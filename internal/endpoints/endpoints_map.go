@@ -82,6 +82,12 @@ var endpointsMap = endpointStruct{
 		"us-west-1/s3": endpointEntry{
 			Endpoint: "s3-{region}.amazonaws.com",
 		},
+                "eucalyptus/ec2": endpointEntry{
+                        Endpoint: "compute.emea.eucalyptus.com:8773",
+                },
+                "eucalyptus/iam": endpointEntry{
+                        Endpoint: "euare.emea.eucalyptus.com:8773",
+                },
 		"us-west-2/s3": endpointEntry{
 			Endpoint: "s3-{region}.amazonaws.com",
 		},
