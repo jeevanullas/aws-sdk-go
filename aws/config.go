@@ -36,17 +36,10 @@ var DefaultConfig = &Config{
 	Credentials:             DefaultChainCredentials,
 	Endpoint:                "",
 	Region:                  os.Getenv("AWS_REGION"),
-<<<<<<< HEAD
 	DisableSSL:              false,
 	ManualSend:              false,
 	HTTPClient:              http.DefaultClient,
 	LogLevel:                0,
-=======
-	DisableSSL:              false,
-	HTTPClient:              http.DefaultClient,
-	LogHTTPBody:             false,
-	LogLevel:                0,
->>>>>>> upstream/master
 	Logger:                  os.Stdout,
 	MaxRetries:              DefaultRetries,
 	DisableParamValidation:  false,

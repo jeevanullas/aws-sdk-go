@@ -82,11 +82,7 @@ var endpointsMap = endpointStruct{
 		"us-west-1/s3": {
 			Endpoint: "s3-{region}.amazonaws.com",
 		},
-<<<<<<< HEAD
-		"us-west-2/s3": endpointEntry{
-=======
 		"us-west-2/s3": {
->>>>>>> upstream/master
 			Endpoint: "s3-{region}.amazonaws.com",
 		},
 	},
