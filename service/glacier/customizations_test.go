@@ -1,16 +1,21 @@
+// +build !integration
+
 package glacier_test
 
 import (
 	"bytes"
 	"testing"
 
-	"github.com/awslabs/aws-sdk-go/aws"
-	"github.com/awslabs/aws-sdk-go/aws/awsutil"
-	"github.com/awslabs/aws-sdk-go/service/glacier"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
+	"github.com/aws/aws-sdk-go/internal/test/unit"
+	"github.com/aws/aws-sdk-go/service/glacier"
 	"github.com/stretchr/testify/assert"
 )
 
 var (
+	_ = unit.Imported
+
 	payloadBuf = func() *bytes.Reader {
 		buf := make([]byte, 5767168) // 5.5MB buffer
 		for i := range buf {
@@ -19,9 +24,7 @@ var (
 		return bytes.NewReader(buf)
 	}()
 
-	svc = glacier.New(&aws.Config{
-		Region: "mock-region",
-	})
+	svc = glacier.New(nil)
 )
 
 func TestCustomizations(t *testing.T) {

@@ -1,6 +1,6 @@
 package s3
 
-import "github.com/awslabs/aws-sdk-go/aws"
+import "github.com/aws/aws-sdk-go/aws"
 
 func init() {
 	initService = func(s *aws.Service) {
@@ -17,8 +17,8 @@ func init() {
 	}
 
 	initRequest = func(r *aws.Request) {
-		switch r.Operation {
-		case opPutBucketCORS, opPutBucketLifecycle, opPutBucketTagging, opDeleteObjects:
+		switch r.Operation.Name {
+		case opPutBucketCORS, opPutBucketLifecycle, opPutBucketPolicy, opPutBucketTagging, opDeleteObjects:
 			// These S3 operations require Content-MD5 to be set
 			r.Handlers.Build.PushBack(contentMD5)
 		case opGetBucketLocation:

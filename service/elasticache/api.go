@@ -4,32 +4,27 @@
 package elasticache
 
 import (
-	"sync"
 	"time"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
-var oprw sync.Mutex
+const opAddTagsToResource = "AddTagsToResource"
 
 // AddTagsToResourceRequest generates a request for the AddTagsToResource operation.
 func (c *ElastiCache) AddTagsToResourceRequest(input *AddTagsToResourceInput) (req *aws.Request, output *TagListMessage) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAddTagsToResource == nil {
-		opAddTagsToResource = &aws.Operation{
-			Name:       "AddTagsToResource",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAddTagsToResource,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AddTagsToResourceInput{}
 	}
 
-	req = c.newRequest(opAddTagsToResource, input, output)
+	req = c.newRequest(op, input, output)
 	output = &TagListMessage{}
 	req.Data = output
 	return
@@ -46,33 +41,27 @@ func (c *ElastiCache) AddTagsToResourceRequest(input *AddTagsToResourceInput) (r
 // categories (such as cost centers, application names, or owners) to organize
 // your costs across multiple services. For more information, see Using Cost
 // Allocation Tags in Amazon ElastiCache (http://docs.aws.amazon.com/AmazonElastiCache/latest/UserGuide/Tagging.html).
-func (c *ElastiCache) AddTagsToResource(input *AddTagsToResourceInput) (output *TagListMessage, err error) {
+func (c *ElastiCache) AddTagsToResource(input *AddTagsToResourceInput) (*TagListMessage, error) {
 	req, out := c.AddTagsToResourceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAddTagsToResource *aws.Operation
+const opAuthorizeCacheSecurityGroupIngress = "AuthorizeCacheSecurityGroupIngress"
 
 // AuthorizeCacheSecurityGroupIngressRequest generates a request for the AuthorizeCacheSecurityGroupIngress operation.
 func (c *ElastiCache) AuthorizeCacheSecurityGroupIngressRequest(input *AuthorizeCacheSecurityGroupIngressInput) (req *aws.Request, output *AuthorizeCacheSecurityGroupIngressOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAuthorizeCacheSecurityGroupIngress == nil {
-		opAuthorizeCacheSecurityGroupIngress = &aws.Operation{
-			Name:       "AuthorizeCacheSecurityGroupIngress",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAuthorizeCacheSecurityGroupIngress,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AuthorizeCacheSecurityGroupIngressInput{}
 	}
 
-	req = c.newRequest(opAuthorizeCacheSecurityGroupIngress, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AuthorizeCacheSecurityGroupIngressOutput{}
 	req.Data = output
 	return
@@ -84,66 +73,54 @@ func (c *ElastiCache) AuthorizeCacheSecurityGroupIngressRequest(input *Authorize
 //
 // You cannot authorize ingress from an Amazon EC2 security group in one region
 // to an ElastiCache cluster in another region.
-func (c *ElastiCache) AuthorizeCacheSecurityGroupIngress(input *AuthorizeCacheSecurityGroupIngressInput) (output *AuthorizeCacheSecurityGroupIngressOutput, err error) {
+func (c *ElastiCache) AuthorizeCacheSecurityGroupIngress(input *AuthorizeCacheSecurityGroupIngressInput) (*AuthorizeCacheSecurityGroupIngressOutput, error) {
 	req, out := c.AuthorizeCacheSecurityGroupIngressRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAuthorizeCacheSecurityGroupIngress *aws.Operation
+const opCopySnapshot = "CopySnapshot"
 
 // CopySnapshotRequest generates a request for the CopySnapshot operation.
 func (c *ElastiCache) CopySnapshotRequest(input *CopySnapshotInput) (req *aws.Request, output *CopySnapshotOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCopySnapshot == nil {
-		opCopySnapshot = &aws.Operation{
-			Name:       "CopySnapshot",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCopySnapshot,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CopySnapshotInput{}
 	}
 
-	req = c.newRequest(opCopySnapshot, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CopySnapshotOutput{}
 	req.Data = output
 	return
 }
 
 // The CopySnapshot action makes a copy of an existing snapshot.
-func (c *ElastiCache) CopySnapshot(input *CopySnapshotInput) (output *CopySnapshotOutput, err error) {
+func (c *ElastiCache) CopySnapshot(input *CopySnapshotInput) (*CopySnapshotOutput, error) {
 	req, out := c.CopySnapshotRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCopySnapshot *aws.Operation
+const opCreateCacheCluster = "CreateCacheCluster"
 
 // CreateCacheClusterRequest generates a request for the CreateCacheCluster operation.
 func (c *ElastiCache) CreateCacheClusterRequest(input *CreateCacheClusterInput) (req *aws.Request, output *CreateCacheClusterOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateCacheCluster == nil {
-		opCreateCacheCluster = &aws.Operation{
-			Name:       "CreateCacheCluster",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateCacheCluster,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateCacheClusterInput{}
 	}
 
-	req = c.newRequest(opCreateCacheCluster, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateCacheClusterOutput{}
 	req.Data = output
 	return
@@ -152,33 +129,27 @@ func (c *ElastiCache) CreateCacheClusterRequest(input *CreateCacheClusterInput) 
 // The CreateCacheCluster action creates a cache cluster. All nodes in the cache
 // cluster run the same protocol-compliant cache engine software, either Memcached
 // or Redis.
-func (c *ElastiCache) CreateCacheCluster(input *CreateCacheClusterInput) (output *CreateCacheClusterOutput, err error) {
+func (c *ElastiCache) CreateCacheCluster(input *CreateCacheClusterInput) (*CreateCacheClusterOutput, error) {
 	req, out := c.CreateCacheClusterRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateCacheCluster *aws.Operation
+const opCreateCacheParameterGroup = "CreateCacheParameterGroup"
 
 // CreateCacheParameterGroupRequest generates a request for the CreateCacheParameterGroup operation.
 func (c *ElastiCache) CreateCacheParameterGroupRequest(input *CreateCacheParameterGroupInput) (req *aws.Request, output *CreateCacheParameterGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateCacheParameterGroup == nil {
-		opCreateCacheParameterGroup = &aws.Operation{
-			Name:       "CreateCacheParameterGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateCacheParameterGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateCacheParameterGroupInput{}
 	}
 
-	req = c.newRequest(opCreateCacheParameterGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateCacheParameterGroupOutput{}
 	req.Data = output
 	return
@@ -187,33 +158,27 @@ func (c *ElastiCache) CreateCacheParameterGroupRequest(input *CreateCacheParamet
 // The CreateCacheParameterGroup action creates a new cache parameter group.
 // A cache parameter group is a collection of parameters that you apply to all
 // of the nodes in a cache cluster.
-func (c *ElastiCache) CreateCacheParameterGroup(input *CreateCacheParameterGroupInput) (output *CreateCacheParameterGroupOutput, err error) {
+func (c *ElastiCache) CreateCacheParameterGroup(input *CreateCacheParameterGroupInput) (*CreateCacheParameterGroupOutput, error) {
 	req, out := c.CreateCacheParameterGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateCacheParameterGroup *aws.Operation
+const opCreateCacheSecurityGroup = "CreateCacheSecurityGroup"
 
 // CreateCacheSecurityGroupRequest generates a request for the CreateCacheSecurityGroup operation.
 func (c *ElastiCache) CreateCacheSecurityGroupRequest(input *CreateCacheSecurityGroupInput) (req *aws.Request, output *CreateCacheSecurityGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateCacheSecurityGroup == nil {
-		opCreateCacheSecurityGroup = &aws.Operation{
-			Name:       "CreateCacheSecurityGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateCacheSecurityGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateCacheSecurityGroupInput{}
 	}
 
-	req = c.newRequest(opCreateCacheSecurityGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateCacheSecurityGroupOutput{}
 	req.Data = output
 	return
@@ -226,33 +191,27 @@ func (c *ElastiCache) CreateCacheSecurityGroupRequest(input *CreateCacheSecurity
 // outside of an Amazon Virtual Private Cloud (VPC). If you are creating a cache
 // cluster inside of a VPC, use a cache subnet group instead. For more information,
 // see CreateCacheSubnetGroup (http://docs.aws.amazon.com/AmazonElastiCache/latest/APIReference/API_CreateCacheSubnetGroup.html).
-func (c *ElastiCache) CreateCacheSecurityGroup(input *CreateCacheSecurityGroupInput) (output *CreateCacheSecurityGroupOutput, err error) {
+func (c *ElastiCache) CreateCacheSecurityGroup(input *CreateCacheSecurityGroupInput) (*CreateCacheSecurityGroupOutput, error) {
 	req, out := c.CreateCacheSecurityGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateCacheSecurityGroup *aws.Operation
+const opCreateCacheSubnetGroup = "CreateCacheSubnetGroup"
 
 // CreateCacheSubnetGroupRequest generates a request for the CreateCacheSubnetGroup operation.
 func (c *ElastiCache) CreateCacheSubnetGroupRequest(input *CreateCacheSubnetGroupInput) (req *aws.Request, output *CreateCacheSubnetGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateCacheSubnetGroup == nil {
-		opCreateCacheSubnetGroup = &aws.Operation{
-			Name:       "CreateCacheSubnetGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateCacheSubnetGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateCacheSubnetGroupInput{}
 	}
 
-	req = c.newRequest(opCreateCacheSubnetGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateCacheSubnetGroupOutput{}
 	req.Data = output
 	return
@@ -262,33 +221,27 @@ func (c *ElastiCache) CreateCacheSubnetGroupRequest(input *CreateCacheSubnetGrou
 //
 // Use this parameter only when you are creating a cluster in an Amazon Virtual
 // Private Cloud (VPC).
-func (c *ElastiCache) CreateCacheSubnetGroup(input *CreateCacheSubnetGroupInput) (output *CreateCacheSubnetGroupOutput, err error) {
+func (c *ElastiCache) CreateCacheSubnetGroup(input *CreateCacheSubnetGroupInput) (*CreateCacheSubnetGroupOutput, error) {
 	req, out := c.CreateCacheSubnetGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateCacheSubnetGroup *aws.Operation
+const opCreateReplicationGroup = "CreateReplicationGroup"
 
 // CreateReplicationGroupRequest generates a request for the CreateReplicationGroup operation.
 func (c *ElastiCache) CreateReplicationGroupRequest(input *CreateReplicationGroupInput) (req *aws.Request, output *CreateReplicationGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateReplicationGroup == nil {
-		opCreateReplicationGroup = &aws.Operation{
-			Name:       "CreateReplicationGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateReplicationGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateReplicationGroupInput{}
 	}
 
-	req = c.newRequest(opCreateReplicationGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateReplicationGroupOutput{}
 	req.Data = output
 	return
@@ -305,33 +258,27 @@ func (c *ElastiCache) CreateReplicationGroupRequest(input *CreateReplicationGrou
 // up to a total of five read replicas.
 //
 // Note: This action is valid only for Redis.
-func (c *ElastiCache) CreateReplicationGroup(input *CreateReplicationGroupInput) (output *CreateReplicationGroupOutput, err error) {
+func (c *ElastiCache) CreateReplicationGroup(input *CreateReplicationGroupInput) (*CreateReplicationGroupOutput, error) {
 	req, out := c.CreateReplicationGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateReplicationGroup *aws.Operation
+const opCreateSnapshot = "CreateSnapshot"
 
 // CreateSnapshotRequest generates a request for the CreateSnapshot operation.
 func (c *ElastiCache) CreateSnapshotRequest(input *CreateSnapshotInput) (req *aws.Request, output *CreateSnapshotOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateSnapshot == nil {
-		opCreateSnapshot = &aws.Operation{
-			Name:       "CreateSnapshot",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateSnapshot,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateSnapshotInput{}
 	}
 
-	req = c.newRequest(opCreateSnapshot, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateSnapshotOutput{}
 	req.Data = output
 	return
@@ -339,33 +286,27 @@ func (c *ElastiCache) CreateSnapshotRequest(input *CreateSnapshotInput) (req *aw
 
 // The CreateSnapshot action creates a copy of an entire cache cluster at a
 // specific moment in time.
-func (c *ElastiCache) CreateSnapshot(input *CreateSnapshotInput) (output *CreateSnapshotOutput, err error) {
+func (c *ElastiCache) CreateSnapshot(input *CreateSnapshotInput) (*CreateSnapshotOutput, error) {
 	req, out := c.CreateSnapshotRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateSnapshot *aws.Operation
+const opDeleteCacheCluster = "DeleteCacheCluster"
 
 // DeleteCacheClusterRequest generates a request for the DeleteCacheCluster operation.
 func (c *ElastiCache) DeleteCacheClusterRequest(input *DeleteCacheClusterInput) (req *aws.Request, output *DeleteCacheClusterOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteCacheCluster == nil {
-		opDeleteCacheCluster = &aws.Operation{
-			Name:       "DeleteCacheCluster",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteCacheCluster,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteCacheClusterInput{}
 	}
 
-	req = c.newRequest(opDeleteCacheCluster, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteCacheClusterOutput{}
 	req.Data = output
 	return
@@ -379,33 +320,27 @@ func (c *ElastiCache) DeleteCacheClusterRequest(input *DeleteCacheClusterInput) 
 //
 // This API cannot be used to delete a cache cluster that is the last read
 // replica of a replication group that has Multi-AZ mode enabled.
-func (c *ElastiCache) DeleteCacheCluster(input *DeleteCacheClusterInput) (output *DeleteCacheClusterOutput, err error) {
+func (c *ElastiCache) DeleteCacheCluster(input *DeleteCacheClusterInput) (*DeleteCacheClusterOutput, error) {
 	req, out := c.DeleteCacheClusterRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteCacheCluster *aws.Operation
+const opDeleteCacheParameterGroup = "DeleteCacheParameterGroup"
 
 // DeleteCacheParameterGroupRequest generates a request for the DeleteCacheParameterGroup operation.
 func (c *ElastiCache) DeleteCacheParameterGroupRequest(input *DeleteCacheParameterGroupInput) (req *aws.Request, output *DeleteCacheParameterGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteCacheParameterGroup == nil {
-		opDeleteCacheParameterGroup = &aws.Operation{
-			Name:       "DeleteCacheParameterGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteCacheParameterGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteCacheParameterGroupInput{}
 	}
 
-	req = c.newRequest(opDeleteCacheParameterGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteCacheParameterGroupOutput{}
 	req.Data = output
 	return
@@ -414,33 +349,27 @@ func (c *ElastiCache) DeleteCacheParameterGroupRequest(input *DeleteCacheParamet
 // The DeleteCacheParameterGroup action deletes the specified cache parameter
 // group. You cannot delete a cache parameter group if it is associated with
 // any cache clusters.
-func (c *ElastiCache) DeleteCacheParameterGroup(input *DeleteCacheParameterGroupInput) (output *DeleteCacheParameterGroupOutput, err error) {
+func (c *ElastiCache) DeleteCacheParameterGroup(input *DeleteCacheParameterGroupInput) (*DeleteCacheParameterGroupOutput, error) {
 	req, out := c.DeleteCacheParameterGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteCacheParameterGroup *aws.Operation
+const opDeleteCacheSecurityGroup = "DeleteCacheSecurityGroup"
 
 // DeleteCacheSecurityGroupRequest generates a request for the DeleteCacheSecurityGroup operation.
 func (c *ElastiCache) DeleteCacheSecurityGroupRequest(input *DeleteCacheSecurityGroupInput) (req *aws.Request, output *DeleteCacheSecurityGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteCacheSecurityGroup == nil {
-		opDeleteCacheSecurityGroup = &aws.Operation{
-			Name:       "DeleteCacheSecurityGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteCacheSecurityGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteCacheSecurityGroupInput{}
 	}
 
-	req = c.newRequest(opDeleteCacheSecurityGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteCacheSecurityGroupOutput{}
 	req.Data = output
 	return
@@ -450,33 +379,27 @@ func (c *ElastiCache) DeleteCacheSecurityGroupRequest(input *DeleteCacheSecurity
 //
 // You cannot delete a cache security group if it is associated with any cache
 // clusters.
-func (c *ElastiCache) DeleteCacheSecurityGroup(input *DeleteCacheSecurityGroupInput) (output *DeleteCacheSecurityGroupOutput, err error) {
+func (c *ElastiCache) DeleteCacheSecurityGroup(input *DeleteCacheSecurityGroupInput) (*DeleteCacheSecurityGroupOutput, error) {
 	req, out := c.DeleteCacheSecurityGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteCacheSecurityGroup *aws.Operation
+const opDeleteCacheSubnetGroup = "DeleteCacheSubnetGroup"
 
 // DeleteCacheSubnetGroupRequest generates a request for the DeleteCacheSubnetGroup operation.
 func (c *ElastiCache) DeleteCacheSubnetGroupRequest(input *DeleteCacheSubnetGroupInput) (req *aws.Request, output *DeleteCacheSubnetGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteCacheSubnetGroup == nil {
-		opDeleteCacheSubnetGroup = &aws.Operation{
-			Name:       "DeleteCacheSubnetGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteCacheSubnetGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteCacheSubnetGroupInput{}
 	}
 
-	req = c.newRequest(opDeleteCacheSubnetGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteCacheSubnetGroupOutput{}
 	req.Data = output
 	return
@@ -486,33 +409,27 @@ func (c *ElastiCache) DeleteCacheSubnetGroupRequest(input *DeleteCacheSubnetGrou
 //
 // You cannot delete a cache subnet group if it is associated with any cache
 // clusters.
-func (c *ElastiCache) DeleteCacheSubnetGroup(input *DeleteCacheSubnetGroupInput) (output *DeleteCacheSubnetGroupOutput, err error) {
+func (c *ElastiCache) DeleteCacheSubnetGroup(input *DeleteCacheSubnetGroupInput) (*DeleteCacheSubnetGroupOutput, error) {
 	req, out := c.DeleteCacheSubnetGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteCacheSubnetGroup *aws.Operation
+const opDeleteReplicationGroup = "DeleteReplicationGroup"
 
 // DeleteReplicationGroupRequest generates a request for the DeleteReplicationGroup operation.
 func (c *ElastiCache) DeleteReplicationGroupRequest(input *DeleteReplicationGroupInput) (req *aws.Request, output *DeleteReplicationGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteReplicationGroup == nil {
-		opDeleteReplicationGroup = &aws.Operation{
-			Name:       "DeleteReplicationGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteReplicationGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteReplicationGroupInput{}
 	}
 
-	req = c.newRequest(opDeleteReplicationGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteReplicationGroupOutput{}
 	req.Data = output
 	return
@@ -526,33 +443,27 @@ func (c *ElastiCache) DeleteReplicationGroupRequest(input *DeleteReplicationGrou
 // When you receive a successful response from this action, Amazon ElastiCache
 // immediately begins deleting the selected resources; you cannot cancel or
 // revert this action.
-func (c *ElastiCache) DeleteReplicationGroup(input *DeleteReplicationGroupInput) (output *DeleteReplicationGroupOutput, err error) {
+func (c *ElastiCache) DeleteReplicationGroup(input *DeleteReplicationGroupInput) (*DeleteReplicationGroupOutput, error) {
 	req, out := c.DeleteReplicationGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteReplicationGroup *aws.Operation
+const opDeleteSnapshot = "DeleteSnapshot"
 
 // DeleteSnapshotRequest generates a request for the DeleteSnapshot operation.
 func (c *ElastiCache) DeleteSnapshotRequest(input *DeleteSnapshotInput) (req *aws.Request, output *DeleteSnapshotOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteSnapshot == nil {
-		opDeleteSnapshot = &aws.Operation{
-			Name:       "DeleteSnapshot",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteSnapshot,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteSnapshotInput{}
 	}
 
-	req = c.newRequest(opDeleteSnapshot, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteSnapshotOutput{}
 	req.Data = output
 	return
@@ -561,33 +472,33 @@ func (c *ElastiCache) DeleteSnapshotRequest(input *DeleteSnapshotInput) (req *aw
 // The DeleteSnapshot action deletes an existing snapshot. When you receive
 // a successful response from this action, ElastiCache immediately begins deleting
 // the snapshot; you cannot cancel or revert this action.
-func (c *ElastiCache) DeleteSnapshot(input *DeleteSnapshotInput) (output *DeleteSnapshotOutput, err error) {
+func (c *ElastiCache) DeleteSnapshot(input *DeleteSnapshotInput) (*DeleteSnapshotOutput, error) {
 	req, out := c.DeleteSnapshotRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteSnapshot *aws.Operation
+const opDescribeCacheClusters = "DescribeCacheClusters"
 
 // DescribeCacheClustersRequest generates a request for the DescribeCacheClusters operation.
 func (c *ElastiCache) DescribeCacheClustersRequest(input *DescribeCacheClustersInput) (req *aws.Request, output *DescribeCacheClustersOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeCacheClusters == nil {
-		opDescribeCacheClusters = &aws.Operation{
-			Name:       "DescribeCacheClusters",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeCacheClusters,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeCacheClustersInput{}
 	}
 
-	req = c.newRequest(opDescribeCacheClusters, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeCacheClustersOutput{}
 	req.Data = output
 	return
@@ -615,33 +526,40 @@ func (c *ElastiCache) DescribeCacheClustersRequest(input *DescribeCacheClustersI
 //
 // If cache nodes are currently being removed from the cache cluster, no endpoint
 // information for the removed nodes is displayed.
-func (c *ElastiCache) DescribeCacheClusters(input *DescribeCacheClustersInput) (output *DescribeCacheClustersOutput, err error) {
+func (c *ElastiCache) DescribeCacheClusters(input *DescribeCacheClustersInput) (*DescribeCacheClustersOutput, error) {
 	req, out := c.DescribeCacheClustersRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeCacheClusters *aws.Operation
+func (c *ElastiCache) DescribeCacheClustersPages(input *DescribeCacheClustersInput, fn func(p *DescribeCacheClustersOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeCacheClustersRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeCacheClustersOutput), lastPage)
+	})
+}
+
+const opDescribeCacheEngineVersions = "DescribeCacheEngineVersions"
 
 // DescribeCacheEngineVersionsRequest generates a request for the DescribeCacheEngineVersions operation.
 func (c *ElastiCache) DescribeCacheEngineVersionsRequest(input *DescribeCacheEngineVersionsInput) (req *aws.Request, output *DescribeCacheEngineVersionsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeCacheEngineVersions == nil {
-		opDescribeCacheEngineVersions = &aws.Operation{
-			Name:       "DescribeCacheEngineVersions",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeCacheEngineVersions,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeCacheEngineVersionsInput{}
 	}
 
-	req = c.newRequest(opDescribeCacheEngineVersions, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeCacheEngineVersionsOutput{}
 	req.Data = output
 	return
@@ -649,33 +567,40 @@ func (c *ElastiCache) DescribeCacheEngineVersionsRequest(input *DescribeCacheEng
 
 // The DescribeCacheEngineVersions action returns a list of the available cache
 // engines and their versions.
-func (c *ElastiCache) DescribeCacheEngineVersions(input *DescribeCacheEngineVersionsInput) (output *DescribeCacheEngineVersionsOutput, err error) {
+func (c *ElastiCache) DescribeCacheEngineVersions(input *DescribeCacheEngineVersionsInput) (*DescribeCacheEngineVersionsOutput, error) {
 	req, out := c.DescribeCacheEngineVersionsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeCacheEngineVersions *aws.Operation
+func (c *ElastiCache) DescribeCacheEngineVersionsPages(input *DescribeCacheEngineVersionsInput, fn func(p *DescribeCacheEngineVersionsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeCacheEngineVersionsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeCacheEngineVersionsOutput), lastPage)
+	})
+}
+
+const opDescribeCacheParameterGroups = "DescribeCacheParameterGroups"
 
 // DescribeCacheParameterGroupsRequest generates a request for the DescribeCacheParameterGroups operation.
 func (c *ElastiCache) DescribeCacheParameterGroupsRequest(input *DescribeCacheParameterGroupsInput) (req *aws.Request, output *DescribeCacheParameterGroupsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeCacheParameterGroups == nil {
-		opDescribeCacheParameterGroups = &aws.Operation{
-			Name:       "DescribeCacheParameterGroups",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeCacheParameterGroups,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeCacheParameterGroupsInput{}
 	}
 
-	req = c.newRequest(opDescribeCacheParameterGroups, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeCacheParameterGroupsOutput{}
 	req.Data = output
 	return
@@ -684,33 +609,40 @@ func (c *ElastiCache) DescribeCacheParameterGroupsRequest(input *DescribeCachePa
 // The DescribeCacheParameterGroups action returns a list of cache parameter
 // group descriptions. If a cache parameter group name is specified, the list
 // will contain only the descriptions for that group.
-func (c *ElastiCache) DescribeCacheParameterGroups(input *DescribeCacheParameterGroupsInput) (output *DescribeCacheParameterGroupsOutput, err error) {
+func (c *ElastiCache) DescribeCacheParameterGroups(input *DescribeCacheParameterGroupsInput) (*DescribeCacheParameterGroupsOutput, error) {
 	req, out := c.DescribeCacheParameterGroupsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeCacheParameterGroups *aws.Operation
+func (c *ElastiCache) DescribeCacheParameterGroupsPages(input *DescribeCacheParameterGroupsInput, fn func(p *DescribeCacheParameterGroupsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeCacheParameterGroupsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeCacheParameterGroupsOutput), lastPage)
+	})
+}
+
+const opDescribeCacheParameters = "DescribeCacheParameters"
 
 // DescribeCacheParametersRequest generates a request for the DescribeCacheParameters operation.
 func (c *ElastiCache) DescribeCacheParametersRequest(input *DescribeCacheParametersInput) (req *aws.Request, output *DescribeCacheParametersOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeCacheParameters == nil {
-		opDescribeCacheParameters = &aws.Operation{
-			Name:       "DescribeCacheParameters",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeCacheParameters,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeCacheParametersInput{}
 	}
 
-	req = c.newRequest(opDescribeCacheParameters, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeCacheParametersOutput{}
 	req.Data = output
 	return
@@ -718,33 +650,40 @@ func (c *ElastiCache) DescribeCacheParametersRequest(input *DescribeCacheParamet
 
 // The DescribeCacheParameters action returns the detailed parameter list for
 // a particular cache parameter group.
-func (c *ElastiCache) DescribeCacheParameters(input *DescribeCacheParametersInput) (output *DescribeCacheParametersOutput, err error) {
+func (c *ElastiCache) DescribeCacheParameters(input *DescribeCacheParametersInput) (*DescribeCacheParametersOutput, error) {
 	req, out := c.DescribeCacheParametersRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeCacheParameters *aws.Operation
+func (c *ElastiCache) DescribeCacheParametersPages(input *DescribeCacheParametersInput, fn func(p *DescribeCacheParametersOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeCacheParametersRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeCacheParametersOutput), lastPage)
+	})
+}
+
+const opDescribeCacheSecurityGroups = "DescribeCacheSecurityGroups"
 
 // DescribeCacheSecurityGroupsRequest generates a request for the DescribeCacheSecurityGroups operation.
 func (c *ElastiCache) DescribeCacheSecurityGroupsRequest(input *DescribeCacheSecurityGroupsInput) (req *aws.Request, output *DescribeCacheSecurityGroupsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeCacheSecurityGroups == nil {
-		opDescribeCacheSecurityGroups = &aws.Operation{
-			Name:       "DescribeCacheSecurityGroups",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeCacheSecurityGroups,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeCacheSecurityGroupsInput{}
 	}
 
-	req = c.newRequest(opDescribeCacheSecurityGroups, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeCacheSecurityGroupsOutput{}
 	req.Data = output
 	return
@@ -753,33 +692,40 @@ func (c *ElastiCache) DescribeCacheSecurityGroupsRequest(input *DescribeCacheSec
 // The DescribeCacheSecurityGroups action returns a list of cache security group
 // descriptions. If a cache security group name is specified, the list will
 // contain only the description of that group.
-func (c *ElastiCache) DescribeCacheSecurityGroups(input *DescribeCacheSecurityGroupsInput) (output *DescribeCacheSecurityGroupsOutput, err error) {
+func (c *ElastiCache) DescribeCacheSecurityGroups(input *DescribeCacheSecurityGroupsInput) (*DescribeCacheSecurityGroupsOutput, error) {
 	req, out := c.DescribeCacheSecurityGroupsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeCacheSecurityGroups *aws.Operation
+func (c *ElastiCache) DescribeCacheSecurityGroupsPages(input *DescribeCacheSecurityGroupsInput, fn func(p *DescribeCacheSecurityGroupsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeCacheSecurityGroupsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeCacheSecurityGroupsOutput), lastPage)
+	})
+}
+
+const opDescribeCacheSubnetGroups = "DescribeCacheSubnetGroups"
 
 // DescribeCacheSubnetGroupsRequest generates a request for the DescribeCacheSubnetGroups operation.
 func (c *ElastiCache) DescribeCacheSubnetGroupsRequest(input *DescribeCacheSubnetGroupsInput) (req *aws.Request, output *DescribeCacheSubnetGroupsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeCacheSubnetGroups == nil {
-		opDescribeCacheSubnetGroups = &aws.Operation{
-			Name:       "DescribeCacheSubnetGroups",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeCacheSubnetGroups,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeCacheSubnetGroupsInput{}
 	}
 
-	req = c.newRequest(opDescribeCacheSubnetGroups, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeCacheSubnetGroupsOutput{}
 	req.Data = output
 	return
@@ -788,33 +734,40 @@ func (c *ElastiCache) DescribeCacheSubnetGroupsRequest(input *DescribeCacheSubne
 // The DescribeCacheSubnetGroups action returns a list of cache subnet group
 // descriptions. If a subnet group name is specified, the list will contain
 // only the description of that group.
-func (c *ElastiCache) DescribeCacheSubnetGroups(input *DescribeCacheSubnetGroupsInput) (output *DescribeCacheSubnetGroupsOutput, err error) {
+func (c *ElastiCache) DescribeCacheSubnetGroups(input *DescribeCacheSubnetGroupsInput) (*DescribeCacheSubnetGroupsOutput, error) {
 	req, out := c.DescribeCacheSubnetGroupsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeCacheSubnetGroups *aws.Operation
+func (c *ElastiCache) DescribeCacheSubnetGroupsPages(input *DescribeCacheSubnetGroupsInput, fn func(p *DescribeCacheSubnetGroupsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeCacheSubnetGroupsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeCacheSubnetGroupsOutput), lastPage)
+	})
+}
+
+const opDescribeEngineDefaultParameters = "DescribeEngineDefaultParameters"
 
 // DescribeEngineDefaultParametersRequest generates a request for the DescribeEngineDefaultParameters operation.
 func (c *ElastiCache) DescribeEngineDefaultParametersRequest(input *DescribeEngineDefaultParametersInput) (req *aws.Request, output *DescribeEngineDefaultParametersOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeEngineDefaultParameters == nil {
-		opDescribeEngineDefaultParameters = &aws.Operation{
-			Name:       "DescribeEngineDefaultParameters",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeEngineDefaultParameters,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"EngineDefaults.Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeEngineDefaultParametersInput{}
 	}
 
-	req = c.newRequest(opDescribeEngineDefaultParameters, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeEngineDefaultParametersOutput{}
 	req.Data = output
 	return
@@ -822,33 +775,40 @@ func (c *ElastiCache) DescribeEngineDefaultParametersRequest(input *DescribeEngi
 
 // The DescribeEngineDefaultParameters action returns the default engine and
 // system parameter information for the specified cache engine.
-func (c *ElastiCache) DescribeEngineDefaultParameters(input *DescribeEngineDefaultParametersInput) (output *DescribeEngineDefaultParametersOutput, err error) {
+func (c *ElastiCache) DescribeEngineDefaultParameters(input *DescribeEngineDefaultParametersInput) (*DescribeEngineDefaultParametersOutput, error) {
 	req, out := c.DescribeEngineDefaultParametersRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeEngineDefaultParameters *aws.Operation
+func (c *ElastiCache) DescribeEngineDefaultParametersPages(input *DescribeEngineDefaultParametersInput, fn func(p *DescribeEngineDefaultParametersOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeEngineDefaultParametersRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeEngineDefaultParametersOutput), lastPage)
+	})
+}
+
+const opDescribeEvents = "DescribeEvents"
 
 // DescribeEventsRequest generates a request for the DescribeEvents operation.
 func (c *ElastiCache) DescribeEventsRequest(input *DescribeEventsInput) (req *aws.Request, output *DescribeEventsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeEvents == nil {
-		opDescribeEvents = &aws.Operation{
-			Name:       "DescribeEvents",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeEvents,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeEventsInput{}
 	}
 
-	req = c.newRequest(opDescribeEvents, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeEventsOutput{}
 	req.Data = output
 	return
@@ -861,33 +821,40 @@ func (c *ElastiCache) DescribeEventsRequest(input *DescribeEventsInput) (req *aw
 //
 // By default, only the events occurring within the last hour are returned;
 // however, you can retrieve up to 14 days' worth of events if necessary.
-func (c *ElastiCache) DescribeEvents(input *DescribeEventsInput) (output *DescribeEventsOutput, err error) {
+func (c *ElastiCache) DescribeEvents(input *DescribeEventsInput) (*DescribeEventsOutput, error) {
 	req, out := c.DescribeEventsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeEvents *aws.Operation
+func (c *ElastiCache) DescribeEventsPages(input *DescribeEventsInput, fn func(p *DescribeEventsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeEventsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeEventsOutput), lastPage)
+	})
+}
+
+const opDescribeReplicationGroups = "DescribeReplicationGroups"
 
 // DescribeReplicationGroupsRequest generates a request for the DescribeReplicationGroups operation.
 func (c *ElastiCache) DescribeReplicationGroupsRequest(input *DescribeReplicationGroupsInput) (req *aws.Request, output *DescribeReplicationGroupsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeReplicationGroups == nil {
-		opDescribeReplicationGroups = &aws.Operation{
-			Name:       "DescribeReplicationGroups",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeReplicationGroups,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeReplicationGroupsInput{}
 	}
 
-	req = c.newRequest(opDescribeReplicationGroups, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeReplicationGroupsOutput{}
 	req.Data = output
 	return
@@ -896,33 +863,40 @@ func (c *ElastiCache) DescribeReplicationGroupsRequest(input *DescribeReplicatio
 // The DescribeReplicationGroups action returns information about a particular
 // replication group. If no identifier is specified, DescribeReplicationGroups
 // returns information about all replication groups.
-func (c *ElastiCache) DescribeReplicationGroups(input *DescribeReplicationGroupsInput) (output *DescribeReplicationGroupsOutput, err error) {
+func (c *ElastiCache) DescribeReplicationGroups(input *DescribeReplicationGroupsInput) (*DescribeReplicationGroupsOutput, error) {
 	req, out := c.DescribeReplicationGroupsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeReplicationGroups *aws.Operation
+func (c *ElastiCache) DescribeReplicationGroupsPages(input *DescribeReplicationGroupsInput, fn func(p *DescribeReplicationGroupsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeReplicationGroupsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeReplicationGroupsOutput), lastPage)
+	})
+}
+
+const opDescribeReservedCacheNodes = "DescribeReservedCacheNodes"
 
 // DescribeReservedCacheNodesRequest generates a request for the DescribeReservedCacheNodes operation.
 func (c *ElastiCache) DescribeReservedCacheNodesRequest(input *DescribeReservedCacheNodesInput) (req *aws.Request, output *DescribeReservedCacheNodesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeReservedCacheNodes == nil {
-		opDescribeReservedCacheNodes = &aws.Operation{
-			Name:       "DescribeReservedCacheNodes",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeReservedCacheNodes,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeReservedCacheNodesInput{}
 	}
 
-	req = c.newRequest(opDescribeReservedCacheNodes, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeReservedCacheNodesOutput{}
 	req.Data = output
 	return
@@ -930,33 +904,40 @@ func (c *ElastiCache) DescribeReservedCacheNodesRequest(input *DescribeReservedC
 
 // The DescribeReservedCacheNodes action returns information about reserved
 // cache nodes for this account, or about a specified reserved cache node.
-func (c *ElastiCache) DescribeReservedCacheNodes(input *DescribeReservedCacheNodesInput) (output *DescribeReservedCacheNodesOutput, err error) {
+func (c *ElastiCache) DescribeReservedCacheNodes(input *DescribeReservedCacheNodesInput) (*DescribeReservedCacheNodesOutput, error) {
 	req, out := c.DescribeReservedCacheNodesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeReservedCacheNodes *aws.Operation
+func (c *ElastiCache) DescribeReservedCacheNodesPages(input *DescribeReservedCacheNodesInput, fn func(p *DescribeReservedCacheNodesOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeReservedCacheNodesRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeReservedCacheNodesOutput), lastPage)
+	})
+}
+
+const opDescribeReservedCacheNodesOfferings = "DescribeReservedCacheNodesOfferings"
 
 // DescribeReservedCacheNodesOfferingsRequest generates a request for the DescribeReservedCacheNodesOfferings operation.
 func (c *ElastiCache) DescribeReservedCacheNodesOfferingsRequest(input *DescribeReservedCacheNodesOfferingsInput) (req *aws.Request, output *DescribeReservedCacheNodesOfferingsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeReservedCacheNodesOfferings == nil {
-		opDescribeReservedCacheNodesOfferings = &aws.Operation{
-			Name:       "DescribeReservedCacheNodesOfferings",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeReservedCacheNodesOfferings,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeReservedCacheNodesOfferingsInput{}
 	}
 
-	req = c.newRequest(opDescribeReservedCacheNodesOfferings, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeReservedCacheNodesOfferingsOutput{}
 	req.Data = output
 	return
@@ -964,33 +945,40 @@ func (c *ElastiCache) DescribeReservedCacheNodesOfferingsRequest(input *Describe
 
 // The DescribeReservedCacheNodesOfferings action lists available reserved cache
 // node offerings.
-func (c *ElastiCache) DescribeReservedCacheNodesOfferings(input *DescribeReservedCacheNodesOfferingsInput) (output *DescribeReservedCacheNodesOfferingsOutput, err error) {
+func (c *ElastiCache) DescribeReservedCacheNodesOfferings(input *DescribeReservedCacheNodesOfferingsInput) (*DescribeReservedCacheNodesOfferingsOutput, error) {
 	req, out := c.DescribeReservedCacheNodesOfferingsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeReservedCacheNodesOfferings *aws.Operation
+func (c *ElastiCache) DescribeReservedCacheNodesOfferingsPages(input *DescribeReservedCacheNodesOfferingsInput, fn func(p *DescribeReservedCacheNodesOfferingsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeReservedCacheNodesOfferingsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeReservedCacheNodesOfferingsOutput), lastPage)
+	})
+}
+
+const opDescribeSnapshots = "DescribeSnapshots"
 
 // DescribeSnapshotsRequest generates a request for the DescribeSnapshots operation.
 func (c *ElastiCache) DescribeSnapshotsRequest(input *DescribeSnapshotsInput) (req *aws.Request, output *DescribeSnapshotsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeSnapshots == nil {
-		opDescribeSnapshots = &aws.Operation{
-			Name:       "DescribeSnapshots",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeSnapshots,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeSnapshotsInput{}
 	}
 
-	req = c.newRequest(opDescribeSnapshots, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeSnapshotsOutput{}
 	req.Data = output
 	return
@@ -1000,33 +988,34 @@ func (c *ElastiCache) DescribeSnapshotsRequest(input *DescribeSnapshotsInput) (r
 // By default, DescribeSnapshots lists all of your snapshots; it can optionally
 // describe a single snapshot, or just the snapshots associated with a particular
 // cache cluster.
-func (c *ElastiCache) DescribeSnapshots(input *DescribeSnapshotsInput) (output *DescribeSnapshotsOutput, err error) {
+func (c *ElastiCache) DescribeSnapshots(input *DescribeSnapshotsInput) (*DescribeSnapshotsOutput, error) {
 	req, out := c.DescribeSnapshotsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeSnapshots *aws.Operation
+func (c *ElastiCache) DescribeSnapshotsPages(input *DescribeSnapshotsInput, fn func(p *DescribeSnapshotsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeSnapshotsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeSnapshotsOutput), lastPage)
+	})
+}
+
+const opListTagsForResource = "ListTagsForResource"
 
 // ListTagsForResourceRequest generates a request for the ListTagsForResource operation.
 func (c *ElastiCache) ListTagsForResourceRequest(input *ListTagsForResourceInput) (req *aws.Request, output *TagListMessage) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListTagsForResource == nil {
-		opListTagsForResource = &aws.Operation{
-			Name:       "ListTagsForResource",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opListTagsForResource,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ListTagsForResourceInput{}
 	}
 
-	req = c.newRequest(opListTagsForResource, input, output)
+	req = c.newRequest(op, input, output)
 	output = &TagListMessage{}
 	req.Data = output
 	return
@@ -1040,33 +1029,27 @@ func (c *ElastiCache) ListTagsForResourceRequest(input *ListTagsForResourceInput
 // You can have a maximum of 10 cost allocation tags on an ElastiCache resource.
 // For more information, see Using Cost Allocation Tags in Amazon ElastiCache
 // (http://docs.aws.amazon.com/AmazonElastiCache/latest/UserGuide/BestPractices.html).
-func (c *ElastiCache) ListTagsForResource(input *ListTagsForResourceInput) (output *TagListMessage, err error) {
+func (c *ElastiCache) ListTagsForResource(input *ListTagsForResourceInput) (*TagListMessage, error) {
 	req, out := c.ListTagsForResourceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListTagsForResource *aws.Operation
+const opModifyCacheCluster = "ModifyCacheCluster"
 
 // ModifyCacheClusterRequest generates a request for the ModifyCacheCluster operation.
 func (c *ElastiCache) ModifyCacheClusterRequest(input *ModifyCacheClusterInput) (req *aws.Request, output *ModifyCacheClusterOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifyCacheCluster == nil {
-		opModifyCacheCluster = &aws.Operation{
-			Name:       "ModifyCacheCluster",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifyCacheCluster,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifyCacheClusterInput{}
 	}
 
-	req = c.newRequest(opModifyCacheCluster, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ModifyCacheClusterOutput{}
 	req.Data = output
 	return
@@ -1075,33 +1058,27 @@ func (c *ElastiCache) ModifyCacheClusterRequest(input *ModifyCacheClusterInput) 
 // The ModifyCacheCluster action modifies the settings for a cache cluster.
 // You can use this action to change one or more cluster configuration parameters
 // by specifying the parameters and the new values.
-func (c *ElastiCache) ModifyCacheCluster(input *ModifyCacheClusterInput) (output *ModifyCacheClusterOutput, err error) {
+func (c *ElastiCache) ModifyCacheCluster(input *ModifyCacheClusterInput) (*ModifyCacheClusterOutput, error) {
 	req, out := c.ModifyCacheClusterRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opModifyCacheCluster *aws.Operation
+const opModifyCacheParameterGroup = "ModifyCacheParameterGroup"
 
 // ModifyCacheParameterGroupRequest generates a request for the ModifyCacheParameterGroup operation.
 func (c *ElastiCache) ModifyCacheParameterGroupRequest(input *ModifyCacheParameterGroupInput) (req *aws.Request, output *CacheParameterGroupNameMessage) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifyCacheParameterGroup == nil {
-		opModifyCacheParameterGroup = &aws.Operation{
-			Name:       "ModifyCacheParameterGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifyCacheParameterGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifyCacheParameterGroupInput{}
 	}
 
-	req = c.newRequest(opModifyCacheParameterGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CacheParameterGroupNameMessage{}
 	req.Data = output
 	return
@@ -1110,66 +1087,54 @@ func (c *ElastiCache) ModifyCacheParameterGroupRequest(input *ModifyCacheParamet
 // The ModifyCacheParameterGroup action modifies the parameters of a cache parameter
 // group. You can modify up to 20 parameters in a single request by submitting
 // a list parameter name and value pairs.
-func (c *ElastiCache) ModifyCacheParameterGroup(input *ModifyCacheParameterGroupInput) (output *CacheParameterGroupNameMessage, err error) {
+func (c *ElastiCache) ModifyCacheParameterGroup(input *ModifyCacheParameterGroupInput) (*CacheParameterGroupNameMessage, error) {
 	req, out := c.ModifyCacheParameterGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opModifyCacheParameterGroup *aws.Operation
+const opModifyCacheSubnetGroup = "ModifyCacheSubnetGroup"
 
 // ModifyCacheSubnetGroupRequest generates a request for the ModifyCacheSubnetGroup operation.
 func (c *ElastiCache) ModifyCacheSubnetGroupRequest(input *ModifyCacheSubnetGroupInput) (req *aws.Request, output *ModifyCacheSubnetGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifyCacheSubnetGroup == nil {
-		opModifyCacheSubnetGroup = &aws.Operation{
-			Name:       "ModifyCacheSubnetGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifyCacheSubnetGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifyCacheSubnetGroupInput{}
 	}
 
-	req = c.newRequest(opModifyCacheSubnetGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ModifyCacheSubnetGroupOutput{}
 	req.Data = output
 	return
 }
 
 // The ModifyCacheSubnetGroup action modifies an existing cache subnet group.
-func (c *ElastiCache) ModifyCacheSubnetGroup(input *ModifyCacheSubnetGroupInput) (output *ModifyCacheSubnetGroupOutput, err error) {
+func (c *ElastiCache) ModifyCacheSubnetGroup(input *ModifyCacheSubnetGroupInput) (*ModifyCacheSubnetGroupOutput, error) {
 	req, out := c.ModifyCacheSubnetGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opModifyCacheSubnetGroup *aws.Operation
+const opModifyReplicationGroup = "ModifyReplicationGroup"
 
 // ModifyReplicationGroupRequest generates a request for the ModifyReplicationGroup operation.
 func (c *ElastiCache) ModifyReplicationGroupRequest(input *ModifyReplicationGroupInput) (req *aws.Request, output *ModifyReplicationGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifyReplicationGroup == nil {
-		opModifyReplicationGroup = &aws.Operation{
-			Name:       "ModifyReplicationGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifyReplicationGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifyReplicationGroupInput{}
 	}
 
-	req = c.newRequest(opModifyReplicationGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ModifyReplicationGroupOutput{}
 	req.Data = output
 	return
@@ -1177,33 +1142,27 @@ func (c *ElastiCache) ModifyReplicationGroupRequest(input *ModifyReplicationGrou
 
 // The ModifyReplicationGroup action modifies the settings for a replication
 // group.
-func (c *ElastiCache) ModifyReplicationGroup(input *ModifyReplicationGroupInput) (output *ModifyReplicationGroupOutput, err error) {
+func (c *ElastiCache) ModifyReplicationGroup(input *ModifyReplicationGroupInput) (*ModifyReplicationGroupOutput, error) {
 	req, out := c.ModifyReplicationGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opModifyReplicationGroup *aws.Operation
+const opPurchaseReservedCacheNodesOffering = "PurchaseReservedCacheNodesOffering"
 
 // PurchaseReservedCacheNodesOfferingRequest generates a request for the PurchaseReservedCacheNodesOffering operation.
 func (c *ElastiCache) PurchaseReservedCacheNodesOfferingRequest(input *PurchaseReservedCacheNodesOfferingInput) (req *aws.Request, output *PurchaseReservedCacheNodesOfferingOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opPurchaseReservedCacheNodesOffering == nil {
-		opPurchaseReservedCacheNodesOffering = &aws.Operation{
-			Name:       "PurchaseReservedCacheNodesOffering",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opPurchaseReservedCacheNodesOffering,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &PurchaseReservedCacheNodesOfferingInput{}
 	}
 
-	req = c.newRequest(opPurchaseReservedCacheNodesOffering, input, output)
+	req = c.newRequest(op, input, output)
 	output = &PurchaseReservedCacheNodesOfferingOutput{}
 	req.Data = output
 	return
@@ -1211,33 +1170,27 @@ func (c *ElastiCache) PurchaseReservedCacheNodesOfferingRequest(input *PurchaseR
 
 // The PurchaseReservedCacheNodesOffering action allows you to purchase a reserved
 // cache node offering.
-func (c *ElastiCache) PurchaseReservedCacheNodesOffering(input *PurchaseReservedCacheNodesOfferingInput) (output *PurchaseReservedCacheNodesOfferingOutput, err error) {
+func (c *ElastiCache) PurchaseReservedCacheNodesOffering(input *PurchaseReservedCacheNodesOfferingInput) (*PurchaseReservedCacheNodesOfferingOutput, error) {
 	req, out := c.PurchaseReservedCacheNodesOfferingRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opPurchaseReservedCacheNodesOffering *aws.Operation
+const opRebootCacheCluster = "RebootCacheCluster"
 
 // RebootCacheClusterRequest generates a request for the RebootCacheCluster operation.
 func (c *ElastiCache) RebootCacheClusterRequest(input *RebootCacheClusterInput) (req *aws.Request, output *RebootCacheClusterOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRebootCacheCluster == nil {
-		opRebootCacheCluster = &aws.Operation{
-			Name:       "RebootCacheCluster",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRebootCacheCluster,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RebootCacheClusterInput{}
 	}
 
-	req = c.newRequest(opRebootCacheCluster, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RebootCacheClusterOutput{}
 	req.Data = output
 	return
@@ -1253,33 +1206,27 @@ func (c *ElastiCache) RebootCacheClusterRequest(input *RebootCacheClusterInput) 
 // to be lost.
 //
 // When the reboot is complete, a cache cluster event is created.
-func (c *ElastiCache) RebootCacheCluster(input *RebootCacheClusterInput) (output *RebootCacheClusterOutput, err error) {
+func (c *ElastiCache) RebootCacheCluster(input *RebootCacheClusterInput) (*RebootCacheClusterOutput, error) {
 	req, out := c.RebootCacheClusterRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRebootCacheCluster *aws.Operation
+const opRemoveTagsFromResource = "RemoveTagsFromResource"
 
 // RemoveTagsFromResourceRequest generates a request for the RemoveTagsFromResource operation.
 func (c *ElastiCache) RemoveTagsFromResourceRequest(input *RemoveTagsFromResourceInput) (req *aws.Request, output *TagListMessage) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRemoveTagsFromResource == nil {
-		opRemoveTagsFromResource = &aws.Operation{
-			Name:       "RemoveTagsFromResource",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRemoveTagsFromResource,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RemoveTagsFromResourceInput{}
 	}
 
-	req = c.newRequest(opRemoveTagsFromResource, input, output)
+	req = c.newRequest(op, input, output)
 	output = &TagListMessage{}
 	req.Data = output
 	return
@@ -1287,33 +1234,27 @@ func (c *ElastiCache) RemoveTagsFromResourceRequest(input *RemoveTagsFromResourc
 
 // The RemoveTagsFromResource action removes the tags identified by the TagKeys
 // list from the named resource.
-func (c *ElastiCache) RemoveTagsFromResource(input *RemoveTagsFromResourceInput) (output *TagListMessage, err error) {
+func (c *ElastiCache) RemoveTagsFromResource(input *RemoveTagsFromResourceInput) (*TagListMessage, error) {
 	req, out := c.RemoveTagsFromResourceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRemoveTagsFromResource *aws.Operation
+const opResetCacheParameterGroup = "ResetCacheParameterGroup"
 
 // ResetCacheParameterGroupRequest generates a request for the ResetCacheParameterGroup operation.
 func (c *ElastiCache) ResetCacheParameterGroupRequest(input *ResetCacheParameterGroupInput) (req *aws.Request, output *CacheParameterGroupNameMessage) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opResetCacheParameterGroup == nil {
-		opResetCacheParameterGroup = &aws.Operation{
-			Name:       "ResetCacheParameterGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opResetCacheParameterGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ResetCacheParameterGroupInput{}
 	}
 
-	req = c.newRequest(opResetCacheParameterGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CacheParameterGroupNameMessage{}
 	req.Data = output
 	return
@@ -1323,33 +1264,27 @@ func (c *ElastiCache) ResetCacheParameterGroupRequest(input *ResetCacheParameter
 // group to the engine or system default value. You can reset specific parameters
 // by submitting a list of parameter names. To reset the entire cache parameter
 // group, specify the ResetAllParameters and CacheParameterGroupName parameters.
-func (c *ElastiCache) ResetCacheParameterGroup(input *ResetCacheParameterGroupInput) (output *CacheParameterGroupNameMessage, err error) {
+func (c *ElastiCache) ResetCacheParameterGroup(input *ResetCacheParameterGroupInput) (*CacheParameterGroupNameMessage, error) {
 	req, out := c.ResetCacheParameterGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opResetCacheParameterGroup *aws.Operation
+const opRevokeCacheSecurityGroupIngress = "RevokeCacheSecurityGroupIngress"
 
 // RevokeCacheSecurityGroupIngressRequest generates a request for the RevokeCacheSecurityGroupIngress operation.
 func (c *ElastiCache) RevokeCacheSecurityGroupIngressRequest(input *RevokeCacheSecurityGroupIngressInput) (req *aws.Request, output *RevokeCacheSecurityGroupIngressOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRevokeCacheSecurityGroupIngress == nil {
-		opRevokeCacheSecurityGroupIngress = &aws.Operation{
-			Name:       "RevokeCacheSecurityGroupIngress",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRevokeCacheSecurityGroupIngress,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RevokeCacheSecurityGroupIngressInput{}
 	}
 
-	req = c.newRequest(opRevokeCacheSecurityGroupIngress, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RevokeCacheSecurityGroupIngressOutput{}
 	req.Data = output
 	return
@@ -1358,14 +1293,11 @@ func (c *ElastiCache) RevokeCacheSecurityGroupIngressRequest(input *RevokeCacheS
 // The RevokeCacheSecurityGroupIngress action revokes ingress from a cache security
 // group. Use this action to disallow access from an Amazon EC2 security group
 // that had been previously authorized.
-func (c *ElastiCache) RevokeCacheSecurityGroupIngress(input *RevokeCacheSecurityGroupIngressInput) (output *RevokeCacheSecurityGroupIngressOutput, err error) {
+func (c *ElastiCache) RevokeCacheSecurityGroupIngress(input *RevokeCacheSecurityGroupIngressInput) (*RevokeCacheSecurityGroupIngressOutput, error) {
 	req, out := c.RevokeCacheSecurityGroupIngressRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
-
-var opRevokeCacheSecurityGroupIngress *aws.Operation
 
 // Represents the input of an AddTagsToResource action.
 type AddTagsToResourceInput struct {
@@ -1376,11 +1308,21 @@ type AddTagsToResourceInput struct {
 	// pair. A tag key must be accompanied by a tag value.
 	Tags []*Tag `locationNameList:"Tag" type:"list" required:"true"`
 
-	metadataAddTagsToResourceInput `json:"-", xml:"-"`
+	metadataAddTagsToResourceInput `json:"-" xml:"-"`
 }
 
 type metadataAddTagsToResourceInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AddTagsToResourceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddTagsToResourceInput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of an AuthorizeCacheSecurityGroupIngress action.
@@ -1397,11 +1339,21 @@ type AuthorizeCacheSecurityGroupIngressInput struct {
 	// AWS account number for this parameter.
 	EC2SecurityGroupOwnerID *string `locationName:"EC2SecurityGroupOwnerId" type:"string" required:"true"`
 
-	metadataAuthorizeCacheSecurityGroupIngressInput `json:"-", xml:"-"`
+	metadataAuthorizeCacheSecurityGroupIngressInput `json:"-" xml:"-"`
 }
 
 type metadataAuthorizeCacheSecurityGroupIngressInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AuthorizeCacheSecurityGroupIngressInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AuthorizeCacheSecurityGroupIngressInput) GoString() string {
+	return s.String()
 }
 
 type AuthorizeCacheSecurityGroupIngressOutput struct {
@@ -1410,11 +1362,21 @@ type AuthorizeCacheSecurityGroupIngressOutput struct {
 	//   AuthorizeCacheSecurityGroupIngress   CreateCacheSecurityGroup   RevokeCacheSecurityGroupIngress
 	CacheSecurityGroup *CacheSecurityGroup `type:"structure"`
 
-	metadataAuthorizeCacheSecurityGroupIngressOutput `json:"-", xml:"-"`
+	metadataAuthorizeCacheSecurityGroupIngressOutput `json:"-" xml:"-"`
 }
 
 type metadataAuthorizeCacheSecurityGroupIngressOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AuthorizeCacheSecurityGroupIngressOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AuthorizeCacheSecurityGroupIngressOutput) GoString() string {
+	return s.String()
 }
 
 // Describes an Availability Zone in which the cache cluster is launched.
@@ -1422,11 +1384,21 @@ type AvailabilityZone struct {
 	// The name of the Availability Zone.
 	Name *string `type:"string"`
 
-	metadataAvailabilityZone `json:"-", xml:"-"`
+	metadataAvailabilityZone `json:"-" xml:"-"`
 }
 
 type metadataAvailabilityZone struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AvailabilityZone) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AvailabilityZone) GoString() string {
+	return s.String()
 }
 
 // Contains all of the attributes of a specific cache cluster.
@@ -1543,11 +1515,21 @@ type CacheCluster struct {
 	// Example: 05:00-09:00
 	SnapshotWindow *string `type:"string"`
 
-	metadataCacheCluster `json:"-", xml:"-"`
+	metadataCacheCluster `json:"-" xml:"-"`
 }
 
 type metadataCacheCluster struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CacheCluster) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CacheCluster) GoString() string {
+	return s.String()
 }
 
 // Provides all of the details about a particular cache engine version.
@@ -1567,11 +1549,21 @@ type CacheEngineVersion struct {
 	// The version number of the cache engine.
 	EngineVersion *string `type:"string"`
 
-	metadataCacheEngineVersion `json:"-", xml:"-"`
+	metadataCacheEngineVersion `json:"-" xml:"-"`
 }
 
 type metadataCacheEngineVersion struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CacheEngineVersion) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CacheEngineVersion) GoString() string {
+	return s.String()
 }
 
 // Represents an individual cache node within a cache cluster. Each cache node
@@ -1621,11 +1613,21 @@ type CacheNode struct {
 	// cluster.
 	SourceCacheNodeID *string `locationName:"SourceCacheNodeId" type:"string"`
 
-	metadataCacheNode `json:"-", xml:"-"`
+	metadataCacheNode `json:"-" xml:"-"`
 }
 
 type metadataCacheNode struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CacheNode) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CacheNode) GoString() string {
+	return s.String()
 }
 
 // A parameter that has a different value for each cache node type it is applied
@@ -1658,11 +1660,21 @@ type CacheNodeTypeSpecificParameter struct {
 	// The source of the parameter value.
 	Source *string `type:"string"`
 
-	metadataCacheNodeTypeSpecificParameter `json:"-", xml:"-"`
+	metadataCacheNodeTypeSpecificParameter `json:"-" xml:"-"`
 }
 
 type metadataCacheNodeTypeSpecificParameter struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CacheNodeTypeSpecificParameter) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CacheNodeTypeSpecificParameter) GoString() string {
+	return s.String()
 }
 
 // A value that applies only to a certain cache node type.
@@ -1673,11 +1685,21 @@ type CacheNodeTypeSpecificValue struct {
 	// The value for the cache node type.
 	Value *string `type:"string"`
 
-	metadataCacheNodeTypeSpecificValue `json:"-", xml:"-"`
+	metadataCacheNodeTypeSpecificValue `json:"-" xml:"-"`
 }
 
 type metadataCacheNodeTypeSpecificValue struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CacheNodeTypeSpecificValue) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CacheNodeTypeSpecificValue) GoString() string {
+	return s.String()
 }
 
 // Represents the output of a CreateCacheParameterGroup action.
@@ -1692,11 +1714,21 @@ type CacheParameterGroup struct {
 	// The description for this cache parameter group.
 	Description *string `type:"string"`
 
-	metadataCacheParameterGroup `json:"-", xml:"-"`
+	metadataCacheParameterGroup `json:"-" xml:"-"`
 }
 
 type metadataCacheParameterGroup struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CacheParameterGroup) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CacheParameterGroup) GoString() string {
+	return s.String()
 }
 
 // Represents the output of one of the following actions:
@@ -1706,11 +1738,21 @@ type CacheParameterGroupNameMessage struct {
 	// The name of the cache parameter group.
 	CacheParameterGroupName *string `type:"string"`
 
-	metadataCacheParameterGroupNameMessage `json:"-", xml:"-"`
+	metadataCacheParameterGroupNameMessage `json:"-" xml:"-"`
 }
 
 type metadataCacheParameterGroupNameMessage struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CacheParameterGroupNameMessage) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CacheParameterGroupNameMessage) GoString() string {
+	return s.String()
 }
 
 // The status of the cache parameter group.
@@ -1725,11 +1767,21 @@ type CacheParameterGroupStatus struct {
 	// The status of parameter updates.
 	ParameterApplyStatus *string `type:"string"`
 
-	metadataCacheParameterGroupStatus `json:"-", xml:"-"`
+	metadataCacheParameterGroupStatus `json:"-" xml:"-"`
 }
 
 type metadataCacheParameterGroupStatus struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CacheParameterGroupStatus) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CacheParameterGroupStatus) GoString() string {
+	return s.String()
 }
 
 // Represents the output of one of the following actions:
@@ -1749,11 +1801,21 @@ type CacheSecurityGroup struct {
 	// The AWS account ID of the cache security group owner.
 	OwnerID *string `locationName:"OwnerId" type:"string"`
 
-	metadataCacheSecurityGroup `json:"-", xml:"-"`
+	metadataCacheSecurityGroup `json:"-" xml:"-"`
 }
 
 type metadataCacheSecurityGroup struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CacheSecurityGroup) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CacheSecurityGroup) GoString() string {
+	return s.String()
 }
 
 // Represents a cache cluster's status within a particular cache security group.
@@ -1766,11 +1828,21 @@ type CacheSecurityGroupMembership struct {
 	// to a cache cluster are modified.
 	Status *string `type:"string"`
 
-	metadataCacheSecurityGroupMembership `json:"-", xml:"-"`
+	metadataCacheSecurityGroupMembership `json:"-" xml:"-"`
 }
 
 type metadataCacheSecurityGroupMembership struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CacheSecurityGroupMembership) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CacheSecurityGroupMembership) GoString() string {
+	return s.String()
 }
 
 // Represents the output of one of the following actions:
@@ -1790,11 +1862,21 @@ type CacheSubnetGroup struct {
 	// group.
 	VPCID *string `locationName:"VpcId" type:"string"`
 
-	metadataCacheSubnetGroup `json:"-", xml:"-"`
+	metadataCacheSubnetGroup `json:"-" xml:"-"`
 }
 
 type metadataCacheSubnetGroup struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CacheSubnetGroup) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CacheSubnetGroup) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a CopySnapshotMessage action.
@@ -1805,11 +1887,21 @@ type CopySnapshotInput struct {
 	// A name for the copied snapshot.
 	TargetSnapshotName *string `type:"string" required:"true"`
 
-	metadataCopySnapshotInput `json:"-", xml:"-"`
+	metadataCopySnapshotInput `json:"-" xml:"-"`
 }
 
 type metadataCopySnapshotInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CopySnapshotInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CopySnapshotInput) GoString() string {
+	return s.String()
 }
 
 type CopySnapshotOutput struct {
@@ -1817,11 +1909,21 @@ type CopySnapshotOutput struct {
 	// was taken.
 	Snapshot *Snapshot `type:"structure"`
 
-	metadataCopySnapshotOutput `json:"-", xml:"-"`
+	metadataCopySnapshotOutput `json:"-" xml:"-"`
 }
 
 type metadataCopySnapshotOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CopySnapshotOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CopySnapshotOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a CreateCacheCluster action.
@@ -2016,22 +2118,42 @@ type CreateCacheClusterInput struct {
 	// pair. A tag key must be accompanied by a tag value.
 	Tags []*Tag `locationNameList:"Tag" type:"list"`
 
-	metadataCreateCacheClusterInput `json:"-", xml:"-"`
+	metadataCreateCacheClusterInput `json:"-" xml:"-"`
 }
 
 type metadataCreateCacheClusterInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateCacheClusterInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateCacheClusterInput) GoString() string {
+	return s.String()
+}
+
 type CreateCacheClusterOutput struct {
 	// Contains all of the attributes of a specific cache cluster.
 	CacheCluster *CacheCluster `type:"structure"`
 
-	metadataCreateCacheClusterOutput `json:"-", xml:"-"`
+	metadataCreateCacheClusterOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateCacheClusterOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateCacheClusterOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateCacheClusterOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a CreateCacheParameterGroup action.
@@ -2048,22 +2170,42 @@ type CreateCacheParameterGroupInput struct {
 	// A user-specified description for the cache parameter group.
 	Description *string `type:"string" required:"true"`
 
-	metadataCreateCacheParameterGroupInput `json:"-", xml:"-"`
+	metadataCreateCacheParameterGroupInput `json:"-" xml:"-"`
 }
 
 type metadataCreateCacheParameterGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateCacheParameterGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateCacheParameterGroupInput) GoString() string {
+	return s.String()
+}
+
 type CreateCacheParameterGroupOutput struct {
 	// Represents the output of a CreateCacheParameterGroup action.
 	CacheParameterGroup *CacheParameterGroup `type:"structure"`
 
-	metadataCreateCacheParameterGroupOutput `json:"-", xml:"-"`
+	metadataCreateCacheParameterGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateCacheParameterGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateCacheParameterGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateCacheParameterGroupOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a CreateCacheSecurityGroup action.
@@ -2080,11 +2222,21 @@ type CreateCacheSecurityGroupInput struct {
 	// A description for the cache security group.
 	Description *string `type:"string" required:"true"`
 
-	metadataCreateCacheSecurityGroupInput `json:"-", xml:"-"`
+	metadataCreateCacheSecurityGroupInput `json:"-" xml:"-"`
 }
 
 type metadataCreateCacheSecurityGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateCacheSecurityGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateCacheSecurityGroupInput) GoString() string {
+	return s.String()
 }
 
 type CreateCacheSecurityGroupOutput struct {
@@ -2093,11 +2245,21 @@ type CreateCacheSecurityGroupOutput struct {
 	//   AuthorizeCacheSecurityGroupIngress   CreateCacheSecurityGroup   RevokeCacheSecurityGroupIngress
 	CacheSecurityGroup *CacheSecurityGroup `type:"structure"`
 
-	metadataCreateCacheSecurityGroupOutput `json:"-", xml:"-"`
+	metadataCreateCacheSecurityGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateCacheSecurityGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateCacheSecurityGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateCacheSecurityGroupOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a CreateCacheSubnetGroup action.
@@ -2115,11 +2277,21 @@ type CreateCacheSubnetGroupInput struct {
 	// A list of VPC subnet IDs for the cache subnet group.
 	SubnetIDs []*string `locationName:"SubnetIds" locationNameList:"SubnetIdentifier" type:"list" required:"true"`
 
-	metadataCreateCacheSubnetGroupInput `json:"-", xml:"-"`
+	metadataCreateCacheSubnetGroupInput `json:"-" xml:"-"`
 }
 
 type metadataCreateCacheSubnetGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateCacheSubnetGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateCacheSubnetGroupInput) GoString() string {
+	return s.String()
 }
 
 type CreateCacheSubnetGroupOutput struct {
@@ -2128,11 +2300,21 @@ type CreateCacheSubnetGroupOutput struct {
 	//   CreateCacheSubnetGroup   ModifyCacheSubnetGroup
 	CacheSubnetGroup *CacheSubnetGroup `type:"structure"`
 
-	metadataCreateCacheSubnetGroupOutput `json:"-", xml:"-"`
+	metadataCreateCacheSubnetGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateCacheSubnetGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateCacheSubnetGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateCacheSubnetGroupOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a CreateReplicationGroup action.
@@ -2306,22 +2488,42 @@ type CreateReplicationGroupInput struct {
 	// pair. A tag key must be accompanied by a tag value.
 	Tags []*Tag `locationNameList:"Tag" type:"list"`
 
-	metadataCreateReplicationGroupInput `json:"-", xml:"-"`
+	metadataCreateReplicationGroupInput `json:"-" xml:"-"`
 }
 
 type metadataCreateReplicationGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateReplicationGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateReplicationGroupInput) GoString() string {
+	return s.String()
+}
+
 type CreateReplicationGroupOutput struct {
 	// Contains all of the attributes of a specific replication group.
 	ReplicationGroup *ReplicationGroup `type:"structure"`
 
-	metadataCreateReplicationGroupOutput `json:"-", xml:"-"`
+	metadataCreateReplicationGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateReplicationGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateReplicationGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateReplicationGroupOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a CreateSnapshot action.
@@ -2333,11 +2535,21 @@ type CreateSnapshotInput struct {
 	// A name for the snapshot being created.
 	SnapshotName *string `type:"string" required:"true"`
 
-	metadataCreateSnapshotInput `json:"-", xml:"-"`
+	metadataCreateSnapshotInput `json:"-" xml:"-"`
 }
 
 type metadataCreateSnapshotInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateSnapshotInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateSnapshotInput) GoString() string {
+	return s.String()
 }
 
 type CreateSnapshotOutput struct {
@@ -2345,11 +2557,21 @@ type CreateSnapshotOutput struct {
 	// was taken.
 	Snapshot *Snapshot `type:"structure"`
 
-	metadataCreateSnapshotOutput `json:"-", xml:"-"`
+	metadataCreateSnapshotOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateSnapshotOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateSnapshotOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateSnapshotOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DeleteCacheCluster action.
@@ -2363,22 +2585,42 @@ type DeleteCacheClusterInput struct {
 	// then deletes the cache cluster immediately afterward.
 	FinalSnapshotIdentifier *string `type:"string"`
 
-	metadataDeleteCacheClusterInput `json:"-", xml:"-"`
+	metadataDeleteCacheClusterInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteCacheClusterInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteCacheClusterInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteCacheClusterInput) GoString() string {
+	return s.String()
+}
+
 type DeleteCacheClusterOutput struct {
 	// Contains all of the attributes of a specific cache cluster.
 	CacheCluster *CacheCluster `type:"structure"`
 
-	metadataDeleteCacheClusterOutput `json:"-", xml:"-"`
+	metadataDeleteCacheClusterOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteCacheClusterOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteCacheClusterOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteCacheClusterOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DeleteCacheParameterGroup action.
@@ -2389,19 +2631,39 @@ type DeleteCacheParameterGroupInput struct {
 	// clusters.
 	CacheParameterGroupName *string `type:"string" required:"true"`
 
-	metadataDeleteCacheParameterGroupInput `json:"-", xml:"-"`
+	metadataDeleteCacheParameterGroupInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteCacheParameterGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteCacheParameterGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteCacheParameterGroupInput) GoString() string {
+	return s.String()
+}
+
 type DeleteCacheParameterGroupOutput struct {
-	metadataDeleteCacheParameterGroupOutput `json:"-", xml:"-"`
+	metadataDeleteCacheParameterGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteCacheParameterGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteCacheParameterGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteCacheParameterGroupOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DeleteCacheSecurityGroup action.
@@ -2411,19 +2673,39 @@ type DeleteCacheSecurityGroupInput struct {
 	// You cannot delete the default security group.
 	CacheSecurityGroupName *string `type:"string" required:"true"`
 
-	metadataDeleteCacheSecurityGroupInput `json:"-", xml:"-"`
+	metadataDeleteCacheSecurityGroupInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteCacheSecurityGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteCacheSecurityGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteCacheSecurityGroupInput) GoString() string {
+	return s.String()
+}
+
 type DeleteCacheSecurityGroupOutput struct {
-	metadataDeleteCacheSecurityGroupOutput `json:"-", xml:"-"`
+	metadataDeleteCacheSecurityGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteCacheSecurityGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteCacheSecurityGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteCacheSecurityGroupOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DeleteCacheSubnetGroup action.
@@ -2433,19 +2715,39 @@ type DeleteCacheSubnetGroupInput struct {
 	// Constraints: Must contain no more than 255 alphanumeric characters or hyphens.
 	CacheSubnetGroupName *string `type:"string" required:"true"`
 
-	metadataDeleteCacheSubnetGroupInput `json:"-", xml:"-"`
+	metadataDeleteCacheSubnetGroupInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteCacheSubnetGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteCacheSubnetGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteCacheSubnetGroupInput) GoString() string {
+	return s.String()
+}
+
 type DeleteCacheSubnetGroupOutput struct {
-	metadataDeleteCacheSubnetGroupOutput `json:"-", xml:"-"`
+	metadataDeleteCacheSubnetGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteCacheSubnetGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteCacheSubnetGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteCacheSubnetGroupOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DeleteReplicationGroup action.
@@ -2464,22 +2766,42 @@ type DeleteReplicationGroupInput struct {
 	// node will be retained.
 	RetainPrimaryCluster *bool `type:"boolean"`
 
-	metadataDeleteReplicationGroupInput `json:"-", xml:"-"`
+	metadataDeleteReplicationGroupInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteReplicationGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteReplicationGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteReplicationGroupInput) GoString() string {
+	return s.String()
+}
+
 type DeleteReplicationGroupOutput struct {
 	// Contains all of the attributes of a specific replication group.
 	ReplicationGroup *ReplicationGroup `type:"structure"`
 
-	metadataDeleteReplicationGroupOutput `json:"-", xml:"-"`
+	metadataDeleteReplicationGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteReplicationGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteReplicationGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteReplicationGroupOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DeleteSnapshot action.
@@ -2487,11 +2809,21 @@ type DeleteSnapshotInput struct {
 	// The name of the snapshot to be deleted.
 	SnapshotName *string `type:"string" required:"true"`
 
-	metadataDeleteSnapshotInput `json:"-", xml:"-"`
+	metadataDeleteSnapshotInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteSnapshotInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteSnapshotInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteSnapshotInput) GoString() string {
+	return s.String()
 }
 
 type DeleteSnapshotOutput struct {
@@ -2499,11 +2831,21 @@ type DeleteSnapshotOutput struct {
 	// was taken.
 	Snapshot *Snapshot `type:"structure"`
 
-	metadataDeleteSnapshotOutput `json:"-", xml:"-"`
+	metadataDeleteSnapshotOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteSnapshotOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteSnapshotOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteSnapshotOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DescribeCacheClusters action.
@@ -2531,11 +2873,21 @@ type DescribeCacheClustersInput struct {
 	// to retrieve information about the individual cache nodes.
 	ShowCacheNodeInfo *bool `type:"boolean"`
 
-	metadataDescribeCacheClustersInput `json:"-", xml:"-"`
+	metadataDescribeCacheClustersInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCacheClustersInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCacheClustersInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCacheClustersInput) GoString() string {
+	return s.String()
 }
 
 // Represents the output of a DescribeCacheClusters action.
@@ -2547,11 +2899,21 @@ type DescribeCacheClustersOutput struct {
 	// Provides an identifier to allow retrieval of paginated results.
 	Marker *string `type:"string"`
 
-	metadataDescribeCacheClustersOutput `json:"-", xml:"-"`
+	metadataDescribeCacheClustersOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCacheClustersOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCacheClustersOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCacheClustersOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DescribeCacheEngineVersions action.
@@ -2590,11 +2952,21 @@ type DescribeCacheEngineVersionsInput struct {
 	// Constraints: minimum 20; maximum 100.
 	MaxRecords *int64 `type:"integer"`
 
-	metadataDescribeCacheEngineVersionsInput `json:"-", xml:"-"`
+	metadataDescribeCacheEngineVersionsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCacheEngineVersionsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCacheEngineVersionsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCacheEngineVersionsInput) GoString() string {
+	return s.String()
 }
 
 // Represents the output of a DescribeCacheEngineVersions action.
@@ -2606,11 +2978,21 @@ type DescribeCacheEngineVersionsOutput struct {
 	// Provides an identifier to allow retrieval of paginated results.
 	Marker *string `type:"string"`
 
-	metadataDescribeCacheEngineVersionsOutput `json:"-", xml:"-"`
+	metadataDescribeCacheEngineVersionsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCacheEngineVersionsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCacheEngineVersionsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCacheEngineVersionsOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DescribeCacheParameterGroups action.
@@ -2632,11 +3014,21 @@ type DescribeCacheParameterGroupsInput struct {
 	// Constraints: minimum 20; maximum 100.
 	MaxRecords *int64 `type:"integer"`
 
-	metadataDescribeCacheParameterGroupsInput `json:"-", xml:"-"`
+	metadataDescribeCacheParameterGroupsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCacheParameterGroupsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCacheParameterGroupsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCacheParameterGroupsInput) GoString() string {
+	return s.String()
 }
 
 // Represents the output of a DescribeCacheParameterGroups action.
@@ -2648,11 +3040,21 @@ type DescribeCacheParameterGroupsOutput struct {
 	// Provides an identifier to allow retrieval of paginated results.
 	Marker *string `type:"string"`
 
-	metadataDescribeCacheParameterGroupsOutput `json:"-", xml:"-"`
+	metadataDescribeCacheParameterGroupsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCacheParameterGroupsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCacheParameterGroupsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCacheParameterGroupsOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DescribeCacheParameters action.
@@ -2679,11 +3081,21 @@ type DescribeCacheParametersInput struct {
 	// Valid values: user | system | engine-default
 	Source *string `type:"string"`
 
-	metadataDescribeCacheParametersInput `json:"-", xml:"-"`
+	metadataDescribeCacheParametersInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCacheParametersInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCacheParametersInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCacheParametersInput) GoString() string {
+	return s.String()
 }
 
 // Represents the output of a DescribeCacheParameters action.
@@ -2698,11 +3110,21 @@ type DescribeCacheParametersOutput struct {
 	// A list of Parameter instances.
 	Parameters []*Parameter `locationNameList:"Parameter" type:"list"`
 
-	metadataDescribeCacheParametersOutput `json:"-", xml:"-"`
+	metadataDescribeCacheParametersOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCacheParametersOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCacheParametersOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCacheParametersOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DescribeCacheSecurityGroups action.
@@ -2724,11 +3146,21 @@ type DescribeCacheSecurityGroupsInput struct {
 	// Constraints: minimum 20; maximum 100.
 	MaxRecords *int64 `type:"integer"`
 
-	metadataDescribeCacheSecurityGroupsInput `json:"-", xml:"-"`
+	metadataDescribeCacheSecurityGroupsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCacheSecurityGroupsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCacheSecurityGroupsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCacheSecurityGroupsInput) GoString() string {
+	return s.String()
 }
 
 // Represents the output of a DescribeCacheSecurityGroups action.
@@ -2740,11 +3172,21 @@ type DescribeCacheSecurityGroupsOutput struct {
 	// Provides an identifier to allow retrieval of paginated results.
 	Marker *string `type:"string"`
 
-	metadataDescribeCacheSecurityGroupsOutput `json:"-", xml:"-"`
+	metadataDescribeCacheSecurityGroupsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCacheSecurityGroupsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCacheSecurityGroupsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCacheSecurityGroupsOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DescribeCacheSubnetGroups action.
@@ -2766,11 +3208,21 @@ type DescribeCacheSubnetGroupsInput struct {
 	// Constraints: minimum 20; maximum 100.
 	MaxRecords *int64 `type:"integer"`
 
-	metadataDescribeCacheSubnetGroupsInput `json:"-", xml:"-"`
+	metadataDescribeCacheSubnetGroupsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCacheSubnetGroupsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCacheSubnetGroupsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCacheSubnetGroupsInput) GoString() string {
+	return s.String()
 }
 
 // Represents the output of a DescribeCacheSubnetGroups action.
@@ -2782,11 +3234,21 @@ type DescribeCacheSubnetGroupsOutput struct {
 	// Provides an identifier to allow retrieval of paginated results.
 	Marker *string `type:"string"`
 
-	metadataDescribeCacheSubnetGroupsOutput `json:"-", xml:"-"`
+	metadataDescribeCacheSubnetGroupsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCacheSubnetGroupsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCacheSubnetGroupsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCacheSubnetGroupsOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DescribeEngineDefaultParameters action.
@@ -2809,22 +3271,42 @@ type DescribeEngineDefaultParametersInput struct {
 	// Constraints: minimum 20; maximum 100.
 	MaxRecords *int64 `type:"integer"`
 
-	metadataDescribeEngineDefaultParametersInput `json:"-", xml:"-"`
+	metadataDescribeEngineDefaultParametersInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeEngineDefaultParametersInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeEngineDefaultParametersInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeEngineDefaultParametersInput) GoString() string {
+	return s.String()
+}
+
 type DescribeEngineDefaultParametersOutput struct {
 	// Represents the output of a DescribeEngineDefaultParameters action.
 	EngineDefaults *EngineDefaults `type:"structure"`
 
-	metadataDescribeEngineDefaultParametersOutput `json:"-", xml:"-"`
+	metadataDescribeEngineDefaultParametersOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeEngineDefaultParametersOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeEngineDefaultParametersOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeEngineDefaultParametersOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DescribeEvents action.
@@ -2865,11 +3347,21 @@ type DescribeEventsInput struct {
 	// 8601 format.
 	StartTime *time.Time `type:"timestamp" timestampFormat:"iso8601"`
 
-	metadataDescribeEventsInput `json:"-", xml:"-"`
+	metadataDescribeEventsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeEventsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeEventsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeEventsInput) GoString() string {
+	return s.String()
 }
 
 // Represents the output of a DescribeEvents action.
@@ -2881,11 +3373,21 @@ type DescribeEventsOutput struct {
 	// Provides an identifier to allow retrieval of paginated results.
 	Marker *string `type:"string"`
 
-	metadataDescribeEventsOutput `json:"-", xml:"-"`
+	metadataDescribeEventsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeEventsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeEventsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeEventsOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DescribeReplicationGroups action.
@@ -2911,11 +3413,21 @@ type DescribeReplicationGroupsInput struct {
 	// groups is returned.
 	ReplicationGroupID *string `locationName:"ReplicationGroupId" type:"string"`
 
-	metadataDescribeReplicationGroupsInput `json:"-", xml:"-"`
+	metadataDescribeReplicationGroupsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReplicationGroupsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeReplicationGroupsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReplicationGroupsInput) GoString() string {
+	return s.String()
 }
 
 // Represents the output of a DescribeReplicationGroups action.
@@ -2927,11 +3439,21 @@ type DescribeReplicationGroupsOutput struct {
 	// about one replication group.
 	ReplicationGroups []*ReplicationGroup `locationNameList:"ReplicationGroup" type:"list"`
 
-	metadataDescribeReplicationGroupsOutput `json:"-", xml:"-"`
+	metadataDescribeReplicationGroupsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReplicationGroupsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeReplicationGroupsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReplicationGroupsOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DescribeReservedCacheNodes action.
@@ -2996,11 +3518,21 @@ type DescribeReservedCacheNodesInput struct {
 	// reservations matching the specified offering identifier.
 	ReservedCacheNodesOfferingID *string `locationName:"ReservedCacheNodesOfferingId" type:"string"`
 
-	metadataDescribeReservedCacheNodesInput `json:"-", xml:"-"`
+	metadataDescribeReservedCacheNodesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReservedCacheNodesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeReservedCacheNodesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReservedCacheNodesInput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DescribeReservedCacheNodesOfferings action.
@@ -3063,11 +3595,21 @@ type DescribeReservedCacheNodesOfferingsInput struct {
 	// Example: 438012d3-4052-4cc7-b2e3-8d3372e0e706
 	ReservedCacheNodesOfferingID *string `locationName:"ReservedCacheNodesOfferingId" type:"string"`
 
-	metadataDescribeReservedCacheNodesOfferingsInput `json:"-", xml:"-"`
+	metadataDescribeReservedCacheNodesOfferingsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReservedCacheNodesOfferingsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeReservedCacheNodesOfferingsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReservedCacheNodesOfferingsInput) GoString() string {
+	return s.String()
 }
 
 // Represents the output of a DescribeReservedCacheNodesOfferings action.
@@ -3079,11 +3621,21 @@ type DescribeReservedCacheNodesOfferingsOutput struct {
 	// detailed information about one offering.
 	ReservedCacheNodesOfferings []*ReservedCacheNodesOffering `locationNameList:"ReservedCacheNodesOffering" type:"list"`
 
-	metadataDescribeReservedCacheNodesOfferingsOutput `json:"-", xml:"-"`
+	metadataDescribeReservedCacheNodesOfferingsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReservedCacheNodesOfferingsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeReservedCacheNodesOfferingsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReservedCacheNodesOfferingsOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the output of a DescribeReservedCacheNodes action.
@@ -3095,11 +3647,21 @@ type DescribeReservedCacheNodesOutput struct {
 	// information about one node.
 	ReservedCacheNodes []*ReservedCacheNode `locationNameList:"ReservedCacheNode" type:"list"`
 
-	metadataDescribeReservedCacheNodesOutput `json:"-", xml:"-"`
+	metadataDescribeReservedCacheNodesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReservedCacheNodesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeReservedCacheNodesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReservedCacheNodesOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a DescribeSnapshotsMessage action.
@@ -3132,11 +3694,21 @@ type DescribeSnapshotsInput struct {
 	// snapshots.
 	SnapshotSource *string `type:"string"`
 
-	metadataDescribeSnapshotsInput `json:"-", xml:"-"`
+	metadataDescribeSnapshotsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSnapshotsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeSnapshotsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSnapshotsInput) GoString() string {
+	return s.String()
 }
 
 // Represents the output of a DescribeSnapshots action.
@@ -3150,11 +3722,21 @@ type DescribeSnapshotsOutput struct {
 	// about one snapshot.
 	Snapshots []*Snapshot `locationNameList:"Snapshot" type:"list"`
 
-	metadataDescribeSnapshotsOutput `json:"-", xml:"-"`
+	metadataDescribeSnapshotsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSnapshotsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeSnapshotsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSnapshotsOutput) GoString() string {
+	return s.String()
 }
 
 // Provides ownership and status information for an Amazon EC2 security group.
@@ -3168,11 +3750,21 @@ type EC2SecurityGroup struct {
 	// The status of the Amazon EC2 security group.
 	Status *string `type:"string"`
 
-	metadataEC2SecurityGroup `json:"-", xml:"-"`
+	metadataEC2SecurityGroup `json:"-" xml:"-"`
 }
 
 type metadataEC2SecurityGroup struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s EC2SecurityGroup) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EC2SecurityGroup) GoString() string {
+	return s.String()
 }
 
 // Represents the information required for client programs to connect to a cache
@@ -3184,11 +3776,21 @@ type Endpoint struct {
 	// The port number that the cache engine is listening on.
 	Port *int64 `type:"integer"`
 
-	metadataEndpoint `json:"-", xml:"-"`
+	metadataEndpoint `json:"-" xml:"-"`
 }
 
 type metadataEndpoint struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Endpoint) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Endpoint) GoString() string {
+	return s.String()
 }
 
 // Represents the output of a DescribeEngineDefaultParameters action.
@@ -3207,11 +3809,21 @@ type EngineDefaults struct {
 	// Contains a list of engine default parameters.
 	Parameters []*Parameter `locationNameList:"Parameter" type:"list"`
 
-	metadataEngineDefaults `json:"-", xml:"-"`
+	metadataEngineDefaults `json:"-" xml:"-"`
 }
 
 type metadataEngineDefaults struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s EngineDefaults) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EngineDefaults) GoString() string {
+	return s.String()
 }
 
 // Represents a single occurrence of something interesting within the system.
@@ -3233,11 +3845,21 @@ type Event struct {
 	// a security group, etc.
 	SourceType *string `type:"string"`
 
-	metadataEvent `json:"-", xml:"-"`
+	metadataEvent `json:"-" xml:"-"`
 }
 
 type metadataEvent struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Event) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Event) GoString() string {
+	return s.String()
 }
 
 // The input parameters for the ListTagsForResource action.
@@ -3246,11 +3868,21 @@ type ListTagsForResourceInput struct {
 	// arn:aws:elasticache:us-west-2:0123456789:cluster:myCluster.
 	ResourceName *string `type:"string" required:"true"`
 
-	metadataListTagsForResourceInput `json:"-", xml:"-"`
+	metadataListTagsForResourceInput `json:"-" xml:"-"`
 }
 
 type metadataListTagsForResourceInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListTagsForResourceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListTagsForResourceInput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a ModifyCacheCluster action.
@@ -3433,22 +4065,42 @@ type ModifyCacheClusterInput struct {
 	// a daily snapshot of your cache cluster.
 	SnapshotWindow *string `type:"string"`
 
-	metadataModifyCacheClusterInput `json:"-", xml:"-"`
+	metadataModifyCacheClusterInput `json:"-" xml:"-"`
 }
 
 type metadataModifyCacheClusterInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ModifyCacheClusterInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyCacheClusterInput) GoString() string {
+	return s.String()
+}
+
 type ModifyCacheClusterOutput struct {
 	// Contains all of the attributes of a specific cache cluster.
 	CacheCluster *CacheCluster `type:"structure"`
 
-	metadataModifyCacheClusterOutput `json:"-", xml:"-"`
+	metadataModifyCacheClusterOutput `json:"-" xml:"-"`
 }
 
 type metadataModifyCacheClusterOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyCacheClusterOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyCacheClusterOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a ModifyCacheParameterGroup action.
@@ -3461,11 +4113,21 @@ type ModifyCacheParameterGroupInput struct {
 	// A maximum of 20 parameters may be modified per request.
 	ParameterNameValues []*ParameterNameValue `locationNameList:"ParameterNameValue" type:"list" required:"true"`
 
-	metadataModifyCacheParameterGroupInput `json:"-", xml:"-"`
+	metadataModifyCacheParameterGroupInput `json:"-" xml:"-"`
 }
 
 type metadataModifyCacheParameterGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyCacheParameterGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyCacheParameterGroupInput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a ModifyCacheSubnetGroup action.
@@ -3484,11 +4146,21 @@ type ModifyCacheSubnetGroupInput struct {
 	// The EC2 subnet IDs for the cache subnet group.
 	SubnetIDs []*string `locationName:"SubnetIds" locationNameList:"SubnetIdentifier" type:"list"`
 
-	metadataModifyCacheSubnetGroupInput `json:"-", xml:"-"`
+	metadataModifyCacheSubnetGroupInput `json:"-" xml:"-"`
 }
 
 type metadataModifyCacheSubnetGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyCacheSubnetGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyCacheSubnetGroupInput) GoString() string {
+	return s.String()
 }
 
 type ModifyCacheSubnetGroupOutput struct {
@@ -3497,11 +4169,21 @@ type ModifyCacheSubnetGroupOutput struct {
 	//   CreateCacheSubnetGroup   ModifyCacheSubnetGroup
 	CacheSubnetGroup *CacheSubnetGroup `type:"structure"`
 
-	metadataModifyCacheSubnetGroupOutput `json:"-", xml:"-"`
+	metadataModifyCacheSubnetGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataModifyCacheSubnetGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyCacheSubnetGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyCacheSubnetGroupOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a ModifyReplicationGroups action.
@@ -3613,22 +4295,42 @@ type ModifyReplicationGroupInput struct {
 	// replication group.
 	SnapshottingClusterID *string `locationName:"SnapshottingClusterId" type:"string"`
 
-	metadataModifyReplicationGroupInput `json:"-", xml:"-"`
+	metadataModifyReplicationGroupInput `json:"-" xml:"-"`
 }
 
 type metadataModifyReplicationGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ModifyReplicationGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyReplicationGroupInput) GoString() string {
+	return s.String()
+}
+
 type ModifyReplicationGroupOutput struct {
 	// Contains all of the attributes of a specific replication group.
 	ReplicationGroup *ReplicationGroup `type:"structure"`
 
-	metadataModifyReplicationGroupOutput `json:"-", xml:"-"`
+	metadataModifyReplicationGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataModifyReplicationGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyReplicationGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyReplicationGroupOutput) GoString() string {
+	return s.String()
 }
 
 // Represents a collection of cache nodes in a replication group.
@@ -3647,11 +4349,21 @@ type NodeGroup struct {
 	// The current state of this replication group - creating, available, etc.
 	Status *string `type:"string"`
 
-	metadataNodeGroup `json:"-", xml:"-"`
+	metadataNodeGroup `json:"-" xml:"-"`
 }
 
 type metadataNodeGroup struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s NodeGroup) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s NodeGroup) GoString() string {
+	return s.String()
 }
 
 // Represents a single node within a node group.
@@ -3673,11 +4385,21 @@ type NodeGroupMember struct {
 	// node.
 	ReadEndpoint *Endpoint `type:"structure"`
 
-	metadataNodeGroupMember `json:"-", xml:"-"`
+	metadataNodeGroupMember `json:"-" xml:"-"`
 }
 
 type metadataNodeGroupMember struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s NodeGroupMember) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s NodeGroupMember) GoString() string {
+	return s.String()
 }
 
 // Represents an individual cache node in a snapshot of a cache cluster.
@@ -3695,11 +4417,21 @@ type NodeSnapshot struct {
 	// obtained for the snapshot.
 	SnapshotCreateTime *time.Time `type:"timestamp" timestampFormat:"iso8601"`
 
-	metadataNodeSnapshot `json:"-", xml:"-"`
+	metadataNodeSnapshot `json:"-" xml:"-"`
 }
 
 type metadataNodeSnapshot struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s NodeSnapshot) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s NodeSnapshot) GoString() string {
+	return s.String()
 }
 
 // Describes a notification topic and its status. Notification topics are used
@@ -3712,11 +4444,21 @@ type NotificationConfiguration struct {
 	// The current state of the topic.
 	TopicStatus *string `type:"string"`
 
-	metadataNotificationConfiguration `json:"-", xml:"-"`
+	metadataNotificationConfiguration `json:"-" xml:"-"`
 }
 
 type metadataNotificationConfiguration struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s NotificationConfiguration) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s NotificationConfiguration) GoString() string {
+	return s.String()
 }
 
 // Describes an individual setting that controls some aspect of ElastiCache
@@ -3748,11 +4490,21 @@ type Parameter struct {
 	// The source of the parameter.
 	Source *string `type:"string"`
 
-	metadataParameter `json:"-", xml:"-"`
+	metadataParameter `json:"-" xml:"-"`
 }
 
 type metadataParameter struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Parameter) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Parameter) GoString() string {
+	return s.String()
 }
 
 // Describes a name-value pair that is used to update the value of a parameter.
@@ -3763,11 +4515,21 @@ type ParameterNameValue struct {
 	// The value of the parameter.
 	ParameterValue *string `type:"string"`
 
-	metadataParameterNameValue `json:"-", xml:"-"`
+	metadataParameterNameValue `json:"-" xml:"-"`
 }
 
 type metadataParameterNameValue struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ParameterNameValue) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ParameterNameValue) GoString() string {
+	return s.String()
 }
 
 // A group of settings that will be applied to the cache cluster in the future,
@@ -3786,11 +4548,21 @@ type PendingModifiedValues struct {
 	// this value must be between 1 and 20.
 	NumCacheNodes *int64 `type:"integer"`
 
-	metadataPendingModifiedValues `json:"-", xml:"-"`
+	metadataPendingModifiedValues `json:"-" xml:"-"`
 }
 
 type metadataPendingModifiedValues struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PendingModifiedValues) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PendingModifiedValues) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a PurchaseReservedCacheNodesOffering action.
@@ -3810,22 +4582,42 @@ type PurchaseReservedCacheNodesOfferingInput struct {
 	// Example: 438012d3-4052-4cc7-b2e3-8d3372e0e706
 	ReservedCacheNodesOfferingID *string `locationName:"ReservedCacheNodesOfferingId" type:"string" required:"true"`
 
-	metadataPurchaseReservedCacheNodesOfferingInput `json:"-", xml:"-"`
+	metadataPurchaseReservedCacheNodesOfferingInput `json:"-" xml:"-"`
 }
 
 type metadataPurchaseReservedCacheNodesOfferingInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s PurchaseReservedCacheNodesOfferingInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PurchaseReservedCacheNodesOfferingInput) GoString() string {
+	return s.String()
+}
+
 type PurchaseReservedCacheNodesOfferingOutput struct {
 	// Represents the output of a PurchaseReservedCacheNodesOffering action.
 	ReservedCacheNode *ReservedCacheNode `type:"structure"`
 
-	metadataPurchaseReservedCacheNodesOfferingOutput `json:"-", xml:"-"`
+	metadataPurchaseReservedCacheNodesOfferingOutput `json:"-" xml:"-"`
 }
 
 type metadataPurchaseReservedCacheNodesOfferingOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PurchaseReservedCacheNodesOfferingOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PurchaseReservedCacheNodesOfferingOutput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a RebootCacheCluster action.
@@ -3838,22 +4630,42 @@ type RebootCacheClusterInput struct {
 	// node IDs.
 	CacheNodeIDsToReboot []*string `locationName:"CacheNodeIdsToReboot" locationNameList:"CacheNodeId" type:"list" required:"true"`
 
-	metadataRebootCacheClusterInput `json:"-", xml:"-"`
+	metadataRebootCacheClusterInput `json:"-" xml:"-"`
 }
 
 type metadataRebootCacheClusterInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RebootCacheClusterInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RebootCacheClusterInput) GoString() string {
+	return s.String()
+}
+
 type RebootCacheClusterOutput struct {
 	// Contains all of the attributes of a specific cache cluster.
 	CacheCluster *CacheCluster `type:"structure"`
 
-	metadataRebootCacheClusterOutput `json:"-", xml:"-"`
+	metadataRebootCacheClusterOutput `json:"-" xml:"-"`
 }
 
 type metadataRebootCacheClusterOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RebootCacheClusterOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RebootCacheClusterOutput) GoString() string {
+	return s.String()
 }
 
 // Contains the specific price and frequency of a recurring charges for a reserved
@@ -3865,11 +4677,21 @@ type RecurringCharge struct {
 	// The frequency of the recurring charge.
 	RecurringChargeFrequency *string `type:"string"`
 
-	metadataRecurringCharge `json:"-", xml:"-"`
+	metadataRecurringCharge `json:"-" xml:"-"`
 }
 
 type metadataRecurringCharge struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RecurringCharge) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RecurringCharge) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a RemoveTagsFromResource action.
@@ -3883,11 +4705,21 @@ type RemoveTagsFromResourceInput struct {
 	// the key name Region from the resource named by the ResourceName parameter.
 	TagKeys []*string `type:"list" required:"true"`
 
-	metadataRemoveTagsFromResourceInput `json:"-", xml:"-"`
+	metadataRemoveTagsFromResourceInput `json:"-" xml:"-"`
 }
 
 type metadataRemoveTagsFromResourceInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RemoveTagsFromResourceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RemoveTagsFromResourceInput) GoString() string {
+	return s.String()
 }
 
 // Contains all of the attributes of a specific replication group.
@@ -3923,11 +4755,21 @@ type ReplicationGroup struct {
 	// The current state of this replication group - creating, available, etc.
 	Status *string `type:"string"`
 
-	metadataReplicationGroup `json:"-", xml:"-"`
+	metadataReplicationGroup `json:"-" xml:"-"`
 }
 
 type metadataReplicationGroup struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ReplicationGroup) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReplicationGroup) GoString() string {
+	return s.String()
 }
 
 // The settings to be applied to the replication group, either immediately or
@@ -3944,11 +4786,21 @@ type ReplicationGroupPendingModifiedValues struct {
 	// was specified), or during the next maintenance window.
 	PrimaryClusterID *string `locationName:"PrimaryClusterId" type:"string"`
 
-	metadataReplicationGroupPendingModifiedValues `json:"-", xml:"-"`
+	metadataReplicationGroupPendingModifiedValues `json:"-" xml:"-"`
 }
 
 type metadataReplicationGroupPendingModifiedValues struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ReplicationGroupPendingModifiedValues) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReplicationGroupPendingModifiedValues) GoString() string {
+	return s.String()
 }
 
 // Represents the output of a PurchaseReservedCacheNodesOffering action.
@@ -4007,11 +4859,21 @@ type ReservedCacheNode struct {
 	// The hourly price charged for this reserved cache node.
 	UsagePrice *float64 `type:"double"`
 
-	metadataReservedCacheNode `json:"-", xml:"-"`
+	metadataReservedCacheNode `json:"-" xml:"-"`
 }
 
 type metadataReservedCacheNode struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ReservedCacheNode) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReservedCacheNode) GoString() string {
+	return s.String()
 }
 
 // Describes all of the attributes of a reserved cache node offering.
@@ -4058,11 +4920,21 @@ type ReservedCacheNodesOffering struct {
 	// The hourly price charged for this offering.
 	UsagePrice *float64 `type:"double"`
 
-	metadataReservedCacheNodesOffering `json:"-", xml:"-"`
+	metadataReservedCacheNodesOffering `json:"-" xml:"-"`
 }
 
 type metadataReservedCacheNodesOffering struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ReservedCacheNodesOffering) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReservedCacheNodesOffering) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a ResetCacheParameterGroup action.
@@ -4080,11 +4952,21 @@ type ResetCacheParameterGroupInput struct {
 	// Valid values: true | false
 	ResetAllParameters *bool `type:"boolean"`
 
-	metadataResetCacheParameterGroupInput `json:"-", xml:"-"`
+	metadataResetCacheParameterGroupInput `json:"-" xml:"-"`
 }
 
 type metadataResetCacheParameterGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ResetCacheParameterGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ResetCacheParameterGroupInput) GoString() string {
+	return s.String()
 }
 
 // Represents the input of a RevokeCacheSecurityGroupIngress action.
@@ -4100,11 +4982,21 @@ type RevokeCacheSecurityGroupIngressInput struct {
 	// AWS account number for this parameter.
 	EC2SecurityGroupOwnerID *string `locationName:"EC2SecurityGroupOwnerId" type:"string" required:"true"`
 
-	metadataRevokeCacheSecurityGroupIngressInput `json:"-", xml:"-"`
+	metadataRevokeCacheSecurityGroupIngressInput `json:"-" xml:"-"`
 }
 
 type metadataRevokeCacheSecurityGroupIngressInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RevokeCacheSecurityGroupIngressInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RevokeCacheSecurityGroupIngressInput) GoString() string {
+	return s.String()
 }
 
 type RevokeCacheSecurityGroupIngressOutput struct {
@@ -4113,11 +5005,21 @@ type RevokeCacheSecurityGroupIngressOutput struct {
 	//   AuthorizeCacheSecurityGroupIngress   CreateCacheSecurityGroup   RevokeCacheSecurityGroupIngress
 	CacheSecurityGroup *CacheSecurityGroup `type:"structure"`
 
-	metadataRevokeCacheSecurityGroupIngressOutput `json:"-", xml:"-"`
+	metadataRevokeCacheSecurityGroupIngressOutput `json:"-" xml:"-"`
 }
 
 type metadataRevokeCacheSecurityGroupIngressOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RevokeCacheSecurityGroupIngressOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RevokeCacheSecurityGroupIngressOutput) GoString() string {
+	return s.String()
 }
 
 // Represents a single cache security group and its status.
@@ -4130,11 +5032,21 @@ type SecurityGroupMembership struct {
 	// to a cache cluster are modified.
 	Status *string `type:"string"`
 
-	metadataSecurityGroupMembership `json:"-", xml:"-"`
+	metadataSecurityGroupMembership `json:"-" xml:"-"`
 }
 
 type metadataSecurityGroupMembership struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SecurityGroupMembership) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SecurityGroupMembership) GoString() string {
+	return s.String()
 }
 
 // Represents a copy of an entire cache cluster as of the time when the snapshot
@@ -4244,11 +5156,21 @@ type Snapshot struct {
 	// group for the source cache cluster.
 	VPCID *string `locationName:"VpcId" type:"string"`
 
-	metadataSnapshot `json:"-", xml:"-"`
+	metadataSnapshot `json:"-" xml:"-"`
 }
 
 type metadataSnapshot struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Snapshot) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Snapshot) GoString() string {
+	return s.String()
 }
 
 // Represents the subnet associated with a cache cluster. This parameter refers
@@ -4261,11 +5183,21 @@ type Subnet struct {
 	// The unique identifier for the subnet.
 	SubnetIdentifier *string `type:"string"`
 
-	metadataSubnet `json:"-", xml:"-"`
+	metadataSubnet `json:"-" xml:"-"`
 }
 
 type metadataSubnet struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Subnet) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Subnet) GoString() string {
+	return s.String()
 }
 
 // A cost allocation Tag that can be added to an ElastiCache cluster or replication
@@ -4278,11 +5210,21 @@ type Tag struct {
 	// The tag's value. May not be null.
 	Value *string `type:"string"`
 
-	metadataTag `json:"-", xml:"-"`
+	metadataTag `json:"-" xml:"-"`
 }
 
 type metadataTag struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Tag) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Tag) GoString() string {
+	return s.String()
 }
 
 // Represents the output from the AddTagsToResource, ListTagsOnResource, and
@@ -4291,9 +5233,19 @@ type TagListMessage struct {
 	// A list of cost allocation tags as key-value pairs.
 	TagList []*Tag `locationNameList:"Tag" type:"list"`
 
-	metadataTagListMessage `json:"-", xml:"-"`
+	metadataTagListMessage `json:"-" xml:"-"`
 }
 
 type metadataTagListMessage struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s TagListMessage) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TagListMessage) GoString() string {
+	return s.String()
 }

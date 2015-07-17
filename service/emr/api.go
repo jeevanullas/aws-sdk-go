@@ -4,65 +4,54 @@
 package emr
 
 import (
-	"sync"
 	"time"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
-var oprw sync.Mutex
+const opAddInstanceGroups = "AddInstanceGroups"
 
 // AddInstanceGroupsRequest generates a request for the AddInstanceGroups operation.
 func (c *EMR) AddInstanceGroupsRequest(input *AddInstanceGroupsInput) (req *aws.Request, output *AddInstanceGroupsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAddInstanceGroups == nil {
-		opAddInstanceGroups = &aws.Operation{
-			Name:       "AddInstanceGroups",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAddInstanceGroups,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AddInstanceGroupsInput{}
 	}
 
-	req = c.newRequest(opAddInstanceGroups, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AddInstanceGroupsOutput{}
 	req.Data = output
 	return
 }
 
 // AddInstanceGroups adds an instance group to a running cluster.
-func (c *EMR) AddInstanceGroups(input *AddInstanceGroupsInput) (output *AddInstanceGroupsOutput, err error) {
+func (c *EMR) AddInstanceGroups(input *AddInstanceGroupsInput) (*AddInstanceGroupsOutput, error) {
 	req, out := c.AddInstanceGroupsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAddInstanceGroups *aws.Operation
+const opAddJobFlowSteps = "AddJobFlowSteps"
 
 // AddJobFlowStepsRequest generates a request for the AddJobFlowSteps operation.
 func (c *EMR) AddJobFlowStepsRequest(input *AddJobFlowStepsInput) (req *aws.Request, output *AddJobFlowStepsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAddJobFlowSteps == nil {
-		opAddJobFlowSteps = &aws.Operation{
-			Name:       "AddJobFlowSteps",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAddJobFlowSteps,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AddJobFlowStepsInput{}
 	}
 
-	req = c.newRequest(opAddJobFlowSteps, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AddJobFlowStepsOutput{}
 	req.Data = output
 	return
@@ -92,33 +81,27 @@ func (c *EMR) AddJobFlowStepsRequest(input *AddJobFlowStepsInput) (req *aws.Requ
 //
 //  You can only add steps to a job flow that is in one of the following states:
 // STARTING, BOOTSTRAPPING, RUNNING, or WAITING.
-func (c *EMR) AddJobFlowSteps(input *AddJobFlowStepsInput) (output *AddJobFlowStepsOutput, err error) {
+func (c *EMR) AddJobFlowSteps(input *AddJobFlowStepsInput) (*AddJobFlowStepsOutput, error) {
 	req, out := c.AddJobFlowStepsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAddJobFlowSteps *aws.Operation
+const opAddTags = "AddTags"
 
 // AddTagsRequest generates a request for the AddTags operation.
 func (c *EMR) AddTagsRequest(input *AddTagsInput) (req *aws.Request, output *AddTagsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAddTags == nil {
-		opAddTags = &aws.Operation{
-			Name:       "AddTags",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAddTags,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AddTagsInput{}
 	}
 
-	req = c.newRequest(opAddTags, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AddTagsOutput{}
 	req.Data = output
 	return
@@ -128,33 +111,27 @@ func (c *EMR) AddTagsRequest(input *AddTagsInput) (req *aws.Request, output *Add
 // in various ways, such as grouping clusters to track your Amazon EMR resource
 // allocation costs. For more information, see Tagging Amazon EMR Resources
 // (http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-tags.html).
-func (c *EMR) AddTags(input *AddTagsInput) (output *AddTagsOutput, err error) {
+func (c *EMR) AddTags(input *AddTagsInput) (*AddTagsOutput, error) {
 	req, out := c.AddTagsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAddTags *aws.Operation
+const opDescribeCluster = "DescribeCluster"
 
 // DescribeClusterRequest generates a request for the DescribeCluster operation.
 func (c *EMR) DescribeClusterRequest(input *DescribeClusterInput) (req *aws.Request, output *DescribeClusterOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeCluster == nil {
-		opDescribeCluster = &aws.Operation{
-			Name:       "DescribeCluster",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeCluster,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeClusterInput{}
 	}
 
-	req = c.newRequest(opDescribeCluster, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeClusterOutput{}
 	req.Data = output
 	return
@@ -162,33 +139,27 @@ func (c *EMR) DescribeClusterRequest(input *DescribeClusterInput) (req *aws.Requ
 
 // Provides cluster-level details including status, hardware and software configuration,
 // VPC settings, and so on. For information about the cluster steps, see ListSteps.
-func (c *EMR) DescribeCluster(input *DescribeClusterInput) (output *DescribeClusterOutput, err error) {
+func (c *EMR) DescribeCluster(input *DescribeClusterInput) (*DescribeClusterOutput, error) {
 	req, out := c.DescribeClusterRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeCluster *aws.Operation
+const opDescribeJobFlows = "DescribeJobFlows"
 
 // DescribeJobFlowsRequest generates a request for the DescribeJobFlows operation.
 func (c *EMR) DescribeJobFlowsRequest(input *DescribeJobFlowsInput) (req *aws.Request, output *DescribeJobFlowsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeJobFlows == nil {
-		opDescribeJobFlows = &aws.Operation{
-			Name:       "DescribeJobFlows",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeJobFlows,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeJobFlowsInput{}
 	}
 
-	req = c.newRequest(opDescribeJobFlows, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeJobFlowsOutput{}
 	req.Data = output
 	return
@@ -212,99 +183,100 @@ func (c *EMR) DescribeJobFlowsRequest(input *DescribeJobFlowsInput) (req *aws.Re
 // within the last two months that are in one of the following states: RUNNING,
 // WAITING, SHUTTING_DOWN, STARTING    Amazon Elastic MapReduce can return a
 // maximum of 512 job flow descriptions.
-func (c *EMR) DescribeJobFlows(input *DescribeJobFlowsInput) (output *DescribeJobFlowsOutput, err error) {
+func (c *EMR) DescribeJobFlows(input *DescribeJobFlowsInput) (*DescribeJobFlowsOutput, error) {
 	req, out := c.DescribeJobFlowsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeJobFlows *aws.Operation
+const opDescribeStep = "DescribeStep"
 
 // DescribeStepRequest generates a request for the DescribeStep operation.
 func (c *EMR) DescribeStepRequest(input *DescribeStepInput) (req *aws.Request, output *DescribeStepOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeStep == nil {
-		opDescribeStep = &aws.Operation{
-			Name:       "DescribeStep",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeStep,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeStepInput{}
 	}
 
-	req = c.newRequest(opDescribeStep, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeStepOutput{}
 	req.Data = output
 	return
 }
 
 // Provides more detail about the cluster step.
-func (c *EMR) DescribeStep(input *DescribeStepInput) (output *DescribeStepOutput, err error) {
+func (c *EMR) DescribeStep(input *DescribeStepInput) (*DescribeStepOutput, error) {
 	req, out := c.DescribeStepRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeStep *aws.Operation
+const opListBootstrapActions = "ListBootstrapActions"
 
 // ListBootstrapActionsRequest generates a request for the ListBootstrapActions operation.
 func (c *EMR) ListBootstrapActionsRequest(input *ListBootstrapActionsInput) (req *aws.Request, output *ListBootstrapActionsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListBootstrapActions == nil {
-		opListBootstrapActions = &aws.Operation{
-			Name:       "ListBootstrapActions",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opListBootstrapActions,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &ListBootstrapActionsInput{}
 	}
 
-	req = c.newRequest(opListBootstrapActions, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListBootstrapActionsOutput{}
 	req.Data = output
 	return
 }
 
 // Provides information about the bootstrap actions associated with a cluster.
-func (c *EMR) ListBootstrapActions(input *ListBootstrapActionsInput) (output *ListBootstrapActionsOutput, err error) {
+func (c *EMR) ListBootstrapActions(input *ListBootstrapActionsInput) (*ListBootstrapActionsOutput, error) {
 	req, out := c.ListBootstrapActionsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListBootstrapActions *aws.Operation
+func (c *EMR) ListBootstrapActionsPages(input *ListBootstrapActionsInput, fn func(p *ListBootstrapActionsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.ListBootstrapActionsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*ListBootstrapActionsOutput), lastPage)
+	})
+}
+
+const opListClusters = "ListClusters"
 
 // ListClustersRequest generates a request for the ListClusters operation.
 func (c *EMR) ListClustersRequest(input *ListClustersInput) (req *aws.Request, output *ListClustersOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListClusters == nil {
-		opListClusters = &aws.Operation{
-			Name:       "ListClusters",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opListClusters,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &ListClustersInput{}
 	}
 
-	req = c.newRequest(opListClusters, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListClustersOutput{}
 	req.Data = output
 	return
@@ -315,66 +287,80 @@ func (c *EMR) ListClustersRequest(input *ListClustersInput) (req *aws.Request, o
 // by cluster creation date and time or by status. This call returns a maximum
 // of 50 clusters per call, but returns a marker to track the paging of the
 // cluster list across multiple ListClusters calls.
-func (c *EMR) ListClusters(input *ListClustersInput) (output *ListClustersOutput, err error) {
+func (c *EMR) ListClusters(input *ListClustersInput) (*ListClustersOutput, error) {
 	req, out := c.ListClustersRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListClusters *aws.Operation
+func (c *EMR) ListClustersPages(input *ListClustersInput, fn func(p *ListClustersOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.ListClustersRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*ListClustersOutput), lastPage)
+	})
+}
+
+const opListInstanceGroups = "ListInstanceGroups"
 
 // ListInstanceGroupsRequest generates a request for the ListInstanceGroups operation.
 func (c *EMR) ListInstanceGroupsRequest(input *ListInstanceGroupsInput) (req *aws.Request, output *ListInstanceGroupsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListInstanceGroups == nil {
-		opListInstanceGroups = &aws.Operation{
-			Name:       "ListInstanceGroups",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opListInstanceGroups,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &ListInstanceGroupsInput{}
 	}
 
-	req = c.newRequest(opListInstanceGroups, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListInstanceGroupsOutput{}
 	req.Data = output
 	return
 }
 
 // Provides all available details about the instance groups in a cluster.
-func (c *EMR) ListInstanceGroups(input *ListInstanceGroupsInput) (output *ListInstanceGroupsOutput, err error) {
+func (c *EMR) ListInstanceGroups(input *ListInstanceGroupsInput) (*ListInstanceGroupsOutput, error) {
 	req, out := c.ListInstanceGroupsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListInstanceGroups *aws.Operation
+func (c *EMR) ListInstanceGroupsPages(input *ListInstanceGroupsInput, fn func(p *ListInstanceGroupsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.ListInstanceGroupsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*ListInstanceGroupsOutput), lastPage)
+	})
+}
+
+const opListInstances = "ListInstances"
 
 // ListInstancesRequest generates a request for the ListInstances operation.
 func (c *EMR) ListInstancesRequest(input *ListInstancesInput) (req *aws.Request, output *ListInstancesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListInstances == nil {
-		opListInstances = &aws.Operation{
-			Name:       "ListInstances",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opListInstances,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &ListInstancesInput{}
 	}
 
-	req = c.newRequest(opListInstances, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListInstancesOutput{}
 	req.Data = output
 	return
@@ -385,66 +371,74 @@ func (c *EMR) ListInstancesRequest(input *ListInstancesInput) (req *aws.Request,
 // indicates when the EC2 instances reach the Ready state, when instances become
 // available to Amazon EMR to use for jobs, and the IP addresses for cluster
 // instances, etc.
-func (c *EMR) ListInstances(input *ListInstancesInput) (output *ListInstancesOutput, err error) {
+func (c *EMR) ListInstances(input *ListInstancesInput) (*ListInstancesOutput, error) {
 	req, out := c.ListInstancesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListInstances *aws.Operation
+func (c *EMR) ListInstancesPages(input *ListInstancesInput, fn func(p *ListInstancesOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.ListInstancesRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*ListInstancesOutput), lastPage)
+	})
+}
+
+const opListSteps = "ListSteps"
 
 // ListStepsRequest generates a request for the ListSteps operation.
 func (c *EMR) ListStepsRequest(input *ListStepsInput) (req *aws.Request, output *ListStepsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListSteps == nil {
-		opListSteps = &aws.Operation{
-			Name:       "ListSteps",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opListSteps,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &ListStepsInput{}
 	}
 
-	req = c.newRequest(opListSteps, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListStepsOutput{}
 	req.Data = output
 	return
 }
 
 // Provides a list of steps for the cluster.
-func (c *EMR) ListSteps(input *ListStepsInput) (output *ListStepsOutput, err error) {
+func (c *EMR) ListSteps(input *ListStepsInput) (*ListStepsOutput, error) {
 	req, out := c.ListStepsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListSteps *aws.Operation
+func (c *EMR) ListStepsPages(input *ListStepsInput, fn func(p *ListStepsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.ListStepsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*ListStepsOutput), lastPage)
+	})
+}
+
+const opModifyInstanceGroups = "ModifyInstanceGroups"
 
 // ModifyInstanceGroupsRequest generates a request for the ModifyInstanceGroups operation.
 func (c *EMR) ModifyInstanceGroupsRequest(input *ModifyInstanceGroupsInput) (req *aws.Request, output *ModifyInstanceGroupsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifyInstanceGroups == nil {
-		opModifyInstanceGroups = &aws.Operation{
-			Name:       "ModifyInstanceGroups",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifyInstanceGroups,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifyInstanceGroupsInput{}
 	}
 
-	req = c.newRequest(opModifyInstanceGroups, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ModifyInstanceGroupsOutput{}
 	req.Data = output
 	return
@@ -454,33 +448,27 @@ func (c *EMR) ModifyInstanceGroupsRequest(input *ModifyInstanceGroupsInput) (req
 // of an instance group. The input parameters include the new target instance
 // count for the group and the instance group ID. The call will either succeed
 // or fail atomically.
-func (c *EMR) ModifyInstanceGroups(input *ModifyInstanceGroupsInput) (output *ModifyInstanceGroupsOutput, err error) {
+func (c *EMR) ModifyInstanceGroups(input *ModifyInstanceGroupsInput) (*ModifyInstanceGroupsOutput, error) {
 	req, out := c.ModifyInstanceGroupsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opModifyInstanceGroups *aws.Operation
+const opRemoveTags = "RemoveTags"
 
 // RemoveTagsRequest generates a request for the RemoveTags operation.
 func (c *EMR) RemoveTagsRequest(input *RemoveTagsInput) (req *aws.Request, output *RemoveTagsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRemoveTags == nil {
-		opRemoveTags = &aws.Operation{
-			Name:       "RemoveTags",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRemoveTags,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RemoveTagsInput{}
 	}
 
-	req = c.newRequest(opRemoveTags, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RemoveTagsOutput{}
 	req.Data = output
 	return
@@ -492,33 +480,27 @@ func (c *EMR) RemoveTagsRequest(input *RemoveTagsInput) (req *aws.Request, outpu
 // Resources (http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-tags.html).
 //
 // The following example removes the stack tag with value Prod from a cluster:
-func (c *EMR) RemoveTags(input *RemoveTagsInput) (output *RemoveTagsOutput, err error) {
+func (c *EMR) RemoveTags(input *RemoveTagsInput) (*RemoveTagsOutput, error) {
 	req, out := c.RemoveTagsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRemoveTags *aws.Operation
+const opRunJobFlow = "RunJobFlow"
 
 // RunJobFlowRequest generates a request for the RunJobFlow operation.
 func (c *EMR) RunJobFlowRequest(input *RunJobFlowInput) (req *aws.Request, output *RunJobFlowOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRunJobFlow == nil {
-		opRunJobFlow = &aws.Operation{
-			Name:       "RunJobFlow",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRunJobFlow,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RunJobFlowInput{}
 	}
 
-	req = c.newRequest(opRunJobFlow, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RunJobFlowOutput{}
 	req.Data = output
 	return
@@ -547,33 +529,27 @@ func (c *EMR) RunJobFlowRequest(input *RunJobFlowInput) (req *aws.Request, outpu
 //
 // For long running job flows, we recommend that you periodically store your
 // results.
-func (c *EMR) RunJobFlow(input *RunJobFlowInput) (output *RunJobFlowOutput, err error) {
+func (c *EMR) RunJobFlow(input *RunJobFlowInput) (*RunJobFlowOutput, error) {
 	req, out := c.RunJobFlowRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRunJobFlow *aws.Operation
+const opSetTerminationProtection = "SetTerminationProtection"
 
 // SetTerminationProtectionRequest generates a request for the SetTerminationProtection operation.
 func (c *EMR) SetTerminationProtectionRequest(input *SetTerminationProtectionInput) (req *aws.Request, output *SetTerminationProtectionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opSetTerminationProtection == nil {
-		opSetTerminationProtection = &aws.Operation{
-			Name:       "SetTerminationProtection",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opSetTerminationProtection,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &SetTerminationProtectionInput{}
 	}
 
-	req = c.newRequest(opSetTerminationProtection, input, output)
+	req = c.newRequest(op, input, output)
 	output = &SetTerminationProtectionOutput{}
 	req.Data = output
 	return
@@ -596,33 +572,27 @@ func (c *EMR) SetTerminationProtectionRequest(input *SetTerminationProtectionInp
 //
 //  For more information, go to Protecting a Job Flow from Termination (http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/UsingEMR_TerminationProtection.html)
 // in the Amazon Elastic MapReduce Developer's Guide.
-func (c *EMR) SetTerminationProtection(input *SetTerminationProtectionInput) (output *SetTerminationProtectionOutput, err error) {
+func (c *EMR) SetTerminationProtection(input *SetTerminationProtectionInput) (*SetTerminationProtectionOutput, error) {
 	req, out := c.SetTerminationProtectionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opSetTerminationProtection *aws.Operation
+const opSetVisibleToAllUsers = "SetVisibleToAllUsers"
 
 // SetVisibleToAllUsersRequest generates a request for the SetVisibleToAllUsers operation.
 func (c *EMR) SetVisibleToAllUsersRequest(input *SetVisibleToAllUsersInput) (req *aws.Request, output *SetVisibleToAllUsersOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opSetVisibleToAllUsers == nil {
-		opSetVisibleToAllUsers = &aws.Operation{
-			Name:       "SetVisibleToAllUsers",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opSetVisibleToAllUsers,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &SetVisibleToAllUsersInput{}
 	}
 
-	req = c.newRequest(opSetVisibleToAllUsers, input, output)
+	req = c.newRequest(op, input, output)
 	output = &SetVisibleToAllUsersOutput{}
 	req.Data = output
 	return
@@ -634,33 +604,27 @@ func (c *EMR) SetVisibleToAllUsersRequest(input *SetVisibleToAllUsersInput) (req
 // it using the VisibleToAllUsers parameter of RunJobFlow. The SetVisibleToAllUsers
 // action can be called only by an IAM user who created the job flow or the
 // AWS account that owns the job flow.
-func (c *EMR) SetVisibleToAllUsers(input *SetVisibleToAllUsersInput) (output *SetVisibleToAllUsersOutput, err error) {
+func (c *EMR) SetVisibleToAllUsers(input *SetVisibleToAllUsersInput) (*SetVisibleToAllUsersOutput, error) {
 	req, out := c.SetVisibleToAllUsersRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opSetVisibleToAllUsers *aws.Operation
+const opTerminateJobFlows = "TerminateJobFlows"
 
 // TerminateJobFlowsRequest generates a request for the TerminateJobFlows operation.
 func (c *EMR) TerminateJobFlowsRequest(input *TerminateJobFlowsInput) (req *aws.Request, output *TerminateJobFlowsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opTerminateJobFlows == nil {
-		opTerminateJobFlows = &aws.Operation{
-			Name:       "TerminateJobFlows",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opTerminateJobFlows,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &TerminateJobFlowsInput{}
 	}
 
-	req = c.newRequest(opTerminateJobFlows, input, output)
+	req = c.newRequest(op, input, output)
 	output = &TerminateJobFlowsOutput{}
 	req.Data = output
 	return
@@ -675,14 +639,11 @@ func (c *EMR) TerminateJobFlowsRequest(input *TerminateJobFlowsInput) (req *aws.
 // is asynchronous. Depending on the configuration of the job flow, it may take
 // up to 5-20 minutes for the job flow to completely terminate and release allocated
 // resources, such as Amazon EC2 instances.
-func (c *EMR) TerminateJobFlows(input *TerminateJobFlowsInput) (output *TerminateJobFlowsOutput, err error) {
+func (c *EMR) TerminateJobFlows(input *TerminateJobFlowsInput) (*TerminateJobFlowsOutput, error) {
 	req, out := c.TerminateJobFlowsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
-
-var opTerminateJobFlows *aws.Operation
 
 // Input to an AddInstanceGroups call.
 type AddInstanceGroupsInput struct {
@@ -692,11 +653,21 @@ type AddInstanceGroupsInput struct {
 	// Job flow in which to add the instance groups.
 	JobFlowID *string `locationName:"JobFlowId" type:"string" required:"true"`
 
-	metadataAddInstanceGroupsInput `json:"-", xml:"-"`
+	metadataAddInstanceGroupsInput `json:"-" xml:"-"`
 }
 
 type metadataAddInstanceGroupsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AddInstanceGroupsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddInstanceGroupsInput) GoString() string {
+	return s.String()
 }
 
 // Output from an AddInstanceGroups call.
@@ -707,11 +678,21 @@ type AddInstanceGroupsOutput struct {
 	// The job flow ID in which the instance groups are added.
 	JobFlowID *string `locationName:"JobFlowId" type:"string"`
 
-	metadataAddInstanceGroupsOutput `json:"-", xml:"-"`
+	metadataAddInstanceGroupsOutput `json:"-" xml:"-"`
 }
 
 type metadataAddInstanceGroupsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AddInstanceGroupsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddInstanceGroupsOutput) GoString() string {
+	return s.String()
 }
 
 // The input argument to the AddJobFlowSteps operation.
@@ -723,11 +704,21 @@ type AddJobFlowStepsInput struct {
 	// A list of StepConfig to be executed by the job flow.
 	Steps []*StepConfig `type:"list" required:"true"`
 
-	metadataAddJobFlowStepsInput `json:"-", xml:"-"`
+	metadataAddJobFlowStepsInput `json:"-" xml:"-"`
 }
 
 type metadataAddJobFlowStepsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AddJobFlowStepsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddJobFlowStepsInput) GoString() string {
+	return s.String()
 }
 
 // The output for the AddJobFlowSteps operation.
@@ -735,11 +726,21 @@ type AddJobFlowStepsOutput struct {
 	// The identifiers of the list of steps added to the job flow.
 	StepIDs []*string `locationName:"StepIds" type:"list"`
 
-	metadataAddJobFlowStepsOutput `json:"-", xml:"-"`
+	metadataAddJobFlowStepsOutput `json:"-" xml:"-"`
 }
 
 type metadataAddJobFlowStepsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AddJobFlowStepsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddJobFlowStepsOutput) GoString() string {
+	return s.String()
 }
 
 // This input identifies a cluster and a list of tags to attach.
@@ -754,20 +755,40 @@ type AddTagsInput struct {
 	// of 256 characters.
 	Tags []*Tag `type:"list" required:"true"`
 
-	metadataAddTagsInput `json:"-", xml:"-"`
+	metadataAddTagsInput `json:"-" xml:"-"`
 }
 
 type metadataAddTagsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AddTagsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddTagsInput) GoString() string {
+	return s.String()
+}
+
 // This output indicates the result of adding tags to a resource.
 type AddTagsOutput struct {
-	metadataAddTagsOutput `json:"-", xml:"-"`
+	metadataAddTagsOutput `json:"-" xml:"-"`
 }
 
 type metadataAddTagsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AddTagsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddTagsOutput) GoString() string {
+	return s.String()
 }
 
 // An application is any Amazon or third-party software that you can add to
@@ -785,7 +806,7 @@ type metadataAddTagsOutput struct {
 type Application struct {
 	// This option is for advanced users only. This is meta information about third-party
 	// applications that third-party vendors use for testing purposes.
-	AdditionalInfo *map[string]*string `type:"map"`
+	AdditionalInfo map[string]*string `type:"map"`
 
 	// Arguments for Amazon EMR to pass to the application.
 	Args []*string `type:"list"`
@@ -796,11 +817,21 @@ type Application struct {
 	// The version of the application.
 	Version *string `type:"string"`
 
-	metadataApplication `json:"-", xml:"-"`
+	metadataApplication `json:"-" xml:"-"`
 }
 
 type metadataApplication struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Application) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Application) GoString() string {
+	return s.String()
 }
 
 // Configuration of a bootstrap action.
@@ -811,11 +842,21 @@ type BootstrapActionConfig struct {
 	// The script run by the bootstrap action.
 	ScriptBootstrapAction *ScriptBootstrapActionConfig `type:"structure" required:"true"`
 
-	metadataBootstrapActionConfig `json:"-", xml:"-"`
+	metadataBootstrapActionConfig `json:"-" xml:"-"`
 }
 
 type metadataBootstrapActionConfig struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s BootstrapActionConfig) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s BootstrapActionConfig) GoString() string {
+	return s.String()
 }
 
 // Reports the configuration of a bootstrap action in a job flow.
@@ -823,11 +864,21 @@ type BootstrapActionDetail struct {
 	// A description of the bootstrap action.
 	BootstrapActionConfig *BootstrapActionConfig `type:"structure"`
 
-	metadataBootstrapActionDetail `json:"-", xml:"-"`
+	metadataBootstrapActionDetail `json:"-" xml:"-"`
 }
 
 type metadataBootstrapActionDetail struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s BootstrapActionDetail) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s BootstrapActionDetail) GoString() string {
+	return s.String()
 }
 
 // The detailed description of the cluster.
@@ -892,11 +943,21 @@ type Cluster struct {
 	// action.
 	VisibleToAllUsers *bool `type:"boolean"`
 
-	metadataCluster `json:"-", xml:"-"`
+	metadataCluster `json:"-" xml:"-"`
 }
 
 type metadataCluster struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Cluster) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Cluster) GoString() string {
+	return s.String()
 }
 
 // The reason that the cluster changed to its current state.
@@ -907,11 +968,21 @@ type ClusterStateChangeReason struct {
 	// The descriptive message for the state change reason.
 	Message *string `type:"string"`
 
-	metadataClusterStateChangeReason `json:"-", xml:"-"`
+	metadataClusterStateChangeReason `json:"-" xml:"-"`
 }
 
 type metadataClusterStateChangeReason struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ClusterStateChangeReason) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ClusterStateChangeReason) GoString() string {
+	return s.String()
 }
 
 // The detailed status of the cluster.
@@ -926,11 +997,21 @@ type ClusterStatus struct {
 	// cluster.
 	Timeline *ClusterTimeline `type:"structure"`
 
-	metadataClusterStatus `json:"-", xml:"-"`
+	metadataClusterStatus `json:"-" xml:"-"`
 }
 
 type metadataClusterStatus struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ClusterStatus) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ClusterStatus) GoString() string {
+	return s.String()
 }
 
 // The summary description of the cluster.
@@ -952,11 +1033,21 @@ type ClusterSummary struct {
 	// The details about the current status of the cluster.
 	Status *ClusterStatus `type:"structure"`
 
-	metadataClusterSummary `json:"-", xml:"-"`
+	metadataClusterSummary `json:"-" xml:"-"`
 }
 
 type metadataClusterSummary struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ClusterSummary) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ClusterSummary) GoString() string {
+	return s.String()
 }
 
 // Represents the timeline of the cluster's lifecycle.
@@ -970,11 +1061,21 @@ type ClusterTimeline struct {
 	// The date and time when the cluster was ready to execute steps.
 	ReadyDateTime *time.Time `type:"timestamp" timestampFormat:"unix"`
 
-	metadataClusterTimeline `json:"-", xml:"-"`
+	metadataClusterTimeline `json:"-" xml:"-"`
 }
 
 type metadataClusterTimeline struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ClusterTimeline) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ClusterTimeline) GoString() string {
+	return s.String()
 }
 
 // An entity describing an executable that runs on a cluster.
@@ -988,11 +1089,21 @@ type Command struct {
 	// The Amazon S3 location of the command script.
 	ScriptPath *string `type:"string"`
 
-	metadataCommand `json:"-", xml:"-"`
+	metadataCommand `json:"-" xml:"-"`
 }
 
 type metadataCommand struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Command) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Command) GoString() string {
+	return s.String()
 }
 
 // This input determines which cluster to describe.
@@ -1000,11 +1111,21 @@ type DescribeClusterInput struct {
 	// The identifier of the cluster to describe.
 	ClusterID *string `locationName:"ClusterId" type:"string" required:"true"`
 
-	metadataDescribeClusterInput `json:"-", xml:"-"`
+	metadataDescribeClusterInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeClusterInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeClusterInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeClusterInput) GoString() string {
+	return s.String()
 }
 
 // This output contains the description of the cluster.
@@ -1012,11 +1133,21 @@ type DescribeClusterOutput struct {
 	// This output contains the details for the requested cluster.
 	Cluster *Cluster `type:"structure"`
 
-	metadataDescribeClusterOutput `json:"-", xml:"-"`
+	metadataDescribeClusterOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeClusterOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeClusterOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeClusterOutput) GoString() string {
+	return s.String()
 }
 
 // The input for the DescribeJobFlows operation.
@@ -1033,11 +1164,21 @@ type DescribeJobFlowsInput struct {
 	// Return only job flows whose state is contained in this list.
 	JobFlowStates []*string `type:"list"`
 
-	metadataDescribeJobFlowsInput `json:"-", xml:"-"`
+	metadataDescribeJobFlowsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeJobFlowsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeJobFlowsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeJobFlowsInput) GoString() string {
+	return s.String()
 }
 
 // The output for the DescribeJobFlows operation.
@@ -1045,11 +1186,21 @@ type DescribeJobFlowsOutput struct {
 	// A list of job flows matching the parameters supplied.
 	JobFlows []*JobFlowDetail `type:"list"`
 
-	metadataDescribeJobFlowsOutput `json:"-", xml:"-"`
+	metadataDescribeJobFlowsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeJobFlowsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeJobFlowsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeJobFlowsOutput) GoString() string {
+	return s.String()
 }
 
 // This input determines which step to describe.
@@ -1060,11 +1211,21 @@ type DescribeStepInput struct {
 	// The identifier of the step to describe.
 	StepID *string `locationName:"StepId" type:"string" required:"true"`
 
-	metadataDescribeStepInput `json:"-", xml:"-"`
+	metadataDescribeStepInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeStepInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeStepInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeStepInput) GoString() string {
+	return s.String()
 }
 
 // This output contains the description of the cluster step.
@@ -1072,11 +1233,21 @@ type DescribeStepOutput struct {
 	// The step details for the requested step identifier.
 	Step *Step `type:"structure"`
 
-	metadataDescribeStepOutput `json:"-", xml:"-"`
+	metadataDescribeStepOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeStepOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeStepOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeStepOutput) GoString() string {
+	return s.String()
 }
 
 // Provides information about the EC2 instances in a cluster grouped by category.
@@ -1117,11 +1288,21 @@ type EC2InstanceAttributes struct {
 	// of the job flow assume this role.
 	IAMInstanceProfile *string `locationName:"IamInstanceProfile" type:"string"`
 
-	metadataEC2InstanceAttributes `json:"-", xml:"-"`
+	metadataEC2InstanceAttributes `json:"-" xml:"-"`
 }
 
 type metadataEC2InstanceAttributes struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s EC2InstanceAttributes) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EC2InstanceAttributes) GoString() string {
+	return s.String()
 }
 
 // A job flow step consisting of a JAR file whose main function will be executed.
@@ -1143,11 +1324,21 @@ type HadoopJARStepConfig struct {
 	// properties to pass key value pairs to your main function.
 	Properties []*KeyValue `type:"list"`
 
-	metadataHadoopJARStepConfig `json:"-", xml:"-"`
+	metadataHadoopJARStepConfig `json:"-" xml:"-"`
 }
 
 type metadataHadoopJARStepConfig struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s HadoopJARStepConfig) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s HadoopJARStepConfig) GoString() string {
+	return s.String()
 }
 
 // A cluster step consisting of a JAR file whose main function will be executed.
@@ -1167,13 +1358,23 @@ type HadoopStepConfig struct {
 
 	// The list of Java properties that are set when the step runs. You can use
 	// these properties to pass key value pairs to your main function.
-	Properties *map[string]*string `type:"map"`
+	Properties map[string]*string `type:"map"`
 
-	metadataHadoopStepConfig `json:"-", xml:"-"`
+	metadataHadoopStepConfig `json:"-" xml:"-"`
 }
 
 type metadataHadoopStepConfig struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s HadoopStepConfig) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s HadoopStepConfig) GoString() string {
+	return s.String()
 }
 
 // Represents an EC2 instance provisioned as part of cluster.
@@ -1199,11 +1400,21 @@ type Instance struct {
 	// The current status of the instance.
 	Status *InstanceStatus `type:"structure"`
 
-	metadataInstance `json:"-", xml:"-"`
+	metadataInstance `json:"-" xml:"-"`
 }
 
 type metadataInstance struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Instance) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Instance) GoString() string {
+	return s.String()
 }
 
 // This entity represents an instance group, which is a group of instances that
@@ -1238,11 +1449,21 @@ type InstanceGroup struct {
 	// The current status of the instance group.
 	Status *InstanceGroupStatus `type:"structure"`
 
-	metadataInstanceGroup `json:"-", xml:"-"`
+	metadataInstanceGroup `json:"-" xml:"-"`
 }
 
 type metadataInstanceGroup struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceGroup) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceGroup) GoString() string {
+	return s.String()
 }
 
 // Configuration defining a new instance group.
@@ -1266,11 +1487,21 @@ type InstanceGroupConfig struct {
 	// Friendly name given to the instance group.
 	Name *string `type:"string"`
 
-	metadataInstanceGroupConfig `json:"-", xml:"-"`
+	metadataInstanceGroupConfig `json:"-" xml:"-"`
 }
 
 type metadataInstanceGroupConfig struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceGroupConfig) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceGroupConfig) GoString() string {
+	return s.String()
 }
 
 // Detailed information about an instance group.
@@ -1319,11 +1550,21 @@ type InstanceGroupDetail struct {
 	// and FAILED.
 	State *string `type:"string" required:"true"`
 
-	metadataInstanceGroupDetail `json:"-", xml:"-"`
+	metadataInstanceGroupDetail `json:"-" xml:"-"`
 }
 
 type metadataInstanceGroupDetail struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceGroupDetail) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceGroupDetail) GoString() string {
+	return s.String()
 }
 
 // Modify an instance group size.
@@ -1339,11 +1580,21 @@ type InstanceGroupModifyConfig struct {
 	// Unique ID of the instance group to expand or shrink.
 	InstanceGroupID *string `locationName:"InstanceGroupId" type:"string" required:"true"`
 
-	metadataInstanceGroupModifyConfig `json:"-", xml:"-"`
+	metadataInstanceGroupModifyConfig `json:"-" xml:"-"`
 }
 
 type metadataInstanceGroupModifyConfig struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceGroupModifyConfig) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceGroupModifyConfig) GoString() string {
+	return s.String()
 }
 
 // The status change reason details for the instance group.
@@ -1354,11 +1605,21 @@ type InstanceGroupStateChangeReason struct {
 	// The status change reason description.
 	Message *string `type:"string"`
 
-	metadataInstanceGroupStateChangeReason `json:"-", xml:"-"`
+	metadataInstanceGroupStateChangeReason `json:"-" xml:"-"`
 }
 
 type metadataInstanceGroupStateChangeReason struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceGroupStateChangeReason) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceGroupStateChangeReason) GoString() string {
+	return s.String()
 }
 
 // The details of the instance group status.
@@ -1372,11 +1633,21 @@ type InstanceGroupStatus struct {
 	// The timeline of the instance group status over time.
 	Timeline *InstanceGroupTimeline `type:"structure"`
 
-	metadataInstanceGroupStatus `json:"-", xml:"-"`
+	metadataInstanceGroupStatus `json:"-" xml:"-"`
 }
 
 type metadataInstanceGroupStatus struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceGroupStatus) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceGroupStatus) GoString() string {
+	return s.String()
 }
 
 // The timeline of the instance group lifecycle.
@@ -1390,11 +1661,21 @@ type InstanceGroupTimeline struct {
 	// The date and time when the instance group became ready to perform tasks.
 	ReadyDateTime *time.Time `type:"timestamp" timestampFormat:"unix"`
 
-	metadataInstanceGroupTimeline `json:"-", xml:"-"`
+	metadataInstanceGroupTimeline `json:"-" xml:"-"`
 }
 
 type metadataInstanceGroupTimeline struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceGroupTimeline) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceGroupTimeline) GoString() string {
+	return s.String()
 }
 
 // The details of the status change reason for the instance.
@@ -1405,11 +1686,21 @@ type InstanceStateChangeReason struct {
 	// The status change reason description.
 	Message *string `type:"string"`
 
-	metadataInstanceStateChangeReason `json:"-", xml:"-"`
+	metadataInstanceStateChangeReason `json:"-" xml:"-"`
 }
 
 type metadataInstanceStateChangeReason struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceStateChangeReason) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceStateChangeReason) GoString() string {
+	return s.String()
 }
 
 // The instance status details.
@@ -1423,11 +1714,21 @@ type InstanceStatus struct {
 	// The timeline of the instance status over time.
 	Timeline *InstanceTimeline `type:"structure"`
 
-	metadataInstanceStatus `json:"-", xml:"-"`
+	metadataInstanceStatus `json:"-" xml:"-"`
 }
 
 type metadataInstanceStatus struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceStatus) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceStatus) GoString() string {
+	return s.String()
 }
 
 // The timeline of the instance lifecycle.
@@ -1441,11 +1742,21 @@ type InstanceTimeline struct {
 	// The date and time when the instance was ready to perform tasks.
 	ReadyDateTime *time.Time `type:"timestamp" timestampFormat:"unix"`
 
-	metadataInstanceTimeline `json:"-", xml:"-"`
+	metadataInstanceTimeline `json:"-" xml:"-"`
 }
 
 type metadataInstanceTimeline struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceTimeline) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceTimeline) GoString() string {
+	return s.String()
 }
 
 // A description of a job flow.
@@ -1498,11 +1809,21 @@ type JobFlowDetail struct {
 	// SetVisibleToAllUsers action.
 	VisibleToAllUsers *bool `type:"boolean"`
 
-	metadataJobFlowDetail `json:"-", xml:"-"`
+	metadataJobFlowDetail `json:"-" xml:"-"`
 }
 
 type metadataJobFlowDetail struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s JobFlowDetail) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s JobFlowDetail) GoString() string {
+	return s.String()
 }
 
 // Describes the status of the job flow.
@@ -1526,11 +1847,21 @@ type JobFlowExecutionStatusDetail struct {
 	// The state of the job flow.
 	State *string `type:"string" required:"true"`
 
-	metadataJobFlowExecutionStatusDetail `json:"-", xml:"-"`
+	metadataJobFlowExecutionStatusDetail `json:"-" xml:"-"`
 }
 
 type metadataJobFlowExecutionStatusDetail struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s JobFlowExecutionStatusDetail) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s JobFlowExecutionStatusDetail) GoString() string {
+	return s.String()
 }
 
 // A description of the Amazon EC2 instance running the job flow. A valid JobFlowInstancesConfig
@@ -1595,11 +1926,21 @@ type JobFlowInstancesConfig struct {
 	// a job flow error.
 	TerminationProtected *bool `type:"boolean"`
 
-	metadataJobFlowInstancesConfig `json:"-", xml:"-"`
+	metadataJobFlowInstancesConfig `json:"-" xml:"-"`
 }
 
 type metadataJobFlowInstancesConfig struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s JobFlowInstancesConfig) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s JobFlowInstancesConfig) GoString() string {
+	return s.String()
 }
 
 // Specify the type of Amazon EC2 instances to run the job flow on.
@@ -1654,11 +1995,21 @@ type JobFlowInstancesDetail struct {
 	// error.
 	TerminationProtected *bool `type:"boolean"`
 
-	metadataJobFlowInstancesDetail `json:"-", xml:"-"`
+	metadataJobFlowInstancesDetail `json:"-" xml:"-"`
 }
 
 type metadataJobFlowInstancesDetail struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s JobFlowInstancesDetail) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s JobFlowInstancesDetail) GoString() string {
+	return s.String()
 }
 
 // A key value pair.
@@ -1669,11 +2020,21 @@ type KeyValue struct {
 	// The value part of the identified key.
 	Value *string `type:"string"`
 
-	metadataKeyValue `json:"-", xml:"-"`
+	metadataKeyValue `json:"-" xml:"-"`
 }
 
 type metadataKeyValue struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s KeyValue) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s KeyValue) GoString() string {
+	return s.String()
 }
 
 // This input determines which bootstrap actions to retrieve.
@@ -1684,11 +2045,21 @@ type ListBootstrapActionsInput struct {
 	// The pagination token that indicates the next set of results to retrieve .
 	Marker *string `type:"string"`
 
-	metadataListBootstrapActionsInput `json:"-", xml:"-"`
+	metadataListBootstrapActionsInput `json:"-" xml:"-"`
 }
 
 type metadataListBootstrapActionsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListBootstrapActionsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListBootstrapActionsInput) GoString() string {
+	return s.String()
 }
 
 // This output contains the boostrap actions detail .
@@ -1699,11 +2070,21 @@ type ListBootstrapActionsOutput struct {
 	// The pagination token that indicates the next set of results to retrieve .
 	Marker *string `type:"string"`
 
-	metadataListBootstrapActionsOutput `json:"-", xml:"-"`
+	metadataListBootstrapActionsOutput `json:"-" xml:"-"`
 }
 
 type metadataListBootstrapActionsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListBootstrapActionsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListBootstrapActionsOutput) GoString() string {
+	return s.String()
 }
 
 // This input determines how the ListClusters action filters the list of clusters
@@ -1721,11 +2102,21 @@ type ListClustersInput struct {
 	// The pagination token that indicates the next set of results to retrieve.
 	Marker *string `type:"string"`
 
-	metadataListClustersInput `json:"-", xml:"-"`
+	metadataListClustersInput `json:"-" xml:"-"`
 }
 
 type metadataListClustersInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListClustersInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListClustersInput) GoString() string {
+	return s.String()
 }
 
 // This contains a ClusterSummaryList with the cluster details; for example,
@@ -1737,11 +2128,21 @@ type ListClustersOutput struct {
 	// The pagination token that indicates the next set of results to retrieve.
 	Marker *string `type:"string"`
 
-	metadataListClustersOutput `json:"-", xml:"-"`
+	metadataListClustersOutput `json:"-" xml:"-"`
 }
 
 type metadataListClustersOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListClustersOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListClustersOutput) GoString() string {
+	return s.String()
 }
 
 // This input determines which instance groups to retrieve.
@@ -1752,11 +2153,21 @@ type ListInstanceGroupsInput struct {
 	// The pagination token that indicates the next set of results to retrieve.
 	Marker *string `type:"string"`
 
-	metadataListInstanceGroupsInput `json:"-", xml:"-"`
+	metadataListInstanceGroupsInput `json:"-" xml:"-"`
 }
 
 type metadataListInstanceGroupsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListInstanceGroupsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListInstanceGroupsInput) GoString() string {
+	return s.String()
 }
 
 // This input determines which instance groups to retrieve.
@@ -1767,11 +2178,21 @@ type ListInstanceGroupsOutput struct {
 	// The pagination token that indicates the next set of results to retrieve.
 	Marker *string `type:"string"`
 
-	metadataListInstanceGroupsOutput `json:"-", xml:"-"`
+	metadataListInstanceGroupsOutput `json:"-" xml:"-"`
 }
 
 type metadataListInstanceGroupsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListInstanceGroupsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListInstanceGroupsOutput) GoString() string {
+	return s.String()
 }
 
 // This input determines which instances to list.
@@ -1788,11 +2209,21 @@ type ListInstancesInput struct {
 	// The pagination token that indicates the next set of results to retrieve.
 	Marker *string `type:"string"`
 
-	metadataListInstancesInput `json:"-", xml:"-"`
+	metadataListInstancesInput `json:"-" xml:"-"`
 }
 
 type metadataListInstancesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListInstancesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListInstancesInput) GoString() string {
+	return s.String()
 }
 
 // This output contains the list of instances.
@@ -1803,11 +2234,21 @@ type ListInstancesOutput struct {
 	// The pagination token that indicates the next set of results to retrieve.
 	Marker *string `type:"string"`
 
-	metadataListInstancesOutput `json:"-", xml:"-"`
+	metadataListInstancesOutput `json:"-" xml:"-"`
 }
 
 type metadataListInstancesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListInstancesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListInstancesOutput) GoString() string {
+	return s.String()
 }
 
 // This input determines which steps to list.
@@ -1824,11 +2265,21 @@ type ListStepsInput struct {
 	// The filter to limit the step list based on certain states.
 	StepStates []*string `type:"list"`
 
-	metadataListStepsInput `json:"-", xml:"-"`
+	metadataListStepsInput `json:"-" xml:"-"`
 }
 
 type metadataListStepsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListStepsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListStepsInput) GoString() string {
+	return s.String()
 }
 
 // This output contains the list of steps.
@@ -1839,11 +2290,21 @@ type ListStepsOutput struct {
 	// The filtered list of steps for the cluster.
 	Steps []*StepSummary `type:"list"`
 
-	metadataListStepsOutput `json:"-", xml:"-"`
+	metadataListStepsOutput `json:"-" xml:"-"`
 }
 
 type metadataListStepsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListStepsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListStepsOutput) GoString() string {
+	return s.String()
 }
 
 // Change the size of some instance groups.
@@ -1851,19 +2312,39 @@ type ModifyInstanceGroupsInput struct {
 	// Instance groups to change.
 	InstanceGroups []*InstanceGroupModifyConfig `type:"list"`
 
-	metadataModifyInstanceGroupsInput `json:"-", xml:"-"`
+	metadataModifyInstanceGroupsInput `json:"-" xml:"-"`
 }
 
 type metadataModifyInstanceGroupsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ModifyInstanceGroupsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyInstanceGroupsInput) GoString() string {
+	return s.String()
+}
+
 type ModifyInstanceGroupsOutput struct {
-	metadataModifyInstanceGroupsOutput `json:"-", xml:"-"`
+	metadataModifyInstanceGroupsOutput `json:"-" xml:"-"`
 }
 
 type metadataModifyInstanceGroupsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyInstanceGroupsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyInstanceGroupsOutput) GoString() string {
+	return s.String()
 }
 
 // The Amazon EC2 location for the job flow.
@@ -1871,11 +2352,21 @@ type PlacementType struct {
 	// The Amazon EC2 Availability Zone for the job flow.
 	AvailabilityZone *string `type:"string" required:"true"`
 
-	metadataPlacementType `json:"-", xml:"-"`
+	metadataPlacementType `json:"-" xml:"-"`
 }
 
 type metadataPlacementType struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PlacementType) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PlacementType) GoString() string {
+	return s.String()
 }
 
 // This input identifies a cluster and a list of tags to remove.
@@ -1887,20 +2378,40 @@ type RemoveTagsInput struct {
 	// A list of tag keys to remove from a resource.
 	TagKeys []*string `type:"list" required:"true"`
 
-	metadataRemoveTagsInput `json:"-", xml:"-"`
+	metadataRemoveTagsInput `json:"-" xml:"-"`
 }
 
 type metadataRemoveTagsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RemoveTagsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RemoveTagsInput) GoString() string {
+	return s.String()
+}
+
 // This output indicates the result of removing tags from a resource.
 type RemoveTagsOutput struct {
-	metadataRemoveTagsOutput `json:"-", xml:"-"`
+	metadataRemoveTagsOutput `json:"-" xml:"-"`
 }
 
 type metadataRemoveTagsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RemoveTagsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RemoveTagsOutput) GoString() string {
+	return s.String()
 }
 
 // Input to the RunJobFlow operation.
@@ -1981,11 +2492,21 @@ type RunJobFlowInput struct {
 	// flow can view and manage it.
 	VisibleToAllUsers *bool `type:"boolean"`
 
-	metadataRunJobFlowInput `json:"-", xml:"-"`
+	metadataRunJobFlowInput `json:"-" xml:"-"`
 }
 
 type metadataRunJobFlowInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RunJobFlowInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RunJobFlowInput) GoString() string {
+	return s.String()
 }
 
 // The result of the RunJobFlow operation.
@@ -1993,11 +2514,21 @@ type RunJobFlowOutput struct {
 	// An unique identifier for the job flow.
 	JobFlowID *string `locationName:"JobFlowId" type:"string"`
 
-	metadataRunJobFlowOutput `json:"-", xml:"-"`
+	metadataRunJobFlowOutput `json:"-" xml:"-"`
 }
 
 type metadataRunJobFlowOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RunJobFlowOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RunJobFlowOutput) GoString() string {
+	return s.String()
 }
 
 // Configuration of the script to run during a bootstrap action.
@@ -2009,11 +2540,21 @@ type ScriptBootstrapActionConfig struct {
 	// location in Amazon S3 or on a local file system.
 	Path *string `type:"string" required:"true"`
 
-	metadataScriptBootstrapActionConfig `json:"-", xml:"-"`
+	metadataScriptBootstrapActionConfig `json:"-" xml:"-"`
 }
 
 type metadataScriptBootstrapActionConfig struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ScriptBootstrapActionConfig) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ScriptBootstrapActionConfig) GoString() string {
+	return s.String()
 }
 
 // The input argument to the TerminationProtection operation.
@@ -2028,19 +2569,39 @@ type SetTerminationProtectionInput struct {
 	// user intervention, or job-flow error.
 	TerminationProtected *bool `type:"boolean" required:"true"`
 
-	metadataSetTerminationProtectionInput `json:"-", xml:"-"`
+	metadataSetTerminationProtectionInput `json:"-" xml:"-"`
 }
 
 type metadataSetTerminationProtectionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s SetTerminationProtectionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetTerminationProtectionInput) GoString() string {
+	return s.String()
+}
+
 type SetTerminationProtectionOutput struct {
-	metadataSetTerminationProtectionOutput `json:"-", xml:"-"`
+	metadataSetTerminationProtectionOutput `json:"-" xml:"-"`
 }
 
 type metadataSetTerminationProtectionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SetTerminationProtectionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetTerminationProtectionOutput) GoString() string {
+	return s.String()
 }
 
 // The input to the SetVisibleToAllUsers action.
@@ -2055,19 +2616,39 @@ type SetVisibleToAllUsersInput struct {
 	// created a job flow can view and manage it.
 	VisibleToAllUsers *bool `type:"boolean" required:"true"`
 
-	metadataSetVisibleToAllUsersInput `json:"-", xml:"-"`
+	metadataSetVisibleToAllUsersInput `json:"-" xml:"-"`
 }
 
 type metadataSetVisibleToAllUsersInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s SetVisibleToAllUsersInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetVisibleToAllUsersInput) GoString() string {
+	return s.String()
+}
+
 type SetVisibleToAllUsersOutput struct {
-	metadataSetVisibleToAllUsersOutput `json:"-", xml:"-"`
+	metadataSetVisibleToAllUsersOutput `json:"-" xml:"-"`
 }
 
 type metadataSetVisibleToAllUsersOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SetVisibleToAllUsersOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetVisibleToAllUsersOutput) GoString() string {
+	return s.String()
 }
 
 // This represents a step in a cluster.
@@ -2088,11 +2669,21 @@ type Step struct {
 	// The current execution status details of the cluster step.
 	Status *StepStatus `type:"structure"`
 
-	metadataStep `json:"-", xml:"-"`
+	metadataStep `json:"-" xml:"-"`
 }
 
 type metadataStep struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Step) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Step) GoString() string {
+	return s.String()
 }
 
 // Specification of a job flow step.
@@ -2106,11 +2697,21 @@ type StepConfig struct {
 	// The name of the job flow step.
 	Name *string `type:"string" required:"true"`
 
-	metadataStepConfig `json:"-", xml:"-"`
+	metadataStepConfig `json:"-" xml:"-"`
 }
 
 type metadataStepConfig struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StepConfig) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StepConfig) GoString() string {
+	return s.String()
 }
 
 // Combines the execution state and configuration of a step.
@@ -2121,11 +2722,21 @@ type StepDetail struct {
 	// The step configuration.
 	StepConfig *StepConfig `type:"structure" required:"true"`
 
-	metadataStepDetail `json:"-", xml:"-"`
+	metadataStepDetail `json:"-" xml:"-"`
 }
 
 type metadataStepDetail struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StepDetail) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StepDetail) GoString() string {
+	return s.String()
 }
 
 // The execution state of a step.
@@ -2145,11 +2756,21 @@ type StepExecutionStatusDetail struct {
 	// The state of the job flow step.
 	State *string `type:"string" required:"true"`
 
-	metadataStepExecutionStatusDetail `json:"-", xml:"-"`
+	metadataStepExecutionStatusDetail `json:"-" xml:"-"`
 }
 
 type metadataStepExecutionStatusDetail struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StepExecutionStatusDetail) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StepExecutionStatusDetail) GoString() string {
+	return s.String()
 }
 
 // The details of the step state change reason.
@@ -2160,11 +2781,21 @@ type StepStateChangeReason struct {
 	// The descriptive message for the state change reason.
 	Message *string `type:"string"`
 
-	metadataStepStateChangeReason `json:"-", xml:"-"`
+	metadataStepStateChangeReason `json:"-" xml:"-"`
 }
 
 type metadataStepStateChangeReason struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StepStateChangeReason) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StepStateChangeReason) GoString() string {
+	return s.String()
 }
 
 // The execution status details of the cluster step.
@@ -2178,11 +2809,21 @@ type StepStatus struct {
 	// The timeline of the cluster step status over time.
 	Timeline *StepTimeline `type:"structure"`
 
-	metadataStepStatus `json:"-", xml:"-"`
+	metadataStepStatus `json:"-" xml:"-"`
 }
 
 type metadataStepStatus struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StepStatus) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StepStatus) GoString() string {
+	return s.String()
 }
 
 // The summary of the cluster step.
@@ -2203,11 +2844,21 @@ type StepSummary struct {
 	// The current execution status details of the cluster step.
 	Status *StepStatus `type:"structure"`
 
-	metadataStepSummary `json:"-", xml:"-"`
+	metadataStepSummary `json:"-" xml:"-"`
 }
 
 type metadataStepSummary struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StepSummary) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StepSummary) GoString() string {
+	return s.String()
 }
 
 // The timeline of the cluster step lifecycle.
@@ -2221,11 +2872,21 @@ type StepTimeline struct {
 	// The date and time when the cluster step execution started.
 	StartDateTime *time.Time `type:"timestamp" timestampFormat:"unix"`
 
-	metadataStepTimeline `json:"-", xml:"-"`
+	metadataStepTimeline `json:"-" xml:"-"`
 }
 
 type metadataStepTimeline struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StepTimeline) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StepTimeline) GoString() string {
+	return s.String()
 }
 
 // The list of supported product configurations which allow user-supplied arguments.
@@ -2238,11 +2899,21 @@ type SupportedProductConfig struct {
 	// The name of the product configuration.
 	Name *string `type:"string"`
 
-	metadataSupportedProductConfig `json:"-", xml:"-"`
+	metadataSupportedProductConfig `json:"-" xml:"-"`
 }
 
 type metadataSupportedProductConfig struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SupportedProductConfig) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SupportedProductConfig) GoString() string {
+	return s.String()
 }
 
 // A key/value pair containing user-defined metadata that you can associate
@@ -2259,11 +2930,21 @@ type Tag struct {
 	// Tagging Amazon EMR Resources (http://docs.aws.amazon.com/ElasticMapReduce/latest/DeveloperGuide/emr-plan-tags.html).
 	Value *string `type:"string"`
 
-	metadataTag `json:"-", xml:"-"`
+	metadataTag `json:"-" xml:"-"`
 }
 
 type metadataTag struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Tag) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Tag) GoString() string {
+	return s.String()
 }
 
 // Input to the TerminateJobFlows operation.
@@ -2271,17 +2952,37 @@ type TerminateJobFlowsInput struct {
 	// A list of job flows to be shutdown.
 	JobFlowIDs []*string `locationName:"JobFlowIds" type:"list" required:"true"`
 
-	metadataTerminateJobFlowsInput `json:"-", xml:"-"`
+	metadataTerminateJobFlowsInput `json:"-" xml:"-"`
 }
 
 type metadataTerminateJobFlowsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s TerminateJobFlowsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TerminateJobFlowsInput) GoString() string {
+	return s.String()
+}
+
 type TerminateJobFlowsOutput struct {
-	metadataTerminateJobFlowsOutput `json:"-", xml:"-"`
+	metadataTerminateJobFlowsOutput `json:"-" xml:"-"`
 }
 
 type metadataTerminateJobFlowsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s TerminateJobFlowsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TerminateJobFlowsOutput) GoString() string {
+	return s.String()
 }

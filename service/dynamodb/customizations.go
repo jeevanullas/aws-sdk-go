@@ -9,7 +9,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awserr"
 )
 
 func init() {
@@ -74,10 +75,7 @@ func validateCRC32(r *aws.Request) {
 
 	if crc != uint32(expected) {
 		// CRC does not match, set a retryable error
-		r.Retryable = true
-		r.Error = &aws.APIError{
-			Code:    "CRC32CheckFailed",
-			Message: "CRC32 integrity check failed",
-		}
+		r.Retryable.Set(true)
+		r.Error = awserr.New("CRC32CheckFailed", "CRC32 integrity check failed", nil)
 	}
 }

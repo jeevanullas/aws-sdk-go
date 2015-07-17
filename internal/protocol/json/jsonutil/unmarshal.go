@@ -11,6 +11,7 @@ import (
 	"time"
 )
 
+// UnmarshalJSON reads a stream and unmarshals the results in object v.
 func UnmarshalJSON(v interface{}, stream io.Reader) error {
 	var out interface{}
 
@@ -150,15 +151,8 @@ func unmarshalMap(value reflect.Value, data interface{}, tag reflect.StructTag) 
 		return fmt.Errorf("JSON value is not a map (%#v)", data)
 	}
 
-	t := value.Type()
-	if value.Kind() == reflect.Ptr {
-		t = t.Elem()
-		if value.IsNil() {
-			value.Set(reflect.New(t))
-			value.Elem().Set(reflect.MakeMap(t))
-		}
-
-		value = value.Elem()
+	if value.IsNil() {
+		value.Set(reflect.MakeMap(value.Type()))
 	}
 
 	for k, v := range mapData {

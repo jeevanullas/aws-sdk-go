@@ -4,32 +4,27 @@
 package route53domains
 
 import (
-	"sync"
 	"time"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
-var oprw sync.Mutex
+const opCheckDomainAvailability = "CheckDomainAvailability"
 
 // CheckDomainAvailabilityRequest generates a request for the CheckDomainAvailability operation.
 func (c *Route53Domains) CheckDomainAvailabilityRequest(input *CheckDomainAvailabilityInput) (req *aws.Request, output *CheckDomainAvailabilityOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCheckDomainAvailability == nil {
-		opCheckDomainAvailability = &aws.Operation{
-			Name:       "CheckDomainAvailability",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCheckDomainAvailability,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CheckDomainAvailabilityInput{}
 	}
 
-	req = c.newRequest(opCheckDomainAvailability, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CheckDomainAvailabilityOutput{}
 	req.Data = output
 	return
@@ -39,33 +34,27 @@ func (c *Route53Domains) CheckDomainAvailabilityRequest(input *CheckDomainAvaila
 // this API without authenticating. Note that if the availability status of
 // a domain is pending, you must submit another request to determine the availability
 // of the domain name.
-func (c *Route53Domains) CheckDomainAvailability(input *CheckDomainAvailabilityInput) (output *CheckDomainAvailabilityOutput, err error) {
+func (c *Route53Domains) CheckDomainAvailability(input *CheckDomainAvailabilityInput) (*CheckDomainAvailabilityOutput, error) {
 	req, out := c.CheckDomainAvailabilityRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCheckDomainAvailability *aws.Operation
+const opDeleteTagsForDomain = "DeleteTagsForDomain"
 
 // DeleteTagsForDomainRequest generates a request for the DeleteTagsForDomain operation.
 func (c *Route53Domains) DeleteTagsForDomainRequest(input *DeleteTagsForDomainInput) (req *aws.Request, output *DeleteTagsForDomainOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteTagsForDomain == nil {
-		opDeleteTagsForDomain = &aws.Operation{
-			Name:       "DeleteTagsForDomain",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteTagsForDomain,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteTagsForDomainInput{}
 	}
 
-	req = c.newRequest(opDeleteTagsForDomain, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteTagsForDomainOutput{}
 	req.Data = output
 	return
@@ -75,33 +64,27 @@ func (c *Route53Domains) DeleteTagsForDomainRequest(input *DeleteTagsForDomainIn
 //
 // All tag operations are eventually consistent; subsequent operations may
 // not immediately represent all issued operations.
-func (c *Route53Domains) DeleteTagsForDomain(input *DeleteTagsForDomainInput) (output *DeleteTagsForDomainOutput, err error) {
+func (c *Route53Domains) DeleteTagsForDomain(input *DeleteTagsForDomainInput) (*DeleteTagsForDomainOutput, error) {
 	req, out := c.DeleteTagsForDomainRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteTagsForDomain *aws.Operation
+const opDisableDomainAutoRenew = "DisableDomainAutoRenew"
 
 // DisableDomainAutoRenewRequest generates a request for the DisableDomainAutoRenew operation.
 func (c *Route53Domains) DisableDomainAutoRenewRequest(input *DisableDomainAutoRenewInput) (req *aws.Request, output *DisableDomainAutoRenewOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDisableDomainAutoRenew == nil {
-		opDisableDomainAutoRenew = &aws.Operation{
-			Name:       "DisableDomainAutoRenew",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDisableDomainAutoRenew,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DisableDomainAutoRenewInput{}
 	}
 
-	req = c.newRequest(opDisableDomainAutoRenew, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DisableDomainAutoRenewOutput{}
 	req.Data = output
 	return
@@ -114,33 +97,27 @@ func (c *Route53Domains) DisableDomainAutoRenewRequest(input *DisableDomainAutoR
 // disable automatic renewal, registration for the domain will not be renewed
 // when the expiration date passes, and you will lose control of the domain
 // name.
-func (c *Route53Domains) DisableDomainAutoRenew(input *DisableDomainAutoRenewInput) (output *DisableDomainAutoRenewOutput, err error) {
+func (c *Route53Domains) DisableDomainAutoRenew(input *DisableDomainAutoRenewInput) (*DisableDomainAutoRenewOutput, error) {
 	req, out := c.DisableDomainAutoRenewRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDisableDomainAutoRenew *aws.Operation
+const opDisableDomainTransferLock = "DisableDomainTransferLock"
 
 // DisableDomainTransferLockRequest generates a request for the DisableDomainTransferLock operation.
 func (c *Route53Domains) DisableDomainTransferLockRequest(input *DisableDomainTransferLockInput) (req *aws.Request, output *DisableDomainTransferLockOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDisableDomainTransferLock == nil {
-		opDisableDomainTransferLock = &aws.Operation{
-			Name:       "DisableDomainTransferLock",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDisableDomainTransferLock,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DisableDomainTransferLockInput{}
 	}
 
-	req = c.newRequest(opDisableDomainTransferLock, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DisableDomainTransferLockOutput{}
 	req.Data = output
 	return
@@ -153,33 +130,27 @@ func (c *Route53Domains) DisableDomainTransferLockRequest(input *DisableDomainTr
 // ID that you can use to track the progress and completion of the action. If
 // the request is not completed successfully, the domain registrant will be
 // notified by email.
-func (c *Route53Domains) DisableDomainTransferLock(input *DisableDomainTransferLockInput) (output *DisableDomainTransferLockOutput, err error) {
+func (c *Route53Domains) DisableDomainTransferLock(input *DisableDomainTransferLockInput) (*DisableDomainTransferLockOutput, error) {
 	req, out := c.DisableDomainTransferLockRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDisableDomainTransferLock *aws.Operation
+const opEnableDomainAutoRenew = "EnableDomainAutoRenew"
 
 // EnableDomainAutoRenewRequest generates a request for the EnableDomainAutoRenew operation.
 func (c *Route53Domains) EnableDomainAutoRenewRequest(input *EnableDomainAutoRenewInput) (req *aws.Request, output *EnableDomainAutoRenewOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opEnableDomainAutoRenew == nil {
-		opEnableDomainAutoRenew = &aws.Operation{
-			Name:       "EnableDomainAutoRenew",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opEnableDomainAutoRenew,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &EnableDomainAutoRenewInput{}
 	}
 
-	req = c.newRequest(opEnableDomainAutoRenew, input, output)
+	req = c.newRequest(op, input, output)
 	output = &EnableDomainAutoRenewOutput{}
 	req.Data = output
 	return
@@ -195,33 +166,27 @@ func (c *Route53Domains) EnableDomainAutoRenewRequest(input *EnableDomainAutoRen
 // on the website for our registrar partner, Gandi. Route 53 requires that you
 // renew before the end of the renewal period that is listed on the Gandi website
 // so we can complete processing before the deadline.
-func (c *Route53Domains) EnableDomainAutoRenew(input *EnableDomainAutoRenewInput) (output *EnableDomainAutoRenewOutput, err error) {
+func (c *Route53Domains) EnableDomainAutoRenew(input *EnableDomainAutoRenewInput) (*EnableDomainAutoRenewOutput, error) {
 	req, out := c.EnableDomainAutoRenewRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opEnableDomainAutoRenew *aws.Operation
+const opEnableDomainTransferLock = "EnableDomainTransferLock"
 
 // EnableDomainTransferLockRequest generates a request for the EnableDomainTransferLock operation.
 func (c *Route53Domains) EnableDomainTransferLockRequest(input *EnableDomainTransferLockInput) (req *aws.Request, output *EnableDomainTransferLockOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opEnableDomainTransferLock == nil {
-		opEnableDomainTransferLock = &aws.Operation{
-			Name:       "EnableDomainTransferLock",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opEnableDomainTransferLock,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &EnableDomainTransferLockInput{}
 	}
 
-	req = c.newRequest(opEnableDomainTransferLock, input, output)
+	req = c.newRequest(op, input, output)
 	output = &EnableDomainTransferLockOutput{}
 	req.Data = output
 	return
@@ -232,33 +197,27 @@ func (c *Route53Domains) EnableDomainTransferLockRequest(input *EnableDomainTran
 // ID that you can use to track the progress and completion of the action. If
 // the request is not completed successfully, the domain registrant will be
 // notified by email.
-func (c *Route53Domains) EnableDomainTransferLock(input *EnableDomainTransferLockInput) (output *EnableDomainTransferLockOutput, err error) {
+func (c *Route53Domains) EnableDomainTransferLock(input *EnableDomainTransferLockInput) (*EnableDomainTransferLockOutput, error) {
 	req, out := c.EnableDomainTransferLockRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opEnableDomainTransferLock *aws.Operation
+const opGetDomainDetail = "GetDomainDetail"
 
 // GetDomainDetailRequest generates a request for the GetDomainDetail operation.
 func (c *Route53Domains) GetDomainDetailRequest(input *GetDomainDetailInput) (req *aws.Request, output *GetDomainDetailOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetDomainDetail == nil {
-		opGetDomainDetail = &aws.Operation{
-			Name:       "GetDomainDetail",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opGetDomainDetail,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &GetDomainDetailInput{}
 	}
 
-	req = c.newRequest(opGetDomainDetail, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetDomainDetailOutput{}
 	req.Data = output
 	return
@@ -266,66 +225,60 @@ func (c *Route53Domains) GetDomainDetailRequest(input *GetDomainDetailInput) (re
 
 // This operation returns detailed information about the domain. The domain's
 // contact information is also returned as part of the output.
-func (c *Route53Domains) GetDomainDetail(input *GetDomainDetailInput) (output *GetDomainDetailOutput, err error) {
+func (c *Route53Domains) GetDomainDetail(input *GetDomainDetailInput) (*GetDomainDetailOutput, error) {
 	req, out := c.GetDomainDetailRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetDomainDetail *aws.Operation
+const opGetOperationDetail = "GetOperationDetail"
 
 // GetOperationDetailRequest generates a request for the GetOperationDetail operation.
 func (c *Route53Domains) GetOperationDetailRequest(input *GetOperationDetailInput) (req *aws.Request, output *GetOperationDetailOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetOperationDetail == nil {
-		opGetOperationDetail = &aws.Operation{
-			Name:       "GetOperationDetail",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opGetOperationDetail,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &GetOperationDetailInput{}
 	}
 
-	req = c.newRequest(opGetOperationDetail, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetOperationDetailOutput{}
 	req.Data = output
 	return
 }
 
 // This operation returns the current status of an operation that is not completed.
-func (c *Route53Domains) GetOperationDetail(input *GetOperationDetailInput) (output *GetOperationDetailOutput, err error) {
+func (c *Route53Domains) GetOperationDetail(input *GetOperationDetailInput) (*GetOperationDetailOutput, error) {
 	req, out := c.GetOperationDetailRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetOperationDetail *aws.Operation
+const opListDomains = "ListDomains"
 
 // ListDomainsRequest generates a request for the ListDomains operation.
 func (c *Route53Domains) ListDomainsRequest(input *ListDomainsInput) (req *aws.Request, output *ListDomainsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListDomains == nil {
-		opListDomains = &aws.Operation{
-			Name:       "ListDomains",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opListDomains,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"NextPageMarker"},
+			LimitToken:      "MaxItems",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &ListDomainsInput{}
 	}
 
-	req = c.newRequest(opListDomains, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListDomainsOutput{}
 	req.Data = output
 	return
@@ -333,66 +286,74 @@ func (c *Route53Domains) ListDomainsRequest(input *ListDomainsInput) (req *aws.R
 
 // This operation returns all the domain names registered with Amazon Route
 // 53 for the current AWS account.
-func (c *Route53Domains) ListDomains(input *ListDomainsInput) (output *ListDomainsOutput, err error) {
+func (c *Route53Domains) ListDomains(input *ListDomainsInput) (*ListDomainsOutput, error) {
 	req, out := c.ListDomainsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListDomains *aws.Operation
+func (c *Route53Domains) ListDomainsPages(input *ListDomainsInput, fn func(p *ListDomainsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.ListDomainsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*ListDomainsOutput), lastPage)
+	})
+}
+
+const opListOperations = "ListOperations"
 
 // ListOperationsRequest generates a request for the ListOperations operation.
 func (c *Route53Domains) ListOperationsRequest(input *ListOperationsInput) (req *aws.Request, output *ListOperationsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListOperations == nil {
-		opListOperations = &aws.Operation{
-			Name:       "ListOperations",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opListOperations,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"NextPageMarker"},
+			LimitToken:      "MaxItems",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &ListOperationsInput{}
 	}
 
-	req = c.newRequest(opListOperations, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListOperationsOutput{}
 	req.Data = output
 	return
 }
 
 // This operation returns the operation IDs of operations that are not yet complete.
-func (c *Route53Domains) ListOperations(input *ListOperationsInput) (output *ListOperationsOutput, err error) {
+func (c *Route53Domains) ListOperations(input *ListOperationsInput) (*ListOperationsOutput, error) {
 	req, out := c.ListOperationsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListOperations *aws.Operation
+func (c *Route53Domains) ListOperationsPages(input *ListOperationsInput, fn func(p *ListOperationsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.ListOperationsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*ListOperationsOutput), lastPage)
+	})
+}
+
+const opListTagsForDomain = "ListTagsForDomain"
 
 // ListTagsForDomainRequest generates a request for the ListTagsForDomain operation.
 func (c *Route53Domains) ListTagsForDomainRequest(input *ListTagsForDomainInput) (req *aws.Request, output *ListTagsForDomainOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListTagsForDomain == nil {
-		opListTagsForDomain = &aws.Operation{
-			Name:       "ListTagsForDomain",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opListTagsForDomain,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ListTagsForDomainInput{}
 	}
 
-	req = c.newRequest(opListTagsForDomain, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListTagsForDomainOutput{}
 	req.Data = output
 	return
@@ -403,33 +364,27 @@ func (c *Route53Domains) ListTagsForDomainRequest(input *ListTagsForDomainInput)
 //
 // All tag operations are eventually consistent; subsequent operations may
 // not immediately represent all issued operations.
-func (c *Route53Domains) ListTagsForDomain(input *ListTagsForDomainInput) (output *ListTagsForDomainOutput, err error) {
+func (c *Route53Domains) ListTagsForDomain(input *ListTagsForDomainInput) (*ListTagsForDomainOutput, error) {
 	req, out := c.ListTagsForDomainRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListTagsForDomain *aws.Operation
+const opRegisterDomain = "RegisterDomain"
 
 // RegisterDomainRequest generates a request for the RegisterDomain operation.
 func (c *Route53Domains) RegisterDomainRequest(input *RegisterDomainInput) (req *aws.Request, output *RegisterDomainOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRegisterDomain == nil {
-		opRegisterDomain = &aws.Operation{
-			Name:       "RegisterDomain",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRegisterDomain,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RegisterDomainInput{}
 	}
 
-	req = c.newRequest(opRegisterDomain, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RegisterDomainOutput{}
 	req.Data = output
 	return
@@ -454,33 +409,27 @@ func (c *Route53Domains) RegisterDomainRequest(input *RegisterDomainInput) (req 
 // successfully, the domain registrant is notified by email. Charges your AWS
 // account an amount based on the top-level domain. For more information, see
 // Amazon Route 53 Pricing (http://aws.amazon.com/route53/pricing/).
-func (c *Route53Domains) RegisterDomain(input *RegisterDomainInput) (output *RegisterDomainOutput, err error) {
+func (c *Route53Domains) RegisterDomain(input *RegisterDomainInput) (*RegisterDomainOutput, error) {
 	req, out := c.RegisterDomainRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRegisterDomain *aws.Operation
+const opRetrieveDomainAuthCode = "RetrieveDomainAuthCode"
 
 // RetrieveDomainAuthCodeRequest generates a request for the RetrieveDomainAuthCode operation.
 func (c *Route53Domains) RetrieveDomainAuthCodeRequest(input *RetrieveDomainAuthCodeInput) (req *aws.Request, output *RetrieveDomainAuthCodeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRetrieveDomainAuthCode == nil {
-		opRetrieveDomainAuthCode = &aws.Operation{
-			Name:       "RetrieveDomainAuthCode",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRetrieveDomainAuthCode,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RetrieveDomainAuthCodeInput{}
 	}
 
-	req = c.newRequest(opRetrieveDomainAuthCode, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RetrieveDomainAuthCodeOutput{}
 	req.Data = output
 	return
@@ -488,33 +437,27 @@ func (c *Route53Domains) RetrieveDomainAuthCodeRequest(input *RetrieveDomainAuth
 
 // This operation returns the AuthCode for the domain. To transfer a domain
 // to another registrar, you provide this value to the new registrar.
-func (c *Route53Domains) RetrieveDomainAuthCode(input *RetrieveDomainAuthCodeInput) (output *RetrieveDomainAuthCodeOutput, err error) {
+func (c *Route53Domains) RetrieveDomainAuthCode(input *RetrieveDomainAuthCodeInput) (*RetrieveDomainAuthCodeOutput, error) {
 	req, out := c.RetrieveDomainAuthCodeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRetrieveDomainAuthCode *aws.Operation
+const opTransferDomain = "TransferDomain"
 
 // TransferDomainRequest generates a request for the TransferDomain operation.
 func (c *Route53Domains) TransferDomainRequest(input *TransferDomainInput) (req *aws.Request, output *TransferDomainOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opTransferDomain == nil {
-		opTransferDomain = &aws.Operation{
-			Name:       "TransferDomain",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opTransferDomain,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &TransferDomainInput{}
 	}
 
-	req = c.newRequest(opTransferDomain, input, output)
+	req = c.newRequest(op, input, output)
 	output = &TransferDomainOutput{}
 	req.Data = output
 	return
@@ -544,33 +487,27 @@ func (c *Route53Domains) TransferDomainRequest(input *TransferDomainInput) (req 
 // operation ID that you can use to track the progress and completion of the
 // action. If the transfer doesn't complete successfully, the domain registrant
 // will be notified by email.
-func (c *Route53Domains) TransferDomain(input *TransferDomainInput) (output *TransferDomainOutput, err error) {
+func (c *Route53Domains) TransferDomain(input *TransferDomainInput) (*TransferDomainOutput, error) {
 	req, out := c.TransferDomainRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opTransferDomain *aws.Operation
+const opUpdateDomainContact = "UpdateDomainContact"
 
 // UpdateDomainContactRequest generates a request for the UpdateDomainContact operation.
 func (c *Route53Domains) UpdateDomainContactRequest(input *UpdateDomainContactInput) (req *aws.Request, output *UpdateDomainContactOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUpdateDomainContact == nil {
-		opUpdateDomainContact = &aws.Operation{
-			Name:       "UpdateDomainContact",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opUpdateDomainContact,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &UpdateDomainContactInput{}
 	}
 
-	req = c.newRequest(opUpdateDomainContact, input, output)
+	req = c.newRequest(op, input, output)
 	output = &UpdateDomainContactOutput{}
 	req.Data = output
 	return
@@ -584,33 +521,27 @@ func (c *Route53Domains) UpdateDomainContactRequest(input *UpdateDomainContactIn
 // can use to track the progress and completion of the action. If the request
 // is not completed successfully, the domain registrant will be notified by
 // email.
-func (c *Route53Domains) UpdateDomainContact(input *UpdateDomainContactInput) (output *UpdateDomainContactOutput, err error) {
+func (c *Route53Domains) UpdateDomainContact(input *UpdateDomainContactInput) (*UpdateDomainContactOutput, error) {
 	req, out := c.UpdateDomainContactRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opUpdateDomainContact *aws.Operation
+const opUpdateDomainContactPrivacy = "UpdateDomainContactPrivacy"
 
 // UpdateDomainContactPrivacyRequest generates a request for the UpdateDomainContactPrivacy operation.
 func (c *Route53Domains) UpdateDomainContactPrivacyRequest(input *UpdateDomainContactPrivacyInput) (req *aws.Request, output *UpdateDomainContactPrivacyOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUpdateDomainContactPrivacy == nil {
-		opUpdateDomainContactPrivacy = &aws.Operation{
-			Name:       "UpdateDomainContactPrivacy",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opUpdateDomainContactPrivacy,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &UpdateDomainContactPrivacyInput{}
 	}
 
-	req = c.newRequest(opUpdateDomainContactPrivacy, input, output)
+	req = c.newRequest(op, input, output)
 	output = &UpdateDomainContactPrivacyOutput{}
 	req.Data = output
 	return
@@ -627,33 +558,27 @@ func (c *Route53Domains) UpdateDomainContactPrivacyRequest(input *UpdateDomainCo
 // you can use with GetOperationDetail to track the progress and completion
 // of the action. If the request is not completed successfully, the domain registrant
 // will be notified by email.
-func (c *Route53Domains) UpdateDomainContactPrivacy(input *UpdateDomainContactPrivacyInput) (output *UpdateDomainContactPrivacyOutput, err error) {
+func (c *Route53Domains) UpdateDomainContactPrivacy(input *UpdateDomainContactPrivacyInput) (*UpdateDomainContactPrivacyOutput, error) {
 	req, out := c.UpdateDomainContactPrivacyRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opUpdateDomainContactPrivacy *aws.Operation
+const opUpdateDomainNameservers = "UpdateDomainNameservers"
 
 // UpdateDomainNameserversRequest generates a request for the UpdateDomainNameservers operation.
 func (c *Route53Domains) UpdateDomainNameserversRequest(input *UpdateDomainNameserversInput) (req *aws.Request, output *UpdateDomainNameserversOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUpdateDomainNameservers == nil {
-		opUpdateDomainNameservers = &aws.Operation{
-			Name:       "UpdateDomainNameservers",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opUpdateDomainNameservers,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &UpdateDomainNameserversInput{}
 	}
 
-	req = c.newRequest(opUpdateDomainNameservers, input, output)
+	req = c.newRequest(op, input, output)
 	output = &UpdateDomainNameserversOutput{}
 	req.Data = output
 	return
@@ -667,33 +592,27 @@ func (c *Route53Domains) UpdateDomainNameserversRequest(input *UpdateDomainNames
 // If successful, this operation returns an operation ID that you can use to
 // track the progress and completion of the action. If the request is not completed
 // successfully, the domain registrant will be notified by email.
-func (c *Route53Domains) UpdateDomainNameservers(input *UpdateDomainNameserversInput) (output *UpdateDomainNameserversOutput, err error) {
+func (c *Route53Domains) UpdateDomainNameservers(input *UpdateDomainNameserversInput) (*UpdateDomainNameserversOutput, error) {
 	req, out := c.UpdateDomainNameserversRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opUpdateDomainNameservers *aws.Operation
+const opUpdateTagsForDomain = "UpdateTagsForDomain"
 
 // UpdateTagsForDomainRequest generates a request for the UpdateTagsForDomain operation.
 func (c *Route53Domains) UpdateTagsForDomainRequest(input *UpdateTagsForDomainInput) (req *aws.Request, output *UpdateTagsForDomainOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUpdateTagsForDomain == nil {
-		opUpdateTagsForDomain = &aws.Operation{
-			Name:       "UpdateTagsForDomain",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opUpdateTagsForDomain,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &UpdateTagsForDomainInput{}
 	}
 
-	req = c.newRequest(opUpdateTagsForDomain, input, output)
+	req = c.newRequest(op, input, output)
 	output = &UpdateTagsForDomainOutput{}
 	req.Data = output
 	return
@@ -703,14 +622,11 @@ func (c *Route53Domains) UpdateTagsForDomainRequest(input *UpdateTagsForDomainIn
 //
 // All tag operations are eventually consistent; subsequent operations may
 // not immediately represent all issued operations.
-func (c *Route53Domains) UpdateTagsForDomain(input *UpdateTagsForDomainInput) (output *UpdateTagsForDomainOutput, err error) {
+func (c *Route53Domains) UpdateTagsForDomain(input *UpdateTagsForDomainInput) (*UpdateTagsForDomainOutput, error) {
 	req, out := c.UpdateTagsForDomainRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
-
-var opUpdateTagsForDomain *aws.Operation
 
 // The CheckDomainAvailability request contains the following elements.
 type CheckDomainAvailabilityInput struct {
@@ -730,11 +646,21 @@ type CheckDomainAvailabilityInput struct {
 	// Reserved for future use.
 	IDNLangCode *string `locationName:"IdnLangCode" type:"string"`
 
-	metadataCheckDomainAvailabilityInput `json:"-", xml:"-"`
+	metadataCheckDomainAvailabilityInput `json:"-" xml:"-"`
 }
 
 type metadataCheckDomainAvailabilityInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CheckDomainAvailabilityInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CheckDomainAvailabilityInput) GoString() string {
+	return s.String()
 }
 
 // The CheckDomainAvailability response includes the following elements.
@@ -752,14 +678,28 @@ type CheckDomainAvailabilityOutput struct {
 	// name is available and can be preordered.  UNAVAILABLE – The domain name is
 	// not available.  UNAVAILABLE_PREMIUM – The domain name is not available.
 	// UNAVAILABLE_RESTRICTED – The domain name is forbidden.  RESERVED – The domain
-	// name has been reserved for another person or organization.
+	// name has been reserved for another person or organization.  DONT_KNOW – The
+	// TLD registry didn't reply with a definitive answer about whether the domain
+	// name is available. Amazon Route 53 can return this response for a variety
+	// of reasons, for example, the registry is performing maintenance. Try again
+	// later.
 	Availability *string `type:"string" required:"true"`
 
-	metadataCheckDomainAvailabilityOutput `json:"-", xml:"-"`
+	metadataCheckDomainAvailabilityOutput `json:"-" xml:"-"`
 }
 
 type metadataCheckDomainAvailabilityOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CheckDomainAvailabilityOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CheckDomainAvailabilityOutput) GoString() string {
+	return s.String()
 }
 
 // ContactDetail includes the following elements.
@@ -954,11 +894,21 @@ type ContactDetail struct {
 	// Required: No
 	ZipCode *string `type:"string"`
 
-	metadataContactDetail `json:"-", xml:"-"`
+	metadataContactDetail `json:"-" xml:"-"`
 }
 
 type metadataContactDetail struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ContactDetail) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ContactDetail) GoString() string {
+	return s.String()
 }
 
 // The DeleteTagsForDomainRequest includes the following elements.
@@ -991,37 +941,77 @@ type DeleteTagsForDomainInput struct {
 	// '>
 	TagsToDelete []*string `type:"list" required:"true"`
 
-	metadataDeleteTagsForDomainInput `json:"-", xml:"-"`
+	metadataDeleteTagsForDomainInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteTagsForDomainInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteTagsForDomainInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteTagsForDomainInput) GoString() string {
+	return s.String()
+}
+
 type DeleteTagsForDomainOutput struct {
-	metadataDeleteTagsForDomainOutput `json:"-", xml:"-"`
+	metadataDeleteTagsForDomainOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteTagsForDomainOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteTagsForDomainOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteTagsForDomainOutput) GoString() string {
+	return s.String()
+}
+
 type DisableDomainAutoRenewInput struct {
 	DomainName *string `type:"string" required:"true"`
 
-	metadataDisableDomainAutoRenewInput `json:"-", xml:"-"`
+	metadataDisableDomainAutoRenewInput `json:"-" xml:"-"`
 }
 
 type metadataDisableDomainAutoRenewInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DisableDomainAutoRenewInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DisableDomainAutoRenewInput) GoString() string {
+	return s.String()
+}
+
 type DisableDomainAutoRenewOutput struct {
-	metadataDisableDomainAutoRenewOutput `json:"-", xml:"-"`
+	metadataDisableDomainAutoRenewOutput `json:"-" xml:"-"`
 }
 
 type metadataDisableDomainAutoRenewOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DisableDomainAutoRenewOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DisableDomainAutoRenewOutput) GoString() string {
+	return s.String()
 }
 
 // The DisableDomainTransferLock request includes the following element.
@@ -1039,11 +1029,21 @@ type DisableDomainTransferLockInput struct {
 	// Required: Yes
 	DomainName *string `type:"string" required:"true"`
 
-	metadataDisableDomainTransferLockInput `json:"-", xml:"-"`
+	metadataDisableDomainTransferLockInput `json:"-" xml:"-"`
 }
 
 type metadataDisableDomainTransferLockInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DisableDomainTransferLockInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DisableDomainTransferLockInput) GoString() string {
+	return s.String()
 }
 
 // The DisableDomainTransferLock response includes the following element.
@@ -1058,11 +1058,21 @@ type DisableDomainTransferLockOutput struct {
 	// Constraints: Maximum 255 characters.
 	OperationID *string `locationName:"OperationId" type:"string" required:"true"`
 
-	metadataDisableDomainTransferLockOutput `json:"-", xml:"-"`
+	metadataDisableDomainTransferLockOutput `json:"-" xml:"-"`
 }
 
 type metadataDisableDomainTransferLockOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DisableDomainTransferLockOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DisableDomainTransferLockOutput) GoString() string {
+	return s.String()
 }
 
 type DomainSummary struct {
@@ -1091,29 +1101,59 @@ type DomainSummary struct {
 	// Valid values: True | False
 	TransferLock *bool `type:"boolean"`
 
-	metadataDomainSummary `json:"-", xml:"-"`
+	metadataDomainSummary `json:"-" xml:"-"`
 }
 
 type metadataDomainSummary struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DomainSummary) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DomainSummary) GoString() string {
+	return s.String()
+}
+
 type EnableDomainAutoRenewInput struct {
 	DomainName *string `type:"string" required:"true"`
 
-	metadataEnableDomainAutoRenewInput `json:"-", xml:"-"`
+	metadataEnableDomainAutoRenewInput `json:"-" xml:"-"`
 }
 
 type metadataEnableDomainAutoRenewInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s EnableDomainAutoRenewInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EnableDomainAutoRenewInput) GoString() string {
+	return s.String()
+}
+
 type EnableDomainAutoRenewOutput struct {
-	metadataEnableDomainAutoRenewOutput `json:"-", xml:"-"`
+	metadataEnableDomainAutoRenewOutput `json:"-" xml:"-"`
 }
 
 type metadataEnableDomainAutoRenewOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s EnableDomainAutoRenewOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EnableDomainAutoRenewOutput) GoString() string {
+	return s.String()
 }
 
 // The EnableDomainTransferLock request includes the following element.
@@ -1131,11 +1171,21 @@ type EnableDomainTransferLockInput struct {
 	// Required: Yes
 	DomainName *string `type:"string" required:"true"`
 
-	metadataEnableDomainTransferLockInput `json:"-", xml:"-"`
+	metadataEnableDomainTransferLockInput `json:"-" xml:"-"`
 }
 
 type metadataEnableDomainTransferLockInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s EnableDomainTransferLockInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EnableDomainTransferLockInput) GoString() string {
+	return s.String()
 }
 
 // The EnableDomainTransferLock response includes the following elements.
@@ -1150,11 +1200,21 @@ type EnableDomainTransferLockOutput struct {
 	// Constraints: Maximum 255 characters.
 	OperationID *string `locationName:"OperationId" type:"string" required:"true"`
 
-	metadataEnableDomainTransferLockOutput `json:"-", xml:"-"`
+	metadataEnableDomainTransferLockOutput `json:"-" xml:"-"`
 }
 
 type metadataEnableDomainTransferLockOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s EnableDomainTransferLockOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EnableDomainTransferLockOutput) GoString() string {
+	return s.String()
 }
 
 // ExtraParam includes the following elements.
@@ -1190,11 +1250,21 @@ type ExtraParam struct {
 	// Required: Yes
 	Value *string `type:"string" required:"true"`
 
-	metadataExtraParam `json:"-", xml:"-"`
+	metadataExtraParam `json:"-" xml:"-"`
 }
 
 type metadataExtraParam struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ExtraParam) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ExtraParam) GoString() string {
+	return s.String()
 }
 
 // The GetDomainDetail request includes the following element.
@@ -1212,11 +1282,21 @@ type GetDomainDetailInput struct {
 	// Required: Yes
 	DomainName *string `type:"string" required:"true"`
 
-	metadataGetDomainDetailInput `json:"-", xml:"-"`
+	metadataGetDomainDetailInput `json:"-" xml:"-"`
 }
 
 type metadataGetDomainDetailInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetDomainDetailInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetDomainDetailInput) GoString() string {
+	return s.String()
 }
 
 // The GetDomainDetail response includes the following elements.
@@ -1358,11 +1438,21 @@ type GetDomainDetailOutput struct {
 	// Type: String
 	WhoIsServer *string `type:"string"`
 
-	metadataGetDomainDetailOutput `json:"-", xml:"-"`
+	metadataGetDomainDetailOutput `json:"-" xml:"-"`
 }
 
 type metadataGetDomainDetailOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetDomainDetailOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetDomainDetailOutput) GoString() string {
+	return s.String()
 }
 
 // The GetOperationDetail request includes the following element.
@@ -1377,11 +1467,21 @@ type GetOperationDetailInput struct {
 	// Required: Yes
 	OperationID *string `locationName:"OperationId" type:"string" required:"true"`
 
-	metadataGetOperationDetailInput `json:"-", xml:"-"`
+	metadataGetOperationDetailInput `json:"-" xml:"-"`
 }
 
 type metadataGetOperationDetailInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetOperationDetailInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetOperationDetailInput) GoString() string {
+	return s.String()
 }
 
 // The GetOperationDetail response includes the following elements.
@@ -1414,11 +1514,21 @@ type GetOperationDetailOutput struct {
 	// Type: String
 	Type *string `type:"string"`
 
-	metadataGetOperationDetailOutput `json:"-", xml:"-"`
+	metadataGetOperationDetailOutput `json:"-" xml:"-"`
 }
 
 type metadataGetOperationDetailOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetOperationDetailOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetOperationDetailOutput) GoString() string {
+	return s.String()
 }
 
 // The ListDomains request includes the following elements.
@@ -1450,11 +1560,21 @@ type ListDomainsInput struct {
 	// Required: No
 	MaxItems *int64 `type:"integer"`
 
-	metadataListDomainsInput `json:"-", xml:"-"`
+	metadataListDomainsInput `json:"-" xml:"-"`
 }
 
 type metadataListDomainsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListDomainsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListDomainsInput) GoString() string {
+	return s.String()
 }
 
 // The ListDomains response includes the following elements.
@@ -1475,11 +1595,21 @@ type ListDomainsOutput struct {
 	// Parent: Operations
 	NextPageMarker *string `type:"string"`
 
-	metadataListDomainsOutput `json:"-", xml:"-"`
+	metadataListDomainsOutput `json:"-" xml:"-"`
 }
 
 type metadataListDomainsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListDomainsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListDomainsOutput) GoString() string {
+	return s.String()
 }
 
 // The ListOperations request includes the following elements.
@@ -1509,11 +1639,21 @@ type ListOperationsInput struct {
 	// Required: No
 	MaxItems *int64 `type:"integer"`
 
-	metadataListOperationsInput `json:"-", xml:"-"`
+	metadataListOperationsInput `json:"-" xml:"-"`
 }
 
 type metadataListOperationsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListOperationsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListOperationsInput) GoString() string {
+	return s.String()
 }
 
 // The ListOperations response includes the following elements.
@@ -1534,11 +1674,21 @@ type ListOperationsOutput struct {
 	// Children: OperationId, Status, SubmittedDate, Type
 	Operations []*OperationSummary `type:"list" required:"true"`
 
-	metadataListOperationsOutput `json:"-", xml:"-"`
+	metadataListOperationsOutput `json:"-" xml:"-"`
 }
 
 type metadataListOperationsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListOperationsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListOperationsOutput) GoString() string {
+	return s.String()
 }
 
 // The ListTagsForDomainRequest includes the following elements.
@@ -1546,11 +1696,21 @@ type ListTagsForDomainInput struct {
 	// The domain for which you want to get a list of tags.
 	DomainName *string `type:"string" required:"true"`
 
-	metadataListTagsForDomainInput `json:"-", xml:"-"`
+	metadataListTagsForDomainInput `json:"-" xml:"-"`
 }
 
 type metadataListTagsForDomainInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListTagsForDomainInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListTagsForDomainInput) GoString() string {
+	return s.String()
 }
 
 // The ListTagsForDomain response includes the following elements.
@@ -1574,11 +1734,21 @@ type ListTagsForDomainOutput struct {
 	// Type: String
 	TagList []*Tag `type:"list" required:"true"`
 
-	metadataListTagsForDomainOutput `json:"-", xml:"-"`
+	metadataListTagsForDomainOutput `json:"-" xml:"-"`
 }
 
 type metadataListTagsForDomainOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListTagsForDomainOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListTagsForDomainOutput) GoString() string {
+	return s.String()
 }
 
 // Nameserver includes the following elements.
@@ -1604,11 +1774,21 @@ type Nameserver struct {
 	// Parent: Nameservers
 	Name *string `type:"string" required:"true"`
 
-	metadataNameserver `json:"-", xml:"-"`
+	metadataNameserver `json:"-" xml:"-"`
 }
 
 type metadataNameserver struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Nameserver) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Nameserver) GoString() string {
+	return s.String()
 }
 
 // OperationSummary includes the following elements.
@@ -1634,11 +1814,21 @@ type OperationSummary struct {
 	// | UPDATE_NAMESERVER | CHANGE_PRIVACY_PROTECTION | DOMAIN_LOCK
 	Type *string `type:"string" required:"true"`
 
-	metadataOperationSummary `json:"-", xml:"-"`
+	metadataOperationSummary `json:"-" xml:"-"`
 }
 
 type metadataOperationSummary struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s OperationSummary) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s OperationSummary) GoString() string {
+	return s.String()
 }
 
 // The RegisterDomain request includes the following elements.
@@ -1758,11 +1948,21 @@ type RegisterDomainInput struct {
 	// Required: Yes
 	TechContact *ContactDetail `type:"structure" required:"true"`
 
-	metadataRegisterDomainInput `json:"-", xml:"-"`
+	metadataRegisterDomainInput `json:"-" xml:"-"`
 }
 
 type metadataRegisterDomainInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RegisterDomainInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RegisterDomainInput) GoString() string {
+	return s.String()
 }
 
 // The RegisterDomain response includes the following element.
@@ -1777,11 +1977,21 @@ type RegisterDomainOutput struct {
 	// Constraints: Maximum 255 characters.
 	OperationID *string `locationName:"OperationId" type:"string" required:"true"`
 
-	metadataRegisterDomainOutput `json:"-", xml:"-"`
+	metadataRegisterDomainOutput `json:"-" xml:"-"`
 }
 
 type metadataRegisterDomainOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RegisterDomainOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RegisterDomainOutput) GoString() string {
+	return s.String()
 }
 
 // The RetrieveDomainAuthCode request includes the following element.
@@ -1799,11 +2009,21 @@ type RetrieveDomainAuthCodeInput struct {
 	// Required: Yes
 	DomainName *string `type:"string" required:"true"`
 
-	metadataRetrieveDomainAuthCodeInput `json:"-", xml:"-"`
+	metadataRetrieveDomainAuthCodeInput `json:"-" xml:"-"`
 }
 
 type metadataRetrieveDomainAuthCodeInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RetrieveDomainAuthCodeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RetrieveDomainAuthCodeInput) GoString() string {
+	return s.String()
 }
 
 // The RetrieveDomainAuthCode response includes the following element.
@@ -1813,11 +2033,21 @@ type RetrieveDomainAuthCodeOutput struct {
 	// Type: String
 	AuthCode *string `type:"string" required:"true"`
 
-	metadataRetrieveDomainAuthCodeOutput `json:"-", xml:"-"`
+	metadataRetrieveDomainAuthCodeOutput `json:"-" xml:"-"`
 }
 
 type metadataRetrieveDomainAuthCodeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RetrieveDomainAuthCodeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RetrieveDomainAuthCodeOutput) GoString() string {
+	return s.String()
 }
 
 // Each tag includes the following elements.
@@ -1828,7 +2058,7 @@ type Tag struct {
 	//
 	// Default: None
 	//
-	// Valid values: A-Z, a-z, 0-9, space, ".:/=+\-%@"
+	// Valid values: A-Z, a-z, 0-9, space, ".:/=+\-@"
 	//
 	// Constraints: Each key can be 1-128 characters long.
 	//
@@ -1841,18 +2071,28 @@ type Tag struct {
 	//
 	// Default: None
 	//
-	// Valid values: A-Z, a-z, 0-9, space, ".:/=+\-%@"
+	// Valid values: A-Z, a-z, 0-9, space, ".:/=+\-@"
 	//
 	// Constraints: Each value can be 0-256 characters long.
 	//
 	// Required: Yes
 	Value *string `type:"string"`
 
-	metadataTag `json:"-", xml:"-"`
+	metadataTag `json:"-" xml:"-"`
 }
 
 type metadataTag struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Tag) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Tag) GoString() string {
+	return s.String()
 }
 
 // The TransferDomain request includes the following elements.
@@ -1989,11 +2229,21 @@ type TransferDomainInput struct {
 	// Required: Yes
 	TechContact *ContactDetail `type:"structure" required:"true"`
 
-	metadataTransferDomainInput `json:"-", xml:"-"`
+	metadataTransferDomainInput `json:"-" xml:"-"`
 }
 
 type metadataTransferDomainInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s TransferDomainInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TransferDomainInput) GoString() string {
+	return s.String()
 }
 
 // The TranserDomain response includes the following element.
@@ -2008,11 +2258,21 @@ type TransferDomainOutput struct {
 	// Constraints: Maximum 255 characters.
 	OperationID *string `locationName:"OperationId" type:"string" required:"true"`
 
-	metadataTransferDomainOutput `json:"-", xml:"-"`
+	metadataTransferDomainOutput `json:"-" xml:"-"`
 }
 
 type metadataTransferDomainOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s TransferDomainOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TransferDomainOutput) GoString() string {
+	return s.String()
 }
 
 // The UpdateDomainContact request includes the following elements.
@@ -2063,11 +2323,21 @@ type UpdateDomainContactInput struct {
 	// Required: Yes
 	TechContact *ContactDetail `type:"structure"`
 
-	metadataUpdateDomainContactInput `json:"-", xml:"-"`
+	metadataUpdateDomainContactInput `json:"-" xml:"-"`
 }
 
 type metadataUpdateDomainContactInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UpdateDomainContactInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UpdateDomainContactInput) GoString() string {
+	return s.String()
 }
 
 // The UpdateDomainContact response includes the following element.
@@ -2082,11 +2352,21 @@ type UpdateDomainContactOutput struct {
 	// Constraints: Maximum 255 characters.
 	OperationID *string `locationName:"OperationId" type:"string" required:"true"`
 
-	metadataUpdateDomainContactOutput `json:"-", xml:"-"`
+	metadataUpdateDomainContactOutput `json:"-" xml:"-"`
 }
 
 type metadataUpdateDomainContactOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UpdateDomainContactOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UpdateDomainContactOutput) GoString() string {
+	return s.String()
 }
 
 // The UpdateDomainContactPrivacy request includes the following elements.
@@ -2146,11 +2426,21 @@ type UpdateDomainContactPrivacyInput struct {
 	// Required: No
 	TechPrivacy *bool `type:"boolean"`
 
-	metadataUpdateDomainContactPrivacyInput `json:"-", xml:"-"`
+	metadataUpdateDomainContactPrivacyInput `json:"-" xml:"-"`
 }
 
 type metadataUpdateDomainContactPrivacyInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UpdateDomainContactPrivacyInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UpdateDomainContactPrivacyInput) GoString() string {
+	return s.String()
 }
 
 // The UpdateDomainContactPrivacy response includes the following element.
@@ -2165,11 +2455,21 @@ type UpdateDomainContactPrivacyOutput struct {
 	// Constraints: Maximum 255 characters.
 	OperationID *string `locationName:"OperationId" type:"string" required:"true"`
 
-	metadataUpdateDomainContactPrivacyOutput `json:"-", xml:"-"`
+	metadataUpdateDomainContactPrivacyOutput `json:"-" xml:"-"`
 }
 
 type metadataUpdateDomainContactPrivacyOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UpdateDomainContactPrivacyOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UpdateDomainContactPrivacyOutput) GoString() string {
+	return s.String()
 }
 
 // The UpdateDomainNameserver request includes the following elements.
@@ -2199,11 +2499,21 @@ type UpdateDomainNameserversInput struct {
 	// Required: Yes
 	Nameservers []*Nameserver `type:"list" required:"true"`
 
-	metadataUpdateDomainNameserversInput `json:"-", xml:"-"`
+	metadataUpdateDomainNameserversInput `json:"-" xml:"-"`
 }
 
 type metadataUpdateDomainNameserversInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UpdateDomainNameserversInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UpdateDomainNameserversInput) GoString() string {
+	return s.String()
 }
 
 // The UpdateDomainNameservers response includes the following element.
@@ -2218,11 +2528,21 @@ type UpdateDomainNameserversOutput struct {
 	// Constraints: Maximum 255 characters.
 	OperationID *string `locationName:"OperationId" type:"string" required:"true"`
 
-	metadataUpdateDomainNameserversOutput `json:"-", xml:"-"`
+	metadataUpdateDomainNameserversOutput `json:"-" xml:"-"`
 }
 
 type metadataUpdateDomainNameserversOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UpdateDomainNameserversOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UpdateDomainNameserversOutput) GoString() string {
+	return s.String()
 }
 
 // The UpdateTagsForDomainRequest includes the following elements.
@@ -2263,7 +2583,7 @@ type UpdateTagsForDomainInput struct {
 	//
 	// Default: None
 	//
-	// Valid values: Unicode characters including alphanumeric, space, and ".:/=+\-%@"
+	// Valid values: Unicode characters including alphanumeric, space, and ".:/=+\-@"
 	//
 	// Constraints: Each key can be 1-128 characters long.
 	//
@@ -2277,24 +2597,44 @@ type UpdateTagsForDomainInput struct {
 	//
 	// Default: None
 	//
-	// Valid values: Unicode characters including alphanumeric, space, and ".:/=+\-%@"
+	// Valid values: Unicode characters including alphanumeric, space, and ".:/=+\-@"
 	//
 	// Constraints: Each value can be 0-256 characters long.
 	//
 	// Required: Yes
 	TagsToUpdate []*Tag `type:"list"`
 
-	metadataUpdateTagsForDomainInput `json:"-", xml:"-"`
+	metadataUpdateTagsForDomainInput `json:"-" xml:"-"`
 }
 
 type metadataUpdateTagsForDomainInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s UpdateTagsForDomainInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UpdateTagsForDomainInput) GoString() string {
+	return s.String()
+}
+
 type UpdateTagsForDomainOutput struct {
-	metadataUpdateTagsForDomainOutput `json:"-", xml:"-"`
+	metadataUpdateTagsForDomainOutput `json:"-" xml:"-"`
 }
 
 type metadataUpdateTagsForDomainOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UpdateTagsForDomainOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UpdateTagsForDomainOutput) GoString() string {
+	return s.String()
 }

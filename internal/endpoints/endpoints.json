@@ -69,12 +69,6 @@
     "sa-east-1/s3": {
       "endpoint": "s3-{region}.amazonaws.com"
     },
-    "eucalyptus/ec2": {
-      "endpoint": "compute.emea.eucalyptus.com:8773"
-    },
-    "eucalyptus/iam": {
-      "endpoint": "euare.emea.eucalyptus.com:8773"
-    },
     "eu-central-1/s3": {
       "endpoint": "{service}.{region}.amazonaws.com",
       "signatureVersion": "v4"

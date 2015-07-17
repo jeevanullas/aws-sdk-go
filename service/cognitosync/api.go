@@ -4,32 +4,27 @@
 package cognitosync
 
 import (
-	"sync"
 	"time"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
-var oprw sync.Mutex
+const opBulkPublish = "BulkPublish"
 
 // BulkPublishRequest generates a request for the BulkPublish operation.
 func (c *CognitoSync) BulkPublishRequest(input *BulkPublishInput) (req *aws.Request, output *BulkPublishOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opBulkPublish == nil {
-		opBulkPublish = &aws.Operation{
-			Name:       "BulkPublish",
-			HTTPMethod: "POST",
-			HTTPPath:   "/identitypools/{IdentityPoolId}/bulkpublish",
-		}
+	op := &aws.Operation{
+		Name:       opBulkPublish,
+		HTTPMethod: "POST",
+		HTTPPath:   "/identitypools/{IdentityPoolId}/bulkpublish",
 	}
 
 	if input == nil {
 		input = &BulkPublishInput{}
 	}
 
-	req = c.newRequest(opBulkPublish, input, output)
+	req = c.newRequest(op, input, output)
 	output = &BulkPublishOutput{}
 	req.Data = output
 	return
@@ -39,33 +34,30 @@ func (c *CognitoSync) BulkPublishRequest(input *BulkPublishInput) (req *aws.Requ
 // the configured stream. Customers are limited to one successful bulk publish
 // per 24 hours. Bulk publish is an asynchronous request, customers can see
 // the status of the request via the GetBulkPublishDetails operation.
-func (c *CognitoSync) BulkPublish(input *BulkPublishInput) (output *BulkPublishOutput, err error) {
+//
+// This API can only be called with developer credentials. You cannot call
+// this API with the temporary user credentials provided by Cognito Identity.
+func (c *CognitoSync) BulkPublish(input *BulkPublishInput) (*BulkPublishOutput, error) {
 	req, out := c.BulkPublishRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opBulkPublish *aws.Operation
+const opDeleteDataset = "DeleteDataset"
 
 // DeleteDatasetRequest generates a request for the DeleteDataset operation.
 func (c *CognitoSync) DeleteDatasetRequest(input *DeleteDatasetInput) (req *aws.Request, output *DeleteDatasetOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteDataset == nil {
-		opDeleteDataset = &aws.Operation{
-			Name:       "DeleteDataset",
-			HTTPMethod: "DELETE",
-			HTTPPath:   "/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteDataset,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}",
 	}
 
 	if input == nil {
 		input = &DeleteDatasetInput{}
 	}
 
-	req = c.newRequest(opDeleteDataset, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteDatasetOutput{}
 	req.Data = output
 	return
@@ -76,35 +68,29 @@ func (c *CognitoSync) DeleteDatasetRequest(input *DeleteDatasetInput) (req *aws.
 // no longer report the merge. Any subsequent operation on this dataset will
 // result in a ResourceNotFoundException.
 //
-// DeleteDataset can be called with temporary user credentials provided by
-// Cognito Identity or with developer credentials.
-func (c *CognitoSync) DeleteDataset(input *DeleteDatasetInput) (output *DeleteDatasetOutput, err error) {
+// This API can be called with temporary user credentials provided by Cognito
+// Identity or with developer credentials.
+func (c *CognitoSync) DeleteDataset(input *DeleteDatasetInput) (*DeleteDatasetOutput, error) {
 	req, out := c.DeleteDatasetRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteDataset *aws.Operation
+const opDescribeDataset = "DescribeDataset"
 
 // DescribeDatasetRequest generates a request for the DescribeDataset operation.
 func (c *CognitoSync) DescribeDatasetRequest(input *DescribeDatasetInput) (req *aws.Request, output *DescribeDatasetOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeDataset == nil {
-		opDescribeDataset = &aws.Operation{
-			Name:       "DescribeDataset",
-			HTTPMethod: "GET",
-			HTTPPath:   "/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeDataset,
+		HTTPMethod: "GET",
+		HTTPPath:   "/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}",
 	}
 
 	if input == nil {
 		input = &DescribeDatasetInput{}
 	}
 
-	req = c.newRequest(opDescribeDataset, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeDatasetOutput{}
 	req.Data = output
 	return
@@ -114,36 +100,30 @@ func (c *CognitoSync) DescribeDatasetRequest(input *DescribeDatasetInput) (req *
 // Cognito Sync, each identity has access only to its own data. Thus, the credentials
 // used to make this API call need to have access to the identity data.
 //
-// DescribeDataset can be called with temporary user credentials provided by
-// Cognito Identity or with developer credentials. You should use Cognito Identity
-// credentials to make this API call.
-func (c *CognitoSync) DescribeDataset(input *DescribeDatasetInput) (output *DescribeDatasetOutput, err error) {
+// This API can be called with temporary user credentials provided by Cognito
+// Identity or with developer credentials. You should use Cognito Identity credentials
+// to make this API call.
+func (c *CognitoSync) DescribeDataset(input *DescribeDatasetInput) (*DescribeDatasetOutput, error) {
 	req, out := c.DescribeDatasetRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeDataset *aws.Operation
+const opDescribeIdentityPoolUsage = "DescribeIdentityPoolUsage"
 
 // DescribeIdentityPoolUsageRequest generates a request for the DescribeIdentityPoolUsage operation.
 func (c *CognitoSync) DescribeIdentityPoolUsageRequest(input *DescribeIdentityPoolUsageInput) (req *aws.Request, output *DescribeIdentityPoolUsageOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeIdentityPoolUsage == nil {
-		opDescribeIdentityPoolUsage = &aws.Operation{
-			Name:       "DescribeIdentityPoolUsage",
-			HTTPMethod: "GET",
-			HTTPPath:   "/identitypools/{IdentityPoolId}",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeIdentityPoolUsage,
+		HTTPMethod: "GET",
+		HTTPPath:   "/identitypools/{IdentityPoolId}",
 	}
 
 	if input == nil {
 		input = &DescribeIdentityPoolUsageInput{}
 	}
 
-	req = c.newRequest(opDescribeIdentityPoolUsage, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeIdentityPoolUsageOutput{}
 	req.Data = output
 	return
@@ -152,36 +132,29 @@ func (c *CognitoSync) DescribeIdentityPoolUsageRequest(input *DescribeIdentityPo
 // Gets usage details (for example, data storage) about a particular identity
 // pool.
 //
-// DescribeIdentityPoolUsage can only be called with developer credentials.
-// You cannot make this API call with the temporary user credentials provided
-// by Cognito Identity.
-func (c *CognitoSync) DescribeIdentityPoolUsage(input *DescribeIdentityPoolUsageInput) (output *DescribeIdentityPoolUsageOutput, err error) {
+// This API can only be called with developer credentials. You cannot call
+// this API with the temporary user credentials provided by Cognito Identity.
+func (c *CognitoSync) DescribeIdentityPoolUsage(input *DescribeIdentityPoolUsageInput) (*DescribeIdentityPoolUsageOutput, error) {
 	req, out := c.DescribeIdentityPoolUsageRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeIdentityPoolUsage *aws.Operation
+const opDescribeIdentityUsage = "DescribeIdentityUsage"
 
 // DescribeIdentityUsageRequest generates a request for the DescribeIdentityUsage operation.
 func (c *CognitoSync) DescribeIdentityUsageRequest(input *DescribeIdentityUsageInput) (req *aws.Request, output *DescribeIdentityUsageOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeIdentityUsage == nil {
-		opDescribeIdentityUsage = &aws.Operation{
-			Name:       "DescribeIdentityUsage",
-			HTTPMethod: "GET",
-			HTTPPath:   "/identitypools/{IdentityPoolId}/identities/{IdentityId}",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeIdentityUsage,
+		HTTPMethod: "GET",
+		HTTPPath:   "/identitypools/{IdentityPoolId}/identities/{IdentityId}",
 	}
 
 	if input == nil {
 		input = &DescribeIdentityUsageInput{}
 	}
 
-	req = c.newRequest(opDescribeIdentityUsage, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeIdentityUsageOutput{}
 	req.Data = output
 	return
@@ -190,101 +163,120 @@ func (c *CognitoSync) DescribeIdentityUsageRequest(input *DescribeIdentityUsageI
 // Gets usage information for an identity, including number of datasets and
 // data usage.
 //
-// DescribeIdentityUsage can be called with temporary user credentials provided
-// by Cognito Identity or with developer credentials.
-func (c *CognitoSync) DescribeIdentityUsage(input *DescribeIdentityUsageInput) (output *DescribeIdentityUsageOutput, err error) {
+// This API can be called with temporary user credentials provided by Cognito
+// Identity or with developer credentials.
+func (c *CognitoSync) DescribeIdentityUsage(input *DescribeIdentityUsageInput) (*DescribeIdentityUsageOutput, error) {
 	req, out := c.DescribeIdentityUsageRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeIdentityUsage *aws.Operation
+const opGetBulkPublishDetails = "GetBulkPublishDetails"
 
 // GetBulkPublishDetailsRequest generates a request for the GetBulkPublishDetails operation.
 func (c *CognitoSync) GetBulkPublishDetailsRequest(input *GetBulkPublishDetailsInput) (req *aws.Request, output *GetBulkPublishDetailsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetBulkPublishDetails == nil {
-		opGetBulkPublishDetails = &aws.Operation{
-			Name:       "GetBulkPublishDetails",
-			HTTPMethod: "POST",
-			HTTPPath:   "/identitypools/{IdentityPoolId}/getBulkPublishDetails",
-		}
+	op := &aws.Operation{
+		Name:       opGetBulkPublishDetails,
+		HTTPMethod: "POST",
+		HTTPPath:   "/identitypools/{IdentityPoolId}/getBulkPublishDetails",
 	}
 
 	if input == nil {
 		input = &GetBulkPublishDetailsInput{}
 	}
 
-	req = c.newRequest(opGetBulkPublishDetails, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetBulkPublishDetailsOutput{}
 	req.Data = output
 	return
 }
 
 // Get the status of the last BulkPublish operation for an identity pool.
-func (c *CognitoSync) GetBulkPublishDetails(input *GetBulkPublishDetailsInput) (output *GetBulkPublishDetailsOutput, err error) {
+//
+// This API can only be called with developer credentials. You cannot call
+// this API with the temporary user credentials provided by Cognito Identity.
+func (c *CognitoSync) GetBulkPublishDetails(input *GetBulkPublishDetailsInput) (*GetBulkPublishDetailsOutput, error) {
 	req, out := c.GetBulkPublishDetailsRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opGetCognitoEvents = "GetCognitoEvents"
+
+// GetCognitoEventsRequest generates a request for the GetCognitoEvents operation.
+func (c *CognitoSync) GetCognitoEventsRequest(input *GetCognitoEventsInput) (req *aws.Request, output *GetCognitoEventsOutput) {
+	op := &aws.Operation{
+		Name:       opGetCognitoEvents,
+		HTTPMethod: "GET",
+		HTTPPath:   "/identitypools/{IdentityPoolId}/events",
+	}
+
+	if input == nil {
+		input = &GetCognitoEventsInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &GetCognitoEventsOutput{}
+	req.Data = output
 	return
 }
 
-var opGetBulkPublishDetails *aws.Operation
+// Gets the events and the corresponding Lambda functions associated with an
+// identity pool.
+//
+// This API can only be called with developer credentials. You cannot call
+// this API with the temporary user credentials provided by Cognito Identity.
+func (c *CognitoSync) GetCognitoEvents(input *GetCognitoEventsInput) (*GetCognitoEventsOutput, error) {
+	req, out := c.GetCognitoEventsRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opGetIdentityPoolConfiguration = "GetIdentityPoolConfiguration"
 
 // GetIdentityPoolConfigurationRequest generates a request for the GetIdentityPoolConfiguration operation.
 func (c *CognitoSync) GetIdentityPoolConfigurationRequest(input *GetIdentityPoolConfigurationInput) (req *aws.Request, output *GetIdentityPoolConfigurationOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetIdentityPoolConfiguration == nil {
-		opGetIdentityPoolConfiguration = &aws.Operation{
-			Name:       "GetIdentityPoolConfiguration",
-			HTTPMethod: "GET",
-			HTTPPath:   "/identitypools/{IdentityPoolId}/configuration",
-		}
+	op := &aws.Operation{
+		Name:       opGetIdentityPoolConfiguration,
+		HTTPMethod: "GET",
+		HTTPPath:   "/identitypools/{IdentityPoolId}/configuration",
 	}
 
 	if input == nil {
 		input = &GetIdentityPoolConfigurationInput{}
 	}
 
-	req = c.newRequest(opGetIdentityPoolConfiguration, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetIdentityPoolConfigurationOutput{}
 	req.Data = output
 	return
 }
 
 // Gets the configuration settings of an identity pool.
-func (c *CognitoSync) GetIdentityPoolConfiguration(input *GetIdentityPoolConfigurationInput) (output *GetIdentityPoolConfigurationOutput, err error) {
+//
+// This API can only be called with developer credentials. You cannot call
+// this API with the temporary user credentials provided by Cognito Identity.
+func (c *CognitoSync) GetIdentityPoolConfiguration(input *GetIdentityPoolConfigurationInput) (*GetIdentityPoolConfigurationOutput, error) {
 	req, out := c.GetIdentityPoolConfigurationRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetIdentityPoolConfiguration *aws.Operation
+const opListDatasets = "ListDatasets"
 
 // ListDatasetsRequest generates a request for the ListDatasets operation.
 func (c *CognitoSync) ListDatasetsRequest(input *ListDatasetsInput) (req *aws.Request, output *ListDatasetsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListDatasets == nil {
-		opListDatasets = &aws.Operation{
-			Name:       "ListDatasets",
-			HTTPMethod: "GET",
-			HTTPPath:   "/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets",
-		}
+	op := &aws.Operation{
+		Name:       opListDatasets,
+		HTTPMethod: "GET",
+		HTTPPath:   "/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets",
 	}
 
 	if input == nil {
 		input = &ListDatasetsInput{}
 	}
 
-	req = c.newRequest(opListDatasets, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListDatasetsOutput{}
 	req.Data = output
 	return
@@ -297,33 +289,27 @@ func (c *CognitoSync) ListDatasetsRequest(input *ListDatasetsInput) (req *aws.Re
 // ListDatasets can be called with temporary user credentials provided by Cognito
 // Identity or with developer credentials. You should use the Cognito Identity
 // credentials to make this API call.
-func (c *CognitoSync) ListDatasets(input *ListDatasetsInput) (output *ListDatasetsOutput, err error) {
+func (c *CognitoSync) ListDatasets(input *ListDatasetsInput) (*ListDatasetsOutput, error) {
 	req, out := c.ListDatasetsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListDatasets *aws.Operation
+const opListIdentityPoolUsage = "ListIdentityPoolUsage"
 
 // ListIdentityPoolUsageRequest generates a request for the ListIdentityPoolUsage operation.
 func (c *CognitoSync) ListIdentityPoolUsageRequest(input *ListIdentityPoolUsageInput) (req *aws.Request, output *ListIdentityPoolUsageOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListIdentityPoolUsage == nil {
-		opListIdentityPoolUsage = &aws.Operation{
-			Name:       "ListIdentityPoolUsage",
-			HTTPMethod: "GET",
-			HTTPPath:   "/identitypools",
-		}
+	op := &aws.Operation{
+		Name:       opListIdentityPoolUsage,
+		HTTPMethod: "GET",
+		HTTPPath:   "/identitypools",
 	}
 
 	if input == nil {
 		input = &ListIdentityPoolUsageInput{}
 	}
 
-	req = c.newRequest(opListIdentityPoolUsage, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListIdentityPoolUsageOutput{}
 	req.Data = output
 	return
@@ -334,33 +320,27 @@ func (c *CognitoSync) ListIdentityPoolUsageRequest(input *ListIdentityPoolUsageI
 // ListIdentityPoolUsage can only be called with developer credentials. You
 // cannot make this API call with the temporary user credentials provided by
 // Cognito Identity.
-func (c *CognitoSync) ListIdentityPoolUsage(input *ListIdentityPoolUsageInput) (output *ListIdentityPoolUsageOutput, err error) {
+func (c *CognitoSync) ListIdentityPoolUsage(input *ListIdentityPoolUsageInput) (*ListIdentityPoolUsageOutput, error) {
 	req, out := c.ListIdentityPoolUsageRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListIdentityPoolUsage *aws.Operation
+const opListRecords = "ListRecords"
 
 // ListRecordsRequest generates a request for the ListRecords operation.
 func (c *CognitoSync) ListRecordsRequest(input *ListRecordsInput) (req *aws.Request, output *ListRecordsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListRecords == nil {
-		opListRecords = &aws.Operation{
-			Name:       "ListRecords",
-			HTTPMethod: "GET",
-			HTTPPath:   "/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}/records",
-		}
+	op := &aws.Operation{
+		Name:       opListRecords,
+		HTTPMethod: "GET",
+		HTTPPath:   "/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}/records",
 	}
 
 	if input == nil {
 		input = &ListRecordsInput{}
 	}
 
-	req = c.newRequest(opListRecords, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListRecordsOutput{}
 	req.Data = output
 	return
@@ -374,99 +354,120 @@ func (c *CognitoSync) ListRecordsRequest(input *ListRecordsInput) (req *aws.Requ
 // ListRecords can be called with temporary user credentials provided by Cognito
 // Identity or with developer credentials. You should use Cognito Identity credentials
 // to make this API call.
-func (c *CognitoSync) ListRecords(input *ListRecordsInput) (output *ListRecordsOutput, err error) {
+func (c *CognitoSync) ListRecords(input *ListRecordsInput) (*ListRecordsOutput, error) {
 	req, out := c.ListRecordsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListRecords *aws.Operation
+const opRegisterDevice = "RegisterDevice"
 
 // RegisterDeviceRequest generates a request for the RegisterDevice operation.
 func (c *CognitoSync) RegisterDeviceRequest(input *RegisterDeviceInput) (req *aws.Request, output *RegisterDeviceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRegisterDevice == nil {
-		opRegisterDevice = &aws.Operation{
-			Name:       "RegisterDevice",
-			HTTPMethod: "POST",
-			HTTPPath:   "/identitypools/{IdentityPoolId}/identity/{IdentityId}/device",
-		}
+	op := &aws.Operation{
+		Name:       opRegisterDevice,
+		HTTPMethod: "POST",
+		HTTPPath:   "/identitypools/{IdentityPoolId}/identity/{IdentityId}/device",
 	}
 
 	if input == nil {
 		input = &RegisterDeviceInput{}
 	}
 
-	req = c.newRequest(opRegisterDevice, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RegisterDeviceOutput{}
 	req.Data = output
 	return
 }
 
 // Registers a device to receive push sync notifications.
-func (c *CognitoSync) RegisterDevice(input *RegisterDeviceInput) (output *RegisterDeviceOutput, err error) {
+//
+// This API can only be called with temporary credentials provided by Cognito
+// Identity. You cannot call this API with developer credentials.
+func (c *CognitoSync) RegisterDevice(input *RegisterDeviceInput) (*RegisterDeviceOutput, error) {
 	req, out := c.RegisterDeviceRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opSetCognitoEvents = "SetCognitoEvents"
+
+// SetCognitoEventsRequest generates a request for the SetCognitoEvents operation.
+func (c *CognitoSync) SetCognitoEventsRequest(input *SetCognitoEventsInput) (req *aws.Request, output *SetCognitoEventsOutput) {
+	op := &aws.Operation{
+		Name:       opSetCognitoEvents,
+		HTTPMethod: "POST",
+		HTTPPath:   "/identitypools/{IdentityPoolId}/events",
+	}
+
+	if input == nil {
+		input = &SetCognitoEventsInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &SetCognitoEventsOutput{}
+	req.Data = output
 	return
 }
 
-var opRegisterDevice *aws.Operation
+// Sets the AWS Lambda function for a given event type for an identity pool.
+// This request only updates the key/value pair specified. Other key/values
+// pairs are not updated. To remove a key value pair, pass a empty value for
+// the particular key.
+//
+// This API can only be called with developer credentials. You cannot call
+// this API with the temporary user credentials provided by Cognito Identity.
+func (c *CognitoSync) SetCognitoEvents(input *SetCognitoEventsInput) (*SetCognitoEventsOutput, error) {
+	req, out := c.SetCognitoEventsRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opSetIdentityPoolConfiguration = "SetIdentityPoolConfiguration"
 
 // SetIdentityPoolConfigurationRequest generates a request for the SetIdentityPoolConfiguration operation.
 func (c *CognitoSync) SetIdentityPoolConfigurationRequest(input *SetIdentityPoolConfigurationInput) (req *aws.Request, output *SetIdentityPoolConfigurationOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opSetIdentityPoolConfiguration == nil {
-		opSetIdentityPoolConfiguration = &aws.Operation{
-			Name:       "SetIdentityPoolConfiguration",
-			HTTPMethod: "POST",
-			HTTPPath:   "/identitypools/{IdentityPoolId}/configuration",
-		}
+	op := &aws.Operation{
+		Name:       opSetIdentityPoolConfiguration,
+		HTTPMethod: "POST",
+		HTTPPath:   "/identitypools/{IdentityPoolId}/configuration",
 	}
 
 	if input == nil {
 		input = &SetIdentityPoolConfigurationInput{}
 	}
 
-	req = c.newRequest(opSetIdentityPoolConfiguration, input, output)
+	req = c.newRequest(op, input, output)
 	output = &SetIdentityPoolConfigurationOutput{}
 	req.Data = output
 	return
 }
 
 // Sets the necessary configuration for push sync.
-func (c *CognitoSync) SetIdentityPoolConfiguration(input *SetIdentityPoolConfigurationInput) (output *SetIdentityPoolConfigurationOutput, err error) {
+//
+// This API can only be called with developer credentials. You cannot call
+// this API with the temporary user credentials provided by Cognito Identity.
+func (c *CognitoSync) SetIdentityPoolConfiguration(input *SetIdentityPoolConfigurationInput) (*SetIdentityPoolConfigurationOutput, error) {
 	req, out := c.SetIdentityPoolConfigurationRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opSetIdentityPoolConfiguration *aws.Operation
+const opSubscribeToDataset = "SubscribeToDataset"
 
 // SubscribeToDatasetRequest generates a request for the SubscribeToDataset operation.
 func (c *CognitoSync) SubscribeToDatasetRequest(input *SubscribeToDatasetInput) (req *aws.Request, output *SubscribeToDatasetOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opSubscribeToDataset == nil {
-		opSubscribeToDataset = &aws.Operation{
-			Name:       "SubscribeToDataset",
-			HTTPMethod: "POST",
-			HTTPPath:   "/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}/subscriptions/{DeviceId}",
-		}
+	op := &aws.Operation{
+		Name:       opSubscribeToDataset,
+		HTTPMethod: "POST",
+		HTTPPath:   "/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}/subscriptions/{DeviceId}",
 	}
 
 	if input == nil {
 		input = &SubscribeToDatasetInput{}
 	}
 
-	req = c.newRequest(opSubscribeToDataset, input, output)
+	req = c.newRequest(op, input, output)
 	output = &SubscribeToDatasetOutput{}
 	req.Data = output
 	return
@@ -474,33 +475,30 @@ func (c *CognitoSync) SubscribeToDatasetRequest(input *SubscribeToDatasetInput) 
 
 // Subscribes to receive notifications when a dataset is modified by another
 // device.
-func (c *CognitoSync) SubscribeToDataset(input *SubscribeToDatasetInput) (output *SubscribeToDatasetOutput, err error) {
+//
+// This API can only be called with temporary credentials provided by Cognito
+// Identity. You cannot call this API with developer credentials.
+func (c *CognitoSync) SubscribeToDataset(input *SubscribeToDatasetInput) (*SubscribeToDatasetOutput, error) {
 	req, out := c.SubscribeToDatasetRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opSubscribeToDataset *aws.Operation
+const opUnsubscribeFromDataset = "UnsubscribeFromDataset"
 
 // UnsubscribeFromDatasetRequest generates a request for the UnsubscribeFromDataset operation.
 func (c *CognitoSync) UnsubscribeFromDatasetRequest(input *UnsubscribeFromDatasetInput) (req *aws.Request, output *UnsubscribeFromDatasetOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUnsubscribeFromDataset == nil {
-		opUnsubscribeFromDataset = &aws.Operation{
-			Name:       "UnsubscribeFromDataset",
-			HTTPMethod: "DELETE",
-			HTTPPath:   "/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}/subscriptions/{DeviceId}",
-		}
+	op := &aws.Operation{
+		Name:       opUnsubscribeFromDataset,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}/subscriptions/{DeviceId}",
 	}
 
 	if input == nil {
 		input = &UnsubscribeFromDatasetInput{}
 	}
 
-	req = c.newRequest(opUnsubscribeFromDataset, input, output)
+	req = c.newRequest(op, input, output)
 	output = &UnsubscribeFromDatasetOutput{}
 	req.Data = output
 	return
@@ -508,33 +506,30 @@ func (c *CognitoSync) UnsubscribeFromDatasetRequest(input *UnsubscribeFromDatase
 
 // Unsubscribes from receiving notifications when a dataset is modified by another
 // device.
-func (c *CognitoSync) UnsubscribeFromDataset(input *UnsubscribeFromDatasetInput) (output *UnsubscribeFromDatasetOutput, err error) {
+//
+// This API can only be called with temporary credentials provided by Cognito
+// Identity. You cannot call this API with developer credentials.
+func (c *CognitoSync) UnsubscribeFromDataset(input *UnsubscribeFromDatasetInput) (*UnsubscribeFromDatasetOutput, error) {
 	req, out := c.UnsubscribeFromDatasetRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opUnsubscribeFromDataset *aws.Operation
+const opUpdateRecords = "UpdateRecords"
 
 // UpdateRecordsRequest generates a request for the UpdateRecords operation.
 func (c *CognitoSync) UpdateRecordsRequest(input *UpdateRecordsInput) (req *aws.Request, output *UpdateRecordsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUpdateRecords == nil {
-		opUpdateRecords = &aws.Operation{
-			Name:       "UpdateRecords",
-			HTTPMethod: "POST",
-			HTTPPath:   "/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}",
-		}
+	op := &aws.Operation{
+		Name:       opUpdateRecords,
+		HTTPMethod: "POST",
+		HTTPPath:   "/identitypools/{IdentityPoolId}/identities/{IdentityId}/datasets/{DatasetName}",
 	}
 
 	if input == nil {
 		input = &UpdateRecordsInput{}
 	}
 
-	req = c.newRequest(opUpdateRecords, input, output)
+	req = c.newRequest(op, input, output)
 	output = &UpdateRecordsOutput{}
 	req.Data = output
 	return
@@ -542,16 +537,25 @@ func (c *CognitoSync) UpdateRecordsRequest(input *UpdateRecordsInput) (req *aws.
 
 // Posts updates to records and adds and deletes records for a dataset and user.
 //
-// UpdateRecords can only be called with temporary user credentials provided
-// by Cognito Identity. You cannot make this API call with developer credentials.
-func (c *CognitoSync) UpdateRecords(input *UpdateRecordsInput) (output *UpdateRecordsOutput, err error) {
+// The sync count in the record patch is your last known sync count for that
+// record. The server will reject an UpdateRecords request with a ResourceConflictException
+// if you try to patch a record with a new value but a stale sync count.
+//
+// For example, if the sync count on the server is 5 for a key called highScore
+// and you try and submit a new highScore with sync count of 4, the request
+// will be rejected. To obtain the current sync count for a record, call ListRecords.
+// On a successful update of the record, the response returns the new sync count
+// for that record. You should present that sync count the next time you try
+// to update that same record. When the record does not exist, specify the sync
+// count as 0.
+//
+// This API can be called with temporary user credentials provided by Cognito
+// Identity or with developer credentials.
+func (c *CognitoSync) UpdateRecords(input *UpdateRecordsInput) (*UpdateRecordsOutput, error) {
 	req, out := c.UpdateRecordsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
-
-var opUpdateRecords *aws.Operation
 
 // The input for the BulkPublish operation.
 type BulkPublishInput struct {
@@ -559,11 +563,21 @@ type BulkPublishInput struct {
 	// created by Amazon Cognito. GUID generation is unique within a region.
 	IdentityPoolID *string `location:"uri" locationName:"IdentityPoolId" type:"string" required:"true"`
 
-	metadataBulkPublishInput `json:"-", xml:"-"`
+	metadataBulkPublishInput `json:"-" xml:"-"`
 }
 
 type metadataBulkPublishInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s BulkPublishInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s BulkPublishInput) GoString() string {
+	return s.String()
 }
 
 // The output for the BulkPublish operation.
@@ -572,11 +586,21 @@ type BulkPublishOutput struct {
 	// created by Amazon Cognito. GUID generation is unique within a region.
 	IdentityPoolID *string `locationName:"IdentityPoolId" type:"string"`
 
-	metadataBulkPublishOutput `json:"-", xml:"-"`
+	metadataBulkPublishOutput `json:"-" xml:"-"`
 }
 
 type metadataBulkPublishOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s BulkPublishOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s BulkPublishOutput) GoString() string {
+	return s.String()
 }
 
 // Configuration options for configure Cognito streams.
@@ -593,15 +617,25 @@ type CognitoStreams struct {
 	// Status of the Cognito streams. Valid values are: ENABLED - Streaming of updates
 	// to identity pool is enabled.
 	//
-	// DISABLEDStreaming of updates to identity pool is disabled. Bulk publish
+	// DISABLED - Streaming of updates to identity pool is disabled. Bulk publish
 	// will also fail if StreamingStatus is DISABLED.
 	StreamingStatus *string `type:"string"`
 
-	metadataCognitoStreams `json:"-", xml:"-"`
+	metadataCognitoStreams `json:"-" xml:"-"`
 }
 
 type metadataCognitoStreams struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CognitoStreams) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CognitoStreams) GoString() string {
+	return s.String()
 }
 
 // A collection of data for an identity pool. An identity pool can have multiple
@@ -633,11 +667,21 @@ type Dataset struct {
 	// Number of records in this dataset.
 	NumRecords *int64 `type:"long"`
 
-	metadataDataset `json:"-", xml:"-"`
+	metadataDataset `json:"-" xml:"-"`
 }
 
 type metadataDataset struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Dataset) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Dataset) GoString() string {
+	return s.String()
 }
 
 // A request to delete the specific dataset.
@@ -654,11 +698,21 @@ type DeleteDatasetInput struct {
 	// created by Amazon Cognito. GUID generation is unique within a region.
 	IdentityPoolID *string `location:"uri" locationName:"IdentityPoolId" type:"string" required:"true"`
 
-	metadataDeleteDatasetInput `json:"-", xml:"-"`
+	metadataDeleteDatasetInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteDatasetInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteDatasetInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteDatasetInput) GoString() string {
+	return s.String()
 }
 
 // Response to a successful DeleteDataset request.
@@ -670,11 +724,21 @@ type DeleteDatasetOutput struct {
 	// hold up to 1MB of key-value pairs.
 	Dataset *Dataset `type:"structure"`
 
-	metadataDeleteDatasetOutput `json:"-", xml:"-"`
+	metadataDeleteDatasetOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteDatasetOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteDatasetOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteDatasetOutput) GoString() string {
+	return s.String()
 }
 
 // A request for meta data about a dataset (creation date, number of records,
@@ -692,11 +756,21 @@ type DescribeDatasetInput struct {
 	// created by Amazon Cognito. GUID generation is unique within a region.
 	IdentityPoolID *string `location:"uri" locationName:"IdentityPoolId" type:"string" required:"true"`
 
-	metadataDescribeDatasetInput `json:"-", xml:"-"`
+	metadataDescribeDatasetInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDatasetInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDatasetInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDatasetInput) GoString() string {
+	return s.String()
 }
 
 // Response to a successful DescribeDataset request.
@@ -708,11 +782,21 @@ type DescribeDatasetOutput struct {
 	// hold up to 1MB of key-value pairs.
 	Dataset *Dataset `type:"structure"`
 
-	metadataDescribeDatasetOutput `json:"-", xml:"-"`
+	metadataDescribeDatasetOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDatasetOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDatasetOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDatasetOutput) GoString() string {
+	return s.String()
 }
 
 // A request for usage information about the identity pool.
@@ -721,11 +805,21 @@ type DescribeIdentityPoolUsageInput struct {
 	// created by Amazon Cognito. GUID generation is unique within a region.
 	IdentityPoolID *string `location:"uri" locationName:"IdentityPoolId" type:"string" required:"true"`
 
-	metadataDescribeIdentityPoolUsageInput `json:"-", xml:"-"`
+	metadataDescribeIdentityPoolUsageInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeIdentityPoolUsageInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeIdentityPoolUsageInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeIdentityPoolUsageInput) GoString() string {
+	return s.String()
 }
 
 // Response to a successful DescribeIdentityPoolUsage request.
@@ -733,11 +827,21 @@ type DescribeIdentityPoolUsageOutput struct {
 	// Information about the usage of the identity pool.
 	IdentityPoolUsage *IdentityPoolUsage `type:"structure"`
 
-	metadataDescribeIdentityPoolUsageOutput `json:"-", xml:"-"`
+	metadataDescribeIdentityPoolUsageOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeIdentityPoolUsageOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeIdentityPoolUsageOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeIdentityPoolUsageOutput) GoString() string {
+	return s.String()
 }
 
 // A request for information about the usage of an identity pool.
@@ -750,11 +854,21 @@ type DescribeIdentityUsageInput struct {
 	// created by Amazon Cognito. GUID generation is unique within a region.
 	IdentityPoolID *string `location:"uri" locationName:"IdentityPoolId" type:"string" required:"true"`
 
-	metadataDescribeIdentityUsageInput `json:"-", xml:"-"`
+	metadataDescribeIdentityUsageInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeIdentityUsageInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeIdentityUsageInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeIdentityUsageInput) GoString() string {
+	return s.String()
 }
 
 // The response to a successful DescribeIdentityUsage request.
@@ -762,11 +876,21 @@ type DescribeIdentityUsageOutput struct {
 	// Usage information for the identity.
 	IdentityUsage *IdentityUsage `type:"structure"`
 
-	metadataDescribeIdentityUsageOutput `json:"-", xml:"-"`
+	metadataDescribeIdentityUsageOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeIdentityUsageOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeIdentityUsageOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeIdentityUsageOutput) GoString() string {
+	return s.String()
 }
 
 // The input for the GetBulkPublishDetails operation.
@@ -775,11 +899,21 @@ type GetBulkPublishDetailsInput struct {
 	// created by Amazon Cognito. GUID generation is unique within a region.
 	IdentityPoolID *string `location:"uri" locationName:"IdentityPoolId" type:"string" required:"true"`
 
-	metadataGetBulkPublishDetailsInput `json:"-", xml:"-"`
+	metadataGetBulkPublishDetailsInput `json:"-" xml:"-"`
 }
 
 type metadataGetBulkPublishDetailsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetBulkPublishDetailsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetBulkPublishDetailsInput) GoString() string {
+	return s.String()
 }
 
 // The output for the GetBulkPublishDetails operation.
@@ -811,11 +945,65 @@ type GetBulkPublishDetailsOutput struct {
 	// created by Amazon Cognito. GUID generation is unique within a region.
 	IdentityPoolID *string `locationName:"IdentityPoolId" type:"string"`
 
-	metadataGetBulkPublishDetailsOutput `json:"-", xml:"-"`
+	metadataGetBulkPublishDetailsOutput `json:"-" xml:"-"`
 }
 
 type metadataGetBulkPublishDetailsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetBulkPublishDetailsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetBulkPublishDetailsOutput) GoString() string {
+	return s.String()
+}
+
+// A request for a list of the configured Cognito Events
+type GetCognitoEventsInput struct {
+	// The Cognito Identity Pool ID for the request
+	IdentityPoolID *string `location:"uri" locationName:"IdentityPoolId" type:"string" required:"true"`
+
+	metadataGetCognitoEventsInput `json:"-" xml:"-"`
+}
+
+type metadataGetCognitoEventsInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetCognitoEventsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetCognitoEventsInput) GoString() string {
+	return s.String()
+}
+
+// The response from the GetCognitoEvents request
+type GetCognitoEventsOutput struct {
+	// The Cognito Events returned from the GetCognitoEvents request
+	Events map[string]*string `type:"map"`
+
+	metadataGetCognitoEventsOutput `json:"-" xml:"-"`
+}
+
+type metadataGetCognitoEventsOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetCognitoEventsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetCognitoEventsOutput) GoString() string {
+	return s.String()
 }
 
 // The input for the GetIdentityPoolConfiguration operation.
@@ -825,11 +1013,21 @@ type GetIdentityPoolConfigurationInput struct {
 	// a configuration.
 	IdentityPoolID *string `location:"uri" locationName:"IdentityPoolId" type:"string" required:"true"`
 
-	metadataGetIdentityPoolConfigurationInput `json:"-", xml:"-"`
+	metadataGetIdentityPoolConfigurationInput `json:"-" xml:"-"`
 }
 
 type metadataGetIdentityPoolConfigurationInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetIdentityPoolConfigurationInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetIdentityPoolConfigurationInput) GoString() string {
+	return s.String()
 }
 
 // The output for the GetIdentityPoolConfiguration operation.
@@ -844,11 +1042,21 @@ type GetIdentityPoolConfigurationOutput struct {
 	// Options to apply to this identity pool for push synchronization.
 	PushSync *PushSync `type:"structure"`
 
-	metadataGetIdentityPoolConfigurationOutput `json:"-", xml:"-"`
+	metadataGetIdentityPoolConfigurationOutput `json:"-" xml:"-"`
 }
 
 type metadataGetIdentityPoolConfigurationOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetIdentityPoolConfigurationOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetIdentityPoolConfigurationOutput) GoString() string {
+	return s.String()
 }
 
 // Usage information for the identity pool.
@@ -866,11 +1074,21 @@ type IdentityPoolUsage struct {
 	// Number of sync sessions for the identity pool.
 	SyncSessionsCount *int64 `type:"long"`
 
-	metadataIdentityPoolUsage `json:"-", xml:"-"`
+	metadataIdentityPoolUsage `json:"-" xml:"-"`
 }
 
 type metadataIdentityPoolUsage struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s IdentityPoolUsage) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s IdentityPoolUsage) GoString() string {
+	return s.String()
 }
 
 // Usage information for the identity.
@@ -892,11 +1110,21 @@ type IdentityUsage struct {
 	// Date on which the identity was last modified.
 	LastModifiedDate *time.Time `type:"timestamp" timestampFormat:"unix"`
 
-	metadataIdentityUsage `json:"-", xml:"-"`
+	metadataIdentityUsage `json:"-" xml:"-"`
 }
 
 type metadataIdentityUsage struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s IdentityUsage) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s IdentityUsage) GoString() string {
+	return s.String()
 }
 
 // Request for a list of datasets for an identity.
@@ -915,11 +1143,21 @@ type ListDatasetsInput struct {
 	// A pagination token for obtaining the next page of results.
 	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
 
-	metadataListDatasetsInput `json:"-", xml:"-"`
+	metadataListDatasetsInput `json:"-" xml:"-"`
 }
 
 type metadataListDatasetsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListDatasetsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListDatasetsInput) GoString() string {
+	return s.String()
 }
 
 // Returned for a successful ListDatasets request.
@@ -933,11 +1171,21 @@ type ListDatasetsOutput struct {
 	// A pagination token for obtaining the next page of results.
 	NextToken *string `type:"string"`
 
-	metadataListDatasetsOutput `json:"-", xml:"-"`
+	metadataListDatasetsOutput `json:"-" xml:"-"`
 }
 
 type metadataListDatasetsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListDatasetsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListDatasetsOutput) GoString() string {
+	return s.String()
 }
 
 // A request for usage information on an identity pool.
@@ -948,11 +1196,21 @@ type ListIdentityPoolUsageInput struct {
 	// A pagination token for obtaining the next page of results.
 	NextToken *string `location:"querystring" locationName:"nextToken" type:"string"`
 
-	metadataListIdentityPoolUsageInput `json:"-", xml:"-"`
+	metadataListIdentityPoolUsageInput `json:"-" xml:"-"`
 }
 
 type metadataListIdentityPoolUsageInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListIdentityPoolUsageInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListIdentityPoolUsageInput) GoString() string {
+	return s.String()
 }
 
 // Returned for a successful ListIdentityPoolUsage request.
@@ -969,11 +1227,21 @@ type ListIdentityPoolUsageOutput struct {
 	// A pagination token for obtaining the next page of results.
 	NextToken *string `type:"string"`
 
-	metadataListIdentityPoolUsageOutput `json:"-", xml:"-"`
+	metadataListIdentityPoolUsageOutput `json:"-" xml:"-"`
 }
 
 type metadataListIdentityPoolUsageOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListIdentityPoolUsageOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListIdentityPoolUsageOutput) GoString() string {
+	return s.String()
 }
 
 // A request for a list of records.
@@ -1002,11 +1270,21 @@ type ListRecordsInput struct {
 	// A token containing a session ID, identity ID, and expiration.
 	SyncSessionToken *string `location:"querystring" locationName:"syncSessionToken" type:"string"`
 
-	metadataListRecordsInput `json:"-", xml:"-"`
+	metadataListRecordsInput `json:"-" xml:"-"`
 }
 
 type metadataListRecordsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListRecordsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListRecordsInput) GoString() string {
+	return s.String()
 }
 
 // Returned for a successful ListRecordsRequest.
@@ -1038,11 +1316,21 @@ type ListRecordsOutput struct {
 	// A token containing a session ID, identity ID, and expiration.
 	SyncSessionToken *string `type:"string"`
 
-	metadataListRecordsOutput `json:"-", xml:"-"`
+	metadataListRecordsOutput `json:"-" xml:"-"`
 }
 
 type metadataListRecordsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListRecordsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListRecordsOutput) GoString() string {
+	return s.String()
 }
 
 // Configuration options to be applied to the identity pool.
@@ -1053,11 +1341,21 @@ type PushSync struct {
 	// A role configured to allow Cognito to call SNS on behalf of the developer.
 	RoleARN *string `locationName:"RoleArn" type:"string"`
 
-	metadataPushSync `json:"-", xml:"-"`
+	metadataPushSync `json:"-" xml:"-"`
 }
 
 type metadataPushSync struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PushSync) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PushSync) GoString() string {
+	return s.String()
 }
 
 // The basic data structure of a dataset.
@@ -1080,11 +1378,21 @@ type Record struct {
 	// The value for the record.
 	Value *string `type:"string"`
 
-	metadataRecord `json:"-", xml:"-"`
+	metadataRecord `json:"-" xml:"-"`
 }
 
 type metadataRecord struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Record) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Record) GoString() string {
+	return s.String()
 }
 
 // An update operation for a record.
@@ -1104,11 +1412,21 @@ type RecordPatch struct {
 	// The value associated with the record patch.
 	Value *string `type:"string"`
 
-	metadataRecordPatch `json:"-", xml:"-"`
+	metadataRecordPatch `json:"-" xml:"-"`
 }
 
 type metadataRecordPatch struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RecordPatch) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RecordPatch) GoString() string {
+	return s.String()
 }
 
 // A request to RegisterDevice.
@@ -1127,11 +1445,21 @@ type RegisterDeviceInput struct {
 	// The push token.
 	Token *string `type:"string" required:"true"`
 
-	metadataRegisterDeviceInput `json:"-", xml:"-"`
+	metadataRegisterDeviceInput `json:"-" xml:"-"`
 }
 
 type metadataRegisterDeviceInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RegisterDeviceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RegisterDeviceInput) GoString() string {
+	return s.String()
 }
 
 // Response to a RegisterDevice request.
@@ -1139,11 +1467,66 @@ type RegisterDeviceOutput struct {
 	// The unique ID generated for this device by Cognito.
 	DeviceID *string `locationName:"DeviceId" type:"string"`
 
-	metadataRegisterDeviceOutput `json:"-", xml:"-"`
+	metadataRegisterDeviceOutput `json:"-" xml:"-"`
 }
 
 type metadataRegisterDeviceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RegisterDeviceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RegisterDeviceOutput) GoString() string {
+	return s.String()
+}
+
+// A request to configure Cognito Events"
+//
+// "
+type SetCognitoEventsInput struct {
+	// The events to configure
+	Events map[string]*string `type:"map" required:"true"`
+
+	// The Cognito Identity Pool to use when configuring Cognito Events
+	IdentityPoolID *string `location:"uri" locationName:"IdentityPoolId" type:"string" required:"true"`
+
+	metadataSetCognitoEventsInput `json:"-" xml:"-"`
+}
+
+type metadataSetCognitoEventsInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SetCognitoEventsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetCognitoEventsInput) GoString() string {
+	return s.String()
+}
+
+type SetCognitoEventsOutput struct {
+	metadataSetCognitoEventsOutput `json:"-" xml:"-"`
+}
+
+type metadataSetCognitoEventsOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SetCognitoEventsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetCognitoEventsOutput) GoString() string {
+	return s.String()
 }
 
 // The input for the SetIdentityPoolConfiguration operation.
@@ -1158,11 +1541,21 @@ type SetIdentityPoolConfigurationInput struct {
 	// Options to apply to this identity pool for push synchronization.
 	PushSync *PushSync `type:"structure"`
 
-	metadataSetIdentityPoolConfigurationInput `json:"-", xml:"-"`
+	metadataSetIdentityPoolConfigurationInput `json:"-" xml:"-"`
 }
 
 type metadataSetIdentityPoolConfigurationInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SetIdentityPoolConfigurationInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetIdentityPoolConfigurationInput) GoString() string {
+	return s.String()
 }
 
 // The output for the SetIdentityPoolConfiguration operation
@@ -1177,11 +1570,21 @@ type SetIdentityPoolConfigurationOutput struct {
 	// Options to apply to this identity pool for push synchronization.
 	PushSync *PushSync `type:"structure"`
 
-	metadataSetIdentityPoolConfigurationOutput `json:"-", xml:"-"`
+	metadataSetIdentityPoolConfigurationOutput `json:"-" xml:"-"`
 }
 
 type metadataSetIdentityPoolConfigurationOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SetIdentityPoolConfigurationOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetIdentityPoolConfigurationOutput) GoString() string {
+	return s.String()
 }
 
 // A request to SubscribeToDatasetRequest.
@@ -1199,20 +1602,40 @@ type SubscribeToDatasetInput struct {
 	// created by Amazon Cognito. The ID of the pool to which the identity belongs.
 	IdentityPoolID *string `location:"uri" locationName:"IdentityPoolId" type:"string" required:"true"`
 
-	metadataSubscribeToDatasetInput `json:"-", xml:"-"`
+	metadataSubscribeToDatasetInput `json:"-" xml:"-"`
 }
 
 type metadataSubscribeToDatasetInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s SubscribeToDatasetInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SubscribeToDatasetInput) GoString() string {
+	return s.String()
+}
+
 // Response to a SubscribeToDataset request.
 type SubscribeToDatasetOutput struct {
-	metadataSubscribeToDatasetOutput `json:"-", xml:"-"`
+	metadataSubscribeToDatasetOutput `json:"-" xml:"-"`
 }
 
 type metadataSubscribeToDatasetOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SubscribeToDatasetOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SubscribeToDatasetOutput) GoString() string {
+	return s.String()
 }
 
 // A request to UnsubscribeFromDataset.
@@ -1230,20 +1653,40 @@ type UnsubscribeFromDatasetInput struct {
 	// created by Amazon Cognito. The ID of the pool to which this identity belongs.
 	IdentityPoolID *string `location:"uri" locationName:"IdentityPoolId" type:"string" required:"true"`
 
-	metadataUnsubscribeFromDatasetInput `json:"-", xml:"-"`
+	metadataUnsubscribeFromDatasetInput `json:"-" xml:"-"`
 }
 
 type metadataUnsubscribeFromDatasetInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s UnsubscribeFromDatasetInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UnsubscribeFromDatasetInput) GoString() string {
+	return s.String()
+}
+
 // Response to an UnsubscribeFromDataset request.
 type UnsubscribeFromDatasetOutput struct {
-	metadataUnsubscribeFromDatasetOutput `json:"-", xml:"-"`
+	metadataUnsubscribeFromDatasetOutput `json:"-" xml:"-"`
 }
 
 type metadataUnsubscribeFromDatasetOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UnsubscribeFromDatasetOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UnsubscribeFromDatasetOutput) GoString() string {
+	return s.String()
 }
 
 // A request to post updates to records or add and delete records for a dataset
@@ -1275,11 +1718,21 @@ type UpdateRecordsInput struct {
 	// dataset and identity.
 	SyncSessionToken *string `type:"string" required:"true"`
 
-	metadataUpdateRecordsInput `json:"-", xml:"-"`
+	metadataUpdateRecordsInput `json:"-" xml:"-"`
 }
 
 type metadataUpdateRecordsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UpdateRecordsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UpdateRecordsInput) GoString() string {
+	return s.String()
 }
 
 // Returned for a successful UpdateRecordsRequest.
@@ -1287,9 +1740,19 @@ type UpdateRecordsOutput struct {
 	// A list of records that have been updated.
 	Records []*Record `type:"list"`
 
-	metadataUpdateRecordsOutput `json:"-", xml:"-"`
+	metadataUpdateRecordsOutput `json:"-" xml:"-"`
 }
 
 type metadataUpdateRecordsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UpdateRecordsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UpdateRecordsOutput) GoString() string {
+	return s.String()
 }

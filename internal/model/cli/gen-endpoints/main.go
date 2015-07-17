@@ -8,9 +8,15 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/awslabs/aws-sdk-go/internal/model"
+	"github.com/aws/aws-sdk-go/internal/model"
 )
 
+// Generates the endpoints from json description
+//
+// CLI Args:
+//  [0] This file's execution path
+//  [1] The definition file to use
+//  [2] The output file to generate
 func main() {
 	in, err := os.Open(os.Args[1])
 	if err != nil {

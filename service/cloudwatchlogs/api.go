@@ -4,31 +4,25 @@
 package cloudwatchlogs
 
 import (
-	"sync"
-
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
-var oprw sync.Mutex
+const opCreateLogGroup = "CreateLogGroup"
 
 // CreateLogGroupRequest generates a request for the CreateLogGroup operation.
 func (c *CloudWatchLogs) CreateLogGroupRequest(input *CreateLogGroupInput) (req *aws.Request, output *CreateLogGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateLogGroup == nil {
-		opCreateLogGroup = &aws.Operation{
-			Name:       "CreateLogGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateLogGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateLogGroupInput{}
 	}
 
-	req = c.newRequest(opCreateLogGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateLogGroupOutput{}
 	req.Data = output
 	return
@@ -41,33 +35,27 @@ func (c *CloudWatchLogs) CreateLogGroupRequest(input *CreateLogGroupInput) (req 
 //  You must use the following guidelines when naming a log group:  Log group
 // names can be between 1 and 512 characters long. Allowed characters are a-z,
 // A-Z, 0-9, '_' (underscore), '-' (hyphen), '/' (forward slash), and '.' (period).
-func (c *CloudWatchLogs) CreateLogGroup(input *CreateLogGroupInput) (output *CreateLogGroupOutput, err error) {
+func (c *CloudWatchLogs) CreateLogGroup(input *CreateLogGroupInput) (*CreateLogGroupOutput, error) {
 	req, out := c.CreateLogGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateLogGroup *aws.Operation
+const opCreateLogStream = "CreateLogStream"
 
 // CreateLogStreamRequest generates a request for the CreateLogStream operation.
 func (c *CloudWatchLogs) CreateLogStreamRequest(input *CreateLogStreamInput) (req *aws.Request, output *CreateLogStreamOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateLogStream == nil {
-		opCreateLogStream = &aws.Operation{
-			Name:       "CreateLogStream",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateLogStream,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateLogStreamInput{}
 	}
 
-	req = c.newRequest(opCreateLogStream, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateLogStreamOutput{}
 	req.Data = output
 	return
@@ -80,33 +68,27 @@ func (c *CloudWatchLogs) CreateLogStreamRequest(input *CreateLogStreamInput) (re
 //  You must use the following guidelines when naming a log stream:  Log stream
 // names can be between 1 and 512 characters long. The ':' colon character is
 // not allowed.
-func (c *CloudWatchLogs) CreateLogStream(input *CreateLogStreamInput) (output *CreateLogStreamOutput, err error) {
+func (c *CloudWatchLogs) CreateLogStream(input *CreateLogStreamInput) (*CreateLogStreamOutput, error) {
 	req, out := c.CreateLogStreamRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateLogStream *aws.Operation
+const opDeleteLogGroup = "DeleteLogGroup"
 
 // DeleteLogGroupRequest generates a request for the DeleteLogGroup operation.
 func (c *CloudWatchLogs) DeleteLogGroupRequest(input *DeleteLogGroupInput) (req *aws.Request, output *DeleteLogGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteLogGroup == nil {
-		opDeleteLogGroup = &aws.Operation{
-			Name:       "DeleteLogGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteLogGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteLogGroupInput{}
 	}
 
-	req = c.newRequest(opDeleteLogGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteLogGroupOutput{}
 	req.Data = output
 	return
@@ -114,33 +96,27 @@ func (c *CloudWatchLogs) DeleteLogGroupRequest(input *DeleteLogGroupInput) (req 
 
 // Deletes the log group with the specified name and permanently deletes all
 // the archived log events associated with it.
-func (c *CloudWatchLogs) DeleteLogGroup(input *DeleteLogGroupInput) (output *DeleteLogGroupOutput, err error) {
+func (c *CloudWatchLogs) DeleteLogGroup(input *DeleteLogGroupInput) (*DeleteLogGroupOutput, error) {
 	req, out := c.DeleteLogGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteLogGroup *aws.Operation
+const opDeleteLogStream = "DeleteLogStream"
 
 // DeleteLogStreamRequest generates a request for the DeleteLogStream operation.
 func (c *CloudWatchLogs) DeleteLogStreamRequest(input *DeleteLogStreamInput) (req *aws.Request, output *DeleteLogStreamOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteLogStream == nil {
-		opDeleteLogStream = &aws.Operation{
-			Name:       "DeleteLogStream",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteLogStream,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteLogStreamInput{}
 	}
 
-	req = c.newRequest(opDeleteLogStream, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteLogStreamOutput{}
 	req.Data = output
 	return
@@ -148,66 +124,54 @@ func (c *CloudWatchLogs) DeleteLogStreamRequest(input *DeleteLogStreamInput) (re
 
 // Deletes a log stream and permanently deletes all the archived log events
 // associated with it.
-func (c *CloudWatchLogs) DeleteLogStream(input *DeleteLogStreamInput) (output *DeleteLogStreamOutput, err error) {
+func (c *CloudWatchLogs) DeleteLogStream(input *DeleteLogStreamInput) (*DeleteLogStreamOutput, error) {
 	req, out := c.DeleteLogStreamRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteLogStream *aws.Operation
+const opDeleteMetricFilter = "DeleteMetricFilter"
 
 // DeleteMetricFilterRequest generates a request for the DeleteMetricFilter operation.
 func (c *CloudWatchLogs) DeleteMetricFilterRequest(input *DeleteMetricFilterInput) (req *aws.Request, output *DeleteMetricFilterOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteMetricFilter == nil {
-		opDeleteMetricFilter = &aws.Operation{
-			Name:       "DeleteMetricFilter",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteMetricFilter,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteMetricFilterInput{}
 	}
 
-	req = c.newRequest(opDeleteMetricFilter, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteMetricFilterOutput{}
 	req.Data = output
 	return
 }
 
 // Deletes a metric filter associated with the specified log group.
-func (c *CloudWatchLogs) DeleteMetricFilter(input *DeleteMetricFilterInput) (output *DeleteMetricFilterOutput, err error) {
+func (c *CloudWatchLogs) DeleteMetricFilter(input *DeleteMetricFilterInput) (*DeleteMetricFilterOutput, error) {
 	req, out := c.DeleteMetricFilterRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteMetricFilter *aws.Operation
+const opDeleteRetentionPolicy = "DeleteRetentionPolicy"
 
 // DeleteRetentionPolicyRequest generates a request for the DeleteRetentionPolicy operation.
 func (c *CloudWatchLogs) DeleteRetentionPolicyRequest(input *DeleteRetentionPolicyInput) (req *aws.Request, output *DeleteRetentionPolicyOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteRetentionPolicy == nil {
-		opDeleteRetentionPolicy = &aws.Operation{
-			Name:       "DeleteRetentionPolicy",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteRetentionPolicy,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteRetentionPolicyInput{}
 	}
 
-	req = c.newRequest(opDeleteRetentionPolicy, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteRetentionPolicyOutput{}
 	req.Data = output
 	return
@@ -215,33 +179,60 @@ func (c *CloudWatchLogs) DeleteRetentionPolicyRequest(input *DeleteRetentionPoli
 
 // Deletes the retention policy of the specified log group. Log events would
 // not expire if they belong to log groups without a retention policy.
-func (c *CloudWatchLogs) DeleteRetentionPolicy(input *DeleteRetentionPolicyInput) (output *DeleteRetentionPolicyOutput, err error) {
+func (c *CloudWatchLogs) DeleteRetentionPolicy(input *DeleteRetentionPolicyInput) (*DeleteRetentionPolicyOutput, error) {
 	req, out := c.DeleteRetentionPolicyRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opDeleteSubscriptionFilter = "DeleteSubscriptionFilter"
+
+// DeleteSubscriptionFilterRequest generates a request for the DeleteSubscriptionFilter operation.
+func (c *CloudWatchLogs) DeleteSubscriptionFilterRequest(input *DeleteSubscriptionFilterInput) (req *aws.Request, output *DeleteSubscriptionFilterOutput) {
+	op := &aws.Operation{
+		Name:       opDeleteSubscriptionFilter,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DeleteSubscriptionFilterInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &DeleteSubscriptionFilterOutput{}
+	req.Data = output
 	return
 }
 
-var opDeleteRetentionPolicy *aws.Operation
+// Deletes a subscription filter associated with the specified log group.
+func (c *CloudWatchLogs) DeleteSubscriptionFilter(input *DeleteSubscriptionFilterInput) (*DeleteSubscriptionFilterOutput, error) {
+	req, out := c.DeleteSubscriptionFilterRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opDescribeLogGroups = "DescribeLogGroups"
 
 // DescribeLogGroupsRequest generates a request for the DescribeLogGroups operation.
 func (c *CloudWatchLogs) DescribeLogGroupsRequest(input *DescribeLogGroupsInput) (req *aws.Request, output *DescribeLogGroupsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeLogGroups == nil {
-		opDescribeLogGroups = &aws.Operation{
-			Name:       "DescribeLogGroups",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeLogGroups,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "limit",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeLogGroupsInput{}
 	}
 
-	req = c.newRequest(opDescribeLogGroups, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeLogGroupsOutput{}
 	req.Data = output
 	return
@@ -255,33 +246,40 @@ func (c *CloudWatchLogs) DescribeLogGroupsRequest(input *DescribeLogGroupsInput)
 // log groups to list, the response would contain a nextToken value in the response
 // body. You can also limit the number of log groups returned in the response
 // by specifying the limit parameter in the request.
-func (c *CloudWatchLogs) DescribeLogGroups(input *DescribeLogGroupsInput) (output *DescribeLogGroupsOutput, err error) {
+func (c *CloudWatchLogs) DescribeLogGroups(input *DescribeLogGroupsInput) (*DescribeLogGroupsOutput, error) {
 	req, out := c.DescribeLogGroupsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeLogGroups *aws.Operation
+func (c *CloudWatchLogs) DescribeLogGroupsPages(input *DescribeLogGroupsInput, fn func(p *DescribeLogGroupsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeLogGroupsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeLogGroupsOutput), lastPage)
+	})
+}
+
+const opDescribeLogStreams = "DescribeLogStreams"
 
 // DescribeLogStreamsRequest generates a request for the DescribeLogStreams operation.
 func (c *CloudWatchLogs) DescribeLogStreamsRequest(input *DescribeLogStreamsInput) (req *aws.Request, output *DescribeLogStreamsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeLogStreams == nil {
-		opDescribeLogStreams = &aws.Operation{
-			Name:       "DescribeLogStreams",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeLogStreams,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "limit",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeLogStreamsInput{}
 	}
 
-	req = c.newRequest(opDescribeLogStreams, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeLogStreamsOutput{}
 	req.Data = output
 	return
@@ -296,33 +294,40 @@ func (c *CloudWatchLogs) DescribeLogStreamsRequest(input *DescribeLogStreamsInpu
 // response by specifying the limit parameter in the request. This operation
 // has a limit of five transactions per second, after which transactions are
 // throttled.
-func (c *CloudWatchLogs) DescribeLogStreams(input *DescribeLogStreamsInput) (output *DescribeLogStreamsOutput, err error) {
+func (c *CloudWatchLogs) DescribeLogStreams(input *DescribeLogStreamsInput) (*DescribeLogStreamsOutput, error) {
 	req, out := c.DescribeLogStreamsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeLogStreams *aws.Operation
+func (c *CloudWatchLogs) DescribeLogStreamsPages(input *DescribeLogStreamsInput, fn func(p *DescribeLogStreamsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeLogStreamsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeLogStreamsOutput), lastPage)
+	})
+}
+
+const opDescribeMetricFilters = "DescribeMetricFilters"
 
 // DescribeMetricFiltersRequest generates a request for the DescribeMetricFilters operation.
 func (c *CloudWatchLogs) DescribeMetricFiltersRequest(input *DescribeMetricFiltersInput) (req *aws.Request, output *DescribeMetricFiltersOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeMetricFilters == nil {
-		opDescribeMetricFilters = &aws.Operation{
-			Name:       "DescribeMetricFilters",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeMetricFilters,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "limit",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeMetricFiltersInput{}
 	}
 
-	req = c.newRequest(opDescribeMetricFilters, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeMetricFiltersOutput{}
 	req.Data = output
 	return
@@ -335,33 +340,114 @@ func (c *CloudWatchLogs) DescribeMetricFiltersRequest(input *DescribeMetricFilte
 // more metric filters to list, the response would contain a nextToken value
 // in the response body. You can also limit the number of metric filters returned
 // in the response by specifying the limit parameter in the request.
-func (c *CloudWatchLogs) DescribeMetricFilters(input *DescribeMetricFiltersInput) (output *DescribeMetricFiltersOutput, err error) {
+func (c *CloudWatchLogs) DescribeMetricFilters(input *DescribeMetricFiltersInput) (*DescribeMetricFiltersOutput, error) {
 	req, out := c.DescribeMetricFiltersRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+func (c *CloudWatchLogs) DescribeMetricFiltersPages(input *DescribeMetricFiltersInput, fn func(p *DescribeMetricFiltersOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeMetricFiltersRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeMetricFiltersOutput), lastPage)
+	})
+}
+
+const opDescribeSubscriptionFilters = "DescribeSubscriptionFilters"
+
+// DescribeSubscriptionFiltersRequest generates a request for the DescribeSubscriptionFilters operation.
+func (c *CloudWatchLogs) DescribeSubscriptionFiltersRequest(input *DescribeSubscriptionFiltersInput) (req *aws.Request, output *DescribeSubscriptionFiltersOutput) {
+	op := &aws.Operation{
+		Name:       opDescribeSubscriptionFilters,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DescribeSubscriptionFiltersInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &DescribeSubscriptionFiltersOutput{}
+	req.Data = output
 	return
 }
 
-var opDescribeMetricFilters *aws.Operation
+// Returns all the subscription filters associated with the specified log group.
+// The list returned in the response is ASCII-sorted by filter name.
+//
+//  By default, this operation returns up to 50 subscription filters. If there
+// are more subscription filters to list, the response would contain a nextToken
+// value in the response body. You can also limit the number of subscription
+// filters returned in the response by specifying the limit parameter in the
+// request.
+func (c *CloudWatchLogs) DescribeSubscriptionFilters(input *DescribeSubscriptionFiltersInput) (*DescribeSubscriptionFiltersOutput, error) {
+	req, out := c.DescribeSubscriptionFiltersRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opFilterLogEvents = "FilterLogEvents"
+
+// FilterLogEventsRequest generates a request for the FilterLogEvents operation.
+func (c *CloudWatchLogs) FilterLogEventsRequest(input *FilterLogEventsInput) (req *aws.Request, output *FilterLogEventsOutput) {
+	op := &aws.Operation{
+		Name:       opFilterLogEvents,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &FilterLogEventsInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &FilterLogEventsOutput{}
+	req.Data = output
+	return
+}
+
+// Retrieves log events, optionally filtered by a filter pattern from the specified
+// log group. You can provide an optional time range to filter the results on
+// the event timestamp. You can limit the streams searched to an explicit list
+// of logStreamNames.
+//
+//  By default, this operation returns as much matching log events as can fit
+// in a response size of 1MB, up to 10,000 log events, or all the events found
+// within a time-bounded scan window. If the response includes a nextToken,
+// then there is more data to search, and the search can be resumed with a new
+// request providing the nextToken. The response will contain a list of searchedLogStreams
+// that contains information about which streams were searched in the request
+// and whether they have been searched completely or require further pagination.
+// The limit parameter in the request. can be used to specify the maximum number
+// of events to return in a page.
+func (c *CloudWatchLogs) FilterLogEvents(input *FilterLogEventsInput) (*FilterLogEventsOutput, error) {
+	req, out := c.FilterLogEventsRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opGetLogEvents = "GetLogEvents"
 
 // GetLogEventsRequest generates a request for the GetLogEvents operation.
 func (c *CloudWatchLogs) GetLogEventsRequest(input *GetLogEventsInput) (req *aws.Request, output *GetLogEventsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetLogEvents == nil {
-		opGetLogEvents = &aws.Operation{
-			Name:       "GetLogEvents",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opGetLogEvents,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextForwardToken"},
+			LimitToken:      "limit",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &GetLogEventsInput{}
 	}
 
-	req = c.newRequest(opGetLogEvents, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetLogEventsOutput{}
 	req.Data = output
 	return
@@ -377,33 +463,34 @@ func (c *CloudWatchLogs) GetLogEventsRequest(input *GetLogEventsInput) (req *aws
 // events in either forward or backward direction. You can also limit the number
 // of log events returned in the response by specifying the limit parameter
 // in the request.
-func (c *CloudWatchLogs) GetLogEvents(input *GetLogEventsInput) (output *GetLogEventsOutput, err error) {
+func (c *CloudWatchLogs) GetLogEvents(input *GetLogEventsInput) (*GetLogEventsOutput, error) {
 	req, out := c.GetLogEventsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetLogEvents *aws.Operation
+func (c *CloudWatchLogs) GetLogEventsPages(input *GetLogEventsInput, fn func(p *GetLogEventsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.GetLogEventsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*GetLogEventsOutput), lastPage)
+	})
+}
+
+const opPutLogEvents = "PutLogEvents"
 
 // PutLogEventsRequest generates a request for the PutLogEvents operation.
 func (c *CloudWatchLogs) PutLogEventsRequest(input *PutLogEventsInput) (req *aws.Request, output *PutLogEventsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opPutLogEvents == nil {
-		opPutLogEvents = &aws.Operation{
-			Name:       "PutLogEvents",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opPutLogEvents,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &PutLogEventsInput{}
 	}
 
-	req = c.newRequest(opPutLogEvents, input, output)
+	req = c.newRequest(op, input, output)
 	output = &PutLogEventsOutput{}
 	req.Data = output
 	return
@@ -422,33 +509,27 @@ func (c *CloudWatchLogs) PutLogEventsRequest(input *PutLogEventsInput) (req *aws
 // log events in the batch can be older than 14 days or the retention period
 // of the log group. The log events in the batch must be in chronological ordered
 // by their timestamp. The maximum number of log events in a batch is 10,000.
-func (c *CloudWatchLogs) PutLogEvents(input *PutLogEventsInput) (output *PutLogEventsOutput, err error) {
+func (c *CloudWatchLogs) PutLogEvents(input *PutLogEventsInput) (*PutLogEventsOutput, error) {
 	req, out := c.PutLogEventsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opPutLogEvents *aws.Operation
+const opPutMetricFilter = "PutMetricFilter"
 
 // PutMetricFilterRequest generates a request for the PutMetricFilter operation.
 func (c *CloudWatchLogs) PutMetricFilterRequest(input *PutMetricFilterInput) (req *aws.Request, output *PutMetricFilterOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opPutMetricFilter == nil {
-		opPutMetricFilter = &aws.Operation{
-			Name:       "PutMetricFilter",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opPutMetricFilter,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &PutMetricFilterInput{}
 	}
 
-	req = c.newRequest(opPutMetricFilter, input, output)
+	req = c.newRequest(op, input, output)
 	output = &PutMetricFilterOutput{}
 	req.Data = output
 	return
@@ -457,33 +538,30 @@ func (c *CloudWatchLogs) PutMetricFilterRequest(input *PutMetricFilterInput) (re
 // Creates or updates a metric filter and associates it with the specified log
 // group. Metric filters allow you to configure rules to extract metric data
 // from log events ingested through PutLogEvents requests.
-func (c *CloudWatchLogs) PutMetricFilter(input *PutMetricFilterInput) (output *PutMetricFilterOutput, err error) {
+//
+//  The maximum number of metric filters that can be associated with a log
+// group is 100.
+func (c *CloudWatchLogs) PutMetricFilter(input *PutMetricFilterInput) (*PutMetricFilterOutput, error) {
 	req, out := c.PutMetricFilterRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opPutMetricFilter *aws.Operation
+const opPutRetentionPolicy = "PutRetentionPolicy"
 
 // PutRetentionPolicyRequest generates a request for the PutRetentionPolicy operation.
 func (c *CloudWatchLogs) PutRetentionPolicyRequest(input *PutRetentionPolicyInput) (req *aws.Request, output *PutRetentionPolicyOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opPutRetentionPolicy == nil {
-		opPutRetentionPolicy = &aws.Operation{
-			Name:       "PutRetentionPolicy",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opPutRetentionPolicy,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &PutRetentionPolicyInput{}
 	}
 
-	req = c.newRequest(opPutRetentionPolicy, input, output)
+	req = c.newRequest(op, input, output)
 	output = &PutRetentionPolicyOutput{}
 	req.Data = output
 	return
@@ -492,33 +570,61 @@ func (c *CloudWatchLogs) PutRetentionPolicyRequest(input *PutRetentionPolicyInpu
 // Sets the retention of the specified log group. A retention policy allows
 // you to configure the number of days you want to retain log events in the
 // specified log group.
-func (c *CloudWatchLogs) PutRetentionPolicy(input *PutRetentionPolicyInput) (output *PutRetentionPolicyOutput, err error) {
+func (c *CloudWatchLogs) PutRetentionPolicy(input *PutRetentionPolicyInput) (*PutRetentionPolicyOutput, error) {
 	req, out := c.PutRetentionPolicyRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opPutSubscriptionFilter = "PutSubscriptionFilter"
+
+// PutSubscriptionFilterRequest generates a request for the PutSubscriptionFilter operation.
+func (c *CloudWatchLogs) PutSubscriptionFilterRequest(input *PutSubscriptionFilterInput) (req *aws.Request, output *PutSubscriptionFilterOutput) {
+	op := &aws.Operation{
+		Name:       opPutSubscriptionFilter,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &PutSubscriptionFilterInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &PutSubscriptionFilterOutput{}
+	req.Data = output
 	return
 }
 
-var opPutRetentionPolicy *aws.Operation
+// Creates or updates a subscription filter and associates it with the specified
+// log group. Subscription filters allow you to subscribe to a real-time stream
+// of log events ingested through PutLogEvents requests and have them delivered
+// to a specific destination. Currently the only supported destination is an
+// Amazon Kinesis stream belonging to the same account as the subscription filter.
+//
+//  Currently there can only be one subscription filter associated with a log
+// group.
+func (c *CloudWatchLogs) PutSubscriptionFilter(input *PutSubscriptionFilterInput) (*PutSubscriptionFilterOutput, error) {
+	req, out := c.PutSubscriptionFilterRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opTestMetricFilter = "TestMetricFilter"
 
 // TestMetricFilterRequest generates a request for the TestMetricFilter operation.
 func (c *CloudWatchLogs) TestMetricFilterRequest(input *TestMetricFilterInput) (req *aws.Request, output *TestMetricFilterOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opTestMetricFilter == nil {
-		opTestMetricFilter = &aws.Operation{
-			Name:       "TestMetricFilter",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opTestMetricFilter,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &TestMetricFilterInput{}
 	}
 
-	req = c.newRequest(opTestMetricFilter, input, output)
+	req = c.newRequest(op, input, output)
 	output = &TestMetricFilterOutput{}
 	req.Data = output
 	return
@@ -527,128 +633,297 @@ func (c *CloudWatchLogs) TestMetricFilterRequest(input *TestMetricFilterInput) (
 // Tests the filter pattern of a metric filter against a sample of log event
 // messages. You can use this operation to validate the correctness of a metric
 // filter pattern.
-func (c *CloudWatchLogs) TestMetricFilter(input *TestMetricFilterInput) (output *TestMetricFilterOutput, err error) {
+func (c *CloudWatchLogs) TestMetricFilter(input *TestMetricFilterInput) (*TestMetricFilterOutput, error) {
 	req, out := c.TestMetricFilterRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opTestMetricFilter *aws.Operation
-
 type CreateLogGroupInput struct {
+	// The name of the log group to create.
 	LogGroupName *string `locationName:"logGroupName" type:"string" required:"true"`
 
-	metadataCreateLogGroupInput `json:"-", xml:"-"`
+	metadataCreateLogGroupInput `json:"-" xml:"-"`
 }
 
 type metadataCreateLogGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateLogGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateLogGroupInput) GoString() string {
+	return s.String()
+}
+
 type CreateLogGroupOutput struct {
-	metadataCreateLogGroupOutput `json:"-", xml:"-"`
+	metadataCreateLogGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateLogGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateLogGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateLogGroupOutput) GoString() string {
+	return s.String()
+}
+
 type CreateLogStreamInput struct {
+	// The name of the log group under which the log stream is to be created.
 	LogGroupName *string `locationName:"logGroupName" type:"string" required:"true"`
 
+	// The name of the log stream to create.
 	LogStreamName *string `locationName:"logStreamName" type:"string" required:"true"`
 
-	metadataCreateLogStreamInput `json:"-", xml:"-"`
+	metadataCreateLogStreamInput `json:"-" xml:"-"`
 }
 
 type metadataCreateLogStreamInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateLogStreamInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateLogStreamInput) GoString() string {
+	return s.String()
+}
+
 type CreateLogStreamOutput struct {
-	metadataCreateLogStreamOutput `json:"-", xml:"-"`
+	metadataCreateLogStreamOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateLogStreamOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateLogStreamOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateLogStreamOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteLogGroupInput struct {
+	// The name of the log group to delete.
 	LogGroupName *string `locationName:"logGroupName" type:"string" required:"true"`
 
-	metadataDeleteLogGroupInput `json:"-", xml:"-"`
+	metadataDeleteLogGroupInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteLogGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteLogGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteLogGroupInput) GoString() string {
+	return s.String()
+}
+
 type DeleteLogGroupOutput struct {
-	metadataDeleteLogGroupOutput `json:"-", xml:"-"`
+	metadataDeleteLogGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteLogGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteLogGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteLogGroupOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteLogStreamInput struct {
+	// The name of the log group under which the log stream to delete belongs.
 	LogGroupName *string `locationName:"logGroupName" type:"string" required:"true"`
 
+	// The name of the log stream to delete.
 	LogStreamName *string `locationName:"logStreamName" type:"string" required:"true"`
 
-	metadataDeleteLogStreamInput `json:"-", xml:"-"`
+	metadataDeleteLogStreamInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteLogStreamInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteLogStreamInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteLogStreamInput) GoString() string {
+	return s.String()
+}
+
 type DeleteLogStreamOutput struct {
-	metadataDeleteLogStreamOutput `json:"-", xml:"-"`
+	metadataDeleteLogStreamOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteLogStreamOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteLogStreamOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteLogStreamOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteMetricFilterInput struct {
-	// The name of the metric filter.
+	// The name of the metric filter to delete.
 	FilterName *string `locationName:"filterName" type:"string" required:"true"`
 
+	// The name of the log group that is associated with the metric filter to delete.
 	LogGroupName *string `locationName:"logGroupName" type:"string" required:"true"`
 
-	metadataDeleteMetricFilterInput `json:"-", xml:"-"`
+	metadataDeleteMetricFilterInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteMetricFilterInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteMetricFilterInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteMetricFilterInput) GoString() string {
+	return s.String()
+}
+
 type DeleteMetricFilterOutput struct {
-	metadataDeleteMetricFilterOutput `json:"-", xml:"-"`
+	metadataDeleteMetricFilterOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteMetricFilterOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteMetricFilterOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteMetricFilterOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteRetentionPolicyInput struct {
+	// The name of the log group that is associated with the retention policy to
+	// delete.
 	LogGroupName *string `locationName:"logGroupName" type:"string" required:"true"`
 
-	metadataDeleteRetentionPolicyInput `json:"-", xml:"-"`
+	metadataDeleteRetentionPolicyInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteRetentionPolicyInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteRetentionPolicyInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteRetentionPolicyInput) GoString() string {
+	return s.String()
+}
+
 type DeleteRetentionPolicyOutput struct {
-	metadataDeleteRetentionPolicyOutput `json:"-", xml:"-"`
+	metadataDeleteRetentionPolicyOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteRetentionPolicyOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteRetentionPolicyOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteRetentionPolicyOutput) GoString() string {
+	return s.String()
+}
+
+type DeleteSubscriptionFilterInput struct {
+	// The name of the subscription filter to delete.
+	FilterName *string `locationName:"filterName" type:"string" required:"true"`
+
+	// The name of the log group that is associated with the subscription filter
+	// to delete.
+	LogGroupName *string `locationName:"logGroupName" type:"string" required:"true"`
+
+	metadataDeleteSubscriptionFilterInput `json:"-" xml:"-"`
+}
+
+type metadataDeleteSubscriptionFilterInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteSubscriptionFilterInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteSubscriptionFilterInput) GoString() string {
+	return s.String()
+}
+
+type DeleteSubscriptionFilterOutput struct {
+	metadataDeleteSubscriptionFilterOutput `json:"-" xml:"-"`
+}
+
+type metadataDeleteSubscriptionFilterOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteSubscriptionFilterOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteSubscriptionFilterOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeLogGroupsInput struct {
@@ -656,6 +931,8 @@ type DescribeLogGroupsInput struct {
 	// a value, the request would return up to 50 items.
 	Limit *int64 `locationName:"limit" type:"integer"`
 
+	// Will only return log groups that match the provided logGroupNamePrefix. If
+	// you don't specify a value, no prefix filter is applied.
 	LogGroupNamePrefix *string `locationName:"logGroupNamePrefix" type:"string"`
 
 	// A string token used for pagination that points to the next page of results.
@@ -663,11 +940,21 @@ type DescribeLogGroupsInput struct {
 	// request.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataDescribeLogGroupsInput `json:"-", xml:"-"`
+	metadataDescribeLogGroupsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeLogGroupsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeLogGroupsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeLogGroupsInput) GoString() string {
+	return s.String()
 }
 
 type DescribeLogGroupsOutput struct {
@@ -679,11 +966,21 @@ type DescribeLogGroupsOutput struct {
 	// token expires after 24 hours.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataDescribeLogGroupsOutput `json:"-", xml:"-"`
+	metadataDescribeLogGroupsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeLogGroupsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeLogGroupsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeLogGroupsOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeLogStreamsInput struct {
@@ -695,6 +992,7 @@ type DescribeLogStreamsInput struct {
 	// a value, the request would return up to 50 items.
 	Limit *int64 `locationName:"limit" type:"integer"`
 
+	// The log group name for which log streams are to be listed.
 	LogGroupName *string `locationName:"logGroupName" type:"string" required:"true"`
 
 	// Will only return log streams that match the provided logStreamNamePrefix.
@@ -712,11 +1010,21 @@ type DescribeLogStreamsInput struct {
 	// also contain a logStreamNamePrefix.
 	OrderBy *string `locationName:"orderBy" type:"string"`
 
-	metadataDescribeLogStreamsInput `json:"-", xml:"-"`
+	metadataDescribeLogStreamsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeLogStreamsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeLogStreamsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeLogStreamsInput) GoString() string {
+	return s.String()
 }
 
 type DescribeLogStreamsOutput struct {
@@ -728,21 +1036,33 @@ type DescribeLogStreamsOutput struct {
 	// token expires after 24 hours.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataDescribeLogStreamsOutput `json:"-", xml:"-"`
+	metadataDescribeLogStreamsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeLogStreamsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeLogStreamsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeLogStreamsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeMetricFiltersInput struct {
-	// The name of the metric filter.
+	// Will only return metric filters that match the provided filterNamePrefix.
+	// If you don't specify a value, no prefix filter is applied.
 	FilterNamePrefix *string `locationName:"filterNamePrefix" type:"string"`
 
 	// The maximum number of items returned in the response. If you don't specify
 	// a value, the request would return up to 50 items.
 	Limit *int64 `locationName:"limit" type:"integer"`
 
+	// The log group name for which metric filters are to be listed.
 	LogGroupName *string `locationName:"logGroupName" type:"string" required:"true"`
 
 	// A string token used for pagination that points to the next page of results.
@@ -750,11 +1070,21 @@ type DescribeMetricFiltersInput struct {
 	// request.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataDescribeMetricFiltersInput `json:"-", xml:"-"`
+	metadataDescribeMetricFiltersInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeMetricFiltersInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeMetricFiltersInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeMetricFiltersInput) GoString() string {
+	return s.String()
 }
 
 type DescribeMetricFiltersOutput struct {
@@ -765,25 +1095,213 @@ type DescribeMetricFiltersOutput struct {
 	// token expires after 24 hours.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataDescribeMetricFiltersOutput `json:"-", xml:"-"`
+	metadataDescribeMetricFiltersOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeMetricFiltersOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeMetricFiltersOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeMetricFiltersOutput) GoString() string {
+	return s.String()
+}
+
+type DescribeSubscriptionFiltersInput struct {
+	// Will only return subscription filters that match the provided filterNamePrefix.
+	// If you don't specify a value, no prefix filter is applied.
+	FilterNamePrefix *string `locationName:"filterNamePrefix" type:"string"`
+
+	// The maximum number of results to return.
+	Limit *int64 `locationName:"limit" type:"integer"`
+
+	// The log group name for which subscription filters are to be listed.
+	LogGroupName *string `locationName:"logGroupName" type:"string" required:"true"`
+
+	// A string token used for pagination that points to the next page of results.
+	// It must be a value obtained from the response of the previous request. The
+	// token expires after 24 hours.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	metadataDescribeSubscriptionFiltersInput `json:"-" xml:"-"`
+}
+
+type metadataDescribeSubscriptionFiltersInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeSubscriptionFiltersInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSubscriptionFiltersInput) GoString() string {
+	return s.String()
+}
+
+type DescribeSubscriptionFiltersOutput struct {
+	// A string token used for pagination that points to the next page of results.
+	// It must be a value obtained from the response of the previous request. The
+	// token expires after 24 hours.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	SubscriptionFilters []*SubscriptionFilter `locationName:"subscriptionFilters" type:"list"`
+
+	metadataDescribeSubscriptionFiltersOutput `json:"-" xml:"-"`
+}
+
+type metadataDescribeSubscriptionFiltersOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeSubscriptionFiltersOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSubscriptionFiltersOutput) GoString() string {
+	return s.String()
+}
+
+type FilterLogEventsInput struct {
+	// A unix timestamp indicating the end time of the range for the request. If
+	// provided, events with a timestamp later than this time will not be returned.
+	EndTime *int64 `locationName:"endTime" type:"long"`
+
+	// A valid CloudWatch Logs filter pattern to use for filtering the response.
+	// If not provided, all the events are matched.
+	FilterPattern *string `locationName:"filterPattern" type:"string"`
+
+	// If provided, the API will make a best effort to provide responses that contain
+	// events from multiple log streams within the log group interleaved in a single
+	// response. If not provided, all the matched log events in the first log stream
+	// will be searched first, then those in the next log stream, etc.
+	Interleaved *bool `locationName:"interleaved" type:"boolean"`
+
+	// The maximum number of events to return in a page of results. Default is 10,000
+	// events.
+	Limit *int64 `locationName:"limit" type:"integer"`
+
+	// The name of the log group to query.
+	LogGroupName *string `locationName:"logGroupName" type:"string" required:"true"`
+
+	// Optional list of log stream names within the specified log group to search.
+	// Defaults to all the log streams in the log group.
+	LogStreamNames []*string `locationName:"logStreamNames" type:"list"`
+
+	// A pagination token obtained from a FilterLogEvents response to continue paginating
+	// the FilterLogEvents results.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// A unix timestamp indicating the start time of the range for the request.
+	// If provided, events with a timestamp prior to this time will not be returned.
+	StartTime *int64 `locationName:"startTime" type:"long"`
+
+	metadataFilterLogEventsInput `json:"-" xml:"-"`
+}
+
+type metadataFilterLogEventsInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s FilterLogEventsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s FilterLogEventsInput) GoString() string {
+	return s.String()
+}
+
+type FilterLogEventsOutput struct {
+	// A list of FilteredLogEvent objects representing the matched events from the
+	// request.
+	Events []*FilteredLogEvent `locationName:"events" type:"list"`
+
+	// A pagination token obtained from a FilterLogEvents response to continue paginating
+	// the FilterLogEvents results.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// A list of SearchedLogStream objects indicating which log streams have been
+	// searched in this request and whether each has been searched completely or
+	// still has more to be paginated.
+	SearchedLogStreams []*SearchedLogStream `locationName:"searchedLogStreams" type:"list"`
+
+	metadataFilterLogEventsOutput `json:"-" xml:"-"`
+}
+
+type metadataFilterLogEventsOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s FilterLogEventsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s FilterLogEventsOutput) GoString() string {
+	return s.String()
+}
+
+// Represents a matched event from a FilterLogEvents request.
+type FilteredLogEvent struct {
+	// A unique identifier for this event.
+	EventID *string `locationName:"eventId" type:"string"`
+
+	// A point in time expressed as the number of milliseconds since Jan 1, 1970
+	// 00:00:00 UTC.
+	IngestionTime *int64 `locationName:"ingestionTime" type:"long"`
+
+	// The name of the log stream this event belongs to.
+	LogStreamName *string `locationName:"logStreamName" type:"string"`
+
+	// The data contained in the log event.
+	Message *string `locationName:"message" type:"string"`
+
+	// A point in time expressed as the number of milliseconds since Jan 1, 1970
+	// 00:00:00 UTC.
+	Timestamp *int64 `locationName:"timestamp" type:"long"`
+
+	metadataFilteredLogEvent `json:"-" xml:"-"`
+}
+
+type metadataFilteredLogEvent struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s FilteredLogEvent) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s FilteredLogEvent) GoString() string {
+	return s.String()
+}
+
 type GetLogEventsInput struct {
-	// A point in time expressed as the number milliseconds since Jan 1, 1970 00:00:00
-	// UTC.
+	// A point in time expressed as the number of milliseconds since Jan 1, 1970
+	// 00:00:00 UTC.
 	EndTime *int64 `locationName:"endTime" type:"long"`
 
 	// The maximum number of log events returned in the response. If you don't specify
-	// a value, the request would return as much log events as can fit in a response
+	// a value, the request would return as many log events as can fit in a response
 	// size of 1MB, up to 10,000 log events.
 	Limit *int64 `locationName:"limit" type:"integer"`
 
+	// The name of the log group to query.
 	LogGroupName *string `locationName:"logGroupName" type:"string" required:"true"`
 
+	// The name of the log stream to query.
 	LogStreamName *string `locationName:"logStreamName" type:"string" required:"true"`
 
 	// A string token used for pagination that points to the next page of results.
@@ -795,15 +1313,25 @@ type GetLogEventsInput struct {
 	// is false (the latest log events are returned first).
 	StartFromHead *bool `locationName:"startFromHead" type:"boolean"`
 
-	// A point in time expressed as the number milliseconds since Jan 1, 1970 00:00:00
-	// UTC.
+	// A point in time expressed as the number of milliseconds since Jan 1, 1970
+	// 00:00:00 UTC.
 	StartTime *int64 `locationName:"startTime" type:"long"`
 
-	metadataGetLogEventsInput `json:"-", xml:"-"`
+	metadataGetLogEventsInput `json:"-" xml:"-"`
 }
 
 type metadataGetLogEventsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetLogEventsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetLogEventsInput) GoString() string {
+	return s.String()
 }
 
 type GetLogEventsOutput struct {
@@ -819,11 +1347,21 @@ type GetLogEventsOutput struct {
 	// token expires after 24 hours.
 	NextForwardToken *string `locationName:"nextForwardToken" type:"string"`
 
-	metadataGetLogEventsOutput `json:"-", xml:"-"`
+	metadataGetLogEventsOutput `json:"-" xml:"-"`
 }
 
 type metadataGetLogEventsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetLogEventsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetLogEventsOutput) GoString() string {
+	return s.String()
 }
 
 // A log event is a record of some activity that was recorded by the application
@@ -833,22 +1371,32 @@ type metadataGetLogEventsOutput struct {
 type InputLogEvent struct {
 	Message *string `locationName:"message" type:"string" required:"true"`
 
-	// A point in time expressed as the number milliseconds since Jan 1, 1970 00:00:00
-	// UTC.
+	// A point in time expressed as the number of milliseconds since Jan 1, 1970
+	// 00:00:00 UTC.
 	Timestamp *int64 `locationName:"timestamp" type:"long" required:"true"`
 
-	metadataInputLogEvent `json:"-", xml:"-"`
+	metadataInputLogEvent `json:"-" xml:"-"`
 }
 
 type metadataInputLogEvent struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s InputLogEvent) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InputLogEvent) GoString() string {
+	return s.String()
+}
+
 type LogGroup struct {
 	ARN *string `locationName:"arn" type:"string"`
 
-	// A point in time expressed as the number milliseconds since Jan 1, 1970 00:00:00
-	// UTC.
+	// A point in time expressed as the number of milliseconds since Jan 1, 1970
+	// 00:00:00 UTC.
 	CreationTime *int64 `locationName:"creationTime" type:"long"`
 
 	LogGroupName *string `locationName:"logGroupName" type:"string"`
@@ -863,31 +1411,41 @@ type LogGroup struct {
 
 	StoredBytes *int64 `locationName:"storedBytes" type:"long"`
 
-	metadataLogGroup `json:"-", xml:"-"`
+	metadataLogGroup `json:"-" xml:"-"`
 }
 
 type metadataLogGroup struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// A log stream is sequence of log events that share the same emitter.
+// String returns the string representation
+func (s LogGroup) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s LogGroup) GoString() string {
+	return s.String()
+}
+
+// A log stream is sequence of log events from a single emitter of logs.
 type LogStream struct {
 	ARN *string `locationName:"arn" type:"string"`
 
-	// A point in time expressed as the number milliseconds since Jan 1, 1970 00:00:00
-	// UTC.
+	// A point in time expressed as the number of milliseconds since Jan 1, 1970
+	// 00:00:00 UTC.
 	CreationTime *int64 `locationName:"creationTime" type:"long"`
 
-	// A point in time expressed as the number milliseconds since Jan 1, 1970 00:00:00
-	// UTC.
+	// A point in time expressed as the number of milliseconds since Jan 1, 1970
+	// 00:00:00 UTC.
 	FirstEventTimestamp *int64 `locationName:"firstEventTimestamp" type:"long"`
 
-	// A point in time expressed as the number milliseconds since Jan 1, 1970 00:00:00
-	// UTC.
+	// A point in time expressed as the number of milliseconds since Jan 1, 1970
+	// 00:00:00 UTC.
 	LastEventTimestamp *int64 `locationName:"lastEventTimestamp" type:"long"`
 
-	// A point in time expressed as the number milliseconds since Jan 1, 1970 00:00:00
-	// UTC.
+	// A point in time expressed as the number of milliseconds since Jan 1, 1970
+	// 00:00:00 UTC.
 	LastIngestionTime *int64 `locationName:"lastIngestionTime" type:"long"`
 
 	LogStreamName *string `locationName:"logStreamName" type:"string"`
@@ -899,37 +1457,57 @@ type LogStream struct {
 	// obtained from the response of the previous request.
 	UploadSequenceToken *string `locationName:"uploadSequenceToken" type:"string"`
 
-	metadataLogStream `json:"-", xml:"-"`
+	metadataLogStream `json:"-" xml:"-"`
 }
 
 type metadataLogStream struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s LogStream) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s LogStream) GoString() string {
+	return s.String()
+}
+
 // Metric filters can be used to express how Amazon CloudWatch Logs would extract
 // metric observations from ingested log events and transform them to metric
 // data in a CloudWatch metric.
 type MetricFilter struct {
-	// A point in time expressed as the number milliseconds since Jan 1, 1970 00:00:00
-	// UTC.
+	// A point in time expressed as the number of milliseconds since Jan 1, 1970
+	// 00:00:00 UTC.
 	CreationTime *int64 `locationName:"creationTime" type:"long"`
 
-	// The name of the metric filter.
+	// A name for a metric or subscription filter.
 	FilterName *string `locationName:"filterName" type:"string"`
 
 	// A symbolic description of how Amazon CloudWatch Logs should interpret the
-	// data in each log entry. For example, a log entry may contain timestamps,
-	// IP addresses, strings, and so on. You use the pattern to specify what to
-	// look for in the log stream.
+	// data in each log event. For example, a log event may contain timestamps,
+	// IP addresses, strings, and so on. You use the filter pattern to specify what
+	// to look for in the log event message.
 	FilterPattern *string `locationName:"filterPattern" type:"string"`
 
 	MetricTransformations []*MetricTransformation `locationName:"metricTransformations" type:"list"`
 
-	metadataMetricFilter `json:"-", xml:"-"`
+	metadataMetricFilter `json:"-" xml:"-"`
 }
 
 type metadataMetricFilter struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s MetricFilter) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s MetricFilter) GoString() string {
+	return s.String()
 }
 
 type MetricFilterMatchRecord struct {
@@ -937,13 +1515,23 @@ type MetricFilterMatchRecord struct {
 
 	EventNumber *int64 `locationName:"eventNumber" type:"long"`
 
-	ExtractedValues *map[string]*string `locationName:"extractedValues" type:"map"`
+	ExtractedValues map[string]*string `locationName:"extractedValues" type:"map"`
 
-	metadataMetricFilterMatchRecord `json:"-", xml:"-"`
+	metadataMetricFilterMatchRecord `json:"-" xml:"-"`
 }
 
 type metadataMetricFilterMatchRecord struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s MetricFilterMatchRecord) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s MetricFilterMatchRecord) GoString() string {
+	return s.String()
 }
 
 type MetricTransformation struct {
@@ -960,48 +1548,80 @@ type MetricTransformation struct {
 	// value in the log event.
 	MetricValue *string `locationName:"metricValue" type:"string" required:"true"`
 
-	metadataMetricTransformation `json:"-", xml:"-"`
+	metadataMetricTransformation `json:"-" xml:"-"`
 }
 
 type metadataMetricTransformation struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s MetricTransformation) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s MetricTransformation) GoString() string {
+	return s.String()
+}
+
 type OutputLogEvent struct {
-	// A point in time expressed as the number milliseconds since Jan 1, 1970 00:00:00
-	// UTC.
+	// A point in time expressed as the number of milliseconds since Jan 1, 1970
+	// 00:00:00 UTC.
 	IngestionTime *int64 `locationName:"ingestionTime" type:"long"`
 
 	Message *string `locationName:"message" type:"string"`
 
-	// A point in time expressed as the number milliseconds since Jan 1, 1970 00:00:00
-	// UTC.
+	// A point in time expressed as the number of milliseconds since Jan 1, 1970
+	// 00:00:00 UTC.
 	Timestamp *int64 `locationName:"timestamp" type:"long"`
 
-	metadataOutputLogEvent `json:"-", xml:"-"`
+	metadataOutputLogEvent `json:"-" xml:"-"`
 }
 
 type metadataOutputLogEvent struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s OutputLogEvent) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s OutputLogEvent) GoString() string {
+	return s.String()
+}
+
 type PutLogEventsInput struct {
-	// A list of events belonging to a log stream.
+	// A list of log events belonging to a log stream.
 	LogEvents []*InputLogEvent `locationName:"logEvents" type:"list" required:"true"`
 
+	// The name of the log group to put log events to.
 	LogGroupName *string `locationName:"logGroupName" type:"string" required:"true"`
 
+	// The name of the log stream to put log events to.
 	LogStreamName *string `locationName:"logStreamName" type:"string" required:"true"`
 
 	// A string token that must be obtained from the response of the previous PutLogEvents
 	// request.
 	SequenceToken *string `locationName:"sequenceToken" type:"string"`
 
-	metadataPutLogEventsInput `json:"-", xml:"-"`
+	metadataPutLogEventsInput `json:"-" xml:"-"`
 }
 
 type metadataPutLogEventsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PutLogEventsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PutLogEventsInput) GoString() string {
+	return s.String()
 }
 
 type PutLogEventsOutput struct {
@@ -1012,43 +1632,74 @@ type PutLogEventsOutput struct {
 
 	RejectedLogEventsInfo *RejectedLogEventsInfo `locationName:"rejectedLogEventsInfo" type:"structure"`
 
-	metadataPutLogEventsOutput `json:"-", xml:"-"`
+	metadataPutLogEventsOutput `json:"-" xml:"-"`
 }
 
 type metadataPutLogEventsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s PutLogEventsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PutLogEventsOutput) GoString() string {
+	return s.String()
+}
+
 type PutMetricFilterInput struct {
-	// The name of the metric filter.
+	// A name for the metric filter.
 	FilterName *string `locationName:"filterName" type:"string" required:"true"`
 
-	// A symbolic description of how Amazon CloudWatch Logs should interpret the
-	// data in each log entry. For example, a log entry may contain timestamps,
-	// IP addresses, strings, and so on. You use the pattern to specify what to
-	// look for in the log stream.
+	// A valid CloudWatch Logs filter pattern for extracting metric data out of
+	// ingested log events.
 	FilterPattern *string `locationName:"filterPattern" type:"string" required:"true"`
 
+	// The name of the log group to associate the metric filter with.
 	LogGroupName *string `locationName:"logGroupName" type:"string" required:"true"`
 
+	// A collection of information needed to define how metric data gets emitted.
 	MetricTransformations []*MetricTransformation `locationName:"metricTransformations" type:"list" required:"true"`
 
-	metadataPutMetricFilterInput `json:"-", xml:"-"`
+	metadataPutMetricFilterInput `json:"-" xml:"-"`
 }
 
 type metadataPutMetricFilterInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s PutMetricFilterInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PutMetricFilterInput) GoString() string {
+	return s.String()
+}
+
 type PutMetricFilterOutput struct {
-	metadataPutMetricFilterOutput `json:"-", xml:"-"`
+	metadataPutMetricFilterOutput `json:"-" xml:"-"`
 }
 
 type metadataPutMetricFilterOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s PutMetricFilterOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PutMetricFilterOutput) GoString() string {
+	return s.String()
+}
+
 type PutRetentionPolicyInput struct {
+	// The name of the log group to associate the retention policy with.
 	LogGroupName *string `locationName:"logGroupName" type:"string" required:"true"`
 
 	// Specifies the number of days you want to retain log events in the specified
@@ -1056,19 +1707,92 @@ type PutRetentionPolicyInput struct {
 	// 365, 400, 545, 731, 1827, 3653.
 	RetentionInDays *int64 `locationName:"retentionInDays" type:"integer" required:"true"`
 
-	metadataPutRetentionPolicyInput `json:"-", xml:"-"`
+	metadataPutRetentionPolicyInput `json:"-" xml:"-"`
 }
 
 type metadataPutRetentionPolicyInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s PutRetentionPolicyInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PutRetentionPolicyInput) GoString() string {
+	return s.String()
+}
+
 type PutRetentionPolicyOutput struct {
-	metadataPutRetentionPolicyOutput `json:"-", xml:"-"`
+	metadataPutRetentionPolicyOutput `json:"-" xml:"-"`
 }
 
 type metadataPutRetentionPolicyOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PutRetentionPolicyOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PutRetentionPolicyOutput) GoString() string {
+	return s.String()
+}
+
+type PutSubscriptionFilterInput struct {
+	// The ARN of an Amazon Kinesis stream to deliver matching log events to.
+	DestinationARN *string `locationName:"destinationArn" type:"string" required:"true"`
+
+	// A name for the subscription filter.
+	FilterName *string `locationName:"filterName" type:"string" required:"true"`
+
+	// A valid CloudWatch Logs filter pattern for subscribing to a filtered stream
+	// of log events.
+	FilterPattern *string `locationName:"filterPattern" type:"string" required:"true"`
+
+	// The name of the log group to associate the subscription filter with.
+	LogGroupName *string `locationName:"logGroupName" type:"string" required:"true"`
+
+	// The ARN of an IAM role that grants Amazon CloudWatch Logs permissions to
+	// do Amazon Kinesis PutRecord requests on the desitnation stream.
+	RoleARN *string `locationName:"roleArn" type:"string" required:"true"`
+
+	metadataPutSubscriptionFilterInput `json:"-" xml:"-"`
+}
+
+type metadataPutSubscriptionFilterInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PutSubscriptionFilterInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PutSubscriptionFilterInput) GoString() string {
+	return s.String()
+}
+
+type PutSubscriptionFilterOutput struct {
+	metadataPutSubscriptionFilterOutput `json:"-" xml:"-"`
+}
+
+type metadataPutSubscriptionFilterOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PutSubscriptionFilterOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PutSubscriptionFilterOutput) GoString() string {
+	return s.String()
 }
 
 type RejectedLogEventsInfo struct {
@@ -1078,35 +1802,130 @@ type RejectedLogEventsInfo struct {
 
 	TooOldLogEventEndIndex *int64 `locationName:"tooOldLogEventEndIndex" type:"integer"`
 
-	metadataRejectedLogEventsInfo `json:"-", xml:"-"`
+	metadataRejectedLogEventsInfo `json:"-" xml:"-"`
 }
 
 type metadataRejectedLogEventsInfo struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RejectedLogEventsInfo) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RejectedLogEventsInfo) GoString() string {
+	return s.String()
+}
+
+// An object indicating the search status of a log stream in a FilterLogEvents
+// request.
+type SearchedLogStream struct {
+	// The name of the log stream.
+	LogStreamName *string `locationName:"logStreamName" type:"string"`
+
+	// Indicates whether all the events in this log stream were searched or more
+	// data exists to search by paginating further.
+	SearchedCompletely *bool `locationName:"searchedCompletely" type:"boolean"`
+
+	metadataSearchedLogStream `json:"-" xml:"-"`
+}
+
+type metadataSearchedLogStream struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SearchedLogStream) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SearchedLogStream) GoString() string {
+	return s.String()
+}
+
+type SubscriptionFilter struct {
+	// A point in time expressed as the number of milliseconds since Jan 1, 1970
+	// 00:00:00 UTC.
+	CreationTime *int64 `locationName:"creationTime" type:"long"`
+
+	DestinationARN *string `locationName:"destinationArn" type:"string"`
+
+	// A name for a metric or subscription filter.
+	FilterName *string `locationName:"filterName" type:"string"`
+
+	// A symbolic description of how Amazon CloudWatch Logs should interpret the
+	// data in each log event. For example, a log event may contain timestamps,
+	// IP addresses, strings, and so on. You use the filter pattern to specify what
+	// to look for in the log event message.
+	FilterPattern *string `locationName:"filterPattern" type:"string"`
+
+	LogGroupName *string `locationName:"logGroupName" type:"string"`
+
+	RoleARN *string `locationName:"roleArn" type:"string"`
+
+	metadataSubscriptionFilter `json:"-" xml:"-"`
+}
+
+type metadataSubscriptionFilter struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SubscriptionFilter) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SubscriptionFilter) GoString() string {
+	return s.String()
+}
+
 type TestMetricFilterInput struct {
 	// A symbolic description of how Amazon CloudWatch Logs should interpret the
-	// data in each log entry. For example, a log entry may contain timestamps,
-	// IP addresses, strings, and so on. You use the pattern to specify what to
-	// look for in the log stream.
+	// data in each log event. For example, a log event may contain timestamps,
+	// IP addresses, strings, and so on. You use the filter pattern to specify what
+	// to look for in the log event message.
 	FilterPattern *string `locationName:"filterPattern" type:"string" required:"true"`
 
+	// A list of log event messages to test.
 	LogEventMessages []*string `locationName:"logEventMessages" type:"list" required:"true"`
 
-	metadataTestMetricFilterInput `json:"-", xml:"-"`
+	metadataTestMetricFilterInput `json:"-" xml:"-"`
 }
 
 type metadataTestMetricFilterInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s TestMetricFilterInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TestMetricFilterInput) GoString() string {
+	return s.String()
+}
+
 type TestMetricFilterOutput struct {
 	Matches []*MetricFilterMatchRecord `locationName:"matches" type:"list"`
 
-	metadataTestMetricFilterOutput `json:"-", xml:"-"`
+	metadataTestMetricFilterOutput `json:"-" xml:"-"`
 }
 
 type metadataTestMetricFilterOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s TestMetricFilterOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TestMetricFilterOutput) GoString() string {
+	return s.String()
 }

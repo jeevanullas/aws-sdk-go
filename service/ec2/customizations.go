@@ -3,13 +3,13 @@ package ec2
 import (
 	"time"
 
-	"github.com/awslabs/aws-sdk-go/aws"
-	"github.com/awslabs/aws-sdk-go/aws/awsutil"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
 func init() {
 	initRequest = func(r *aws.Request) {
-		if r.Operation == opCopySnapshot { // fill the PresignedURL parameter
+		if r.Operation.Name == opCopySnapshot { // fill the PresignedURL parameter
 			r.Handlers.Build.PushFront(fillPresignedURL)
 		}
 	}
@@ -38,8 +38,8 @@ func fillPresignedURL(r *aws.Request) {
 	// Create a new client pointing at source region.
 	// We will use this to presign the CopySnapshot request against
 	// the source region
-	var config aws.Config
-	awsutil.Copy(&config, r.Service.Config)
+	config := r.Service.Config.Copy()
+
 	config.Endpoint = ""
 	config.Region = *params.SourceRegion
 	client := New(&config)

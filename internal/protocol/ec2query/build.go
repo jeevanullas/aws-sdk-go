@@ -1,3 +1,4 @@
+// Package ec2query provides serialisation of AWS EC2 requests and responses.
 package ec2query
 
 //go:generate go run ../../fixtures/protocol/generate.go ../../fixtures/protocol/input/ec2.json build_test.go
@@ -5,18 +6,19 @@ package ec2query
 import (
 	"net/url"
 
-	"github.com/awslabs/aws-sdk-go/aws"
-	"github.com/awslabs/aws-sdk-go/internal/protocol/query/queryutil"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awserr"
+	"github.com/aws/aws-sdk-go/internal/protocol/query/queryutil"
 )
 
+// Build builds a request for the EC2 protocol.
 func Build(r *aws.Request) {
 	body := url.Values{
 		"Action":  {r.Operation.Name},
 		"Version": {r.Service.APIVersion},
 	}
 	if err := queryutil.Parse(body, r.Params, true); err != nil {
-		r.Error = err
-		return
+		r.Error = awserr.New("SerializationError", "failed encoding EC2 Query request", err)
 	}
 
 	if r.ExpireTime == 0 {

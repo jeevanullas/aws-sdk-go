@@ -6,12 +6,13 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awserr"
 )
 
 var (
-	errChecksumMissingBody = fmt.Errorf("cannot compute checksum. missing body.")
-	errChecksumMissingMD5  = fmt.Errorf("cannot verify checksum. missing response MD5.")
+	errChecksumMissingBody = fmt.Errorf("cannot compute checksum. missing body")
+	errChecksumMissingMD5  = fmt.Errorf("cannot verify checksum. missing response MD5")
 )
 
 func setupChecksumValidation(r *aws.Request) {
@@ -19,7 +20,7 @@ func setupChecksumValidation(r *aws.Request) {
 		return
 	}
 
-	switch r.Operation {
+	switch r.Operation.Name {
 	case opSendMessage:
 		r.Handlers.Unmarshal.PushBack(verifySendMessage)
 	case opSendMessageBatch:
@@ -98,10 +99,6 @@ func checksumsMatch(body, expectedMD5 *string) error {
 }
 
 func setChecksumError(r *aws.Request, format string, args ...interface{}) {
-	r.Retryable = true
-	r.Error = &aws.APIError{
-		StatusCode: r.HTTPResponse.StatusCode,
-		Code:       "InvalidChecksum",
-		Message:    fmt.Sprintf(format, args...),
-	}
+	r.Retryable.Set(true)
+	r.Error = awserr.New("InvalidChecksum", fmt.Sprintf(format, args...), nil)
 }

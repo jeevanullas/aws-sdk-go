@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/awslabs/aws-sdk-go/internal/protocol/json/jsonutil"
+	"github.com/aws/aws-sdk-go/internal/protocol/json/jsonutil"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -63,9 +63,9 @@ var jsonTests = []struct {
 	},
 	{
 		J{
-			S: S("\x00føø\u00FF"),
+			S: S("\x00føø\u00FF\n\\\"\r\t\b\f"),
 		},
-		`{"S":"\u0000føøÿ"}`,
+		`{"S":"\u0000føøÿ\n\\\"\r\t\b\f"}`,
 		``,
 	},
 }

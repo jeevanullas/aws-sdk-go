@@ -4,32 +4,27 @@
 package cloudformation
 
 import (
-	"sync"
 	"time"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
-var oprw sync.Mutex
+const opCancelUpdateStack = "CancelUpdateStack"
 
 // CancelUpdateStackRequest generates a request for the CancelUpdateStack operation.
 func (c *CloudFormation) CancelUpdateStackRequest(input *CancelUpdateStackInput) (req *aws.Request, output *CancelUpdateStackOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCancelUpdateStack == nil {
-		opCancelUpdateStack = &aws.Operation{
-			Name:       "CancelUpdateStack",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCancelUpdateStack,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CancelUpdateStackInput{}
 	}
 
-	req = c.newRequest(opCancelUpdateStack, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CancelUpdateStackOutput{}
 	req.Data = output
 	return
@@ -39,33 +34,27 @@ func (c *CloudFormation) CancelUpdateStackRequest(input *CancelUpdateStackInput)
 // the stack will roll back the update and revert to the previous stack configuration.
 //
 // Only stacks that are in the UPDATE_IN_PROGRESS state can be canceled.
-func (c *CloudFormation) CancelUpdateStack(input *CancelUpdateStackInput) (output *CancelUpdateStackOutput, err error) {
+func (c *CloudFormation) CancelUpdateStack(input *CancelUpdateStackInput) (*CancelUpdateStackOutput, error) {
 	req, out := c.CancelUpdateStackRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCancelUpdateStack *aws.Operation
+const opCreateStack = "CreateStack"
 
 // CreateStackRequest generates a request for the CreateStack operation.
 func (c *CloudFormation) CreateStackRequest(input *CreateStackInput) (req *aws.Request, output *CreateStackOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateStack == nil {
-		opCreateStack = &aws.Operation{
-			Name:       "CreateStack",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateStack,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateStackInput{}
 	}
 
-	req = c.newRequest(opCreateStack, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateStackOutput{}
 	req.Data = output
 	return
@@ -74,33 +63,27 @@ func (c *CloudFormation) CreateStackRequest(input *CreateStackInput) (req *aws.R
 // Creates a stack as specified in the template. After the call completes successfully,
 // the stack creation starts. You can check the status of the stack via the
 // DescribeStacks API.
-func (c *CloudFormation) CreateStack(input *CreateStackInput) (output *CreateStackOutput, err error) {
+func (c *CloudFormation) CreateStack(input *CreateStackInput) (*CreateStackOutput, error) {
 	req, out := c.CreateStackRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateStack *aws.Operation
+const opDeleteStack = "DeleteStack"
 
 // DeleteStackRequest generates a request for the DeleteStack operation.
 func (c *CloudFormation) DeleteStackRequest(input *DeleteStackInput) (req *aws.Request, output *DeleteStackOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteStack == nil {
-		opDeleteStack = &aws.Operation{
-			Name:       "DeleteStack",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteStack,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteStackInput{}
 	}
 
-	req = c.newRequest(opDeleteStack, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteStackOutput{}
 	req.Data = output
 	return
@@ -109,33 +92,33 @@ func (c *CloudFormation) DeleteStackRequest(input *DeleteStackInput) (req *aws.R
 // Deletes a specified stack. Once the call completes successfully, stack deletion
 // starts. Deleted stacks do not show up in the DescribeStacks API if the deletion
 // has been completed successfully.
-func (c *CloudFormation) DeleteStack(input *DeleteStackInput) (output *DeleteStackOutput, err error) {
+func (c *CloudFormation) DeleteStack(input *DeleteStackInput) (*DeleteStackOutput, error) {
 	req, out := c.DeleteStackRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteStack *aws.Operation
+const opDescribeStackEvents = "DescribeStackEvents"
 
 // DescribeStackEventsRequest generates a request for the DescribeStackEvents operation.
 func (c *CloudFormation) DescribeStackEventsRequest(input *DescribeStackEventsInput) (req *aws.Request, output *DescribeStackEventsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeStackEvents == nil {
-		opDescribeStackEvents = &aws.Operation{
-			Name:       "DescribeStackEvents",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeStackEvents,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeStackEventsInput{}
 	}
 
-	req = c.newRequest(opDescribeStackEvents, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeStackEventsOutput{}
 	req.Data = output
 	return
@@ -147,33 +130,34 @@ func (c *CloudFormation) DescribeStackEventsRequest(input *DescribeStackEventsIn
 //
 // You can list events for stacks that have failed to create or have been deleted
 // by specifying the unique stack identifier (stack ID).
-func (c *CloudFormation) DescribeStackEvents(input *DescribeStackEventsInput) (output *DescribeStackEventsOutput, err error) {
+func (c *CloudFormation) DescribeStackEvents(input *DescribeStackEventsInput) (*DescribeStackEventsOutput, error) {
 	req, out := c.DescribeStackEventsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeStackEvents *aws.Operation
+func (c *CloudFormation) DescribeStackEventsPages(input *DescribeStackEventsInput, fn func(p *DescribeStackEventsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeStackEventsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeStackEventsOutput), lastPage)
+	})
+}
+
+const opDescribeStackResource = "DescribeStackResource"
 
 // DescribeStackResourceRequest generates a request for the DescribeStackResource operation.
 func (c *CloudFormation) DescribeStackResourceRequest(input *DescribeStackResourceInput) (req *aws.Request, output *DescribeStackResourceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeStackResource == nil {
-		opDescribeStackResource = &aws.Operation{
-			Name:       "DescribeStackResource",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeStackResource,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeStackResourceInput{}
 	}
 
-	req = c.newRequest(opDescribeStackResource, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeStackResourceOutput{}
 	req.Data = output
 	return
@@ -183,33 +167,27 @@ func (c *CloudFormation) DescribeStackResourceRequest(input *DescribeStackResour
 //
 // For deleted stacks, DescribeStackResource returns resource information for
 // up to 90 days after the stack has been deleted.
-func (c *CloudFormation) DescribeStackResource(input *DescribeStackResourceInput) (output *DescribeStackResourceOutput, err error) {
+func (c *CloudFormation) DescribeStackResource(input *DescribeStackResourceInput) (*DescribeStackResourceOutput, error) {
 	req, out := c.DescribeStackResourceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeStackResource *aws.Operation
+const opDescribeStackResources = "DescribeStackResources"
 
 // DescribeStackResourcesRequest generates a request for the DescribeStackResources operation.
 func (c *CloudFormation) DescribeStackResourcesRequest(input *DescribeStackResourcesInput) (req *aws.Request, output *DescribeStackResourcesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeStackResources == nil {
-		opDescribeStackResources = &aws.Operation{
-			Name:       "DescribeStackResources",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeStackResources,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeStackResourcesInput{}
 	}
 
-	req = c.newRequest(opDescribeStackResources, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeStackResourcesOutput{}
 	req.Data = output
 	return
@@ -232,33 +210,33 @@ func (c *CloudFormation) DescribeStackResourcesRequest(input *DescribeStackResou
 //
 // A ValidationError is returned if you specify both StackName and PhysicalResourceId
 // in the same request.
-func (c *CloudFormation) DescribeStackResources(input *DescribeStackResourcesInput) (output *DescribeStackResourcesOutput, err error) {
+func (c *CloudFormation) DescribeStackResources(input *DescribeStackResourcesInput) (*DescribeStackResourcesOutput, error) {
 	req, out := c.DescribeStackResourcesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeStackResources *aws.Operation
+const opDescribeStacks = "DescribeStacks"
 
 // DescribeStacksRequest generates a request for the DescribeStacks operation.
 func (c *CloudFormation) DescribeStacksRequest(input *DescribeStacksInput) (req *aws.Request, output *DescribeStacksOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeStacks == nil {
-		opDescribeStacks = &aws.Operation{
-			Name:       "DescribeStacks",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeStacks,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeStacksInput{}
 	}
 
-	req = c.newRequest(opDescribeStacks, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeStacksOutput{}
 	req.Data = output
 	return
@@ -266,33 +244,34 @@ func (c *CloudFormation) DescribeStacksRequest(input *DescribeStacksInput) (req 
 
 // Returns the description for the specified stack; if no stack name was specified,
 // then it returns the description for all the stacks created.
-func (c *CloudFormation) DescribeStacks(input *DescribeStacksInput) (output *DescribeStacksOutput, err error) {
+func (c *CloudFormation) DescribeStacks(input *DescribeStacksInput) (*DescribeStacksOutput, error) {
 	req, out := c.DescribeStacksRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeStacks *aws.Operation
+func (c *CloudFormation) DescribeStacksPages(input *DescribeStacksInput, fn func(p *DescribeStacksOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeStacksRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeStacksOutput), lastPage)
+	})
+}
+
+const opEstimateTemplateCost = "EstimateTemplateCost"
 
 // EstimateTemplateCostRequest generates a request for the EstimateTemplateCost operation.
 func (c *CloudFormation) EstimateTemplateCostRequest(input *EstimateTemplateCostInput) (req *aws.Request, output *EstimateTemplateCostOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opEstimateTemplateCost == nil {
-		opEstimateTemplateCost = &aws.Operation{
-			Name:       "EstimateTemplateCost",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opEstimateTemplateCost,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &EstimateTemplateCostInput{}
 	}
 
-	req = c.newRequest(opEstimateTemplateCost, input, output)
+	req = c.newRequest(op, input, output)
 	output = &EstimateTemplateCostOutput{}
 	req.Data = output
 	return
@@ -301,33 +280,27 @@ func (c *CloudFormation) EstimateTemplateCostRequest(input *EstimateTemplateCost
 // Returns the estimated monthly cost of a template. The return value is an
 // AWS Simple Monthly Calculator URL with a query string that describes the
 // resources required to run the template.
-func (c *CloudFormation) EstimateTemplateCost(input *EstimateTemplateCostInput) (output *EstimateTemplateCostOutput, err error) {
+func (c *CloudFormation) EstimateTemplateCost(input *EstimateTemplateCostInput) (*EstimateTemplateCostOutput, error) {
 	req, out := c.EstimateTemplateCostRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opEstimateTemplateCost *aws.Operation
+const opGetStackPolicy = "GetStackPolicy"
 
 // GetStackPolicyRequest generates a request for the GetStackPolicy operation.
 func (c *CloudFormation) GetStackPolicyRequest(input *GetStackPolicyInput) (req *aws.Request, output *GetStackPolicyOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetStackPolicy == nil {
-		opGetStackPolicy = &aws.Operation{
-			Name:       "GetStackPolicy",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opGetStackPolicy,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &GetStackPolicyInput{}
 	}
 
-	req = c.newRequest(opGetStackPolicy, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetStackPolicyOutput{}
 	req.Data = output
 	return
@@ -335,33 +308,27 @@ func (c *CloudFormation) GetStackPolicyRequest(input *GetStackPolicyInput) (req 
 
 // Returns the stack policy for a specified stack. If a stack doesn't have a
 // policy, a null value is returned.
-func (c *CloudFormation) GetStackPolicy(input *GetStackPolicyInput) (output *GetStackPolicyOutput, err error) {
+func (c *CloudFormation) GetStackPolicy(input *GetStackPolicyInput) (*GetStackPolicyOutput, error) {
 	req, out := c.GetStackPolicyRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetStackPolicy *aws.Operation
+const opGetTemplate = "GetTemplate"
 
 // GetTemplateRequest generates a request for the GetTemplate operation.
 func (c *CloudFormation) GetTemplateRequest(input *GetTemplateInput) (req *aws.Request, output *GetTemplateOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetTemplate == nil {
-		opGetTemplate = &aws.Operation{
-			Name:       "GetTemplate",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opGetTemplate,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &GetTemplateInput{}
 	}
 
-	req = c.newRequest(opGetTemplate, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetTemplateOutput{}
 	req.Data = output
 	return
@@ -374,33 +341,27 @@ func (c *CloudFormation) GetTemplateRequest(input *GetTemplateInput) (req *aws.R
 // the stack has been deleted.
 //
 //  If the template does not exist, a ValidationError is returned.
-func (c *CloudFormation) GetTemplate(input *GetTemplateInput) (output *GetTemplateOutput, err error) {
+func (c *CloudFormation) GetTemplate(input *GetTemplateInput) (*GetTemplateOutput, error) {
 	req, out := c.GetTemplateRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetTemplate *aws.Operation
+const opGetTemplateSummary = "GetTemplateSummary"
 
 // GetTemplateSummaryRequest generates a request for the GetTemplateSummary operation.
 func (c *CloudFormation) GetTemplateSummaryRequest(input *GetTemplateSummaryInput) (req *aws.Request, output *GetTemplateSummaryOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetTemplateSummary == nil {
-		opGetTemplateSummary = &aws.Operation{
-			Name:       "GetTemplateSummary",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opGetTemplateSummary,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &GetTemplateSummaryInput{}
 	}
 
-	req = c.newRequest(opGetTemplateSummary, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetTemplateSummaryOutput{}
 	req.Data = output
 	return
@@ -416,33 +377,33 @@ func (c *CloudFormation) GetTemplateSummaryRequest(input *GetTemplateSummaryInpu
 // For deleted stacks, GetTemplateSummary returns the template information
 // for up to 90 days after the stack has been deleted. If the template does
 // not exist, a ValidationError is returned.
-func (c *CloudFormation) GetTemplateSummary(input *GetTemplateSummaryInput) (output *GetTemplateSummaryOutput, err error) {
+func (c *CloudFormation) GetTemplateSummary(input *GetTemplateSummaryInput) (*GetTemplateSummaryOutput, error) {
 	req, out := c.GetTemplateSummaryRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetTemplateSummary *aws.Operation
+const opListStackResources = "ListStackResources"
 
 // ListStackResourcesRequest generates a request for the ListStackResources operation.
 func (c *CloudFormation) ListStackResourcesRequest(input *ListStackResourcesInput) (req *aws.Request, output *ListStackResourcesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListStackResources == nil {
-		opListStackResources = &aws.Operation{
-			Name:       "ListStackResources",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opListStackResources,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &ListStackResourcesInput{}
 	}
 
-	req = c.newRequest(opListStackResources, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListStackResourcesOutput{}
 	req.Data = output
 	return
@@ -452,33 +413,40 @@ func (c *CloudFormation) ListStackResourcesRequest(input *ListStackResourcesInpu
 //
 // For deleted stacks, ListStackResources returns resource information for
 // up to 90 days after the stack has been deleted.
-func (c *CloudFormation) ListStackResources(input *ListStackResourcesInput) (output *ListStackResourcesOutput, err error) {
+func (c *CloudFormation) ListStackResources(input *ListStackResourcesInput) (*ListStackResourcesOutput, error) {
 	req, out := c.ListStackResourcesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListStackResources *aws.Operation
+func (c *CloudFormation) ListStackResourcesPages(input *ListStackResourcesInput, fn func(p *ListStackResourcesOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.ListStackResourcesRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*ListStackResourcesOutput), lastPage)
+	})
+}
+
+const opListStacks = "ListStacks"
 
 // ListStacksRequest generates a request for the ListStacks operation.
 func (c *CloudFormation) ListStacksRequest(input *ListStacksInput) (req *aws.Request, output *ListStacksOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListStacks == nil {
-		opListStacks = &aws.Operation{
-			Name:       "ListStacks",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opListStacks,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &ListStacksInput{}
 	}
 
-	req = c.newRequest(opListStacks, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListStacksOutput{}
 	req.Data = output
 	return
@@ -489,66 +457,61 @@ func (c *CloudFormation) ListStacksRequest(input *ListStacksInput) (req *aws.Req
 // is kept for 90 days after the stack is deleted. If no StackStatusFilter is
 // specified, summary information for all stacks is returned (including existing
 // stacks and stacks that have been deleted).
-func (c *CloudFormation) ListStacks(input *ListStacksInput) (output *ListStacksOutput, err error) {
+func (c *CloudFormation) ListStacks(input *ListStacksInput) (*ListStacksOutput, error) {
 	req, out := c.ListStacksRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListStacks *aws.Operation
+func (c *CloudFormation) ListStacksPages(input *ListStacksInput, fn func(p *ListStacksOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.ListStacksRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*ListStacksOutput), lastPage)
+	})
+}
+
+const opSetStackPolicy = "SetStackPolicy"
 
 // SetStackPolicyRequest generates a request for the SetStackPolicy operation.
 func (c *CloudFormation) SetStackPolicyRequest(input *SetStackPolicyInput) (req *aws.Request, output *SetStackPolicyOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opSetStackPolicy == nil {
-		opSetStackPolicy = &aws.Operation{
-			Name:       "SetStackPolicy",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opSetStackPolicy,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &SetStackPolicyInput{}
 	}
 
-	req = c.newRequest(opSetStackPolicy, input, output)
+	req = c.newRequest(op, input, output)
 	output = &SetStackPolicyOutput{}
 	req.Data = output
 	return
 }
 
 // Sets a stack policy for a specified stack.
-func (c *CloudFormation) SetStackPolicy(input *SetStackPolicyInput) (output *SetStackPolicyOutput, err error) {
+func (c *CloudFormation) SetStackPolicy(input *SetStackPolicyInput) (*SetStackPolicyOutput, error) {
 	req, out := c.SetStackPolicyRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opSetStackPolicy *aws.Operation
+const opSignalResource = "SignalResource"
 
 // SignalResourceRequest generates a request for the SignalResource operation.
 func (c *CloudFormation) SignalResourceRequest(input *SignalResourceInput) (req *aws.Request, output *SignalResourceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opSignalResource == nil {
-		opSignalResource = &aws.Operation{
-			Name:       "SignalResource",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opSignalResource,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &SignalResourceInput{}
 	}
 
-	req = c.newRequest(opSignalResource, input, output)
+	req = c.newRequest(op, input, output)
 	output = &SignalResourceOutput{}
 	req.Data = output
 	return
@@ -560,33 +523,27 @@ func (c *CloudFormation) SignalResourceRequest(input *SignalResourceInput) (req 
 // or update until resources receive the required number of signals or the timeout
 // period is exceeded. The SignalResource API is useful in cases where you want
 // to send signals from anywhere other than an Amazon EC2 instance.
-func (c *CloudFormation) SignalResource(input *SignalResourceInput) (output *SignalResourceOutput, err error) {
+func (c *CloudFormation) SignalResource(input *SignalResourceInput) (*SignalResourceOutput, error) {
 	req, out := c.SignalResourceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opSignalResource *aws.Operation
+const opUpdateStack = "UpdateStack"
 
 // UpdateStackRequest generates a request for the UpdateStack operation.
 func (c *CloudFormation) UpdateStackRequest(input *UpdateStackInput) (req *aws.Request, output *UpdateStackOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUpdateStack == nil {
-		opUpdateStack = &aws.Operation{
-			Name:       "UpdateStack",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opUpdateStack,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &UpdateStackInput{}
 	}
 
-	req = c.newRequest(opUpdateStack, input, output)
+	req = c.newRequest(op, input, output)
 	output = &UpdateStackOutput{}
 	req.Data = output
 	return
@@ -604,66 +561,77 @@ func (c *CloudFormation) UpdateStackRequest(input *UpdateStackInput) (req *aws.R
 //
 // For more information about creating an update template, updating a stack,
 // and monitoring the progress of the update, see Updating a Stack (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks.html).
-func (c *CloudFormation) UpdateStack(input *UpdateStackInput) (output *UpdateStackOutput, err error) {
+func (c *CloudFormation) UpdateStack(input *UpdateStackInput) (*UpdateStackOutput, error) {
 	req, out := c.UpdateStackRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opUpdateStack *aws.Operation
+const opValidateTemplate = "ValidateTemplate"
 
 // ValidateTemplateRequest generates a request for the ValidateTemplate operation.
 func (c *CloudFormation) ValidateTemplateRequest(input *ValidateTemplateInput) (req *aws.Request, output *ValidateTemplateOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opValidateTemplate == nil {
-		opValidateTemplate = &aws.Operation{
-			Name:       "ValidateTemplate",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opValidateTemplate,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ValidateTemplateInput{}
 	}
 
-	req = c.newRequest(opValidateTemplate, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ValidateTemplateOutput{}
 	req.Data = output
 	return
 }
 
 // Validates a specified template.
-func (c *CloudFormation) ValidateTemplate(input *ValidateTemplateInput) (output *ValidateTemplateOutput, err error) {
+func (c *CloudFormation) ValidateTemplate(input *ValidateTemplateInput) (*ValidateTemplateOutput, error) {
 	req, out := c.ValidateTemplateRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
-
-var opValidateTemplate *aws.Operation
 
 // The input for CancelUpdateStack action.
 type CancelUpdateStackInput struct {
-	// The name or the unique identifier associated with the stack.
+	// The name or the unique stack ID that is associated with the stack.
 	StackName *string `type:"string" required:"true"`
 
-	metadataCancelUpdateStackInput `json:"-", xml:"-"`
+	metadataCancelUpdateStackInput `json:"-" xml:"-"`
 }
 
 type metadataCancelUpdateStackInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CancelUpdateStackInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelUpdateStackInput) GoString() string {
+	return s.String()
+}
+
 type CancelUpdateStackOutput struct {
-	metadataCancelUpdateStackOutput `json:"-", xml:"-"`
+	metadataCancelUpdateStackOutput `json:"-" xml:"-"`
 }
 
 type metadataCancelUpdateStackOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CancelUpdateStackOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelUpdateStackOutput) GoString() string {
+	return s.String()
 }
 
 // The input for CreateStack action.
@@ -674,8 +642,7 @@ type CreateStackInput struct {
 	// explicitly acknowledge their capabilities by specifying this parameter.
 	//
 	// Currently, the only valid value is CAPABILITY_IAM, which is required for
-	// the following resources:  AWS::CloudFormation::Stack (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-stack.html),
-	//  AWS::IAM::AccessKey (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-accesskey.html),
+	// the following resources:  AWS::IAM::AccessKey (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-accesskey.html),
 	//  AWS::IAM::Group (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-group.html),
 	//  AWS::IAM::InstanceProfile (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-instanceprofile.html),
 	//  AWS::IAM::Policy (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-policy.html),
@@ -708,11 +675,12 @@ type CreateStackInput struct {
 	// A list of Parameter structures that specify input parameters for the stack.
 	Parameters []*Parameter `type:"list"`
 
-	// The name associated with the stack. The name must be unique within your AWS
-	// account.
+	// The name that is associated with the stack. The name must be unique in the
+	// region in which you are creating the stack.
 	//
-	// Must contain only alphanumeric characters (case sensitive) and start with
-	// an alpha character. Maximum length of the name is 255 characters.
+	// A stack name can contain only alphanumeric characters (case sensitive) and
+	// hyphens. It must start with an alphabetic character and cannot be longer
+	// than 255 characters.
 	StackName *string `type:"string" required:"true"`
 
 	// Structure containing the stack policy body. For more information, go to
@@ -742,7 +710,7 @@ type CreateStackInput struct {
 	TemplateBody *string `type:"string"`
 
 	// Location of file containing the template body. The URL must point to a template
-	// (max size: 307,200 bytes) located in an S3 bucket in the same region as the
+	// (max size: 460,800 bytes) located in an S3 bucket in the same region as the
 	// stack. For more information, go to the Template Anatomy (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-anatomy.html)
 	// in the AWS CloudFormation User Guide.
 	//
@@ -755,11 +723,21 @@ type CreateStackInput struct {
 	// back.
 	TimeoutInMinutes *int64 `type:"integer"`
 
-	metadataCreateStackInput `json:"-", xml:"-"`
+	metadataCreateStackInput `json:"-" xml:"-"`
 }
 
 type metadataCreateStackInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateStackInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateStackInput) GoString() string {
+	return s.String()
 }
 
 // The output for a CreateStack action.
@@ -767,31 +745,61 @@ type CreateStackOutput struct {
 	// Unique identifier of the stack.
 	StackID *string `locationName:"StackId" type:"string"`
 
-	metadataCreateStackOutput `json:"-", xml:"-"`
+	metadataCreateStackOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateStackOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateStackOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateStackOutput) GoString() string {
+	return s.String()
+}
+
 // The input for DeleteStack action.
 type DeleteStackInput struct {
-	// The name or the unique identifier associated with the stack.
+	// The name or the unique stack ID that is associated with the stack.
 	StackName *string `type:"string" required:"true"`
 
-	metadataDeleteStackInput `json:"-", xml:"-"`
+	metadataDeleteStackInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteStackInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteStackInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteStackInput) GoString() string {
+	return s.String()
+}
+
 type DeleteStackOutput struct {
-	metadataDeleteStackOutput `json:"-", xml:"-"`
+	metadataDeleteStackOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteStackOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteStackOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteStackOutput) GoString() string {
+	return s.String()
 }
 
 // The input for DescribeStackEvents action.
@@ -802,19 +810,29 @@ type DescribeStackEventsInput struct {
 	// Default: There is no default value.
 	NextToken *string `type:"string"`
 
-	// The name or the unique identifier associated with the stack, which are not
-	// always interchangeable:
+	// The name or the unique stack ID that is associated with the stack, which
+	// are not always interchangeable:
 	//
 	//  Running stacks: You can specify either the stack's name or its unique stack
 	// ID. Deleted stacks: You must specify the unique stack ID.  Default: There
 	// is no default value.
 	StackName *string `type:"string"`
 
-	metadataDescribeStackEventsInput `json:"-", xml:"-"`
+	metadataDescribeStackEventsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeStackEventsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeStackEventsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeStackEventsInput) GoString() string {
+	return s.String()
 }
 
 // The output for a DescribeStackEvents action.
@@ -826,11 +844,21 @@ type DescribeStackEventsOutput struct {
 	// A list of StackEvents structures.
 	StackEvents []*StackEvent `type:"list"`
 
-	metadataDescribeStackEventsOutput `json:"-", xml:"-"`
+	metadataDescribeStackEventsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeStackEventsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeStackEventsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeStackEventsOutput) GoString() string {
+	return s.String()
 }
 
 // The input for DescribeStackResource action.
@@ -840,19 +868,29 @@ type DescribeStackResourceInput struct {
 	// Default: There is no default value.
 	LogicalResourceID *string `locationName:"LogicalResourceId" type:"string" required:"true"`
 
-	// The name or the unique identifier associated with the stack, which are not
-	// always interchangeable:
+	// The name or the unique stack ID that is associated with the stack, which
+	// are not always interchangeable:
 	//
 	//  Running stacks: You can specify either the stack's name or its unique stack
 	// ID. Deleted stacks: You must specify the unique stack ID.  Default: There
 	// is no default value.
 	StackName *string `type:"string" required:"true"`
 
-	metadataDescribeStackResourceInput `json:"-", xml:"-"`
+	metadataDescribeStackResourceInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeStackResourceInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeStackResourceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeStackResourceInput) GoString() string {
+	return s.String()
 }
 
 // The output for a DescribeStackResource action.
@@ -861,11 +899,21 @@ type DescribeStackResourceOutput struct {
 	// resource in the specified stack.
 	StackResourceDetail *StackResourceDetail `type:"structure"`
 
-	metadataDescribeStackResourceOutput `json:"-", xml:"-"`
+	metadataDescribeStackResourceOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeStackResourceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeStackResourceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeStackResourceOutput) GoString() string {
+	return s.String()
 }
 
 // The input for DescribeStackResources action.
@@ -889,8 +937,8 @@ type DescribeStackResourcesInput struct {
 	// Default: There is no default value.
 	PhysicalResourceID *string `locationName:"PhysicalResourceId" type:"string"`
 
-	// The name or the unique identifier associated with the stack, which are not
-	// always interchangeable:
+	// The name or the unique stack ID that is associated with the stack, which
+	// are not always interchangeable:
 	//
 	//  Running stacks: You can specify either the stack's name or its unique stack
 	// ID. Deleted stacks: You must specify the unique stack ID.  Default: There
@@ -900,11 +948,21 @@ type DescribeStackResourcesInput struct {
 	// PhysicalResourceId.
 	StackName *string `type:"string"`
 
-	metadataDescribeStackResourcesInput `json:"-", xml:"-"`
+	metadataDescribeStackResourcesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeStackResourcesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeStackResourcesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeStackResourcesInput) GoString() string {
+	return s.String()
 }
 
 // The output for a DescribeStackResources action.
@@ -912,11 +970,21 @@ type DescribeStackResourcesOutput struct {
 	// A list of StackResource structures.
 	StackResources []*StackResource `type:"list"`
 
-	metadataDescribeStackResourcesOutput `json:"-", xml:"-"`
+	metadataDescribeStackResourcesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeStackResourcesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeStackResourcesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeStackResourcesOutput) GoString() string {
+	return s.String()
 }
 
 // The input for DescribeStacks action.
@@ -925,19 +993,29 @@ type DescribeStacksInput struct {
 	// one.
 	NextToken *string `type:"string"`
 
-	// The name or the unique identifier associated with the stack, which are not
-	// always interchangeable:
+	// The name or the unique stack ID that is associated with the stack, which
+	// are not always interchangeable:
 	//
 	//  Running stacks: You can specify either the stack's name or its unique stack
 	// ID. Deleted stacks: You must specify the unique stack ID.  Default: There
 	// is no default value.
 	StackName *string `type:"string"`
 
-	metadataDescribeStacksInput `json:"-", xml:"-"`
+	metadataDescribeStacksInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeStacksInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeStacksInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeStacksInput) GoString() string {
+	return s.String()
 }
 
 // The output for a DescribeStacks action.
@@ -949,11 +1027,21 @@ type DescribeStacksOutput struct {
 	// A list of stack structures.
 	Stacks []*Stack `type:"list"`
 
-	metadataDescribeStacksOutput `json:"-", xml:"-"`
+	metadataDescribeStacksOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeStacksOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeStacksOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeStacksOutput) GoString() string {
+	return s.String()
 }
 
 type EstimateTemplateCostInput struct {
@@ -978,11 +1066,21 @@ type EstimateTemplateCostInput struct {
 	// only TemplateBody is used.
 	TemplateURL *string `type:"string"`
 
-	metadataEstimateTemplateCostInput `json:"-", xml:"-"`
+	metadataEstimateTemplateCostInput `json:"-" xml:"-"`
 }
 
 type metadataEstimateTemplateCostInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s EstimateTemplateCostInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EstimateTemplateCostInput) GoString() string {
+	return s.String()
 }
 
 // The output for a EstimateTemplateCost action.
@@ -991,24 +1089,44 @@ type EstimateTemplateCostOutput struct {
 	// resources required to run the template.
 	URL *string `locationName:"Url" type:"string"`
 
-	metadataEstimateTemplateCostOutput `json:"-", xml:"-"`
+	metadataEstimateTemplateCostOutput `json:"-" xml:"-"`
 }
 
 type metadataEstimateTemplateCostOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s EstimateTemplateCostOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EstimateTemplateCostOutput) GoString() string {
+	return s.String()
+}
+
 // The input for the GetStackPolicy action.
 type GetStackPolicyInput struct {
-	// The name or stack ID that is associated with the stack whose policy you want
-	// to get.
+	// The name or unique stack ID that is associated with the stack whose policy
+	// you want to get.
 	StackName *string `type:"string" required:"true"`
 
-	metadataGetStackPolicyInput `json:"-", xml:"-"`
+	metadataGetStackPolicyInput `json:"-" xml:"-"`
 }
 
 type metadataGetStackPolicyInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetStackPolicyInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetStackPolicyInput) GoString() string {
+	return s.String()
 }
 
 // The output for the GetStackPolicy action.
@@ -1018,28 +1136,48 @@ type GetStackPolicyOutput struct {
 	// in the AWS CloudFormation User Guide.)
 	StackPolicyBody *string `type:"string"`
 
-	metadataGetStackPolicyOutput `json:"-", xml:"-"`
+	metadataGetStackPolicyOutput `json:"-" xml:"-"`
 }
 
 type metadataGetStackPolicyOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s GetStackPolicyOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetStackPolicyOutput) GoString() string {
+	return s.String()
+}
+
 // The input for a GetTemplate action.
 type GetTemplateInput struct {
-	// The name or the unique identifier associated with the stack, which are not
-	// always interchangeable:
+	// The name or the unique stack ID that is associated with the stack, which
+	// are not always interchangeable:
 	//
 	//  Running stacks: You can specify either the stack's name or its unique stack
 	// ID. Deleted stacks: You must specify the unique stack ID.  Default: There
 	// is no default value.
 	StackName *string `type:"string" required:"true"`
 
-	metadataGetTemplateInput `json:"-", xml:"-"`
+	metadataGetTemplateInput `json:"-" xml:"-"`
 }
 
 type metadataGetTemplateInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetTemplateInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetTemplateInput) GoString() string {
+	return s.String()
 }
 
 // The output for GetTemplate action.
@@ -1049,16 +1187,26 @@ type GetTemplateOutput struct {
 	// in the AWS CloudFormation User Guide.)
 	TemplateBody *string `type:"string"`
 
-	metadataGetTemplateOutput `json:"-", xml:"-"`
+	metadataGetTemplateOutput `json:"-" xml:"-"`
 }
 
 type metadataGetTemplateOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s GetTemplateOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetTemplateOutput) GoString() string {
+	return s.String()
+}
+
 // The input for the GetTemplateSummary action.
 type GetTemplateSummaryInput struct {
-	// The name or the unique identifier associated with the stack, which are not
+	// The name or the stack ID that is associated with the stack, which are not
 	// always interchangeable. For running stacks, you can specify either the stack's
 	// name or its unique stack ID. For deleted stack, you must specify the unique
 	// stack ID.
@@ -1077,7 +1225,7 @@ type GetTemplateSummaryInput struct {
 	TemplateBody *string `type:"string"`
 
 	// Location of file containing the template body. The URL must point to a template
-	// (max size: 307,200 bytes) located in an Amazon S3 bucket. For more information
+	// (max size: 460,800 bytes) located in an Amazon S3 bucket. For more information
 	// about templates, see Template Anatomy (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-anatomy.html)
 	// in the AWS CloudFormation User Guide.
 	//
@@ -1085,11 +1233,21 @@ type GetTemplateSummaryInput struct {
 	// TemplateBody, or TemplateURL.
 	TemplateURL *string `type:"string"`
 
-	metadataGetTemplateSummaryInput `json:"-", xml:"-"`
+	metadataGetTemplateSummaryInput `json:"-" xml:"-"`
 }
 
 type metadataGetTemplateSummaryInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetTemplateSummaryInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetTemplateSummaryInput) GoString() string {
+	return s.String()
 }
 
 // The output for the GetTemplateSummary action.
@@ -1101,11 +1259,15 @@ type GetTemplateSummaryOutput struct {
 	// those actions return an InsufficientCapabilities error.
 	Capabilities []*string `type:"list"`
 
-	// The capabilities reason found within the template.
+	// The list of resources that generated the values in the Capabilities response
+	// element.
 	CapabilitiesReason *string `type:"string"`
 
 	// The value that is defined in the Description property of the template.
 	Description *string `type:"string"`
+
+	// The value that is defined for the Metadata property of the template.
+	Metadata *string `type:"string"`
 
 	// A list of parameter declarations that describe various properties for each
 	// parameter.
@@ -1115,11 +1277,21 @@ type GetTemplateSummaryOutput struct {
 	// template.
 	Version *string `type:"string"`
 
-	metadataGetTemplateSummaryOutput `json:"-", xml:"-"`
+	metadataGetTemplateSummaryOutput `json:"-" xml:"-"`
 }
 
 type metadataGetTemplateSummaryOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetTemplateSummaryOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetTemplateSummaryOutput) GoString() string {
+	return s.String()
 }
 
 // The input for the ListStackResource action.
@@ -1130,19 +1302,29 @@ type ListStackResourcesInput struct {
 	// Default: There is no default value.
 	NextToken *string `type:"string"`
 
-	// The name or the unique identifier associated with the stack, which are not
-	// always interchangeable:
+	// The name or the unique stack ID that is associated with the stack, which
+	// are not always interchangeable:
 	//
 	//  Running stacks: You can specify either the stack's name or its unique stack
 	// ID. Deleted stacks: You must specify the unique stack ID.  Default: There
 	// is no default value.
 	StackName *string `type:"string" required:"true"`
 
-	metadataListStackResourcesInput `json:"-", xml:"-"`
+	metadataListStackResourcesInput `json:"-" xml:"-"`
 }
 
 type metadataListStackResourcesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListStackResourcesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListStackResourcesInput) GoString() string {
+	return s.String()
 }
 
 // The output for a ListStackResources action.
@@ -1154,11 +1336,21 @@ type ListStackResourcesOutput struct {
 	// A list of StackResourceSummary structures.
 	StackResourceSummaries []*StackResourceSummary `type:"list"`
 
-	metadataListStackResourcesOutput `json:"-", xml:"-"`
+	metadataListStackResourcesOutput `json:"-" xml:"-"`
 }
 
 type metadataListStackResourcesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListStackResourcesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListStackResourcesOutput) GoString() string {
+	return s.String()
 }
 
 // The input for ListStacks action.
@@ -1174,11 +1366,21 @@ type ListStacksInput struct {
 	// stack status codes, see the StackStatus parameter of the Stack data type.
 	StackStatusFilter []*string `type:"list"`
 
-	metadataListStacksInput `json:"-", xml:"-"`
+	metadataListStacksInput `json:"-" xml:"-"`
 }
 
 type metadataListStacksInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListStacksInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListStacksInput) GoString() string {
+	return s.String()
 }
 
 // The output for ListStacks action.
@@ -1191,11 +1393,21 @@ type ListStacksOutput struct {
 	// stacks.
 	StackSummaries []*StackSummary `type:"list"`
 
-	metadataListStacksOutput `json:"-", xml:"-"`
+	metadataListStacksOutput `json:"-" xml:"-"`
 }
 
 type metadataListStacksOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListStacksOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListStacksOutput) GoString() string {
+	return s.String()
 }
 
 // The Output data type.
@@ -1209,30 +1421,77 @@ type Output struct {
 	// The value associated with the output.
 	OutputValue *string `type:"string"`
 
-	metadataOutput `json:"-", xml:"-"`
+	metadataOutput `json:"-" xml:"-"`
 }
 
 type metadataOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s Output) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Output) GoString() string {
+	return s.String()
+}
+
 // The Parameter data type.
 type Parameter struct {
-	// The key associated with the parameter.
+	// The key associated with the parameter. If you don't specify a key and value
+	// for a particular parameter, AWS CloudFormation uses the default value that
+	// is specified in your template.
 	ParameterKey *string `type:"string"`
 
 	// The value associated with the parameter.
 	ParameterValue *string `type:"string"`
 
-	// During a stack update, use the existing parameter value that is being used
-	// for the stack.
+	// During a stack update, use the existing parameter value that the stack is
+	// using for a given parameter key. If you specify true, do not specify a parameter
+	// value.
 	UsePreviousValue *bool `type:"boolean"`
 
-	metadataParameter `json:"-", xml:"-"`
+	metadataParameter `json:"-" xml:"-"`
 }
 
 type metadataParameter struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Parameter) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Parameter) GoString() string {
+	return s.String()
+}
+
+// A set of criteria that AWS CloudFormation uses to validate parameter values.
+// Although other constraints might be defined in the stack template, AWS CloudFormation
+// returns only the AllowedValues property.
+type ParameterConstraints struct {
+	// A list of values that are permitted for a parameter.
+	AllowedValues []*string `type:"list"`
+
+	metadataParameterConstraints `json:"-" xml:"-"`
+}
+
+type metadataParameterConstraints struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ParameterConstraints) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ParameterConstraints) GoString() string {
+	return s.String()
 }
 
 // The ParameterDeclaration data type.
@@ -1247,22 +1506,35 @@ type ParameterDeclaration struct {
 	// logs and in the AWS Management Console.
 	NoEcho *bool `type:"boolean"`
 
+	// The criteria that AWS CloudFormation uses to validate parameter values.
+	ParameterConstraints *ParameterConstraints `type:"structure"`
+
 	// The name that is associated with the parameter.
 	ParameterKey *string `type:"string"`
 
 	// The type of parameter.
 	ParameterType *string `type:"string"`
 
-	metadataParameterDeclaration `json:"-", xml:"-"`
+	metadataParameterDeclaration `json:"-" xml:"-"`
 }
 
 type metadataParameterDeclaration struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ParameterDeclaration) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ParameterDeclaration) GoString() string {
+	return s.String()
+}
+
 // The input for the SetStackPolicy action.
 type SetStackPolicyInput struct {
-	// The name or stack ID that you want to associate a policy with.
+	// The name or unique stack ID that you want to associate a policy with.
 	StackName *string `type:"string" required:"true"`
 
 	// Structure containing the stack policy body. For more information, go to
@@ -1277,19 +1549,39 @@ type SetStackPolicyInput struct {
 	// but not both.
 	StackPolicyURL *string `type:"string"`
 
-	metadataSetStackPolicyInput `json:"-", xml:"-"`
+	metadataSetStackPolicyInput `json:"-" xml:"-"`
 }
 
 type metadataSetStackPolicyInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s SetStackPolicyInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetStackPolicyInput) GoString() string {
+	return s.String()
+}
+
 type SetStackPolicyOutput struct {
-	metadataSetStackPolicyOutput `json:"-", xml:"-"`
+	metadataSetStackPolicyOutput `json:"-" xml:"-"`
 }
 
 type metadataSetStackPolicyOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SetStackPolicyOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetStackPolicyOutput) GoString() string {
+	return s.String()
 }
 
 // The input for the SignalResource action.
@@ -1298,7 +1590,8 @@ type SignalResourceInput struct {
 	// the name of the resource that given in the template.
 	LogicalResourceID *string `locationName:"LogicalResourceId" type:"string" required:"true"`
 
-	// The stack name or ID that includes the resource that you want to signal.
+	// The stack name or unique stack ID that includes the resource that you want
+	// to signal.
 	StackName *string `type:"string" required:"true"`
 
 	// The status of the signal, which is either success or failure. A failure signal
@@ -1311,19 +1604,39 @@ type SignalResourceInput struct {
 	// condition), each signal requires a different unique ID.
 	UniqueID *string `locationName:"UniqueId" type:"string" required:"true"`
 
-	metadataSignalResourceInput `json:"-", xml:"-"`
+	metadataSignalResourceInput `json:"-" xml:"-"`
 }
 
 type metadataSignalResourceInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s SignalResourceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SignalResourceInput) GoString() string {
+	return s.String()
+}
+
 type SignalResourceOutput struct {
-	metadataSignalResourceOutput `json:"-", xml:"-"`
+	metadataSignalResourceOutput `json:"-" xml:"-"`
 }
 
 type metadataSignalResourceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SignalResourceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SignalResourceOutput) GoString() string {
+	return s.String()
 }
 
 // The Stack data type.
@@ -1373,11 +1686,21 @@ type Stack struct {
 	// The amount of time within which stack creation should complete.
 	TimeoutInMinutes *int64 `type:"integer"`
 
-	metadataStack `json:"-", xml:"-"`
+	metadataStack `json:"-" xml:"-"`
 }
 
 type metadataStack struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Stack) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Stack) GoString() string {
+	return s.String()
 }
 
 // The StackEvent data type.
@@ -1415,11 +1738,21 @@ type StackEvent struct {
 	// Time the status was updated.
 	Timestamp *time.Time `type:"timestamp" timestampFormat:"iso8601" required:"true"`
 
-	metadataStackEvent `json:"-", xml:"-"`
+	metadataStackEvent `json:"-" xml:"-"`
 }
 
 type metadataStackEvent struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StackEvent) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StackEvent) GoString() string {
+	return s.String()
 }
 
 // The StackResource data type.
@@ -1454,11 +1787,21 @@ type StackResource struct {
 	// Time the status was updated.
 	Timestamp *time.Time `type:"timestamp" timestampFormat:"iso8601" required:"true"`
 
-	metadataStackResource `json:"-", xml:"-"`
+	metadataStackResource `json:"-" xml:"-"`
 }
 
 type metadataStackResource struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StackResource) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StackResource) GoString() string {
+	return s.String()
 }
 
 // Contains detailed information about the specified stack resource.
@@ -1498,11 +1841,21 @@ type StackResourceDetail struct {
 	// The name associated with the stack.
 	StackName *string `type:"string"`
 
-	metadataStackResourceDetail `json:"-", xml:"-"`
+	metadataStackResourceDetail `json:"-" xml:"-"`
 }
 
 type metadataStackResourceDetail struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StackResourceDetail) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StackResourceDetail) GoString() string {
+	return s.String()
 }
 
 // Contains high-level information about the specified stack resource.
@@ -1528,11 +1881,21 @@ type StackResourceSummary struct {
 	// in the AWS CloudFormation User Guide.)
 	ResourceType *string `type:"string" required:"true"`
 
-	metadataStackResourceSummary `json:"-", xml:"-"`
+	metadataStackResourceSummary `json:"-" xml:"-"`
 }
 
 type metadataStackResourceSummary struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StackResourceSummary) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StackResourceSummary) GoString() string {
+	return s.String()
 }
 
 // The StackSummary Data Type
@@ -1562,11 +1925,21 @@ type StackSummary struct {
 	// The template description of the template used to create the stack.
 	TemplateDescription *string `type:"string"`
 
-	metadataStackSummary `json:"-", xml:"-"`
+	metadataStackSummary `json:"-" xml:"-"`
 }
 
 type metadataStackSummary struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StackSummary) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StackSummary) GoString() string {
+	return s.String()
 }
 
 // The Tag type is used by CreateStack in the Tags parameter. It allows you
@@ -1582,11 +1955,21 @@ type Tag struct {
 	// of 256 characters for a tag value.
 	Value *string `type:"string"`
 
-	metadataTag `json:"-", xml:"-"`
+	metadataTag `json:"-" xml:"-"`
 }
 
 type metadataTag struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Tag) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Tag) GoString() string {
+	return s.String()
 }
 
 // The TemplateParameter data type.
@@ -1604,11 +1987,21 @@ type TemplateParameter struct {
 	// The name associated with the parameter.
 	ParameterKey *string `type:"string"`
 
-	metadataTemplateParameter `json:"-", xml:"-"`
+	metadataTemplateParameter `json:"-" xml:"-"`
 }
 
 type metadataTemplateParameter struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s TemplateParameter) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TemplateParameter) GoString() string {
+	return s.String()
 }
 
 // The input for UpdateStack action.
@@ -1618,8 +2011,7 @@ type UpdateStackInput struct {
 	// that can affect permissions in your AWS account. For those stacks, you must
 	// explicitly acknowledge their capabilities by specifying this parameter. Currently,
 	// the only valid value is CAPABILITY_IAM, which is required for the following
-	// resources:  AWS::CloudFormation::Stack (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-stack.html),
-	//  AWS::IAM::AccessKey (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-accesskey.html),
+	// resources:  AWS::IAM::AccessKey (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-accesskey.html),
 	//  AWS::IAM::Group (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-group.html),
 	//  AWS::IAM::InstanceProfile (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-resource-iam-instanceprofile.html),
 	//  AWS::IAM::Policy (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/aws-properties-iam-policy.html),
@@ -1635,12 +2027,11 @@ type UpdateStackInput struct {
 	NotificationARNs []*string `type:"list"`
 
 	// A list of Parameter structures that specify input parameters for the stack.
+	// For more information, see the Parameter (http://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_Parameter.html)
+	// data type.
 	Parameters []*Parameter `type:"list"`
 
-	// The name or stack ID of the stack to update.
-	//
-	//  Must contain only alphanumeric characters (case sensitive) and start with
-	// an alpha character. Maximum length of the name is 255 characters.
+	// The name or unique stack ID of the stack to update.
 	StackName *string `type:"string" required:"true"`
 
 	// Structure containing a new stack policy body. You can specify either the
@@ -1702,11 +2093,21 @@ type UpdateStackInput struct {
 	// updating.
 	UsePreviousTemplate *bool `type:"boolean"`
 
-	metadataUpdateStackInput `json:"-", xml:"-"`
+	metadataUpdateStackInput `json:"-" xml:"-"`
 }
 
 type metadataUpdateStackInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UpdateStackInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UpdateStackInput) GoString() string {
+	return s.String()
 }
 
 // The output for a UpdateStack action.
@@ -1714,11 +2115,21 @@ type UpdateStackOutput struct {
 	// Unique identifier of the stack.
 	StackID *string `locationName:"StackId" type:"string"`
 
-	metadataUpdateStackOutput `json:"-", xml:"-"`
+	metadataUpdateStackOutput `json:"-" xml:"-"`
 }
 
 type metadataUpdateStackOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UpdateStackOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UpdateStackOutput) GoString() string {
+	return s.String()
 }
 
 // The input for ValidateTemplate action.
@@ -1733,7 +2144,7 @@ type ValidateTemplateInput struct {
 	TemplateBody *string `type:"string"`
 
 	// Location of file containing the template body. The URL must point to a template
-	// (max size: 307,200 bytes) located in an S3 bucket in the same region as the
+	// (max size: 460,800 bytes) located in an S3 bucket in the same region as the
 	// stack. For more information, go to Template Anatomy (http://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/template-anatomy.html)
 	// in the AWS CloudFormation User Guide.
 	//
@@ -1741,11 +2152,21 @@ type ValidateTemplateInput struct {
 	// only TemplateBody is used.
 	TemplateURL *string `type:"string"`
 
-	metadataValidateTemplateInput `json:"-", xml:"-"`
+	metadataValidateTemplateInput `json:"-" xml:"-"`
 }
 
 type metadataValidateTemplateInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ValidateTemplateInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ValidateTemplateInput) GoString() string {
+	return s.String()
 }
 
 // The output for ValidateTemplate action.
@@ -1757,7 +2178,8 @@ type ValidateTemplateOutput struct {
 	// those actions return an InsufficientCapabilities error.
 	Capabilities []*string `type:"list"`
 
-	// The capabilities reason found within the template.
+	// The list of resources that generated the values in the Capabilities response
+	// element.
 	CapabilitiesReason *string `type:"string"`
 
 	// The description found within the template.
@@ -1766,9 +2188,19 @@ type ValidateTemplateOutput struct {
 	// A list of TemplateParameter structures.
 	Parameters []*TemplateParameter `type:"list"`
 
-	metadataValidateTemplateOutput `json:"-", xml:"-"`
+	metadataValidateTemplateOutput `json:"-" xml:"-"`
 }
 
 type metadataValidateTemplateOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ValidateTemplateOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ValidateTemplateOutput) GoString() string {
+	return s.String()
 }

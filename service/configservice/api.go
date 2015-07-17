@@ -4,32 +4,27 @@
 package configservice
 
 import (
-	"sync"
 	"time"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
-var oprw sync.Mutex
+const opDeleteDeliveryChannel = "DeleteDeliveryChannel"
 
 // DeleteDeliveryChannelRequest generates a request for the DeleteDeliveryChannel operation.
 func (c *ConfigService) DeleteDeliveryChannelRequest(input *DeleteDeliveryChannelInput) (req *aws.Request, output *DeleteDeliveryChannelOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteDeliveryChannel == nil {
-		opDeleteDeliveryChannel = &aws.Operation{
-			Name:       "DeleteDeliveryChannel",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteDeliveryChannel,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteDeliveryChannelInput{}
 	}
 
-	req = c.newRequest(opDeleteDeliveryChannel, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteDeliveryChannelOutput{}
 	req.Data = output
 	return
@@ -41,33 +36,27 @@ func (c *ConfigService) DeleteDeliveryChannelRequest(input *DeleteDeliveryChanne
 // and the configuration recorder is still running. To delete the delivery channel,
 // stop the running configuration recorder using the StopConfigurationRecorder
 // action.
-func (c *ConfigService) DeleteDeliveryChannel(input *DeleteDeliveryChannelInput) (output *DeleteDeliveryChannelOutput, err error) {
+func (c *ConfigService) DeleteDeliveryChannel(input *DeleteDeliveryChannelInput) (*DeleteDeliveryChannelOutput, error) {
 	req, out := c.DeleteDeliveryChannelRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteDeliveryChannel *aws.Operation
+const opDeliverConfigSnapshot = "DeliverConfigSnapshot"
 
 // DeliverConfigSnapshotRequest generates a request for the DeliverConfigSnapshot operation.
 func (c *ConfigService) DeliverConfigSnapshotRequest(input *DeliverConfigSnapshotInput) (req *aws.Request, output *DeliverConfigSnapshotOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeliverConfigSnapshot == nil {
-		opDeliverConfigSnapshot = &aws.Operation{
-			Name:       "DeliverConfigSnapshot",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeliverConfigSnapshot,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeliverConfigSnapshotInput{}
 	}
 
-	req = c.newRequest(opDeliverConfigSnapshot, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeliverConfigSnapshotOutput{}
 	req.Data = output
 	return
@@ -80,33 +69,27 @@ func (c *ConfigService) DeliverConfigSnapshotRequest(input *DeliverConfigSnapsho
 //  Notification of starting the delivery. Notification of delivery completed,
 // if the delivery was successfully completed. Notification of delivery failure,
 // if the delivery failed to complete.
-func (c *ConfigService) DeliverConfigSnapshot(input *DeliverConfigSnapshotInput) (output *DeliverConfigSnapshotOutput, err error) {
+func (c *ConfigService) DeliverConfigSnapshot(input *DeliverConfigSnapshotInput) (*DeliverConfigSnapshotOutput, error) {
 	req, out := c.DeliverConfigSnapshotRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeliverConfigSnapshot *aws.Operation
+const opDescribeConfigurationRecorderStatus = "DescribeConfigurationRecorderStatus"
 
 // DescribeConfigurationRecorderStatusRequest generates a request for the DescribeConfigurationRecorderStatus operation.
 func (c *ConfigService) DescribeConfigurationRecorderStatusRequest(input *DescribeConfigurationRecorderStatusInput) (req *aws.Request, output *DescribeConfigurationRecorderStatusOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeConfigurationRecorderStatus == nil {
-		opDescribeConfigurationRecorderStatus = &aws.Operation{
-			Name:       "DescribeConfigurationRecorderStatus",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeConfigurationRecorderStatus,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeConfigurationRecorderStatusInput{}
 	}
 
-	req = c.newRequest(opDescribeConfigurationRecorderStatus, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeConfigurationRecorderStatusOutput{}
 	req.Data = output
 	return
@@ -115,33 +98,29 @@ func (c *ConfigService) DescribeConfigurationRecorderStatusRequest(input *Descri
 // Returns the current status of the specified configuration recorder. If a
 // configuration recorder is not specified, this action returns the status of
 // all configuration recorder associated with the account.
-func (c *ConfigService) DescribeConfigurationRecorderStatus(input *DescribeConfigurationRecorderStatusInput) (output *DescribeConfigurationRecorderStatusOutput, err error) {
+//
+// Currently, you can specify only one configuration recorder per account.
+func (c *ConfigService) DescribeConfigurationRecorderStatus(input *DescribeConfigurationRecorderStatusInput) (*DescribeConfigurationRecorderStatusOutput, error) {
 	req, out := c.DescribeConfigurationRecorderStatusRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeConfigurationRecorderStatus *aws.Operation
+const opDescribeConfigurationRecorders = "DescribeConfigurationRecorders"
 
 // DescribeConfigurationRecordersRequest generates a request for the DescribeConfigurationRecorders operation.
 func (c *ConfigService) DescribeConfigurationRecordersRequest(input *DescribeConfigurationRecordersInput) (req *aws.Request, output *DescribeConfigurationRecordersOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeConfigurationRecorders == nil {
-		opDescribeConfigurationRecorders = &aws.Operation{
-			Name:       "DescribeConfigurationRecorders",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeConfigurationRecorders,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeConfigurationRecordersInput{}
 	}
 
-	req = c.newRequest(opDescribeConfigurationRecorders, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeConfigurationRecordersOutput{}
 	req.Data = output
 	return
@@ -150,33 +129,29 @@ func (c *ConfigService) DescribeConfigurationRecordersRequest(input *DescribeCon
 // Returns the name of one or more specified configuration recorders. If the
 // recorder name is not specified, this action returns the names of all the
 // configuration recorders associated with the account.
-func (c *ConfigService) DescribeConfigurationRecorders(input *DescribeConfigurationRecordersInput) (output *DescribeConfigurationRecordersOutput, err error) {
+//
+//  Currently, you can specify only one configuration recorder per account.
+func (c *ConfigService) DescribeConfigurationRecorders(input *DescribeConfigurationRecordersInput) (*DescribeConfigurationRecordersOutput, error) {
 	req, out := c.DescribeConfigurationRecordersRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeConfigurationRecorders *aws.Operation
+const opDescribeDeliveryChannelStatus = "DescribeDeliveryChannelStatus"
 
 // DescribeDeliveryChannelStatusRequest generates a request for the DescribeDeliveryChannelStatus operation.
 func (c *ConfigService) DescribeDeliveryChannelStatusRequest(input *DescribeDeliveryChannelStatusInput) (req *aws.Request, output *DescribeDeliveryChannelStatusOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeDeliveryChannelStatus == nil {
-		opDescribeDeliveryChannelStatus = &aws.Operation{
-			Name:       "DescribeDeliveryChannelStatus",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeDeliveryChannelStatus,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeDeliveryChannelStatusInput{}
 	}
 
-	req = c.newRequest(opDescribeDeliveryChannelStatus, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeDeliveryChannelStatusOutput{}
 	req.Data = output
 	return
@@ -185,33 +160,29 @@ func (c *ConfigService) DescribeDeliveryChannelStatusRequest(input *DescribeDeli
 // Returns the current status of the specified delivery channel. If a delivery
 // channel is not specified, this action returns the current status of all delivery
 // channels associated with the account.
-func (c *ConfigService) DescribeDeliveryChannelStatus(input *DescribeDeliveryChannelStatusInput) (output *DescribeDeliveryChannelStatusOutput, err error) {
+//
+// Currently, you can specify only one delivery channel per account.
+func (c *ConfigService) DescribeDeliveryChannelStatus(input *DescribeDeliveryChannelStatusInput) (*DescribeDeliveryChannelStatusOutput, error) {
 	req, out := c.DescribeDeliveryChannelStatusRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeDeliveryChannelStatus *aws.Operation
+const opDescribeDeliveryChannels = "DescribeDeliveryChannels"
 
 // DescribeDeliveryChannelsRequest generates a request for the DescribeDeliveryChannels operation.
 func (c *ConfigService) DescribeDeliveryChannelsRequest(input *DescribeDeliveryChannelsInput) (req *aws.Request, output *DescribeDeliveryChannelsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeDeliveryChannels == nil {
-		opDescribeDeliveryChannels = &aws.Operation{
-			Name:       "DescribeDeliveryChannels",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeDeliveryChannels,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeDeliveryChannelsInput{}
 	}
 
-	req = c.newRequest(opDescribeDeliveryChannels, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeDeliveryChannelsOutput{}
 	req.Data = output
 	return
@@ -220,33 +191,35 @@ func (c *ConfigService) DescribeDeliveryChannelsRequest(input *DescribeDeliveryC
 // Returns details about the specified delivery channel. If a delivery channel
 // is not specified, this action returns the details of all delivery channels
 // associated with the account.
-func (c *ConfigService) DescribeDeliveryChannels(input *DescribeDeliveryChannelsInput) (output *DescribeDeliveryChannelsOutput, err error) {
+//
+//  Currently, you can specify only one delivery channel per account.
+func (c *ConfigService) DescribeDeliveryChannels(input *DescribeDeliveryChannelsInput) (*DescribeDeliveryChannelsOutput, error) {
 	req, out := c.DescribeDeliveryChannelsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeDeliveryChannels *aws.Operation
+const opGetResourceConfigHistory = "GetResourceConfigHistory"
 
 // GetResourceConfigHistoryRequest generates a request for the GetResourceConfigHistory operation.
 func (c *ConfigService) GetResourceConfigHistoryRequest(input *GetResourceConfigHistoryInput) (req *aws.Request, output *GetResourceConfigHistoryOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetResourceConfigHistory == nil {
-		opGetResourceConfigHistory = &aws.Operation{
-			Name:       "GetResourceConfigHistory",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opGetResourceConfigHistory,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "limit",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &GetResourceConfigHistoryInput{}
 	}
 
-	req = c.newRequest(opGetResourceConfigHistory, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetResourceConfigHistoryOutput{}
 	req.Data = output
 	return
@@ -257,70 +230,74 @@ func (c *ConfigService) GetResourceConfigHistoryRequest(input *GetResourceConfig
 // interval. You can specify a limit on the number of results returned on the
 // page. If a limit is specified, a nextToken is returned as part of the result
 // that you can use to continue this request.
-func (c *ConfigService) GetResourceConfigHistory(input *GetResourceConfigHistoryInput) (output *GetResourceConfigHistoryOutput, err error) {
+//
+//  Each call to the API is limited to span a duration of seven days. It is
+// likely that the number of records returned is smaller than the specified
+// limit. In such cases, you can make another call, using the nextToken .
+func (c *ConfigService) GetResourceConfigHistory(input *GetResourceConfigHistoryInput) (*GetResourceConfigHistoryOutput, error) {
 	req, out := c.GetResourceConfigHistoryRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetResourceConfigHistory *aws.Operation
+func (c *ConfigService) GetResourceConfigHistoryPages(input *GetResourceConfigHistoryInput, fn func(p *GetResourceConfigHistoryOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.GetResourceConfigHistoryRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*GetResourceConfigHistoryOutput), lastPage)
+	})
+}
+
+const opPutConfigurationRecorder = "PutConfigurationRecorder"
 
 // PutConfigurationRecorderRequest generates a request for the PutConfigurationRecorder operation.
 func (c *ConfigService) PutConfigurationRecorderRequest(input *PutConfigurationRecorderInput) (req *aws.Request, output *PutConfigurationRecorderOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opPutConfigurationRecorder == nil {
-		opPutConfigurationRecorder = &aws.Operation{
-			Name:       "PutConfigurationRecorder",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opPutConfigurationRecorder,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &PutConfigurationRecorderInput{}
 	}
 
-	req = c.newRequest(opPutConfigurationRecorder, input, output)
+	req = c.newRequest(op, input, output)
 	output = &PutConfigurationRecorderOutput{}
 	req.Data = output
 	return
 }
 
-// Creates a new configuration recorder to record the resource configurations.
+// Creates a new configuration recorder to record the selected resource configurations.
 //
-// You can use this action to change the role (roleARN) of an existing recorder.
-// To change the role, call the action on the existing configuration recorder
-// and specify a role.
-func (c *ConfigService) PutConfigurationRecorder(input *PutConfigurationRecorderInput) (output *PutConfigurationRecorderOutput, err error) {
+// You can use this action to change the role roleARN and/or the recordingGroup
+// of an existing recorder. To change the role, call the action on the existing
+// configuration recorder and specify a role.
+//
+//  Currently, you can specify only one configuration recorder per account.
+//
+// If ConfigurationRecorder does not have the recordingGroup parameter specified,
+// the default is to record all supported resource types.
+func (c *ConfigService) PutConfigurationRecorder(input *PutConfigurationRecorderInput) (*PutConfigurationRecorderOutput, error) {
 	req, out := c.PutConfigurationRecorderRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opPutConfigurationRecorder *aws.Operation
+const opPutDeliveryChannel = "PutDeliveryChannel"
 
 // PutDeliveryChannelRequest generates a request for the PutDeliveryChannel operation.
 func (c *ConfigService) PutDeliveryChannelRequest(input *PutDeliveryChannelInput) (req *aws.Request, output *PutDeliveryChannelOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opPutDeliveryChannel == nil {
-		opPutDeliveryChannel = &aws.Operation{
-			Name:       "PutDeliveryChannel",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opPutDeliveryChannel,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &PutDeliveryChannelInput{}
 	}
 
-	req = c.newRequest(opPutDeliveryChannel, input, output)
+	req = c.newRequest(op, input, output)
 	output = &PutDeliveryChannelOutput{}
 	req.Data = output
 	return
@@ -335,84 +312,72 @@ func (c *ConfigService) PutDeliveryChannelRequest(input *PutDeliveryChannelInput
 // the S3 bucket and the SNS topic. If you specify a different value for either
 // the S3 bucket or the SNS topic, this action will keep the existing value
 // for the parameter that is not changed.
-func (c *ConfigService) PutDeliveryChannel(input *PutDeliveryChannelInput) (output *PutDeliveryChannelOutput, err error) {
+//
+//  Currently, you can specify only one delivery channel per account.
+func (c *ConfigService) PutDeliveryChannel(input *PutDeliveryChannelInput) (*PutDeliveryChannelOutput, error) {
 	req, out := c.PutDeliveryChannelRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opPutDeliveryChannel *aws.Operation
+const opStartConfigurationRecorder = "StartConfigurationRecorder"
 
 // StartConfigurationRecorderRequest generates a request for the StartConfigurationRecorder operation.
 func (c *ConfigService) StartConfigurationRecorderRequest(input *StartConfigurationRecorderInput) (req *aws.Request, output *StartConfigurationRecorderOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opStartConfigurationRecorder == nil {
-		opStartConfigurationRecorder = &aws.Operation{
-			Name:       "StartConfigurationRecorder",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opStartConfigurationRecorder,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &StartConfigurationRecorderInput{}
 	}
 
-	req = c.newRequest(opStartConfigurationRecorder, input, output)
+	req = c.newRequest(op, input, output)
 	output = &StartConfigurationRecorderOutput{}
 	req.Data = output
 	return
 }
 
-// Starts recording configurations of all the resources associated with the
-// account.
+// Starts recording configurations of the AWS resources you have selected to
+// record in your AWS account.
 //
 // You must have created at least one delivery channel to successfully start
 // the configuration recorder.
-func (c *ConfigService) StartConfigurationRecorder(input *StartConfigurationRecorderInput) (output *StartConfigurationRecorderOutput, err error) {
+func (c *ConfigService) StartConfigurationRecorder(input *StartConfigurationRecorderInput) (*StartConfigurationRecorderOutput, error) {
 	req, out := c.StartConfigurationRecorderRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opStartConfigurationRecorder *aws.Operation
+const opStopConfigurationRecorder = "StopConfigurationRecorder"
 
 // StopConfigurationRecorderRequest generates a request for the StopConfigurationRecorder operation.
 func (c *ConfigService) StopConfigurationRecorderRequest(input *StopConfigurationRecorderInput) (req *aws.Request, output *StopConfigurationRecorderOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opStopConfigurationRecorder == nil {
-		opStopConfigurationRecorder = &aws.Operation{
-			Name:       "StopConfigurationRecorder",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opStopConfigurationRecorder,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &StopConfigurationRecorderInput{}
 	}
 
-	req = c.newRequest(opStopConfigurationRecorder, input, output)
+	req = c.newRequest(op, input, output)
 	output = &StopConfigurationRecorderOutput{}
 	req.Data = output
 	return
 }
 
-// Stops recording configurations of all the resources associated with the account.
-func (c *ConfigService) StopConfigurationRecorder(input *StopConfigurationRecorderInput) (output *StopConfigurationRecorderOutput, err error) {
+// Stops recording configurations of the AWS resources you have selected to
+// record in your AWS account.
+func (c *ConfigService) StopConfigurationRecorder(input *StopConfigurationRecorderInput) (*StopConfigurationRecorderOutput, error) {
 	req, out := c.StopConfigurationRecorderRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
-
-var opStopConfigurationRecorder *aws.Operation
 
 // A list that contains the status of the delivery of either the snapshot or
 // the configuration history to the specified Amazon S3 bucket.
@@ -432,11 +397,21 @@ type ConfigExportDeliveryInfo struct {
 	// The time of the last successful delivery.
 	LastSuccessfulTime *time.Time `locationName:"lastSuccessfulTime" type:"timestamp" timestampFormat:"unix"`
 
-	metadataConfigExportDeliveryInfo `json:"-", xml:"-"`
+	metadataConfigExportDeliveryInfo `json:"-" xml:"-"`
 }
 
 type metadataConfigExportDeliveryInfo struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ConfigExportDeliveryInfo) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ConfigExportDeliveryInfo) GoString() string {
+	return s.String()
 }
 
 // A list that contains the status of the delivery of the configuration stream
@@ -449,19 +424,36 @@ type ConfigStreamDeliveryInfo struct {
 	LastErrorMessage *string `locationName:"lastErrorMessage" type:"string"`
 
 	// Status of the last attempted delivery.
+	//
+	// Note Providing an SNS topic on a DeliveryChannel (http://docs.aws.amazon.com/config/latest/APIReference/API_DeliveryChannel.html)
+	// for AWS Config is optional. If the SNS delivery is turned off, the last status
+	// will be Not_Applicable.
 	LastStatus *string `locationName:"lastStatus" type:"string"`
 
 	// The time from the last status change.
 	LastStatusChangeTime *time.Time `locationName:"lastStatusChangeTime" type:"timestamp" timestampFormat:"unix"`
 
-	metadataConfigStreamDeliveryInfo `json:"-", xml:"-"`
+	metadataConfigStreamDeliveryInfo `json:"-" xml:"-"`
 }
 
 type metadataConfigStreamDeliveryInfo struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ConfigStreamDeliveryInfo) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ConfigStreamDeliveryInfo) GoString() string {
+	return s.String()
+}
+
 // A list that contains detailed configurations of a specified resource.
+//
+//  Currently, the list does not contain information about non-AWS components
+// (for example, applications on your Amazon EC2 instances).
 type ConfigurationItem struct {
 	// The Amazon Resource Name (ARN) of the resource.
 	ARN *string `locationName:"arn" type:"string"`
@@ -514,16 +506,26 @@ type ConfigurationItem struct {
 	ResourceType *string `locationName:"resourceType" type:"string"`
 
 	// A mapping of key value tags associated with the resource.
-	Tags *map[string]*string `locationName:"tags" type:"map"`
+	Tags map[string]*string `locationName:"tags" type:"map"`
 
 	// The version number of the resource configuration.
 	Version *string `locationName:"version" type:"string"`
 
-	metadataConfigurationItem `json:"-", xml:"-"`
+	metadataConfigurationItem `json:"-" xml:"-"`
 }
 
 type metadataConfigurationItem struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ConfigurationItem) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ConfigurationItem) GoString() string {
+	return s.String()
 }
 
 // An object that represents the recording of configuration changes of an AWS
@@ -534,15 +536,30 @@ type ConfigurationRecorder struct {
 	// the assigned name.
 	Name *string `locationName:"name" type:"string"`
 
+	// The recording group specifies either to record configurations for all supported
+	// resources or to provide a list of resource types to record. The list of resource
+	// types must be a subset of supported resource types.
+	RecordingGroup *RecordingGroup `locationName:"recordingGroup" type:"structure"`
+
 	// Amazon Resource Name (ARN) of the IAM role used to describe the AWS resources
 	// associated with the account.
 	RoleARN *string `locationName:"roleARN" type:"string"`
 
-	metadataConfigurationRecorder `json:"-", xml:"-"`
+	metadataConfigurationRecorder `json:"-" xml:"-"`
 }
 
 type metadataConfigurationRecorder struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ConfigurationRecorder) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ConfigurationRecorder) GoString() string {
+	return s.String()
 }
 
 // The current status of the configuration recorder.
@@ -571,11 +588,21 @@ type ConfigurationRecorderStatus struct {
 	// Specifies whether the recorder is currently recording or not.
 	Recording *bool `locationName:"recording" type:"boolean"`
 
-	metadataConfigurationRecorderStatus `json:"-", xml:"-"`
+	metadataConfigurationRecorderStatus `json:"-" xml:"-"`
 }
 
 type metadataConfigurationRecorderStatus struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ConfigurationRecorderStatus) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ConfigurationRecorderStatus) GoString() string {
+	return s.String()
 }
 
 // The input for the DeleteDeliveryChannel action. The action accepts the following
@@ -584,19 +611,39 @@ type DeleteDeliveryChannelInput struct {
 	// The name of the delivery channel to delete.
 	DeliveryChannelName *string `type:"string" required:"true"`
 
-	metadataDeleteDeliveryChannelInput `json:"-", xml:"-"`
+	metadataDeleteDeliveryChannelInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteDeliveryChannelInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteDeliveryChannelInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteDeliveryChannelInput) GoString() string {
+	return s.String()
+}
+
 type DeleteDeliveryChannelOutput struct {
-	metadataDeleteDeliveryChannelOutput `json:"-", xml:"-"`
+	metadataDeleteDeliveryChannelOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteDeliveryChannelOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteDeliveryChannelOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteDeliveryChannelOutput) GoString() string {
+	return s.String()
 }
 
 // The input for the DeliverConfigSnapshot action.
@@ -604,11 +651,21 @@ type DeliverConfigSnapshotInput struct {
 	// The name of the delivery channel through which the snapshot is delivered.
 	DeliveryChannelName *string `locationName:"deliveryChannelName" type:"string" required:"true"`
 
-	metadataDeliverConfigSnapshotInput `json:"-", xml:"-"`
+	metadataDeliverConfigSnapshotInput `json:"-" xml:"-"`
 }
 
 type metadataDeliverConfigSnapshotInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeliverConfigSnapshotInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeliverConfigSnapshotInput) GoString() string {
+	return s.String()
 }
 
 // The output for the DeliverConfigSnapshot action in JSON format.
@@ -616,11 +673,21 @@ type DeliverConfigSnapshotOutput struct {
 	// The ID of the snapshot that is being created.
 	ConfigSnapshotID *string `locationName:"configSnapshotId" type:"string"`
 
-	metadataDeliverConfigSnapshotOutput `json:"-", xml:"-"`
+	metadataDeliverConfigSnapshotOutput `json:"-" xml:"-"`
 }
 
 type metadataDeliverConfigSnapshotOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeliverConfigSnapshotOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeliverConfigSnapshotOutput) GoString() string {
+	return s.String()
 }
 
 // A logical container used for storing the configuration changes of an AWS
@@ -642,11 +709,21 @@ type DeliveryChannel struct {
 	// S3 bucket and the Amazon SNS topic.
 	SNSTopicARN *string `locationName:"snsTopicARN" type:"string"`
 
-	metadataDeliveryChannel `json:"-", xml:"-"`
+	metadataDeliveryChannel `json:"-" xml:"-"`
 }
 
 type metadataDeliveryChannel struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeliveryChannel) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeliveryChannel) GoString() string {
+	return s.String()
 }
 
 // The status of a specified delivery channel.
@@ -668,11 +745,21 @@ type DeliveryChannelStatus struct {
 	// The name of the delivery channel.
 	Name *string `locationName:"name" type:"string"`
 
-	metadataDeliveryChannelStatus `json:"-", xml:"-"`
+	metadataDeliveryChannelStatus `json:"-" xml:"-"`
 }
 
 type metadataDeliveryChannelStatus struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeliveryChannelStatus) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeliveryChannelStatus) GoString() string {
+	return s.String()
 }
 
 // The input for the DescribeConfigurationRecorderStatus action.
@@ -682,11 +769,21 @@ type DescribeConfigurationRecorderStatusInput struct {
 	// associated with the account.
 	ConfigurationRecorderNames []*string `type:"list"`
 
-	metadataDescribeConfigurationRecorderStatusInput `json:"-", xml:"-"`
+	metadataDescribeConfigurationRecorderStatusInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeConfigurationRecorderStatusInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeConfigurationRecorderStatusInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeConfigurationRecorderStatusInput) GoString() string {
+	return s.String()
 }
 
 // The output for the DescribeConfigurationRecorderStatus action in JSON format.
@@ -694,11 +791,21 @@ type DescribeConfigurationRecorderStatusOutput struct {
 	// A list that contains status of the specified recorders.
 	ConfigurationRecordersStatus []*ConfigurationRecorderStatus `type:"list"`
 
-	metadataDescribeConfigurationRecorderStatusOutput `json:"-", xml:"-"`
+	metadataDescribeConfigurationRecorderStatusOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeConfigurationRecorderStatusOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeConfigurationRecorderStatusOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeConfigurationRecorderStatusOutput) GoString() string {
+	return s.String()
 }
 
 // The input for the DescribeConfigurationRecorders action.
@@ -706,11 +813,21 @@ type DescribeConfigurationRecordersInput struct {
 	// A list of configuration recorder names.
 	ConfigurationRecorderNames []*string `type:"list"`
 
-	metadataDescribeConfigurationRecordersInput `json:"-", xml:"-"`
+	metadataDescribeConfigurationRecordersInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeConfigurationRecordersInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeConfigurationRecordersInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeConfigurationRecordersInput) GoString() string {
+	return s.String()
 }
 
 // The output for the DescribeConfigurationRecorders action.
@@ -718,11 +835,21 @@ type DescribeConfigurationRecordersOutput struct {
 	// A list that contains the descriptions of the specified configuration recorders.
 	ConfigurationRecorders []*ConfigurationRecorder `type:"list"`
 
-	metadataDescribeConfigurationRecordersOutput `json:"-", xml:"-"`
+	metadataDescribeConfigurationRecordersOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeConfigurationRecordersOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeConfigurationRecordersOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeConfigurationRecordersOutput) GoString() string {
+	return s.String()
 }
 
 // The input for the DeliveryChannelStatus action.
@@ -730,11 +857,21 @@ type DescribeDeliveryChannelStatusInput struct {
 	// A list of delivery channel names.
 	DeliveryChannelNames []*string `type:"list"`
 
-	metadataDescribeDeliveryChannelStatusInput `json:"-", xml:"-"`
+	metadataDescribeDeliveryChannelStatusInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDeliveryChannelStatusInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDeliveryChannelStatusInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDeliveryChannelStatusInput) GoString() string {
+	return s.String()
 }
 
 // The output for the DescribeDeliveryChannelStatus action.
@@ -742,11 +879,21 @@ type DescribeDeliveryChannelStatusOutput struct {
 	// A list that contains the status of a specified delivery channel.
 	DeliveryChannelsStatus []*DeliveryChannelStatus `type:"list"`
 
-	metadataDescribeDeliveryChannelStatusOutput `json:"-", xml:"-"`
+	metadataDescribeDeliveryChannelStatusOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDeliveryChannelStatusOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDeliveryChannelStatusOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDeliveryChannelStatusOutput) GoString() string {
+	return s.String()
 }
 
 // The input for the DescribeDeliveryChannels action.
@@ -754,11 +901,21 @@ type DescribeDeliveryChannelsInput struct {
 	// A list of delivery channel names.
 	DeliveryChannelNames []*string `type:"list"`
 
-	metadataDescribeDeliveryChannelsInput `json:"-", xml:"-"`
+	metadataDescribeDeliveryChannelsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDeliveryChannelsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDeliveryChannelsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDeliveryChannelsInput) GoString() string {
+	return s.String()
 }
 
 // The output for the DescribeDeliveryChannels action.
@@ -766,11 +923,21 @@ type DescribeDeliveryChannelsOutput struct {
 	// A list that contains the descriptions of the specified delivery channel.
 	DeliveryChannels []*DeliveryChannel `type:"list"`
 
-	metadataDescribeDeliveryChannelsOutput `json:"-", xml:"-"`
+	metadataDescribeDeliveryChannelsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDeliveryChannelsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDeliveryChannelsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDeliveryChannelsOutput) GoString() string {
+	return s.String()
 }
 
 // The input for the GetResourceConfigHistory action.
@@ -801,11 +968,21 @@ type GetResourceConfigHistoryInput struct {
 	// The resource type.
 	ResourceType *string `locationName:"resourceType" type:"string" required:"true"`
 
-	metadataGetResourceConfigHistoryInput `json:"-", xml:"-"`
+	metadataGetResourceConfigHistoryInput `json:"-" xml:"-"`
 }
 
 type metadataGetResourceConfigHistoryInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetResourceConfigHistoryInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetResourceConfigHistoryInput) GoString() string {
+	return s.String()
 }
 
 // The output for the GetResourceConfigHistory action.
@@ -816,11 +993,21 @@ type GetResourceConfigHistoryOutput struct {
 	// A token used for pagination of results.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataGetResourceConfigHistoryOutput `json:"-", xml:"-"`
+	metadataGetResourceConfigHistoryOutput `json:"-" xml:"-"`
 }
 
 type metadataGetResourceConfigHistoryOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetResourceConfigHistoryOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetResourceConfigHistoryOutput) GoString() string {
+	return s.String()
 }
 
 // The input for the PutConfigurationRecorder action.
@@ -829,19 +1016,39 @@ type PutConfigurationRecorderInput struct {
 	// made to the resources.
 	ConfigurationRecorder *ConfigurationRecorder `type:"structure" required:"true"`
 
-	metadataPutConfigurationRecorderInput `json:"-", xml:"-"`
+	metadataPutConfigurationRecorderInput `json:"-" xml:"-"`
 }
 
 type metadataPutConfigurationRecorderInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s PutConfigurationRecorderInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PutConfigurationRecorderInput) GoString() string {
+	return s.String()
+}
+
 type PutConfigurationRecorderOutput struct {
-	metadataPutConfigurationRecorderOutput `json:"-", xml:"-"`
+	metadataPutConfigurationRecorderOutput `json:"-" xml:"-"`
 }
 
 type metadataPutConfigurationRecorderOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PutConfigurationRecorderOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PutConfigurationRecorderOutput) GoString() string {
+	return s.String()
 }
 
 // The input for the PutDeliveryChannel action.
@@ -850,19 +1057,74 @@ type PutDeliveryChannelInput struct {
 	// information to an Amazon S3 bucket, and to an Amazon SNS topic.
 	DeliveryChannel *DeliveryChannel `type:"structure" required:"true"`
 
-	metadataPutDeliveryChannelInput `json:"-", xml:"-"`
+	metadataPutDeliveryChannelInput `json:"-" xml:"-"`
 }
 
 type metadataPutDeliveryChannelInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s PutDeliveryChannelInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PutDeliveryChannelInput) GoString() string {
+	return s.String()
+}
+
 type PutDeliveryChannelOutput struct {
-	metadataPutDeliveryChannelOutput `json:"-", xml:"-"`
+	metadataPutDeliveryChannelOutput `json:"-" xml:"-"`
 }
 
 type metadataPutDeliveryChannelOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PutDeliveryChannelOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PutDeliveryChannelOutput) GoString() string {
+	return s.String()
+}
+
+// The group of AWS resource types that AWS Config records when starting the
+// configuration recorder.
+//
+// recordingGroup can have one and only one parameter. Choose either allSupported
+// or resourceTypes.
+type RecordingGroup struct {
+	// Records all supported resource types in the recording group. For a list of
+	// supported resource types, see Supported resource types (http://docs.aws.amazon.com/config/latest/developerguide/resource-config-reference.html#supported-resources).
+	// If you specify allSupported, you cannot enumerate a list of resourceTypes.
+	AllSupported *bool `locationName:"allSupported" type:"boolean"`
+
+	// A comma-separated list of strings representing valid AWS resource types (e.g.,
+	// AWS::EC2::Instance or AWS::CloudTrail::Trail). resourceTypes is only valid
+	// if you have chosen not to select allSupported. For a list of valid resourceTypes
+	// values, see the resourceType Value column in the following topic: Supported
+	// AWS Resource Types (http://docs.aws.amazon.com/config/latest/developerguide/resource-config-reference.html#supported-resources).
+	ResourceTypes []*string `locationName:"resourceTypes" type:"list"`
+
+	metadataRecordingGroup `json:"-" xml:"-"`
+}
+
+type metadataRecordingGroup struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RecordingGroup) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RecordingGroup) GoString() string {
+	return s.String()
 }
 
 // The relationship of the related resource to the main resource.
@@ -870,17 +1132,27 @@ type Relationship struct {
 	// The name of the related resource.
 	RelationshipName *string `locationName:"relationshipName" type:"string"`
 
-	// The resource ID of the related resource (for example, sg-xxxxxx.
+	// The resource ID of the related resource (for example, sg-xxxxxx).
 	ResourceID *string `locationName:"resourceId" type:"string"`
 
 	// The resource type of the related resource.
 	ResourceType *string `locationName:"resourceType" type:"string"`
 
-	metadataRelationship `json:"-", xml:"-"`
+	metadataRelationship `json:"-" xml:"-"`
 }
 
 type metadataRelationship struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Relationship) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Relationship) GoString() string {
+	return s.String()
 }
 
 // The input for the StartConfigurationRecorder action.
@@ -889,19 +1161,39 @@ type StartConfigurationRecorderInput struct {
 	// to the resources.
 	ConfigurationRecorderName *string `type:"string" required:"true"`
 
-	metadataStartConfigurationRecorderInput `json:"-", xml:"-"`
+	metadataStartConfigurationRecorderInput `json:"-" xml:"-"`
 }
 
 type metadataStartConfigurationRecorderInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s StartConfigurationRecorderInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StartConfigurationRecorderInput) GoString() string {
+	return s.String()
+}
+
 type StartConfigurationRecorderOutput struct {
-	metadataStartConfigurationRecorderOutput `json:"-", xml:"-"`
+	metadataStartConfigurationRecorderOutput `json:"-" xml:"-"`
 }
 
 type metadataStartConfigurationRecorderOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StartConfigurationRecorderOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StartConfigurationRecorderOutput) GoString() string {
+	return s.String()
 }
 
 // The input for the StopConfigurationRecorder action.
@@ -910,17 +1202,37 @@ type StopConfigurationRecorderInput struct {
 	// to the resources.
 	ConfigurationRecorderName *string `type:"string" required:"true"`
 
-	metadataStopConfigurationRecorderInput `json:"-", xml:"-"`
+	metadataStopConfigurationRecorderInput `json:"-" xml:"-"`
 }
 
 type metadataStopConfigurationRecorderInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s StopConfigurationRecorderInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StopConfigurationRecorderInput) GoString() string {
+	return s.String()
+}
+
 type StopConfigurationRecorderOutput struct {
-	metadataStopConfigurationRecorderOutput `json:"-", xml:"-"`
+	metadataStopConfigurationRecorderOutput `json:"-" xml:"-"`
 }
 
 type metadataStopConfigurationRecorderOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StopConfigurationRecorderOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StopConfigurationRecorderOutput) GoString() string {
+	return s.String()
 }

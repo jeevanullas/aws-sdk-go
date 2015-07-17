@@ -4,31 +4,25 @@
 package support
 
 import (
-	"sync"
-
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
-var oprw sync.Mutex
+const opAddAttachmentsToSet = "AddAttachmentsToSet"
 
 // AddAttachmentsToSetRequest generates a request for the AddAttachmentsToSet operation.
 func (c *Support) AddAttachmentsToSetRequest(input *AddAttachmentsToSetInput) (req *aws.Request, output *AddAttachmentsToSetOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAddAttachmentsToSet == nil {
-		opAddAttachmentsToSet = &aws.Operation{
-			Name:       "AddAttachmentsToSet",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAddAttachmentsToSet,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AddAttachmentsToSetInput{}
 	}
 
-	req = c.newRequest(opAddAttachmentsToSet, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AddAttachmentsToSetOutput{}
 	req.Data = output
 	return
@@ -44,33 +38,27 @@ func (c *Support) AddAttachmentsToSetRequest(input *AddAttachmentsToSetInput) (r
 // after it is created; the ExpiryTime returned in the response indicates when
 // the set expires. The maximum number of attachments in a set is 3, and the
 // maximum size of any attachment in the set is 5 MB.
-func (c *Support) AddAttachmentsToSet(input *AddAttachmentsToSetInput) (output *AddAttachmentsToSetOutput, err error) {
+func (c *Support) AddAttachmentsToSet(input *AddAttachmentsToSetInput) (*AddAttachmentsToSetOutput, error) {
 	req, out := c.AddAttachmentsToSetRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAddAttachmentsToSet *aws.Operation
+const opAddCommunicationToCase = "AddCommunicationToCase"
 
 // AddCommunicationToCaseRequest generates a request for the AddCommunicationToCase operation.
 func (c *Support) AddCommunicationToCaseRequest(input *AddCommunicationToCaseInput) (req *aws.Request, output *AddCommunicationToCaseOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAddCommunicationToCase == nil {
-		opAddCommunicationToCase = &aws.Operation{
-			Name:       "AddCommunicationToCase",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAddCommunicationToCase,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AddCommunicationToCaseInput{}
 	}
 
-	req = c.newRequest(opAddCommunicationToCase, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AddCommunicationToCaseOutput{}
 	req.Data = output
 	return
@@ -84,33 +72,27 @@ func (c *Support) AddCommunicationToCaseRequest(input *AddCommunicationToCaseInp
 // The response indicates the success or failure of the request.
 //
 // This operation implements a subset of the features of the AWS Support Center.
-func (c *Support) AddCommunicationToCase(input *AddCommunicationToCaseInput) (output *AddCommunicationToCaseOutput, err error) {
+func (c *Support) AddCommunicationToCase(input *AddCommunicationToCaseInput) (*AddCommunicationToCaseOutput, error) {
 	req, out := c.AddCommunicationToCaseRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAddCommunicationToCase *aws.Operation
+const opCreateCase = "CreateCase"
 
 // CreateCaseRequest generates a request for the CreateCase operation.
 func (c *Support) CreateCaseRequest(input *CreateCaseInput) (req *aws.Request, output *CreateCaseOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateCase == nil {
-		opCreateCase = &aws.Operation{
-			Name:       "CreateCase",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateCase,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateCaseInput{}
 	}
 
-	req = c.newRequest(opCreateCase, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateCaseOutput{}
 	req.Data = output
 	return
@@ -146,33 +128,27 @@ func (c *Support) CreateCaseRequest(input *CreateCaseInput) (req *aws.Request, o
 //  A successful CreateCase request returns an AWS Support case number. Case
 // numbers are used by the DescribeCases operation to retrieve existing AWS
 // Support cases.
-func (c *Support) CreateCase(input *CreateCaseInput) (output *CreateCaseOutput, err error) {
+func (c *Support) CreateCase(input *CreateCaseInput) (*CreateCaseOutput, error) {
 	req, out := c.CreateCaseRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateCase *aws.Operation
+const opDescribeAttachment = "DescribeAttachment"
 
 // DescribeAttachmentRequest generates a request for the DescribeAttachment operation.
 func (c *Support) DescribeAttachmentRequest(input *DescribeAttachmentInput) (req *aws.Request, output *DescribeAttachmentOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeAttachment == nil {
-		opDescribeAttachment = &aws.Operation{
-			Name:       "DescribeAttachment",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeAttachment,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeAttachmentInput{}
 	}
 
-	req = c.newRequest(opDescribeAttachment, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeAttachmentOutput{}
 	req.Data = output
 	return
@@ -182,33 +158,33 @@ func (c *Support) DescribeAttachmentRequest(input *DescribeAttachmentInput) (req
 // by the case management system when you add an attachment to a case or case
 // communication. Attachment IDs are returned in the AttachmentDetails objects
 // that are returned by the DescribeCommunications operation.
-func (c *Support) DescribeAttachment(input *DescribeAttachmentInput) (output *DescribeAttachmentOutput, err error) {
+func (c *Support) DescribeAttachment(input *DescribeAttachmentInput) (*DescribeAttachmentOutput, error) {
 	req, out := c.DescribeAttachmentRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeAttachment *aws.Operation
+const opDescribeCases = "DescribeCases"
 
 // DescribeCasesRequest generates a request for the DescribeCases operation.
 func (c *Support) DescribeCasesRequest(input *DescribeCasesInput) (req *aws.Request, output *DescribeCasesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeCases == nil {
-		opDescribeCases = &aws.Operation{
-			Name:       "DescribeCases",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeCases,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeCasesInput{}
 	}
 
-	req = c.newRequest(opDescribeCases, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeCasesOutput{}
 	req.Data = output
 	return
@@ -228,33 +204,40 @@ func (c *Support) DescribeCasesRequest(input *DescribeCasesInput) (req *aws.Requ
 //  One or more CaseDetails data types.  One or more NextToken values, which
 // specify where to paginate the returned records represented by the CaseDetails
 // objects.
-func (c *Support) DescribeCases(input *DescribeCasesInput) (output *DescribeCasesOutput, err error) {
+func (c *Support) DescribeCases(input *DescribeCasesInput) (*DescribeCasesOutput, error) {
 	req, out := c.DescribeCasesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeCases *aws.Operation
+func (c *Support) DescribeCasesPages(input *DescribeCasesInput, fn func(p *DescribeCasesOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeCasesRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeCasesOutput), lastPage)
+	})
+}
+
+const opDescribeCommunications = "DescribeCommunications"
 
 // DescribeCommunicationsRequest generates a request for the DescribeCommunications operation.
 func (c *Support) DescribeCommunicationsRequest(input *DescribeCommunicationsInput) (req *aws.Request, output *DescribeCommunicationsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeCommunications == nil {
-		opDescribeCommunications = &aws.Operation{
-			Name:       "DescribeCommunications",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeCommunications,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"nextToken"},
+			OutputTokens:    []string{"nextToken"},
+			LimitToken:      "maxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeCommunicationsInput{}
 	}
 
-	req = c.newRequest(opDescribeCommunications, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeCommunicationsOutput{}
 	req.Data = output
 	return
@@ -270,33 +253,34 @@ func (c *Support) DescribeCommunicationsRequest(input *DescribeCommunicationsInp
 // You can use the MaxResults and NextToken parameters to control the pagination
 // of the result set. Set MaxResults to the number of cases you want displayed
 // on each page, and use NextToken to specify the resumption of pagination.
-func (c *Support) DescribeCommunications(input *DescribeCommunicationsInput) (output *DescribeCommunicationsOutput, err error) {
+func (c *Support) DescribeCommunications(input *DescribeCommunicationsInput) (*DescribeCommunicationsOutput, error) {
 	req, out := c.DescribeCommunicationsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeCommunications *aws.Operation
+func (c *Support) DescribeCommunicationsPages(input *DescribeCommunicationsInput, fn func(p *DescribeCommunicationsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeCommunicationsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeCommunicationsOutput), lastPage)
+	})
+}
+
+const opDescribeServices = "DescribeServices"
 
 // DescribeServicesRequest generates a request for the DescribeServices operation.
 func (c *Support) DescribeServicesRequest(input *DescribeServicesInput) (req *aws.Request, output *DescribeServicesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeServices == nil {
-		opDescribeServices = &aws.Operation{
-			Name:       "DescribeServices",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeServices,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeServicesInput{}
 	}
 
-	req = c.newRequest(opDescribeServices, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeServicesOutput{}
 	req.Data = output
 	return
@@ -313,33 +297,27 @@ func (c *Support) DescribeServicesRequest(input *DescribeServicesInput) (req *aw
 // and categories returned by the DescribeServices request. Always use the service
 // codes and categories obtained programmatically. This practice ensures that
 // you always have the most recent set of service and category codes.
-func (c *Support) DescribeServices(input *DescribeServicesInput) (output *DescribeServicesOutput, err error) {
+func (c *Support) DescribeServices(input *DescribeServicesInput) (*DescribeServicesOutput, error) {
 	req, out := c.DescribeServicesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeServices *aws.Operation
+const opDescribeSeverityLevels = "DescribeSeverityLevels"
 
 // DescribeSeverityLevelsRequest generates a request for the DescribeSeverityLevels operation.
 func (c *Support) DescribeSeverityLevelsRequest(input *DescribeSeverityLevelsInput) (req *aws.Request, output *DescribeSeverityLevelsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeSeverityLevels == nil {
-		opDescribeSeverityLevels = &aws.Operation{
-			Name:       "DescribeSeverityLevels",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeSeverityLevels,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeSeverityLevelsInput{}
 	}
 
-	req = c.newRequest(opDescribeSeverityLevels, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeSeverityLevelsOutput{}
 	req.Data = output
 	return
@@ -348,33 +326,27 @@ func (c *Support) DescribeSeverityLevelsRequest(input *DescribeSeverityLevelsInp
 // Returns the list of severity levels that you can assign to an AWS Support
 // case. The severity level for a case is also a field in the CaseDetails data
 // type included in any CreateCase request.
-func (c *Support) DescribeSeverityLevels(input *DescribeSeverityLevelsInput) (output *DescribeSeverityLevelsOutput, err error) {
+func (c *Support) DescribeSeverityLevels(input *DescribeSeverityLevelsInput) (*DescribeSeverityLevelsOutput, error) {
 	req, out := c.DescribeSeverityLevelsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeSeverityLevels *aws.Operation
+const opDescribeTrustedAdvisorCheckRefreshStatuses = "DescribeTrustedAdvisorCheckRefreshStatuses"
 
 // DescribeTrustedAdvisorCheckRefreshStatusesRequest generates a request for the DescribeTrustedAdvisorCheckRefreshStatuses operation.
 func (c *Support) DescribeTrustedAdvisorCheckRefreshStatusesRequest(input *DescribeTrustedAdvisorCheckRefreshStatusesInput) (req *aws.Request, output *DescribeTrustedAdvisorCheckRefreshStatusesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeTrustedAdvisorCheckRefreshStatuses == nil {
-		opDescribeTrustedAdvisorCheckRefreshStatuses = &aws.Operation{
-			Name:       "DescribeTrustedAdvisorCheckRefreshStatuses",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeTrustedAdvisorCheckRefreshStatuses,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeTrustedAdvisorCheckRefreshStatusesInput{}
 	}
 
-	req = c.newRequest(opDescribeTrustedAdvisorCheckRefreshStatuses, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeTrustedAdvisorCheckRefreshStatusesOutput{}
 	req.Data = output
 	return
@@ -382,33 +354,27 @@ func (c *Support) DescribeTrustedAdvisorCheckRefreshStatusesRequest(input *Descr
 
 // Returns the refresh status of the Trusted Advisor checks that have the specified
 // check IDs. Check IDs can be obtained by calling DescribeTrustedAdvisorChecks.
-func (c *Support) DescribeTrustedAdvisorCheckRefreshStatuses(input *DescribeTrustedAdvisorCheckRefreshStatusesInput) (output *DescribeTrustedAdvisorCheckRefreshStatusesOutput, err error) {
+func (c *Support) DescribeTrustedAdvisorCheckRefreshStatuses(input *DescribeTrustedAdvisorCheckRefreshStatusesInput) (*DescribeTrustedAdvisorCheckRefreshStatusesOutput, error) {
 	req, out := c.DescribeTrustedAdvisorCheckRefreshStatusesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeTrustedAdvisorCheckRefreshStatuses *aws.Operation
+const opDescribeTrustedAdvisorCheckResult = "DescribeTrustedAdvisorCheckResult"
 
 // DescribeTrustedAdvisorCheckResultRequest generates a request for the DescribeTrustedAdvisorCheckResult operation.
 func (c *Support) DescribeTrustedAdvisorCheckResultRequest(input *DescribeTrustedAdvisorCheckResultInput) (req *aws.Request, output *DescribeTrustedAdvisorCheckResultOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeTrustedAdvisorCheckResult == nil {
-		opDescribeTrustedAdvisorCheckResult = &aws.Operation{
-			Name:       "DescribeTrustedAdvisorCheckResult",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeTrustedAdvisorCheckResult,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeTrustedAdvisorCheckResultInput{}
 	}
 
-	req = c.newRequest(opDescribeTrustedAdvisorCheckResult, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeTrustedAdvisorCheckResultOutput{}
 	req.Data = output
 	return
@@ -426,33 +392,27 @@ func (c *Support) DescribeTrustedAdvisorCheckResultRequest(input *DescribeTruste
 //   Status. The alert status of the check: "ok" (green), "warning" (yellow),
 // "error" (red), or "not_available".  Timestamp. The time of the last refresh
 // of the check.  CheckId. The unique identifier for the check.
-func (c *Support) DescribeTrustedAdvisorCheckResult(input *DescribeTrustedAdvisorCheckResultInput) (output *DescribeTrustedAdvisorCheckResultOutput, err error) {
+func (c *Support) DescribeTrustedAdvisorCheckResult(input *DescribeTrustedAdvisorCheckResultInput) (*DescribeTrustedAdvisorCheckResultOutput, error) {
 	req, out := c.DescribeTrustedAdvisorCheckResultRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeTrustedAdvisorCheckResult *aws.Operation
+const opDescribeTrustedAdvisorCheckSummaries = "DescribeTrustedAdvisorCheckSummaries"
 
 // DescribeTrustedAdvisorCheckSummariesRequest generates a request for the DescribeTrustedAdvisorCheckSummaries operation.
 func (c *Support) DescribeTrustedAdvisorCheckSummariesRequest(input *DescribeTrustedAdvisorCheckSummariesInput) (req *aws.Request, output *DescribeTrustedAdvisorCheckSummariesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeTrustedAdvisorCheckSummaries == nil {
-		opDescribeTrustedAdvisorCheckSummaries = &aws.Operation{
-			Name:       "DescribeTrustedAdvisorCheckSummaries",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeTrustedAdvisorCheckSummaries,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeTrustedAdvisorCheckSummariesInput{}
 	}
 
-	req = c.newRequest(opDescribeTrustedAdvisorCheckSummaries, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeTrustedAdvisorCheckSummariesOutput{}
 	req.Data = output
 	return
@@ -462,33 +422,27 @@ func (c *Support) DescribeTrustedAdvisorCheckSummariesRequest(input *DescribeTru
 // the specified check IDs. Check IDs can be obtained by calling DescribeTrustedAdvisorChecks.
 //
 // The response contains an array of TrustedAdvisorCheckSummary objects.
-func (c *Support) DescribeTrustedAdvisorCheckSummaries(input *DescribeTrustedAdvisorCheckSummariesInput) (output *DescribeTrustedAdvisorCheckSummariesOutput, err error) {
+func (c *Support) DescribeTrustedAdvisorCheckSummaries(input *DescribeTrustedAdvisorCheckSummariesInput) (*DescribeTrustedAdvisorCheckSummariesOutput, error) {
 	req, out := c.DescribeTrustedAdvisorCheckSummariesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeTrustedAdvisorCheckSummaries *aws.Operation
+const opDescribeTrustedAdvisorChecks = "DescribeTrustedAdvisorChecks"
 
 // DescribeTrustedAdvisorChecksRequest generates a request for the DescribeTrustedAdvisorChecks operation.
 func (c *Support) DescribeTrustedAdvisorChecksRequest(input *DescribeTrustedAdvisorChecksInput) (req *aws.Request, output *DescribeTrustedAdvisorChecksOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeTrustedAdvisorChecks == nil {
-		opDescribeTrustedAdvisorChecks = &aws.Operation{
-			Name:       "DescribeTrustedAdvisorChecks",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeTrustedAdvisorChecks,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeTrustedAdvisorChecksInput{}
 	}
 
-	req = c.newRequest(opDescribeTrustedAdvisorChecks, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeTrustedAdvisorChecksOutput{}
 	req.Data = output
 	return
@@ -498,33 +452,27 @@ func (c *Support) DescribeTrustedAdvisorChecksRequest(input *DescribeTrustedAdvi
 // name, ID, category, description, and metadata. You must specify a language
 // code; English ("en") and Japanese ("ja") are currently supported. The response
 // contains a TrustedAdvisorCheckDescription for each check.
-func (c *Support) DescribeTrustedAdvisorChecks(input *DescribeTrustedAdvisorChecksInput) (output *DescribeTrustedAdvisorChecksOutput, err error) {
+func (c *Support) DescribeTrustedAdvisorChecks(input *DescribeTrustedAdvisorChecksInput) (*DescribeTrustedAdvisorChecksOutput, error) {
 	req, out := c.DescribeTrustedAdvisorChecksRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeTrustedAdvisorChecks *aws.Operation
+const opRefreshTrustedAdvisorCheck = "RefreshTrustedAdvisorCheck"
 
 // RefreshTrustedAdvisorCheckRequest generates a request for the RefreshTrustedAdvisorCheck operation.
 func (c *Support) RefreshTrustedAdvisorCheckRequest(input *RefreshTrustedAdvisorCheckInput) (req *aws.Request, output *RefreshTrustedAdvisorCheckOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRefreshTrustedAdvisorCheck == nil {
-		opRefreshTrustedAdvisorCheck = &aws.Operation{
-			Name:       "RefreshTrustedAdvisorCheck",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRefreshTrustedAdvisorCheck,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RefreshTrustedAdvisorCheckInput{}
 	}
 
-	req = c.newRequest(opRefreshTrustedAdvisorCheck, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RefreshTrustedAdvisorCheckOutput{}
 	req.Data = output
 	return
@@ -540,33 +488,27 @@ func (c *Support) RefreshTrustedAdvisorCheckRequest(input *RefreshTrustedAdvisor
 // "success", or "abandoned".  MillisUntilNextRefreshable. The amount of time,
 // in milliseconds, until the check is eligible for refresh.  CheckId. The unique
 // identifier for the check.
-func (c *Support) RefreshTrustedAdvisorCheck(input *RefreshTrustedAdvisorCheckInput) (output *RefreshTrustedAdvisorCheckOutput, err error) {
+func (c *Support) RefreshTrustedAdvisorCheck(input *RefreshTrustedAdvisorCheckInput) (*RefreshTrustedAdvisorCheckOutput, error) {
 	req, out := c.RefreshTrustedAdvisorCheckRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRefreshTrustedAdvisorCheck *aws.Operation
+const opResolveCase = "ResolveCase"
 
 // ResolveCaseRequest generates a request for the ResolveCase operation.
 func (c *Support) ResolveCaseRequest(input *ResolveCaseInput) (req *aws.Request, output *ResolveCaseOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opResolveCase == nil {
-		opResolveCase = &aws.Operation{
-			Name:       "ResolveCase",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opResolveCase,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ResolveCaseInput{}
 	}
 
-	req = c.newRequest(opResolveCase, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ResolveCaseOutput{}
 	req.Data = output
 	return
@@ -574,14 +516,11 @@ func (c *Support) ResolveCaseRequest(input *ResolveCaseInput) (req *aws.Request,
 
 // Takes a CaseId and returns the initial state of the case along with the state
 // of the case after the call to ResolveCase completed.
-func (c *Support) ResolveCase(input *ResolveCaseInput) (output *ResolveCaseOutput, err error) {
+func (c *Support) ResolveCase(input *ResolveCaseInput) (*ResolveCaseOutput, error) {
 	req, out := c.ResolveCaseRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
-
-var opResolveCase *aws.Operation
 
 type AddAttachmentsToSetInput struct {
 	// The ID of the attachment set. If an AttachmentSetId is not specified, a new
@@ -594,11 +533,21 @@ type AddAttachmentsToSetInput struct {
 	// set, and the size limit is 5 MB per attachment.
 	Attachments []*Attachment `locationName:"attachments" type:"list" required:"true"`
 
-	metadataAddAttachmentsToSetInput `json:"-", xml:"-"`
+	metadataAddAttachmentsToSetInput `json:"-" xml:"-"`
 }
 
 type metadataAddAttachmentsToSetInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AddAttachmentsToSetInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddAttachmentsToSetInput) GoString() string {
+	return s.String()
 }
 
 // The ID and expiry time of the attachment set returned by the AddAttachmentsToSet
@@ -613,11 +562,21 @@ type AddAttachmentsToSetOutput struct {
 	// The time and date when the attachment set expires.
 	ExpiryTime *string `locationName:"expiryTime" type:"string"`
 
-	metadataAddAttachmentsToSetOutput `json:"-", xml:"-"`
+	metadataAddAttachmentsToSetOutput `json:"-" xml:"-"`
 }
 
 type metadataAddAttachmentsToSetOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AddAttachmentsToSetOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddAttachmentsToSetOutput) GoString() string {
+	return s.String()
 }
 
 // To be written.
@@ -637,11 +596,21 @@ type AddCommunicationToCaseInput struct {
 	// The body of an email communication to add to the support case.
 	CommunicationBody *string `locationName:"communicationBody" type:"string" required:"true"`
 
-	metadataAddCommunicationToCaseInput `json:"-", xml:"-"`
+	metadataAddCommunicationToCaseInput `json:"-" xml:"-"`
 }
 
 type metadataAddCommunicationToCaseInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AddCommunicationToCaseInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddCommunicationToCaseInput) GoString() string {
+	return s.String()
 }
 
 // The result of the AddCommunicationToCase operation.
@@ -649,11 +618,21 @@ type AddCommunicationToCaseOutput struct {
 	// True if AddCommunicationToCase succeeds. Otherwise, returns an error.
 	Result *bool `locationName:"result" type:"boolean"`
 
-	metadataAddCommunicationToCaseOutput `json:"-", xml:"-"`
+	metadataAddCommunicationToCaseOutput `json:"-" xml:"-"`
 }
 
 type metadataAddCommunicationToCaseOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AddCommunicationToCaseOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddCommunicationToCaseOutput) GoString() string {
+	return s.String()
 }
 
 // An attachment to a case communication. The attachment consists of the file
@@ -665,11 +644,21 @@ type Attachment struct {
 	// The name of the attachment file.
 	FileName *string `locationName:"fileName" type:"string"`
 
-	metadataAttachment `json:"-", xml:"-"`
+	metadataAttachment `json:"-" xml:"-"`
 }
 
 type metadataAttachment struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Attachment) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Attachment) GoString() string {
+	return s.String()
 }
 
 // The file name and ID of an attachment to a case communication. You can use
@@ -681,11 +670,21 @@ type AttachmentDetails struct {
 	// The file name of the attachment.
 	FileName *string `locationName:"fileName" type:"string"`
 
-	metadataAttachmentDetails `json:"-", xml:"-"`
+	metadataAttachmentDetails `json:"-" xml:"-"`
 }
 
 type metadataAttachmentDetails struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AttachmentDetails) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AttachmentDetails) GoString() string {
+	return s.String()
 }
 
 // A JSON-formatted object that contains the metadata for a support case. It
@@ -752,11 +751,21 @@ type CaseDetails struct {
 	// The time that the case was case created in the AWS Support Center.
 	TimeCreated *string `locationName:"timeCreated" type:"string"`
 
-	metadataCaseDetails `json:"-", xml:"-"`
+	metadataCaseDetails `json:"-" xml:"-"`
 }
 
 type metadataCaseDetails struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CaseDetails) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CaseDetails) GoString() string {
+	return s.String()
 }
 
 // A JSON-formatted name/value pair that represents the category name and category
@@ -769,11 +778,21 @@ type Category struct {
 	// The category name for the support case.
 	Name *string `locationName:"name" type:"string"`
 
-	metadataCategory `json:"-", xml:"-"`
+	metadataCategory `json:"-" xml:"-"`
 }
 
 type metadataCategory struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Category) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Category) GoString() string {
+	return s.String()
 }
 
 // A communication associated with an AWS Support case. The communication consists
@@ -796,11 +815,21 @@ type Communication struct {
 	// The time the communication was created.
 	TimeCreated *string `locationName:"timeCreated" type:"string"`
 
-	metadataCommunication `json:"-", xml:"-"`
+	metadataCommunication `json:"-" xml:"-"`
 }
 
 type metadataCommunication struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Communication) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Communication) GoString() string {
+	return s.String()
 }
 
 type CreateCaseInput struct {
@@ -840,11 +869,21 @@ type CreateCaseInput struct {
 	// The title of the AWS Support case.
 	Subject *string `locationName:"subject" type:"string" required:"true"`
 
-	metadataCreateCaseInput `json:"-", xml:"-"`
+	metadataCreateCaseInput `json:"-" xml:"-"`
 }
 
 type metadataCreateCaseInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateCaseInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateCaseInput) GoString() string {
+	return s.String()
 }
 
 // The AWS Support case ID returned by a successful completion of the CreateCase
@@ -854,11 +893,21 @@ type CreateCaseOutput struct {
 	// an alphanumeric string formatted as shown in this example: case-12345678910-2013-c4c1d2bf33c5cf47
 	CaseID *string `locationName:"caseId" type:"string"`
 
-	metadataCreateCaseOutput `json:"-", xml:"-"`
+	metadataCreateCaseOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateCaseOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateCaseOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateCaseOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeAttachmentInput struct {
@@ -866,11 +915,21 @@ type DescribeAttachmentInput struct {
 	// operation.
 	AttachmentID *string `locationName:"attachmentId" type:"string" required:"true"`
 
-	metadataDescribeAttachmentInput `json:"-", xml:"-"`
+	metadataDescribeAttachmentInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeAttachmentInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeAttachmentInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeAttachmentInput) GoString() string {
+	return s.String()
 }
 
 // The content and file name of the attachment returned by the DescribeAttachment
@@ -879,11 +938,21 @@ type DescribeAttachmentOutput struct {
 	// The attachment content and file name.
 	Attachment *Attachment `locationName:"attachment" type:"structure"`
 
-	metadataDescribeAttachmentOutput `json:"-", xml:"-"`
+	metadataDescribeAttachmentOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeAttachmentOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeAttachmentOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeAttachmentOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeCasesInput struct {
@@ -921,11 +990,21 @@ type DescribeCasesInput struct {
 	// A resumption point for pagination.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataDescribeCasesInput `json:"-", xml:"-"`
+	metadataDescribeCasesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCasesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCasesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCasesInput) GoString() string {
+	return s.String()
 }
 
 // Returns an array of CaseDetails objects and a NextToken that defines a point
@@ -937,11 +1016,21 @@ type DescribeCasesOutput struct {
 	// A resumption point for pagination.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataDescribeCasesOutput `json:"-", xml:"-"`
+	metadataDescribeCasesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCasesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCasesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCasesOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeCommunicationsInput struct {
@@ -963,11 +1052,21 @@ type DescribeCommunicationsInput struct {
 	// A resumption point for pagination.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataDescribeCommunicationsInput `json:"-", xml:"-"`
+	metadataDescribeCommunicationsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCommunicationsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCommunicationsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCommunicationsInput) GoString() string {
+	return s.String()
 }
 
 // The communications returned by the DescribeCommunications operation.
@@ -978,11 +1077,21 @@ type DescribeCommunicationsOutput struct {
 	// A resumption point for pagination.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataDescribeCommunicationsOutput `json:"-", xml:"-"`
+	metadataDescribeCommunicationsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCommunicationsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCommunicationsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCommunicationsOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeServicesInput struct {
@@ -994,11 +1103,21 @@ type DescribeServicesInput struct {
 	// A JSON-formatted list of service codes available for AWS services.
 	ServiceCodeList []*string `locationName:"serviceCodeList" type:"list"`
 
-	metadataDescribeServicesInput `json:"-", xml:"-"`
+	metadataDescribeServicesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeServicesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeServicesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeServicesInput) GoString() string {
+	return s.String()
 }
 
 // The list of AWS services returned by the DescribeServices operation.
@@ -1006,11 +1125,21 @@ type DescribeServicesOutput struct {
 	// A JSON-formatted list of AWS services.
 	Services []*Service `locationName:"services" type:"list"`
 
-	metadataDescribeServicesOutput `json:"-", xml:"-"`
+	metadataDescribeServicesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeServicesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeServicesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeServicesOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeSeverityLevelsInput struct {
@@ -1019,11 +1148,21 @@ type DescribeSeverityLevelsInput struct {
 	// must be passed explicitly for operations that take them.
 	Language *string `locationName:"language" type:"string"`
 
-	metadataDescribeSeverityLevelsInput `json:"-", xml:"-"`
+	metadataDescribeSeverityLevelsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSeverityLevelsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeSeverityLevelsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSeverityLevelsInput) GoString() string {
+	return s.String()
 }
 
 // The list of severity levels returned by the DescribeSeverityLevels operation.
@@ -1032,22 +1171,42 @@ type DescribeSeverityLevelsOutput struct {
 	// are defined by your service level agreement with AWS.
 	SeverityLevels []*SeverityLevel `locationName:"severityLevels" type:"list"`
 
-	metadataDescribeSeverityLevelsOutput `json:"-", xml:"-"`
+	metadataDescribeSeverityLevelsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSeverityLevelsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeSeverityLevelsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSeverityLevelsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeTrustedAdvisorCheckRefreshStatusesInput struct {
 	// The IDs of the Trusted Advisor checks.
 	CheckIDs []*string `locationName:"checkIds" type:"list" required:"true"`
 
-	metadataDescribeTrustedAdvisorCheckRefreshStatusesInput `json:"-", xml:"-"`
+	metadataDescribeTrustedAdvisorCheckRefreshStatusesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeTrustedAdvisorCheckRefreshStatusesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeTrustedAdvisorCheckRefreshStatusesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeTrustedAdvisorCheckRefreshStatusesInput) GoString() string {
+	return s.String()
 }
 
 // The statuses of the Trusted Advisor checks returned by the DescribeTrustedAdvisorCheckRefreshStatuses
@@ -1056,11 +1215,21 @@ type DescribeTrustedAdvisorCheckRefreshStatusesOutput struct {
 	// The refresh status of the specified Trusted Advisor checks.
 	Statuses []*TrustedAdvisorCheckRefreshStatus `locationName:"statuses" type:"list" required:"true"`
 
-	metadataDescribeTrustedAdvisorCheckRefreshStatusesOutput `json:"-", xml:"-"`
+	metadataDescribeTrustedAdvisorCheckRefreshStatusesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeTrustedAdvisorCheckRefreshStatusesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeTrustedAdvisorCheckRefreshStatusesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeTrustedAdvisorCheckRefreshStatusesOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeTrustedAdvisorCheckResultInput struct {
@@ -1072,11 +1241,21 @@ type DescribeTrustedAdvisorCheckResultInput struct {
 	// must be passed explicitly for operations that take them.
 	Language *string `locationName:"language" type:"string"`
 
-	metadataDescribeTrustedAdvisorCheckResultInput `json:"-", xml:"-"`
+	metadataDescribeTrustedAdvisorCheckResultInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeTrustedAdvisorCheckResultInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeTrustedAdvisorCheckResultInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeTrustedAdvisorCheckResultInput) GoString() string {
+	return s.String()
 }
 
 // The result of the Trusted Advisor check returned by the DescribeTrustedAdvisorCheckResult
@@ -1085,22 +1264,42 @@ type DescribeTrustedAdvisorCheckResultOutput struct {
 	// The detailed results of the Trusted Advisor check.
 	Result *TrustedAdvisorCheckResult `locationName:"result" type:"structure"`
 
-	metadataDescribeTrustedAdvisorCheckResultOutput `json:"-", xml:"-"`
+	metadataDescribeTrustedAdvisorCheckResultOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeTrustedAdvisorCheckResultOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeTrustedAdvisorCheckResultOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeTrustedAdvisorCheckResultOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeTrustedAdvisorCheckSummariesInput struct {
 	// The IDs of the Trusted Advisor checks.
 	CheckIDs []*string `locationName:"checkIds" type:"list" required:"true"`
 
-	metadataDescribeTrustedAdvisorCheckSummariesInput `json:"-", xml:"-"`
+	metadataDescribeTrustedAdvisorCheckSummariesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeTrustedAdvisorCheckSummariesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeTrustedAdvisorCheckSummariesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeTrustedAdvisorCheckSummariesInput) GoString() string {
+	return s.String()
 }
 
 // The summaries of the Trusted Advisor checks returned by the DescribeTrustedAdvisorCheckSummaries
@@ -1109,11 +1308,21 @@ type DescribeTrustedAdvisorCheckSummariesOutput struct {
 	// The summary information for the requested Trusted Advisor checks.
 	Summaries []*TrustedAdvisorCheckSummary `locationName:"summaries" type:"list" required:"true"`
 
-	metadataDescribeTrustedAdvisorCheckSummariesOutput `json:"-", xml:"-"`
+	metadataDescribeTrustedAdvisorCheckSummariesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeTrustedAdvisorCheckSummariesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeTrustedAdvisorCheckSummariesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeTrustedAdvisorCheckSummariesOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeTrustedAdvisorChecksInput struct {
@@ -1122,11 +1331,21 @@ type DescribeTrustedAdvisorChecksInput struct {
 	// must be passed explicitly for operations that take them.
 	Language *string `locationName:"language" type:"string" required:"true"`
 
-	metadataDescribeTrustedAdvisorChecksInput `json:"-", xml:"-"`
+	metadataDescribeTrustedAdvisorChecksInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeTrustedAdvisorChecksInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeTrustedAdvisorChecksInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeTrustedAdvisorChecksInput) GoString() string {
+	return s.String()
 }
 
 // Information about the Trusted Advisor checks returned by the DescribeTrustedAdvisorChecks
@@ -1135,11 +1354,21 @@ type DescribeTrustedAdvisorChecksOutput struct {
 	// Information about all available Trusted Advisor checks.
 	Checks []*TrustedAdvisorCheckDescription `locationName:"checks" type:"list" required:"true"`
 
-	metadataDescribeTrustedAdvisorChecksOutput `json:"-", xml:"-"`
+	metadataDescribeTrustedAdvisorChecksOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeTrustedAdvisorChecksOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeTrustedAdvisorChecksOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeTrustedAdvisorChecksOutput) GoString() string {
+	return s.String()
 }
 
 // The five most recent communications associated with the case.
@@ -1150,22 +1379,42 @@ type RecentCaseCommunications struct {
 	// A resumption point for pagination.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataRecentCaseCommunications `json:"-", xml:"-"`
+	metadataRecentCaseCommunications `json:"-" xml:"-"`
 }
 
 type metadataRecentCaseCommunications struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RecentCaseCommunications) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RecentCaseCommunications) GoString() string {
+	return s.String()
+}
+
 type RefreshTrustedAdvisorCheckInput struct {
 	// The unique identifier for the Trusted Advisor check.
 	CheckID *string `locationName:"checkId" type:"string" required:"true"`
 
-	metadataRefreshTrustedAdvisorCheckInput `json:"-", xml:"-"`
+	metadataRefreshTrustedAdvisorCheckInput `json:"-" xml:"-"`
 }
 
 type metadataRefreshTrustedAdvisorCheckInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RefreshTrustedAdvisorCheckInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RefreshTrustedAdvisorCheckInput) GoString() string {
+	return s.String()
 }
 
 // The current refresh status of a Trusted Advisor check.
@@ -1174,11 +1423,21 @@ type RefreshTrustedAdvisorCheckOutput struct {
 	// the check is eligible for refresh.
 	Status *TrustedAdvisorCheckRefreshStatus `locationName:"status" type:"structure" required:"true"`
 
-	metadataRefreshTrustedAdvisorCheckOutput `json:"-", xml:"-"`
+	metadataRefreshTrustedAdvisorCheckOutput `json:"-" xml:"-"`
 }
 
 type metadataRefreshTrustedAdvisorCheckOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RefreshTrustedAdvisorCheckOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RefreshTrustedAdvisorCheckOutput) GoString() string {
+	return s.String()
 }
 
 type ResolveCaseInput struct {
@@ -1186,11 +1445,21 @@ type ResolveCaseInput struct {
 	// an alphanumeric string formatted as shown in this example: case-12345678910-2013-c4c1d2bf33c5cf47
 	CaseID *string `locationName:"caseId" type:"string"`
 
-	metadataResolveCaseInput `json:"-", xml:"-"`
+	metadataResolveCaseInput `json:"-" xml:"-"`
 }
 
 type metadataResolveCaseInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ResolveCaseInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ResolveCaseInput) GoString() string {
+	return s.String()
 }
 
 // The status of the case returned by the ResolveCase operation.
@@ -1201,11 +1470,21 @@ type ResolveCaseOutput struct {
 	// The status of the case when the ResolveCase request was sent.
 	InitialCaseStatus *string `locationName:"initialCaseStatus" type:"string"`
 
-	metadataResolveCaseOutput `json:"-", xml:"-"`
+	metadataResolveCaseOutput `json:"-" xml:"-"`
 }
 
 type metadataResolveCaseOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ResolveCaseOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ResolveCaseOutput) GoString() string {
+	return s.String()
 }
 
 // Information about an AWS service returned by the DescribeServices operation.
@@ -1223,11 +1502,21 @@ type Service struct {
 	// code.
 	Name *string `locationName:"name" type:"string"`
 
-	metadataService `json:"-", xml:"-"`
+	metadataService `json:"-" xml:"-"`
 }
 
 type metadataService struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Service) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Service) GoString() string {
+	return s.String()
 }
 
 // A code and name pair that represent a severity level that can be applied
@@ -1240,11 +1529,21 @@ type SeverityLevel struct {
 	// The name of the severity level that corresponds to the severity level code.
 	Name *string `locationName:"name" type:"string"`
 
-	metadataSeverityLevel `json:"-", xml:"-"`
+	metadataSeverityLevel `json:"-" xml:"-"`
 }
 
 type metadataSeverityLevel struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SeverityLevel) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SeverityLevel) GoString() string {
+	return s.String()
 }
 
 // The container for summary information that relates to the category of the
@@ -1254,11 +1553,21 @@ type TrustedAdvisorCategorySpecificSummary struct {
 	// is in the Cost Optimizing category.
 	CostOptimizing *TrustedAdvisorCostOptimizingSummary `locationName:"costOptimizing" type:"structure"`
 
-	metadataTrustedAdvisorCategorySpecificSummary `json:"-", xml:"-"`
+	metadataTrustedAdvisorCategorySpecificSummary `json:"-" xml:"-"`
 }
 
 type metadataTrustedAdvisorCategorySpecificSummary struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s TrustedAdvisorCategorySpecificSummary) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TrustedAdvisorCategorySpecificSummary) GoString() string {
+	return s.String()
 }
 
 // The description and metadata for a Trusted Advisor check.
@@ -1283,11 +1592,21 @@ type TrustedAdvisorCheckDescription struct {
 	// The display name for the Trusted Advisor check.
 	Name *string `locationName:"name" type:"string" required:"true"`
 
-	metadataTrustedAdvisorCheckDescription `json:"-", xml:"-"`
+	metadataTrustedAdvisorCheckDescription `json:"-" xml:"-"`
 }
 
 type metadataTrustedAdvisorCheckDescription struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s TrustedAdvisorCheckDescription) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TrustedAdvisorCheckDescription) GoString() string {
+	return s.String()
 }
 
 // The refresh status of a Trusted Advisor check.
@@ -1303,11 +1622,21 @@ type TrustedAdvisorCheckRefreshStatus struct {
 	// "none", "enqueued", "processing", "success", or "abandoned".
 	Status *string `locationName:"status" type:"string" required:"true"`
 
-	metadataTrustedAdvisorCheckRefreshStatus `json:"-", xml:"-"`
+	metadataTrustedAdvisorCheckRefreshStatus `json:"-" xml:"-"`
 }
 
 type metadataTrustedAdvisorCheckRefreshStatus struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s TrustedAdvisorCheckRefreshStatus) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TrustedAdvisorCheckRefreshStatus) GoString() string {
+	return s.String()
 }
 
 // The results of a Trusted Advisor check returned by DescribeTrustedAdvisorCheckResult.
@@ -1333,11 +1662,21 @@ type TrustedAdvisorCheckResult struct {
 	// The time of the last refresh of the check.
 	Timestamp *string `locationName:"timestamp" type:"string" required:"true"`
 
-	metadataTrustedAdvisorCheckResult `json:"-", xml:"-"`
+	metadataTrustedAdvisorCheckResult `json:"-" xml:"-"`
 }
 
 type metadataTrustedAdvisorCheckResult struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s TrustedAdvisorCheckResult) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TrustedAdvisorCheckResult) GoString() string {
+	return s.String()
 }
 
 // A summary of a Trusted Advisor check result, including the alert status,
@@ -1364,11 +1703,21 @@ type TrustedAdvisorCheckSummary struct {
 	// The time of the last refresh of the check.
 	Timestamp *string `locationName:"timestamp" type:"string" required:"true"`
 
-	metadataTrustedAdvisorCheckSummary `json:"-", xml:"-"`
+	metadataTrustedAdvisorCheckSummary `json:"-" xml:"-"`
 }
 
 type metadataTrustedAdvisorCheckSummary struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s TrustedAdvisorCheckSummary) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TrustedAdvisorCheckSummary) GoString() string {
+	return s.String()
 }
 
 // The estimated cost savings that might be realized if the recommended actions
@@ -1382,11 +1731,21 @@ type TrustedAdvisorCostOptimizingSummary struct {
 	// actions are taken.
 	EstimatedPercentMonthlySavings *float64 `locationName:"estimatedPercentMonthlySavings" type:"double" required:"true"`
 
-	metadataTrustedAdvisorCostOptimizingSummary `json:"-", xml:"-"`
+	metadataTrustedAdvisorCostOptimizingSummary `json:"-" xml:"-"`
 }
 
 type metadataTrustedAdvisorCostOptimizingSummary struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s TrustedAdvisorCostOptimizingSummary) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TrustedAdvisorCostOptimizingSummary) GoString() string {
+	return s.String()
 }
 
 // Contains information about a resource identified by a Trusted Advisor check.
@@ -1411,11 +1770,21 @@ type TrustedAdvisorResourceDetail struct {
 	// The status code for the resource identified in the Trusted Advisor check.
 	Status *string `locationName:"status" type:"string" required:"true"`
 
-	metadataTrustedAdvisorResourceDetail `json:"-", xml:"-"`
+	metadataTrustedAdvisorResourceDetail `json:"-" xml:"-"`
 }
 
 type metadataTrustedAdvisorResourceDetail struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s TrustedAdvisorResourceDetail) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TrustedAdvisorResourceDetail) GoString() string {
+	return s.String()
 }
 
 // Details about AWS resources that were analyzed in a call to Trusted Advisor
@@ -1436,9 +1805,19 @@ type TrustedAdvisorResourcesSummary struct {
 	// marked as suppressed by the user.
 	ResourcesSuppressed *int64 `locationName:"resourcesSuppressed" type:"long" required:"true"`
 
-	metadataTrustedAdvisorResourcesSummary `json:"-", xml:"-"`
+	metadataTrustedAdvisorResourcesSummary `json:"-" xml:"-"`
 }
 
 type metadataTrustedAdvisorResourcesSummary struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s TrustedAdvisorResourcesSummary) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TrustedAdvisorResourcesSummary) GoString() string {
+	return s.String()
 }

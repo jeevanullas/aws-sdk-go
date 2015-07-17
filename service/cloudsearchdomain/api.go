@@ -5,31 +5,26 @@ package cloudsearchdomain
 
 import (
 	"io"
-	"sync"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
-var oprw sync.Mutex
+const opSearch = "Search"
 
 // SearchRequest generates a request for the Search operation.
 func (c *CloudSearchDomain) SearchRequest(input *SearchInput) (req *aws.Request, output *SearchOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opSearch == nil {
-		opSearch = &aws.Operation{
-			Name:       "Search",
-			HTTPMethod: "GET",
-			HTTPPath:   "/2013-01-01/search?format=sdk&pretty=true",
-		}
+	op := &aws.Operation{
+		Name:       opSearch,
+		HTTPMethod: "GET",
+		HTTPPath:   "/2013-01-01/search?format=sdk&pretty=true",
 	}
 
 	if input == nil {
 		input = &SearchInput{}
 	}
 
-	req = c.newRequest(opSearch, input, output)
+	req = c.newRequest(op, input, output)
 	output = &SearchOutput{}
 	req.Data = output
 	return
@@ -54,33 +49,27 @@ func (c *CloudSearchDomain) SearchRequest(input *SearchInput) (req *aws.Request,
 // for your domain, use the Amazon CloudSearch configuration service DescribeDomains
 // action. A domain's endpoints are also displayed on the domain dashboard in
 // the Amazon CloudSearch console.
-func (c *CloudSearchDomain) Search(input *SearchInput) (output *SearchOutput, err error) {
+func (c *CloudSearchDomain) Search(input *SearchInput) (*SearchOutput, error) {
 	req, out := c.SearchRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opSearch *aws.Operation
+const opSuggest = "Suggest"
 
 // SuggestRequest generates a request for the Suggest operation.
 func (c *CloudSearchDomain) SuggestRequest(input *SuggestInput) (req *aws.Request, output *SuggestOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opSuggest == nil {
-		opSuggest = &aws.Operation{
-			Name:       "Suggest",
-			HTTPMethod: "GET",
-			HTTPPath:   "/2013-01-01/suggest?format=sdk&pretty=true",
-		}
+	op := &aws.Operation{
+		Name:       opSuggest,
+		HTTPMethod: "GET",
+		HTTPPath:   "/2013-01-01/suggest?format=sdk&pretty=true",
 	}
 
 	if input == nil {
 		input = &SuggestInput{}
 	}
 
-	req = c.newRequest(opSuggest, input, output)
+	req = c.newRequest(op, input, output)
 	output = &SuggestOutput{}
 	req.Data = output
 	return
@@ -103,33 +92,27 @@ func (c *CloudSearchDomain) SuggestRequest(input *SuggestInput) (req *aws.Reques
 // for your domain, use the Amazon CloudSearch configuration service DescribeDomains
 // action. A domain's endpoints are also displayed on the domain dashboard in
 // the Amazon CloudSearch console.
-func (c *CloudSearchDomain) Suggest(input *SuggestInput) (output *SuggestOutput, err error) {
+func (c *CloudSearchDomain) Suggest(input *SuggestInput) (*SuggestOutput, error) {
 	req, out := c.SuggestRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opSuggest *aws.Operation
+const opUploadDocuments = "UploadDocuments"
 
 // UploadDocumentsRequest generates a request for the UploadDocuments operation.
 func (c *CloudSearchDomain) UploadDocumentsRequest(input *UploadDocumentsInput) (req *aws.Request, output *UploadDocumentsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUploadDocuments == nil {
-		opUploadDocuments = &aws.Operation{
-			Name:       "UploadDocuments",
-			HTTPMethod: "POST",
-			HTTPPath:   "/2013-01-01/documents/batch?format=sdk",
-		}
+	op := &aws.Operation{
+		Name:       opUploadDocuments,
+		HTTPMethod: "POST",
+		HTTPPath:   "/2013-01-01/documents/batch?format=sdk",
 	}
 
 	if input == nil {
 		input = &UploadDocumentsInput{}
 	}
 
-	req = c.newRequest(opUploadDocuments, input, output)
+	req = c.newRequest(op, input, output)
 	output = &UploadDocumentsOutput{}
 	req.Data = output
 	return
@@ -157,14 +140,11 @@ func (c *CloudSearchDomain) UploadDocumentsRequest(input *UploadDocumentsInput) 
 // in the Amazon CloudSearch Developer Guide. For more information about uploading
 // data for indexing, see Uploading Data (http://docs.aws.amazon.com/cloudsearch/latest/developerguide/uploading-data.html)
 // in the Amazon CloudSearch Developer Guide.
-func (c *CloudSearchDomain) UploadDocuments(input *UploadDocumentsInput) (output *UploadDocumentsOutput, err error) {
+func (c *CloudSearchDomain) UploadDocuments(input *UploadDocumentsInput) (*UploadDocumentsOutput, error) {
 	req, out := c.UploadDocumentsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
-
-var opUploadDocuments *aws.Operation
 
 // A container for facet information.
 type Bucket struct {
@@ -174,11 +154,21 @@ type Bucket struct {
 	// The facet value being counted.
 	Value *string `locationName:"value" type:"string"`
 
-	metadataBucket `json:"-", xml:"-"`
+	metadataBucket `json:"-" xml:"-"`
 }
 
 type metadataBucket struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Bucket) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Bucket) GoString() string {
+	return s.String()
 }
 
 // A container for the calculated facet values and counts.
@@ -186,11 +176,21 @@ type BucketInfo struct {
 	// A list of the calculated facet values and counts.
 	Buckets []*Bucket `locationName:"buckets" type:"list"`
 
-	metadataBucketInfo `json:"-", xml:"-"`
+	metadataBucketInfo `json:"-" xml:"-"`
 }
 
 type metadataBucketInfo struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s BucketInfo) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s BucketInfo) GoString() string {
+	return s.String()
 }
 
 // A warning returned by the document service when an issue is discovered while
@@ -199,32 +199,52 @@ type DocumentServiceWarning struct {
 	// The description for a warning returned by the document service.
 	Message *string `locationName:"message" type:"string"`
 
-	metadataDocumentServiceWarning `json:"-", xml:"-"`
+	metadataDocumentServiceWarning `json:"-" xml:"-"`
 }
 
 type metadataDocumentServiceWarning struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DocumentServiceWarning) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DocumentServiceWarning) GoString() string {
+	return s.String()
+}
+
 // Information about a document that matches the search request.
 type Hit struct {
 	// The expressions returned from a document that matches the search request.
-	Exprs *map[string]*string `locationName:"exprs" type:"map"`
+	Exprs map[string]*string `locationName:"exprs" type:"map"`
 
 	// The fields returned from a document that matches the search request.
-	Fields *map[string][]*string `locationName:"fields" type:"map"`
+	Fields map[string][]*string `locationName:"fields" type:"map"`
 
 	// The highlights returned from a document that matches the search request.
-	Highlights *map[string]*string `locationName:"highlights" type:"map"`
+	Highlights map[string]*string `locationName:"highlights" type:"map"`
 
 	// The document ID of a document that matches the search request.
 	ID *string `locationName:"id" type:"string"`
 
-	metadataHit `json:"-", xml:"-"`
+	metadataHit `json:"-" xml:"-"`
 }
 
 type metadataHit struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Hit) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Hit) GoString() string {
+	return s.String()
 }
 
 // The collection of documents that match the search request.
@@ -242,11 +262,21 @@ type Hits struct {
 	// The index of the first matching document.
 	Start *int64 `locationName:"start" type:"long"`
 
-	metadataHits `json:"-", xml:"-"`
+	metadataHits `json:"-" xml:"-"`
 }
 
 type metadataHits struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Hits) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Hits) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the Search request.
@@ -528,18 +558,28 @@ type SearchInput struct {
 	// in the Amazon CloudSearch Developer Guide.
 	Start *int64 `location:"querystring" locationName:"start" type:"long"`
 
-	metadataSearchInput `json:"-", xml:"-"`
+	metadataSearchInput `json:"-" xml:"-"`
 }
 
 type metadataSearchInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s SearchInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SearchInput) GoString() string {
+	return s.String()
+}
+
 // The result of a Search request. Contains the documents that match the specified
 // search criteria and any requested fields, highlights, and facet information.
 type SearchOutput struct {
 	// The requested facet information.
-	Facets *map[string]*BucketInfo `locationName:"facets" type:"map"`
+	Facets map[string]*BucketInfo `locationName:"facets" type:"map"`
 
 	// The documents that match the search criteria.
 	Hits *Hits `locationName:"hits" type:"structure"`
@@ -547,11 +587,21 @@ type SearchOutput struct {
 	// The status information returned for the search request.
 	Status *SearchStatus `locationName:"status" type:"structure"`
 
-	metadataSearchOutput `json:"-", xml:"-"`
+	metadataSearchOutput `json:"-" xml:"-"`
 }
 
 type metadataSearchOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SearchOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SearchOutput) GoString() string {
+	return s.String()
 }
 
 // Contains the resource id (rid) and the time it took to process the request
@@ -563,11 +613,21 @@ type SearchStatus struct {
 	// How long it took to process the request, in milliseconds.
 	TimeMS *int64 `locationName:"timems" type:"long"`
 
-	metadataSearchStatus `json:"-", xml:"-"`
+	metadataSearchStatus `json:"-" xml:"-"`
 }
 
 type metadataSearchStatus struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SearchStatus) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SearchStatus) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the Suggest request.
@@ -581,11 +641,21 @@ type SuggestInput struct {
 	// Specifies the name of the suggester to use to find suggested matches.
 	Suggester *string `location:"querystring" locationName:"suggester" type:"string" required:"true"`
 
-	metadataSuggestInput `json:"-", xml:"-"`
+	metadataSuggestInput `json:"-" xml:"-"`
 }
 
 type metadataSuggestInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SuggestInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SuggestInput) GoString() string {
+	return s.String()
 }
 
 // Container for the suggestion information returned in a SuggestResponse.
@@ -599,11 +669,21 @@ type SuggestModel struct {
 	// The documents that match the query string.
 	Suggestions []*SuggestionMatch `locationName:"suggestions" type:"list"`
 
-	metadataSuggestModel `json:"-", xml:"-"`
+	metadataSuggestModel `json:"-" xml:"-"`
 }
 
 type metadataSuggestModel struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SuggestModel) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SuggestModel) GoString() string {
+	return s.String()
 }
 
 // Contains the response to a Suggest request.
@@ -615,11 +695,21 @@ type SuggestOutput struct {
 	// Container for the matching search suggestion information.
 	Suggest *SuggestModel `locationName:"suggest" type:"structure"`
 
-	metadataSuggestOutput `json:"-", xml:"-"`
+	metadataSuggestOutput `json:"-" xml:"-"`
 }
 
 type metadataSuggestOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SuggestOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SuggestOutput) GoString() string {
+	return s.String()
 }
 
 // Contains the resource id (rid) and the time it took to process the request
@@ -631,11 +721,21 @@ type SuggestStatus struct {
 	// How long it took to process the request, in milliseconds.
 	TimeMS *int64 `locationName:"timems" type:"long"`
 
-	metadataSuggestStatus `json:"-", xml:"-"`
+	metadataSuggestStatus `json:"-" xml:"-"`
 }
 
 type metadataSuggestStatus struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SuggestStatus) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SuggestStatus) GoString() string {
+	return s.String()
 }
 
 // An autocomplete suggestion that matches the query string specified in a SuggestRequest.
@@ -649,11 +749,21 @@ type SuggestionMatch struct {
 	// The string that matches the query string specified in the SuggestRequest.
 	Suggestion *string `locationName:"suggestion" type:"string"`
 
-	metadataSuggestionMatch `json:"-", xml:"-"`
+	metadataSuggestionMatch `json:"-" xml:"-"`
 }
 
 type metadataSuggestionMatch struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SuggestionMatch) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SuggestionMatch) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the UploadDocuments request.
@@ -667,11 +777,21 @@ type UploadDocumentsInput struct {
 	// A batch of documents formatted in JSON or HTML.
 	Documents io.ReadSeeker `locationName:"documents" type:"blob" required:"true"`
 
-	metadataUploadDocumentsInput `json:"-", xml:"-"`
+	metadataUploadDocumentsInput `json:"-" xml:"-"`
 }
 
 type metadataUploadDocumentsInput struct {
 	SDKShapeTraits bool `type:"structure" payload:"Documents"`
+}
+
+// String returns the string representation
+func (s UploadDocumentsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UploadDocumentsInput) GoString() string {
+	return s.String()
 }
 
 // Contains the response to an UploadDocuments request.
@@ -688,9 +808,19 @@ type UploadDocumentsOutput struct {
 	// Any warnings returned by the document service about the documents being uploaded.
 	Warnings []*DocumentServiceWarning `locationName:"warnings" type:"list"`
 
-	metadataUploadDocumentsOutput `json:"-", xml:"-"`
+	metadataUploadDocumentsOutput `json:"-" xml:"-"`
 }
 
 type metadataUploadDocumentsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UploadDocumentsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UploadDocumentsOutput) GoString() string {
+	return s.String()
 }

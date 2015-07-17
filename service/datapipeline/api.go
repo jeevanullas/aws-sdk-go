@@ -4,906 +4,1053 @@
 package datapipeline
 
 import (
-	"sync"
+	"time"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
-var oprw sync.Mutex
+const opActivatePipeline = "ActivatePipeline"
 
 // ActivatePipelineRequest generates a request for the ActivatePipeline operation.
 func (c *DataPipeline) ActivatePipelineRequest(input *ActivatePipelineInput) (req *aws.Request, output *ActivatePipelineOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opActivatePipeline == nil {
-		opActivatePipeline = &aws.Operation{
-			Name:       "ActivatePipeline",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opActivatePipeline,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ActivatePipelineInput{}
 	}
 
-	req = c.newRequest(opActivatePipeline, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ActivatePipelineOutput{}
 	req.Data = output
 	return
 }
 
-// Validates a pipeline and initiates processing. If the pipeline does not pass
-// validation, activation fails. You cannot perform this operation on FINISHED
-// pipelines and attempting to do so will return an InvalidRequestException.
+// Validates the specified pipeline and starts processing pipeline tasks. If
+// the pipeline does not pass validation, activation fails.
 //
-//  Call this action to start processing pipeline tasks of a pipeline you've
-// created using the CreatePipeline and PutPipelineDefinition actions. A pipeline
-// cannot be modified after it has been successfully activated.
-func (c *DataPipeline) ActivatePipeline(input *ActivatePipelineInput) (output *ActivatePipelineOutput, err error) {
+// If you need to pause the pipeline to investigate an issue with a component,
+// such as a data source or script, call DeactivatePipeline.
+//
+// To activate a finished pipeline, modify the end date for the pipeline and
+// then activate it.
+func (c *DataPipeline) ActivatePipeline(input *ActivatePipelineInput) (*ActivatePipelineOutput, error) {
 	req, out := c.ActivatePipelineRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opActivatePipeline *aws.Operation
+const opAddTags = "AddTags"
 
 // AddTagsRequest generates a request for the AddTags operation.
 func (c *DataPipeline) AddTagsRequest(input *AddTagsInput) (req *aws.Request, output *AddTagsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAddTags == nil {
-		opAddTags = &aws.Operation{
-			Name:       "AddTags",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAddTags,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AddTagsInput{}
 	}
 
-	req = c.newRequest(opAddTags, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AddTagsOutput{}
 	req.Data = output
 	return
 }
 
-// Add or modify tags in an existing pipeline.
-func (c *DataPipeline) AddTags(input *AddTagsInput) (output *AddTagsOutput, err error) {
+// Adds or modifies tags for the specified pipeline.
+func (c *DataPipeline) AddTags(input *AddTagsInput) (*AddTagsOutput, error) {
 	req, out := c.AddTagsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAddTags *aws.Operation
+const opCreatePipeline = "CreatePipeline"
 
 // CreatePipelineRequest generates a request for the CreatePipeline operation.
 func (c *DataPipeline) CreatePipelineRequest(input *CreatePipelineInput) (req *aws.Request, output *CreatePipelineOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreatePipeline == nil {
-		opCreatePipeline = &aws.Operation{
-			Name:       "CreatePipeline",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreatePipeline,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreatePipelineInput{}
 	}
 
-	req = c.newRequest(opCreatePipeline, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreatePipelineOutput{}
 	req.Data = output
 	return
 }
 
-// Creates a new empty pipeline. When this action succeeds, you can then use
-// the PutPipelineDefinition action to populate the pipeline.
-func (c *DataPipeline) CreatePipeline(input *CreatePipelineInput) (output *CreatePipelineOutput, err error) {
+// Creates a new, empty pipeline. Use PutPipelineDefinition to populate the
+// pipeline.
+func (c *DataPipeline) CreatePipeline(input *CreatePipelineInput) (*CreatePipelineOutput, error) {
 	req, out := c.CreatePipelineRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opDeactivatePipeline = "DeactivatePipeline"
+
+// DeactivatePipelineRequest generates a request for the DeactivatePipeline operation.
+func (c *DataPipeline) DeactivatePipelineRequest(input *DeactivatePipelineInput) (req *aws.Request, output *DeactivatePipelineOutput) {
+	op := &aws.Operation{
+		Name:       opDeactivatePipeline,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DeactivatePipelineInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &DeactivatePipelineOutput{}
+	req.Data = output
 	return
 }
 
-var opCreatePipeline *aws.Operation
+// Deactivates the specified running pipeline. The pipeline is set to the DEACTIVATING
+// state until the deactivation process completes.
+//
+// To resume a deactivated pipeline, use ActivatePipeline. By default, the
+// pipeline resumes from the last completed execution. Optionally, you can specify
+// the date and time to resume the pipeline.
+func (c *DataPipeline) DeactivatePipeline(input *DeactivatePipelineInput) (*DeactivatePipelineOutput, error) {
+	req, out := c.DeactivatePipelineRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opDeletePipeline = "DeletePipeline"
 
 // DeletePipelineRequest generates a request for the DeletePipeline operation.
 func (c *DataPipeline) DeletePipelineRequest(input *DeletePipelineInput) (req *aws.Request, output *DeletePipelineOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeletePipeline == nil {
-		opDeletePipeline = &aws.Operation{
-			Name:       "DeletePipeline",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeletePipeline,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeletePipelineInput{}
 	}
 
-	req = c.newRequest(opDeletePipeline, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeletePipelineOutput{}
 	req.Data = output
 	return
 }
 
-// Permanently deletes a pipeline, its pipeline definition and its run history.
-// You cannot query or restore a deleted pipeline. AWS Data Pipeline will attempt
-// to cancel instances associated with the pipeline that are currently being
-// processed by task runners. Deleting a pipeline cannot be undone.
+// Deletes a pipeline, its pipeline definition, and its run history. AWS Data
+// Pipeline attempts to cancel instances associated with the pipeline that are
+// currently being processed by task runners.
 //
-//  To temporarily pause a pipeline instead of deleting it, call SetStatus
-// with the status set to Pause on individual components. Components that are
+// Deleting a pipeline cannot be undone. You cannot query or restore a deleted
+// pipeline. To temporarily pause a pipeline instead of deleting it, call SetStatus
+// with the status set to PAUSE on individual components. Components that are
 // paused by SetStatus can be resumed.
-func (c *DataPipeline) DeletePipeline(input *DeletePipelineInput) (output *DeletePipelineOutput, err error) {
+func (c *DataPipeline) DeletePipeline(input *DeletePipelineInput) (*DeletePipelineOutput, error) {
 	req, out := c.DeletePipelineRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeletePipeline *aws.Operation
+const opDescribeObjects = "DescribeObjects"
 
 // DescribeObjectsRequest generates a request for the DescribeObjects operation.
 func (c *DataPipeline) DescribeObjectsRequest(input *DescribeObjectsInput) (req *aws.Request, output *DescribeObjectsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeObjects == nil {
-		opDescribeObjects = &aws.Operation{
-			Name:       "DescribeObjects",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeObjects,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"marker"},
+			OutputTokens:    []string{"marker"},
+			LimitToken:      "",
+			TruncationToken: "hasMoreResults",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeObjectsInput{}
 	}
 
-	req = c.newRequest(opDescribeObjects, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeObjectsOutput{}
 	req.Data = output
 	return
 }
 
-// Returns the object definitions for a set of objects associated with the pipeline.
+// Gets the object definitions for a set of objects associated with the pipeline.
 // Object definitions are composed of a set of fields that define the properties
 // of the object.
-func (c *DataPipeline) DescribeObjects(input *DescribeObjectsInput) (output *DescribeObjectsOutput, err error) {
+func (c *DataPipeline) DescribeObjects(input *DescribeObjectsInput) (*DescribeObjectsOutput, error) {
 	req, out := c.DescribeObjectsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeObjects *aws.Operation
+func (c *DataPipeline) DescribeObjectsPages(input *DescribeObjectsInput, fn func(p *DescribeObjectsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeObjectsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeObjectsOutput), lastPage)
+	})
+}
+
+const opDescribePipelines = "DescribePipelines"
 
 // DescribePipelinesRequest generates a request for the DescribePipelines operation.
 func (c *DataPipeline) DescribePipelinesRequest(input *DescribePipelinesInput) (req *aws.Request, output *DescribePipelinesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribePipelines == nil {
-		opDescribePipelines = &aws.Operation{
-			Name:       "DescribePipelines",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribePipelines,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribePipelinesInput{}
 	}
 
-	req = c.newRequest(opDescribePipelines, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribePipelinesOutput{}
 	req.Data = output
 	return
 }
 
-// Retrieve metadata about one or more pipelines. The information retrieved
+// Retrieves metadata about one or more pipelines. The information retrieved
 // includes the name of the pipeline, the pipeline identifier, its current state,
 // and the user account that owns the pipeline. Using account credentials, you
 // can retrieve metadata about pipelines that you or your IAM users have created.
 // If you are using an IAM user account, you can retrieve metadata about only
-// those pipelines you have read permission for.
+// those pipelines for which you have read permissions.
 //
-//  To retrieve the full pipeline definition instead of metadata about the
-// pipeline, call the GetPipelineDefinition action.
-func (c *DataPipeline) DescribePipelines(input *DescribePipelinesInput) (output *DescribePipelinesOutput, err error) {
+// To retrieve the full pipeline definition instead of metadata about the pipeline,
+// call GetPipelineDefinition.
+func (c *DataPipeline) DescribePipelines(input *DescribePipelinesInput) (*DescribePipelinesOutput, error) {
 	req, out := c.DescribePipelinesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribePipelines *aws.Operation
+const opEvaluateExpression = "EvaluateExpression"
 
 // EvaluateExpressionRequest generates a request for the EvaluateExpression operation.
 func (c *DataPipeline) EvaluateExpressionRequest(input *EvaluateExpressionInput) (req *aws.Request, output *EvaluateExpressionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opEvaluateExpression == nil {
-		opEvaluateExpression = &aws.Operation{
-			Name:       "EvaluateExpression",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opEvaluateExpression,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &EvaluateExpressionInput{}
 	}
 
-	req = c.newRequest(opEvaluateExpression, input, output)
+	req = c.newRequest(op, input, output)
 	output = &EvaluateExpressionOutput{}
 	req.Data = output
 	return
 }
 
-// Evaluates a string in the context of a specified object. A task runner can
-// use this action to evaluate SQL queries stored in Amazon S3.
-func (c *DataPipeline) EvaluateExpression(input *EvaluateExpressionInput) (output *EvaluateExpressionOutput, err error) {
+// Task runners call EvaluateExpression to evaluate a string in the context
+// of the specified object. For example, a task runner can evaluate SQL queries
+// stored in Amazon S3.
+func (c *DataPipeline) EvaluateExpression(input *EvaluateExpressionInput) (*EvaluateExpressionOutput, error) {
 	req, out := c.EvaluateExpressionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opEvaluateExpression *aws.Operation
+const opGetPipelineDefinition = "GetPipelineDefinition"
 
 // GetPipelineDefinitionRequest generates a request for the GetPipelineDefinition operation.
 func (c *DataPipeline) GetPipelineDefinitionRequest(input *GetPipelineDefinitionInput) (req *aws.Request, output *GetPipelineDefinitionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetPipelineDefinition == nil {
-		opGetPipelineDefinition = &aws.Operation{
-			Name:       "GetPipelineDefinition",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opGetPipelineDefinition,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &GetPipelineDefinitionInput{}
 	}
 
-	req = c.newRequest(opGetPipelineDefinition, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetPipelineDefinitionOutput{}
 	req.Data = output
 	return
 }
 
-// Returns the definition of the specified pipeline. You can call GetPipelineDefinition
-// to retrieve the pipeline definition you provided using PutPipelineDefinition.
-func (c *DataPipeline) GetPipelineDefinition(input *GetPipelineDefinitionInput) (output *GetPipelineDefinitionOutput, err error) {
+// Gets the definition of the specified pipeline. You can call GetPipelineDefinition
+// to retrieve the pipeline definition that you provided using PutPipelineDefinition.
+func (c *DataPipeline) GetPipelineDefinition(input *GetPipelineDefinitionInput) (*GetPipelineDefinitionOutput, error) {
 	req, out := c.GetPipelineDefinitionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetPipelineDefinition *aws.Operation
+const opListPipelines = "ListPipelines"
 
 // ListPipelinesRequest generates a request for the ListPipelines operation.
 func (c *DataPipeline) ListPipelinesRequest(input *ListPipelinesInput) (req *aws.Request, output *ListPipelinesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListPipelines == nil {
-		opListPipelines = &aws.Operation{
-			Name:       "ListPipelines",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opListPipelines,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"marker"},
+			OutputTokens:    []string{"marker"},
+			LimitToken:      "",
+			TruncationToken: "hasMoreResults",
+		},
 	}
 
 	if input == nil {
 		input = &ListPipelinesInput{}
 	}
 
-	req = c.newRequest(opListPipelines, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListPipelinesOutput{}
 	req.Data = output
 	return
 }
 
-// Returns a list of pipeline identifiers for all active pipelines. Identifiers
-// are returned only for pipelines you have permission to access.
-func (c *DataPipeline) ListPipelines(input *ListPipelinesInput) (output *ListPipelinesOutput, err error) {
+// Lists the pipeline identifiers for all active pipelines that you have permission
+// to access.
+func (c *DataPipeline) ListPipelines(input *ListPipelinesInput) (*ListPipelinesOutput, error) {
 	req, out := c.ListPipelinesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListPipelines *aws.Operation
+func (c *DataPipeline) ListPipelinesPages(input *ListPipelinesInput, fn func(p *ListPipelinesOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.ListPipelinesRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*ListPipelinesOutput), lastPage)
+	})
+}
+
+const opPollForTask = "PollForTask"
 
 // PollForTaskRequest generates a request for the PollForTask operation.
 func (c *DataPipeline) PollForTaskRequest(input *PollForTaskInput) (req *aws.Request, output *PollForTaskOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opPollForTask == nil {
-		opPollForTask = &aws.Operation{
-			Name:       "PollForTask",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opPollForTask,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &PollForTaskInput{}
 	}
 
-	req = c.newRequest(opPollForTask, input, output)
+	req = c.newRequest(op, input, output)
 	output = &PollForTaskOutput{}
 	req.Data = output
 	return
 }
 
-// Task runners call this action to receive a task to perform from AWS Data
+// Task runners call PollForTask to receive a task to perform from AWS Data
 // Pipeline. The task runner specifies which tasks it can perform by setting
-// a value for the workerGroup parameter of the PollForTask call. The task returned
-// by PollForTask may come from any of the pipelines that match the workerGroup
-// value passed in by the task runner and that was launched using the IAM user
-// credentials specified by the task runner.
+// a value for the workerGroup parameter. The task returned can come from any
+// of the pipelines that match the workerGroup value passed in by the task runner
+// and that was launched using the IAM user credentials specified by the task
+// runner.
 //
-//  If tasks are ready in the work queue, PollForTask returns a response immediately.
+// If tasks are ready in the work queue, PollForTask returns a response immediately.
 // If no tasks are available in the queue, PollForTask uses long-polling and
-// holds on to a poll connection for up to a 90 seconds during which time the
+// holds on to a poll connection for up to a 90 seconds, during which time the
 // first newly scheduled task is handed to the task runner. To accomodate this,
 // set the socket timeout in your task runner to 90 seconds. The task runner
 // should not call PollForTask again on the same workerGroup until it receives
-// a response, and this may take up to 90 seconds.
-func (c *DataPipeline) PollForTask(input *PollForTaskInput) (output *PollForTaskOutput, err error) {
+// a response, and this can take up to 90 seconds.
+func (c *DataPipeline) PollForTask(input *PollForTaskInput) (*PollForTaskOutput, error) {
 	req, out := c.PollForTaskRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opPollForTask *aws.Operation
+const opPutPipelineDefinition = "PutPipelineDefinition"
 
 // PutPipelineDefinitionRequest generates a request for the PutPipelineDefinition operation.
 func (c *DataPipeline) PutPipelineDefinitionRequest(input *PutPipelineDefinitionInput) (req *aws.Request, output *PutPipelineDefinitionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opPutPipelineDefinition == nil {
-		opPutPipelineDefinition = &aws.Operation{
-			Name:       "PutPipelineDefinition",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opPutPipelineDefinition,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &PutPipelineDefinitionInput{}
 	}
 
-	req = c.newRequest(opPutPipelineDefinition, input, output)
+	req = c.newRequest(op, input, output)
 	output = &PutPipelineDefinitionOutput{}
 	req.Data = output
 	return
 }
 
-// Adds tasks, schedules, and preconditions that control the behavior of the
-// pipeline. You can use PutPipelineDefinition to populate a new pipeline.
+// Adds tasks, schedules, and preconditions to the specified pipeline. You can
+// use PutPipelineDefinition to populate a new pipeline.
 //
 //  PutPipelineDefinition also validates the configuration as it adds it to
 // the pipeline. Changes to the pipeline are saved unless one of the following
-// three validation errors exists in the pipeline.  An object is missing a name
-// or identifier field. A string or reference field is empty. The number of
-// objects in the pipeline exceeds the maximum allowed objects. The pipeline
-// is in a FINISHED state.
+// three validation errors exists in the pipeline.
 //
-//  Pipeline object definitions are passed to the PutPipelineDefinition action
-// and returned by the GetPipelineDefinition action.
-func (c *DataPipeline) PutPipelineDefinition(input *PutPipelineDefinitionInput) (output *PutPipelineDefinitionOutput, err error) {
+//  An object is missing a name or identifier field. A string or reference
+// field is empty. The number of objects in the pipeline exceeds the maximum
+// allowed objects. The pipeline is in a FINISHED state.   Pipeline object definitions
+// are passed to the PutPipelineDefinition action and returned by the GetPipelineDefinition
+// action.
+func (c *DataPipeline) PutPipelineDefinition(input *PutPipelineDefinitionInput) (*PutPipelineDefinitionOutput, error) {
 	req, out := c.PutPipelineDefinitionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opPutPipelineDefinition *aws.Operation
+const opQueryObjects = "QueryObjects"
 
 // QueryObjectsRequest generates a request for the QueryObjects operation.
 func (c *DataPipeline) QueryObjectsRequest(input *QueryObjectsInput) (req *aws.Request, output *QueryObjectsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opQueryObjects == nil {
-		opQueryObjects = &aws.Operation{
-			Name:       "QueryObjects",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opQueryObjects,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"marker"},
+			OutputTokens:    []string{"marker"},
+			LimitToken:      "limit",
+			TruncationToken: "hasMoreResults",
+		},
 	}
 
 	if input == nil {
 		input = &QueryObjectsInput{}
 	}
 
-	req = c.newRequest(opQueryObjects, input, output)
+	req = c.newRequest(op, input, output)
 	output = &QueryObjectsOutput{}
 	req.Data = output
 	return
 }
 
-// Queries a pipeline for the names of objects that match a specified set of
-// conditions.
-//
-// The objects returned by QueryObjects are paginated and then filtered by
-// the value you set for query. This means the action may return an empty result
-// set with a value set for marker. If HasMoreResults is set to True, you should
-// continue to call QueryObjects, passing in the returned value for marker,
-// until HasMoreResults returns False.
-func (c *DataPipeline) QueryObjects(input *QueryObjectsInput) (output *QueryObjectsOutput, err error) {
+// Queries the specified pipeline for the names of objects that match the specified
+// set of conditions.
+func (c *DataPipeline) QueryObjects(input *QueryObjectsInput) (*QueryObjectsOutput, error) {
 	req, out := c.QueryObjectsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opQueryObjects *aws.Operation
+func (c *DataPipeline) QueryObjectsPages(input *QueryObjectsInput, fn func(p *QueryObjectsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.QueryObjectsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*QueryObjectsOutput), lastPage)
+	})
+}
+
+const opRemoveTags = "RemoveTags"
 
 // RemoveTagsRequest generates a request for the RemoveTags operation.
 func (c *DataPipeline) RemoveTagsRequest(input *RemoveTagsInput) (req *aws.Request, output *RemoveTagsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRemoveTags == nil {
-		opRemoveTags = &aws.Operation{
-			Name:       "RemoveTags",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRemoveTags,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RemoveTagsInput{}
 	}
 
-	req = c.newRequest(opRemoveTags, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RemoveTagsOutput{}
 	req.Data = output
 	return
 }
 
-// Remove existing tags from a pipeline.
-func (c *DataPipeline) RemoveTags(input *RemoveTagsInput) (output *RemoveTagsOutput, err error) {
+// Removes existing tags from the specified pipeline.
+func (c *DataPipeline) RemoveTags(input *RemoveTagsInput) (*RemoveTagsOutput, error) {
 	req, out := c.RemoveTagsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRemoveTags *aws.Operation
+const opReportTaskProgress = "ReportTaskProgress"
 
 // ReportTaskProgressRequest generates a request for the ReportTaskProgress operation.
 func (c *DataPipeline) ReportTaskProgressRequest(input *ReportTaskProgressInput) (req *aws.Request, output *ReportTaskProgressOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opReportTaskProgress == nil {
-		opReportTaskProgress = &aws.Operation{
-			Name:       "ReportTaskProgress",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opReportTaskProgress,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ReportTaskProgressInput{}
 	}
 
-	req = c.newRequest(opReportTaskProgress, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ReportTaskProgressOutput{}
 	req.Data = output
 	return
 }
 
-// Updates the AWS Data Pipeline service on the progress of the calling task
-// runner. When the task runner is assigned a task, it should call ReportTaskProgress
-// to acknowledge that it has the task within 2 minutes. If the web service
-// does not recieve this acknowledgement within the 2 minute window, it will
-// assign the task in a subsequent PollForTask call. After this initial acknowledgement,
-// the task runner only needs to report progress every 15 minutes to maintain
-// its ownership of the task. You can change this reporting time from 15 minutes
-// by specifying a reportProgressTimeout field in your pipeline. If a task runner
-// does not report its status after 5 minutes, AWS Data Pipeline will assume
-// that the task runner is unable to process the task and will reassign the
-// task in a subsequent response to PollForTask. task runners should call ReportTaskProgress
-// every 60 seconds.
-func (c *DataPipeline) ReportTaskProgress(input *ReportTaskProgressInput) (output *ReportTaskProgressOutput, err error) {
+// Task runners call ReportTaskProgress when assigned a task to acknowledge
+// that it has the task. If the web service does not receive this acknowledgement
+// within 2 minutes, it assigns the task in a subsequent PollForTask call. After
+// this initial acknowledgement, the task runner only needs to report progress
+// every 15 minutes to maintain its ownership of the task. You can change this
+// reporting time from 15 minutes by specifying a reportProgressTimeout field
+// in your pipeline.
+//
+// If a task runner does not report its status after 5 minutes, AWS Data Pipeline
+// assumes that the task runner is unable to process the task and reassigns
+// the task in a subsequent response to PollForTask. Task runners should call
+// ReportTaskProgress every 60 seconds.
+func (c *DataPipeline) ReportTaskProgress(input *ReportTaskProgressInput) (*ReportTaskProgressOutput, error) {
 	req, out := c.ReportTaskProgressRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opReportTaskProgress *aws.Operation
+const opReportTaskRunnerHeartbeat = "ReportTaskRunnerHeartbeat"
 
 // ReportTaskRunnerHeartbeatRequest generates a request for the ReportTaskRunnerHeartbeat operation.
 func (c *DataPipeline) ReportTaskRunnerHeartbeatRequest(input *ReportTaskRunnerHeartbeatInput) (req *aws.Request, output *ReportTaskRunnerHeartbeatOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opReportTaskRunnerHeartbeat == nil {
-		opReportTaskRunnerHeartbeat = &aws.Operation{
-			Name:       "ReportTaskRunnerHeartbeat",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opReportTaskRunnerHeartbeat,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ReportTaskRunnerHeartbeatInput{}
 	}
 
-	req = c.newRequest(opReportTaskRunnerHeartbeat, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ReportTaskRunnerHeartbeatOutput{}
 	req.Data = output
 	return
 }
 
 // Task runners call ReportTaskRunnerHeartbeat every 15 minutes to indicate
-// that they are operational. In the case of AWS Data Pipeline Task Runner launched
+// that they are operational. If the AWS Data Pipeline Task Runner is launched
 // on a resource managed by AWS Data Pipeline, the web service can use this
 // call to detect when the task runner application has failed and restart a
 // new instance.
-func (c *DataPipeline) ReportTaskRunnerHeartbeat(input *ReportTaskRunnerHeartbeatInput) (output *ReportTaskRunnerHeartbeatOutput, err error) {
+func (c *DataPipeline) ReportTaskRunnerHeartbeat(input *ReportTaskRunnerHeartbeatInput) (*ReportTaskRunnerHeartbeatOutput, error) {
 	req, out := c.ReportTaskRunnerHeartbeatRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opReportTaskRunnerHeartbeat *aws.Operation
+const opSetStatus = "SetStatus"
 
 // SetStatusRequest generates a request for the SetStatus operation.
 func (c *DataPipeline) SetStatusRequest(input *SetStatusInput) (req *aws.Request, output *SetStatusOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opSetStatus == nil {
-		opSetStatus = &aws.Operation{
-			Name:       "SetStatus",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opSetStatus,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &SetStatusInput{}
 	}
 
-	req = c.newRequest(opSetStatus, input, output)
+	req = c.newRequest(op, input, output)
 	output = &SetStatusOutput{}
 	req.Data = output
 	return
 }
 
-// Requests that the status of an array of physical or logical pipeline objects
-// be updated in the pipeline. This update may not occur immediately, but is
-// eventually consistent. The status that can be set depends on the type of
-// object, e.g. DataNode or Activity. You cannot perform this operation on FINISHED
-// pipelines and attempting to do so will return an InvalidRequestException.
-func (c *DataPipeline) SetStatus(input *SetStatusInput) (output *SetStatusOutput, err error) {
+// Requests that the status of the specified physical or logical pipeline objects
+// be updated in the specified pipeline. This update might not occur immediately,
+// but is eventually consistent. The status that can be set depends on the type
+// of object (for example, DataNode or Activity). You cannot perform this operation
+// on FINISHED pipelines and attempting to do so returns InvalidRequestException.
+func (c *DataPipeline) SetStatus(input *SetStatusInput) (*SetStatusOutput, error) {
 	req, out := c.SetStatusRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opSetStatus *aws.Operation
+const opSetTaskStatus = "SetTaskStatus"
 
 // SetTaskStatusRequest generates a request for the SetTaskStatus operation.
 func (c *DataPipeline) SetTaskStatusRequest(input *SetTaskStatusInput) (req *aws.Request, output *SetTaskStatusOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opSetTaskStatus == nil {
-		opSetTaskStatus = &aws.Operation{
-			Name:       "SetTaskStatus",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opSetTaskStatus,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &SetTaskStatusInput{}
 	}
 
-	req = c.newRequest(opSetTaskStatus, input, output)
+	req = c.newRequest(op, input, output)
 	output = &SetTaskStatusOutput{}
 	req.Data = output
 	return
 }
 
-// Notifies AWS Data Pipeline that a task is completed and provides information
-// about the final status. The task runner calls this action regardless of whether
-// the task was sucessful. The task runner does not need to call SetTaskStatus
-// for tasks that are canceled by the web service during a call to ReportTaskProgress.
-func (c *DataPipeline) SetTaskStatus(input *SetTaskStatusInput) (output *SetTaskStatusOutput, err error) {
+// Task runners call SetTaskStatus to notify AWS Data Pipeline that a task is
+// completed and provide information about the final status. A task runner makes
+// this call regardless of whether the task was sucessful. A task runner does
+// not need to call SetTaskStatus for tasks that are canceled by the web service
+// during a call to ReportTaskProgress.
+func (c *DataPipeline) SetTaskStatus(input *SetTaskStatusInput) (*SetTaskStatusOutput, error) {
 	req, out := c.SetTaskStatusRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opSetTaskStatus *aws.Operation
+const opValidatePipelineDefinition = "ValidatePipelineDefinition"
 
 // ValidatePipelineDefinitionRequest generates a request for the ValidatePipelineDefinition operation.
 func (c *DataPipeline) ValidatePipelineDefinitionRequest(input *ValidatePipelineDefinitionInput) (req *aws.Request, output *ValidatePipelineDefinitionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opValidatePipelineDefinition == nil {
-		opValidatePipelineDefinition = &aws.Operation{
-			Name:       "ValidatePipelineDefinition",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opValidatePipelineDefinition,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ValidatePipelineDefinitionInput{}
 	}
 
-	req = c.newRequest(opValidatePipelineDefinition, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ValidatePipelineDefinitionOutput{}
 	req.Data = output
 	return
 }
 
-// Tests the pipeline definition with a set of validation checks to ensure that
-// it is well formed and can run without error.
-func (c *DataPipeline) ValidatePipelineDefinition(input *ValidatePipelineDefinitionInput) (output *ValidatePipelineDefinitionOutput, err error) {
+// Validates the specified pipeline definition to ensure that it is well formed
+// and can be run without error.
+func (c *DataPipeline) ValidatePipelineDefinition(input *ValidatePipelineDefinitionInput) (*ValidatePipelineDefinitionOutput, error) {
 	req, out := c.ValidatePipelineDefinitionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opValidatePipelineDefinition *aws.Operation
-
-// The input of the ActivatePipeline action.
+// Contains the parameters for ActivatePipeline.
 type ActivatePipelineInput struct {
-	// Returns a list of parameter values to pass to the pipeline at activation.
+	// A list of parameter values to pass to the pipeline at activation.
 	ParameterValues []*ParameterValue `locationName:"parameterValues" type:"list"`
 
-	// The identifier of the pipeline to activate.
+	// The ID of the pipeline.
 	PipelineID *string `locationName:"pipelineId" type:"string" required:"true"`
 
-	metadataActivatePipelineInput `json:"-", xml:"-"`
+	// The date and time to resume the pipeline. By default, the pipeline resumes
+	// from the last completed execution.
+	StartTimestamp *time.Time `locationName:"startTimestamp" type:"timestamp" timestampFormat:"unix"`
+
+	metadataActivatePipelineInput `json:"-" xml:"-"`
 }
 
 type metadataActivatePipelineInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Contains the output from the ActivatePipeline action.
+// String returns the string representation
+func (s ActivatePipelineInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ActivatePipelineInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of ActivatePipeline.
 type ActivatePipelineOutput struct {
-	metadataActivatePipelineOutput `json:"-", xml:"-"`
+	metadataActivatePipelineOutput `json:"-" xml:"-"`
 }
 
 type metadataActivatePipelineOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The input to the AddTags action.
+// String returns the string representation
+func (s ActivatePipelineOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ActivatePipelineOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for AddTags.
 type AddTagsInput struct {
-	// The identifier of the pipeline to which you want to add the tags.
+	// The ID of the pipeline.
 	PipelineID *string `locationName:"pipelineId" type:"string" required:"true"`
 
-	// The tags as key/value pairs to add to the pipeline.
+	// The tags to add, as key/value pairs.
 	Tags []*Tag `locationName:"tags" type:"list" required:"true"`
 
-	metadataAddTagsInput `json:"-", xml:"-"`
+	metadataAddTagsInput `json:"-" xml:"-"`
 }
 
 type metadataAddTagsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The response from the AddTags action.
+// String returns the string representation
+func (s AddTagsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddTagsInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of AddTags.
 type AddTagsOutput struct {
-	metadataAddTagsOutput `json:"-", xml:"-"`
+	metadataAddTagsOutput `json:"-" xml:"-"`
 }
 
 type metadataAddTagsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The input for the CreatePipeline action.
+// String returns the string representation
+func (s AddTagsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddTagsOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for CreatePipeline.
 type CreatePipelineInput struct {
-	// The description of the new pipeline.
+	// The description for the pipeline.
 	Description *string `locationName:"description" type:"string"`
 
-	// The name of the new pipeline. You can use the same name for multiple pipelines
+	// The name for the pipeline. You can use the same name for multiple pipelines
 	// associated with your AWS account, because AWS Data Pipeline assigns each
-	// new pipeline a unique pipeline identifier.
+	// pipeline a unique pipeline identifier.
 	Name *string `locationName:"name" type:"string" required:"true"`
 
-	// A list of tags to associate with a pipeline at creation time. Tags let you
-	// control access to pipelines. For more information, see Controlling User Access
-	// to Pipelines (http://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-control-access.html)
+	// A list of tags to associate with the pipeline at creation. Tags let you control
+	// access to pipelines. For more information, see Controlling User Access to
+	// Pipelines (http://docs.aws.amazon.com/datapipeline/latest/DeveloperGuide/dp-control-access.html)
 	// in the AWS Data Pipeline Developer Guide.
 	Tags []*Tag `locationName:"tags" type:"list"`
 
-	// A unique identifier that you specify. This identifier is not the same as
-	// the pipeline identifier assigned by AWS Data Pipeline. You are responsible
-	// for defining the format and ensuring the uniqueness of this identifier. You
-	// use this parameter to ensure idempotency during repeated calls to CreatePipeline.
-	// For example, if the first call to CreatePipeline does not return a clear
-	// success, you can pass in the same unique identifier and pipeline name combination
-	// on a subsequent call to CreatePipeline. CreatePipeline ensures that if a
-	// pipeline already exists with the same name and unique identifier, a new pipeline
-	// will not be created. Instead, you'll receive the pipeline identifier from
-	// the previous attempt. The uniqueness of the name and unique identifier combination
-	// is scoped to the AWS account or IAM user credentials.
+	// A unique identifier. This identifier is not the same as the pipeline identifier
+	// assigned by AWS Data Pipeline. You are responsible for defining the format
+	// and ensuring the uniqueness of this identifier. You use this parameter to
+	// ensure idempotency during repeated calls to CreatePipeline. For example,
+	// if the first call to CreatePipeline does not succeed, you can pass in the
+	// same unique identifier and pipeline name combination on a subsequent call
+	// to CreatePipeline. CreatePipeline ensures that if a pipeline already exists
+	// with the same name and unique identifier, a new pipeline is not created.
+	// Instead, you'll receive the pipeline identifier from the previous attempt.
+	// The uniqueness of the name and unique identifier combination is scoped to
+	// the AWS account or IAM user credentials.
 	UniqueID *string `locationName:"uniqueId" type:"string" required:"true"`
 
-	metadataCreatePipelineInput `json:"-", xml:"-"`
+	metadataCreatePipelineInput `json:"-" xml:"-"`
 }
 
 type metadataCreatePipelineInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Contains the output from the CreatePipeline action.
+// String returns the string representation
+func (s CreatePipelineInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreatePipelineInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of CreatePipeline.
 type CreatePipelineOutput struct {
-	// The ID that AWS Data Pipeline assigns the newly created pipeline. The ID
-	// is a string of the form: df-06372391ZG65EXAMPLE.
+	// The ID that AWS Data Pipeline assigns the newly created pipeline. For example,
+	// df-06372391ZG65EXAMPLE.
 	PipelineID *string `locationName:"pipelineId" type:"string" required:"true"`
 
-	metadataCreatePipelineOutput `json:"-", xml:"-"`
+	metadataCreatePipelineOutput `json:"-" xml:"-"`
 }
 
 type metadataCreatePipelineOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The input for the DeletePipeline action.
-type DeletePipelineInput struct {
-	// The identifier of the pipeline to be deleted.
+// String returns the string representation
+func (s CreatePipelineOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreatePipelineOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for DeactivatePipeline.
+type DeactivatePipelineInput struct {
+	// Indicates whether to cancel any running objects. The default is true, which
+	// sets the state of any running objects to CANCELED. If this value is false,
+	// the pipeline is deactivated after all running objects finish.
+	CancelActive *bool `locationName:"cancelActive" type:"boolean"`
+
+	// The ID of the pipeline.
 	PipelineID *string `locationName:"pipelineId" type:"string" required:"true"`
 
-	metadataDeletePipelineInput `json:"-", xml:"-"`
+	metadataDeactivatePipelineInput `json:"-" xml:"-"`
+}
+
+type metadataDeactivatePipelineInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeactivatePipelineInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeactivatePipelineInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of DeactivatePipeline.
+type DeactivatePipelineOutput struct {
+	metadataDeactivatePipelineOutput `json:"-" xml:"-"`
+}
+
+type metadataDeactivatePipelineOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeactivatePipelineOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeactivatePipelineOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for DeletePipeline.
+type DeletePipelineInput struct {
+	// The ID of the pipeline.
+	PipelineID *string `locationName:"pipelineId" type:"string" required:"true"`
+
+	metadataDeletePipelineInput `json:"-" xml:"-"`
 }
 
 type metadataDeletePipelineInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeletePipelineInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeletePipelineInput) GoString() string {
+	return s.String()
+}
+
 type DeletePipelineOutput struct {
-	metadataDeletePipelineOutput `json:"-", xml:"-"`
+	metadataDeletePipelineOutput `json:"-" xml:"-"`
 }
 
 type metadataDeletePipelineOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The DescribeObjects action returns the object definitions for a specified
-// set of object identifiers. You can filter the results to named fields and
-// used markers to page through the results.
+// String returns the string representation
+func (s DeletePipelineOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeletePipelineOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for DescribeObjects.
 type DescribeObjectsInput struct {
 	// Indicates whether any expressions in the object should be evaluated when
 	// the object descriptions are returned.
 	EvaluateExpressions *bool `locationName:"evaluateExpressions" type:"boolean"`
 
-	// The starting point for the results to be returned. The first time you call
-	// DescribeObjects, this value should be empty. As long as the action returns
-	// HasMoreResults as True, you can call DescribeObjects again and pass the marker
-	// value from the response to retrieve the next set of results.
+	// The starting point for the results to be returned. For the first call, this
+	// value should be empty. As long as there are more results, continue to call
+	// DescribeObjects with the marker value from the previous call to retrieve
+	// the next set of results.
 	Marker *string `locationName:"marker" type:"string"`
 
-	// Identifiers of the pipeline objects that contain the definitions to be described.
+	// The IDs of the pipeline objects that contain the definitions to be described.
 	// You can pass as many as 25 identifiers in a single call to DescribeObjects.
 	ObjectIDs []*string `locationName:"objectIds" type:"list" required:"true"`
 
-	// Identifier of the pipeline that contains the object definitions.
+	// The ID of the pipeline that contains the object definitions.
 	PipelineID *string `locationName:"pipelineId" type:"string" required:"true"`
 
-	metadataDescribeObjectsInput `json:"-", xml:"-"`
+	metadataDescribeObjectsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeObjectsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// If True, there are more results that can be returned in another call to DescribeObjects.
+// String returns the string representation
+func (s DescribeObjectsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeObjectsInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of DescribeObjects.
 type DescribeObjectsOutput struct {
-	// If True, there are more pages of results to return.
+	// Indicates whether there are more results to return.
 	HasMoreResults *bool `locationName:"hasMoreResults" type:"boolean"`
 
 	// The starting point for the next page of results. To view the next page of
-	// results, call DescribeObjects again with this marker value.
+	// results, call DescribeObjects again with this marker value. If the value
+	// is null, there are no more results.
 	Marker *string `locationName:"marker" type:"string"`
 
-	// An array of object definitions that are returned by the call to DescribeObjects.
+	// An array of object definitions.
 	PipelineObjects []*PipelineObject `locationName:"pipelineObjects" type:"list" required:"true"`
 
-	metadataDescribeObjectsOutput `json:"-", xml:"-"`
+	metadataDescribeObjectsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeObjectsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The input to the DescribePipelines action.
+// String returns the string representation
+func (s DescribeObjectsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeObjectsOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for DescribePipelines.
 type DescribePipelinesInput struct {
-	// Identifiers of the pipelines to describe. You can pass as many as 25 identifiers
-	// in a single call to DescribePipelines. You can obtain pipeline identifiers
-	// by calling ListPipelines.
+	// The IDs of the pipelines to describe. You can pass as many as 25 identifiers
+	// in a single call. To obtain pipeline IDs, call ListPipelines.
 	PipelineIDs []*string `locationName:"pipelineIds" type:"list" required:"true"`
 
-	metadataDescribePipelinesInput `json:"-", xml:"-"`
+	metadataDescribePipelinesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribePipelinesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Contains the output from the DescribePipelines action.
+// String returns the string representation
+func (s DescribePipelinesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribePipelinesInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of DescribePipelines.
 type DescribePipelinesOutput struct {
-	// An array of descriptions returned for the specified pipelines.
+	// An array of descriptions for the specified pipelines.
 	PipelineDescriptionList []*PipelineDescription `locationName:"pipelineDescriptionList" type:"list" required:"true"`
 
-	metadataDescribePipelinesOutput `json:"-", xml:"-"`
+	metadataDescribePipelinesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribePipelinesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The input for the EvaluateExpression action.
+// String returns the string representation
+func (s DescribePipelinesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribePipelinesOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for EvaluateExpression.
 type EvaluateExpressionInput struct {
 	// The expression to evaluate.
 	Expression *string `locationName:"expression" type:"string" required:"true"`
 
-	// The identifier of the object.
+	// The ID of the object.
 	ObjectID *string `locationName:"objectId" type:"string" required:"true"`
 
-	// The identifier of the pipeline.
+	// The ID of the pipeline.
 	PipelineID *string `locationName:"pipelineId" type:"string" required:"true"`
 
-	metadataEvaluateExpressionInput `json:"-", xml:"-"`
+	metadataEvaluateExpressionInput `json:"-" xml:"-"`
 }
 
 type metadataEvaluateExpressionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Contains the output from the EvaluateExpression action.
+// String returns the string representation
+func (s EvaluateExpressionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EvaluateExpressionInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of EvaluateExpression.
 type EvaluateExpressionOutput struct {
 	// The evaluated expression.
 	EvaluatedExpression *string `locationName:"evaluatedExpression" type:"string" required:"true"`
 
-	metadataEvaluateExpressionOutput `json:"-", xml:"-"`
+	metadataEvaluateExpressionOutput `json:"-" xml:"-"`
 }
 
 type metadataEvaluateExpressionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s EvaluateExpressionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EvaluateExpressionOutput) GoString() string {
+	return s.String()
 }
 
 // A key-value pair that describes a property of a pipeline object. The value
@@ -919,108 +1066,166 @@ type Field struct {
 	// The field value, expressed as a String.
 	StringValue *string `locationName:"stringValue" type:"string"`
 
-	metadataField `json:"-", xml:"-"`
+	metadataField `json:"-" xml:"-"`
 }
 
 type metadataField struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The input for the GetPipelineDefinition action.
+// String returns the string representation
+func (s Field) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Field) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for GetPipelineDefinition.
 type GetPipelineDefinitionInput struct {
-	// The identifier of the pipeline.
+	// The ID of the pipeline.
 	PipelineID *string `locationName:"pipelineId" type:"string" required:"true"`
 
-	// The version of the pipeline definition to retrieve. This parameter accepts
-	// the values latest (default) and active. Where latest indicates the last definition
-	// saved to the pipeline and active indicates the last definition of the pipeline
-	// that was activated.
+	// The version of the pipeline definition to retrieve. Set this parameter to
+	// latest (default) to use the last definition saved to the pipeline or active
+	// to use the last definition that was activated.
 	Version *string `locationName:"version" type:"string"`
 
-	metadataGetPipelineDefinitionInput `json:"-", xml:"-"`
+	metadataGetPipelineDefinitionInput `json:"-" xml:"-"`
 }
 
 type metadataGetPipelineDefinitionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Contains the output from the GetPipelineDefinition action.
+// String returns the string representation
+func (s GetPipelineDefinitionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetPipelineDefinitionInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of GetPipelineDefinition.
 type GetPipelineDefinitionOutput struct {
-	// Returns a list of parameter objects used in the pipeline definition.
+	// The parameter objects used in the pipeline definition.
 	ParameterObjects []*ParameterObject `locationName:"parameterObjects" type:"list"`
 
-	// Returns a list of parameter values used in the pipeline definition.
+	// The parameter values used in the pipeline definition.
 	ParameterValues []*ParameterValue `locationName:"parameterValues" type:"list"`
 
-	// An array of objects defined in the pipeline.
+	// The objects defined in the pipeline.
 	PipelineObjects []*PipelineObject `locationName:"pipelineObjects" type:"list"`
 
-	metadataGetPipelineDefinitionOutput `json:"-", xml:"-"`
+	metadataGetPipelineDefinitionOutput `json:"-" xml:"-"`
 }
 
 type metadataGetPipelineDefinitionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Identity information for the Amazon EC2 instance that is hosting the task
-// runner. You can get this value by calling a metadata URI from the EC2 instance.
-// For more information, go to Instance Metadata (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html)
+// String returns the string representation
+func (s GetPipelineDefinitionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetPipelineDefinitionOutput) GoString() string {
+	return s.String()
+}
+
+// Identity information for the EC2 instance that is hosting the task runner.
+// You can get this value by calling a metadata URI from the EC2 instance. For
+// more information, see Instance Metadata (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html)
 // in the Amazon Elastic Compute Cloud User Guide. Passing in this value proves
 // that your task runner is running on an EC2 instance, and ensures the proper
 // AWS Data Pipeline service charges are applied to your pipeline.
 type InstanceIdentity struct {
-	// A description of an Amazon EC2 instance that is generated when the instance
-	// is launched and exposed to the instance via the instance metadata service
-	// in the form of a JSON representation of an object.
+	// A description of an EC2 instance that is generated when the instance is launched
+	// and exposed to the instance via the instance metadata service in the form
+	// of a JSON representation of an object.
 	Document *string `locationName:"document" type:"string"`
 
 	// A signature which can be used to verify the accuracy and authenticity of
 	// the information provided in the instance identity document.
 	Signature *string `locationName:"signature" type:"string"`
 
-	metadataInstanceIdentity `json:"-", xml:"-"`
+	metadataInstanceIdentity `json:"-" xml:"-"`
 }
 
 type metadataInstanceIdentity struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The input to the ListPipelines action.
+// String returns the string representation
+func (s InstanceIdentity) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceIdentity) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for ListPipelines.
 type ListPipelinesInput struct {
-	// The starting point for the results to be returned. The first time you call
-	// ListPipelines, this value should be empty. As long as the action returns
-	// HasMoreResults as True, you can call ListPipelines again and pass the marker
-	// value from the response to retrieve the next set of results.
+	// The starting point for the results to be returned. For the first call, this
+	// value should be empty. As long as there are more results, continue to call
+	// ListPipelines with the marker value from the previous call to retrieve the
+	// next set of results.
 	Marker *string `locationName:"marker" type:"string"`
 
-	metadataListPipelinesInput `json:"-", xml:"-"`
+	metadataListPipelinesInput `json:"-" xml:"-"`
 }
 
 type metadataListPipelinesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Contains the output from the ListPipelines action.
+// String returns the string representation
+func (s ListPipelinesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListPipelinesInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of ListPipelines.
 type ListPipelinesOutput struct {
-	// If True, there are more results that can be obtained by a subsequent call
-	// to ListPipelines.
+	// Indicates whether there are more results that can be obtained by a subsequent
+	// call.
 	HasMoreResults *bool `locationName:"hasMoreResults" type:"boolean"`
 
-	// If not null, indicates the starting point for the set of pipeline identifiers
-	// that the next call to ListPipelines will retrieve. If null, there are no
-	// more pipeline identifiers.
+	// The starting point for the next page of results. To view the next page of
+	// results, call ListPipelinesOutput again with this marker value. If the value
+	// is null, there are no more results.
 	Marker *string `locationName:"marker" type:"string"`
 
-	// A list of all the pipeline identifiers that your account has permission to
-	// access. If you require additional information about the pipelines, you can
-	// use these identifiers to call DescribePipelines and GetPipelineDefinition.
+	// The pipeline identifiers. If you require additional information about the
+	// pipelines, you can use these identifiers to call DescribePipelines and GetPipelineDefinition.
 	PipelineIDList []*PipelineIDName `locationName:"pipelineIdList" type:"list" required:"true"`
 
-	metadataListPipelinesOutput `json:"-", xml:"-"`
+	metadataListPipelinesOutput `json:"-" xml:"-"`
 }
 
 type metadataListPipelinesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListPipelinesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListPipelinesOutput) GoString() string {
+	return s.String()
 }
 
 // Contains a logical operation for comparing the value of a field with a specified
@@ -1049,11 +1254,21 @@ type Operator struct {
 	// The value that the actual field value will be compared with.
 	Values []*string `locationName:"values" type:"list"`
 
-	metadataOperator `json:"-", xml:"-"`
+	metadataOperator `json:"-" xml:"-"`
 }
 
 type metadataOperator struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Operator) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Operator) GoString() string {
+	return s.String()
 }
 
 // The attributes allowed or specified with a parameter object.
@@ -1064,11 +1279,21 @@ type ParameterAttribute struct {
 	// The field value, expressed as a String.
 	StringValue *string `locationName:"stringValue" type:"string" required:"true"`
 
-	metadataParameterAttribute `json:"-", xml:"-"`
+	metadataParameterAttribute `json:"-" xml:"-"`
 }
 
 type metadataParameterAttribute struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ParameterAttribute) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ParameterAttribute) GoString() string {
+	return s.String()
 }
 
 // Contains information about a parameter object.
@@ -1076,29 +1301,49 @@ type ParameterObject struct {
 	// The attributes of the parameter object.
 	Attributes []*ParameterAttribute `locationName:"attributes" type:"list" required:"true"`
 
-	// Identifier of the parameter object.
+	// The ID of the parameter object.
 	ID *string `locationName:"id" type:"string" required:"true"`
 
-	metadataParameterObject `json:"-", xml:"-"`
+	metadataParameterObject `json:"-" xml:"-"`
 }
 
 type metadataParameterObject struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ParameterObject) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ParameterObject) GoString() string {
+	return s.String()
+}
+
 // A value or list of parameter values.
 type ParameterValue struct {
-	// Identifier of the parameter value.
+	// The ID of the parameter value.
 	ID *string `locationName:"id" type:"string" required:"true"`
 
 	// The field value, expressed as a String.
 	StringValue *string `locationName:"stringValue" type:"string" required:"true"`
 
-	metadataParameterValue `json:"-", xml:"-"`
+	metadataParameterValue `json:"-" xml:"-"`
 }
 
 type metadataParameterValue struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ParameterValue) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ParameterValue) GoString() string {
+	return s.String()
 }
 
 // Contains pipeline metadata.
@@ -1110,7 +1355,7 @@ type PipelineDescription struct {
 	// @accountId, and @pipelineState.
 	Fields []*Field `locationName:"fields" type:"list" required:"true"`
 
-	// Name of the pipeline.
+	// The name of the pipeline.
 	Name *string `locationName:"name" type:"string" required:"true"`
 
 	// The pipeline identifier that was assigned by AWS Data Pipeline. This is a
@@ -1123,27 +1368,47 @@ type PipelineDescription struct {
 	// in the AWS Data Pipeline Developer Guide.
 	Tags []*Tag `locationName:"tags" type:"list"`
 
-	metadataPipelineDescription `json:"-", xml:"-"`
+	metadataPipelineDescription `json:"-" xml:"-"`
 }
 
 type metadataPipelineDescription struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s PipelineDescription) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PipelineDescription) GoString() string {
+	return s.String()
+}
+
 // Contains the name and identifier of a pipeline.
 type PipelineIDName struct {
-	// Identifier of the pipeline that was assigned by AWS Data Pipeline. This is
-	// a string of the form df-297EG78HU43EEXAMPLE.
+	// The ID of the pipeline that was assigned by AWS Data Pipeline. This is a
+	// string of the form df-297EG78HU43EEXAMPLE.
 	ID *string `locationName:"id" type:"string"`
 
-	// Name of the pipeline.
+	// The name of the pipeline.
 	Name *string `locationName:"name" type:"string"`
 
-	metadataPipelineIDName `json:"-", xml:"-"`
+	metadataPipelineIDName `json:"-" xml:"-"`
 }
 
 type metadataPipelineIDName struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PipelineIDName) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PipelineIDName) GoString() string {
+	return s.String()
 }
 
 // Contains information about a pipeline object. This can be a logical, physical,
@@ -1153,104 +1418,151 @@ type PipelineObject struct {
 	// Key-value pairs that define the properties of the object.
 	Fields []*Field `locationName:"fields" type:"list" required:"true"`
 
-	// Identifier of the object.
+	// The ID of the object.
 	ID *string `locationName:"id" type:"string" required:"true"`
 
-	// Name of the object.
+	// The name of the object.
 	Name *string `locationName:"name" type:"string" required:"true"`
 
-	metadataPipelineObject `json:"-", xml:"-"`
+	metadataPipelineObject `json:"-" xml:"-"`
 }
 
 type metadataPipelineObject struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The data type passed in as input to the PollForTask action.
+// String returns the string representation
+func (s PipelineObject) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PipelineObject) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for PollForTask.
 type PollForTaskInput struct {
 	// The public DNS name of the calling task runner.
 	Hostname *string `locationName:"hostname" type:"string"`
 
-	// Identity information for the Amazon EC2 instance that is hosting the task
-	// runner. You can get this value by calling the URI, http://169.254.169.254/latest/meta-data/instance-id,
-	// from the EC2 instance. For more information, go to Instance Metadata (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html)
+	// Identity information for the EC2 instance that is hosting the task runner.
+	// You can get this value from the instance using http://169.254.169.254/latest/meta-data/instance-id.
+	// For more information, see Instance Metadata (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AESDG-chapter-instancedata.html)
 	// in the Amazon Elastic Compute Cloud User Guide. Passing in this value proves
 	// that your task runner is running on an EC2 instance, and ensures the proper
 	// AWS Data Pipeline service charges are applied to your pipeline.
 	InstanceIdentity *InstanceIdentity `locationName:"instanceIdentity" type:"structure"`
 
-	// Indicates the type of task the task runner is configured to accept and process.
-	// The worker group is set as a field on objects in the pipeline when they are
-	// created. You can only specify a single value for workerGroup in the call
-	// to PollForTask. There are no wildcard values permitted in workerGroup, the
-	// string must be an exact, case-sensitive, match.
+	// The type of task the task runner is configured to accept and process. The
+	// worker group is set as a field on objects in the pipeline when they are created.
+	// You can only specify a single value for workerGroup in the call to PollForTask.
+	// There are no wildcard values permitted in workerGroup; the string must be
+	// an exact, case-sensitive, match.
 	WorkerGroup *string `locationName:"workerGroup" type:"string" required:"true"`
 
-	metadataPollForTaskInput `json:"-", xml:"-"`
+	metadataPollForTaskInput `json:"-" xml:"-"`
 }
 
 type metadataPollForTaskInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Contains the output from the PollForTask action.
+// String returns the string representation
+func (s PollForTaskInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PollForTaskInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of PollForTask.
 type PollForTaskOutput struct {
-	// An instance of TaskObject. The returned object contains all the information
-	// needed to complete the task that is being assigned to the task runner. One
-	// of the fields returned in this object is taskId, which contains an identifier
-	// for the task being assigned. The calling task runner uses taskId in subsequent
-	// calls to ReportTaskProgress and SetTaskStatus.
+	// The information needed to complete the task that is being assigned to the
+	// task runner. One of the fields returned in this object is taskId, which contains
+	// an identifier for the task being assigned. The calling task runner uses taskId
+	// in subsequent calls to ReportTaskProgress and SetTaskStatus.
 	TaskObject *TaskObject `locationName:"taskObject" type:"structure"`
 
-	metadataPollForTaskOutput `json:"-", xml:"-"`
+	metadataPollForTaskOutput `json:"-" xml:"-"`
 }
 
 type metadataPollForTaskOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The input of the PutPipelineDefinition action.
+// String returns the string representation
+func (s PollForTaskOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PollForTaskOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for PutPipelineDefinition.
 type PutPipelineDefinitionInput struct {
-	// A list of parameter objects used with the pipeline.
+	// The parameter objects used with the pipeline.
 	ParameterObjects []*ParameterObject `locationName:"parameterObjects" type:"list"`
 
-	// A list of parameter values used with the pipeline.
+	// The parameter values used with the pipeline.
 	ParameterValues []*ParameterValue `locationName:"parameterValues" type:"list"`
 
-	// The identifier of the pipeline to be configured.
+	// The ID of the pipeline.
 	PipelineID *string `locationName:"pipelineId" type:"string" required:"true"`
 
-	// The objects that define the pipeline. These will overwrite the existing pipeline
-	// definition.
+	// The objects that define the pipeline. These objects overwrite the existing
+	// pipeline definition.
 	PipelineObjects []*PipelineObject `locationName:"pipelineObjects" type:"list" required:"true"`
 
-	metadataPutPipelineDefinitionInput `json:"-", xml:"-"`
+	metadataPutPipelineDefinitionInput `json:"-" xml:"-"`
 }
 
 type metadataPutPipelineDefinitionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Contains the output of the PutPipelineDefinition action.
+// String returns the string representation
+func (s PutPipelineDefinitionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PutPipelineDefinitionInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of PutPipelineDefinition.
 type PutPipelineDefinitionOutput struct {
-	// If True, there were validation errors. If errored is True, the pipeline definition
+	// Indicates whether there were validation errors, and the pipeline definition
 	// is stored but cannot be activated until you correct the pipeline and call
 	// PutPipelineDefinition to commit the corrected pipeline.
 	Errored *bool `locationName:"errored" type:"boolean" required:"true"`
 
-	// A list of the validation errors that are associated with the objects defined
-	// in pipelineObjects.
+	// The validation errors that are associated with the objects defined in pipelineObjects.
 	ValidationErrors []*ValidationError `locationName:"validationErrors" type:"list"`
 
-	// A list of the validation warnings that are associated with the objects defined
-	// in pipelineObjects.
+	// The validation warnings that are associated with the objects defined in pipelineObjects.
 	ValidationWarnings []*ValidationWarning `locationName:"validationWarnings" type:"list"`
 
-	metadataPutPipelineDefinitionOutput `json:"-", xml:"-"`
+	metadataPutPipelineDefinitionOutput `json:"-" xml:"-"`
 }
 
 type metadataPutPipelineDefinitionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PutPipelineDefinitionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PutPipelineDefinitionOutput) GoString() string {
+	return s.String()
 }
 
 // Defines the query to run against an object.
@@ -1259,158 +1571,246 @@ type Query struct {
 	// selectors to match the query.
 	Selectors []*Selector `locationName:"selectors" type:"list"`
 
-	metadataQuery `json:"-", xml:"-"`
+	metadataQuery `json:"-" xml:"-"`
 }
 
 type metadataQuery struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The input for the QueryObjects action.
+// String returns the string representation
+func (s Query) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Query) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for QueryObjects.
 type QueryObjectsInput struct {
-	// Specifies the maximum number of object names that QueryObjects will return
-	// in a single call. The default value is 100.
+	// The maximum number of object names that QueryObjects will return in a single
+	// call. The default value is 100.
 	Limit *int64 `locationName:"limit" type:"integer"`
 
-	// The starting point for the results to be returned. The first time you call
-	// QueryObjects, this value should be empty. As long as the action returns HasMoreResults
-	// as True, you can call QueryObjects again and pass the marker value from the
-	// response to retrieve the next set of results.
+	// The starting point for the results to be returned. For the first call, this
+	// value should be empty. As long as there are more results, continue to call
+	// QueryObjects with the marker value from the previous call to retrieve the
+	// next set of results.
 	Marker *string `locationName:"marker" type:"string"`
 
-	// Identifier of the pipeline to be queried for object names.
+	// The ID of the pipeline.
 	PipelineID *string `locationName:"pipelineId" type:"string" required:"true"`
 
-	// Query that defines the objects to be returned. The Query object can contain
+	// The query that defines the objects to be returned. The Query object can contain
 	// a maximum of ten selectors. The conditions in the query are limited to top-level
 	// String fields in the object. These filters can be applied to components,
 	// instances, and attempts.
 	Query *Query `locationName:"query" type:"structure"`
 
-	// Specifies whether the query applies to components or instances. Allowable
-	// values: COMPONENT, INSTANCE, ATTEMPT.
+	// Indicates whether the query applies to components or instances. The possible
+	// values are: COMPONENT, INSTANCE, and ATTEMPT.
 	Sphere *string `locationName:"sphere" type:"string" required:"true"`
 
-	metadataQueryObjectsInput `json:"-", xml:"-"`
+	metadataQueryObjectsInput `json:"-" xml:"-"`
 }
 
 type metadataQueryObjectsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Contains the output from the QueryObjects action.
+// String returns the string representation
+func (s QueryObjectsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s QueryObjectsInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of QueryObjects.
 type QueryObjectsOutput struct {
-	// If True, there are more results that can be obtained by a subsequent call
-	// to QueryObjects.
+	// Indicates whether there are more results that can be obtained by a subsequent
+	// call.
 	HasMoreResults *bool `locationName:"hasMoreResults" type:"boolean"`
 
-	// A list of identifiers that match the query selectors.
+	// The identifiers that match the query selectors.
 	IDs []*string `locationName:"ids" type:"list"`
 
-	// The starting point for the results to be returned. As long as the action
-	// returns HasMoreResults as True, you can call QueryObjects again and pass
-	// the marker value from the response to retrieve the next set of results.
+	// The starting point for the next page of results. To view the next page of
+	// results, call QueryObjects again with this marker value. If the value is
+	// null, there are no more results.
 	Marker *string `locationName:"marker" type:"string"`
 
-	metadataQueryObjectsOutput `json:"-", xml:"-"`
+	metadataQueryObjectsOutput `json:"-" xml:"-"`
 }
 
 type metadataQueryObjectsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The input to the RemoveTags action.
+// String returns the string representation
+func (s QueryObjectsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s QueryObjectsOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for RemoveTags.
 type RemoveTagsInput struct {
-	// The pipeline from which you want to remove tags.
+	// The ID of the pipeline.
 	PipelineID *string `locationName:"pipelineId" type:"string" required:"true"`
 
-	// The keys of the tags you wish to remove.
+	// The keys of the tags to remove.
 	TagKeys []*string `locationName:"tagKeys" type:"list" required:"true"`
 
-	metadataRemoveTagsInput `json:"-", xml:"-"`
+	metadataRemoveTagsInput `json:"-" xml:"-"`
 }
 
 type metadataRemoveTagsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The result of the RemoveTags action.
+// String returns the string representation
+func (s RemoveTagsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RemoveTagsInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of RemoveTags.
 type RemoveTagsOutput struct {
-	metadataRemoveTagsOutput `json:"-", xml:"-"`
+	metadataRemoveTagsOutput `json:"-" xml:"-"`
 }
 
 type metadataRemoveTagsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The input for the ReportTaskProgress action.
+// String returns the string representation
+func (s RemoveTagsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RemoveTagsOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for ReportTaskProgress.
 type ReportTaskProgressInput struct {
 	// Key-value pairs that define the properties of the ReportTaskProgressInput
 	// object.
 	Fields []*Field `locationName:"fields" type:"list"`
 
-	// Identifier of the task assigned to the task runner. This value is provided
-	// in the TaskObject that the service returns with the response for the PollForTask
-	// action.
+	// The ID of the task assigned to the task runner. This value is provided in
+	// the response for PollForTask.
 	TaskID *string `locationName:"taskId" type:"string" required:"true"`
 
-	metadataReportTaskProgressInput `json:"-", xml:"-"`
+	metadataReportTaskProgressInput `json:"-" xml:"-"`
 }
 
 type metadataReportTaskProgressInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Contains the output from the ReportTaskProgress action.
+// String returns the string representation
+func (s ReportTaskProgressInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReportTaskProgressInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of ReportTaskProgress.
 type ReportTaskProgressOutput struct {
-	// If True, the calling task runner should cancel processing of the task. The
+	// If true, the calling task runner should cancel processing of the task. The
 	// task runner does not need to call SetTaskStatus for canceled tasks.
 	Canceled *bool `locationName:"canceled" type:"boolean" required:"true"`
 
-	metadataReportTaskProgressOutput `json:"-", xml:"-"`
+	metadataReportTaskProgressOutput `json:"-" xml:"-"`
 }
 
 type metadataReportTaskProgressOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The input for the ReportTaskRunnerHeartbeat action.
+// String returns the string representation
+func (s ReportTaskProgressOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReportTaskProgressOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for ReportTaskRunnerHeartbeat.
 type ReportTaskRunnerHeartbeatInput struct {
-	// The public DNS name of the calling task runner.
+	// The public DNS name of the task runner.
 	Hostname *string `locationName:"hostname" type:"string"`
 
-	// The identifier of the task runner. This value should be unique across your
-	// AWS account. In the case of AWS Data Pipeline Task Runner launched on a resource
-	// managed by AWS Data Pipeline, the web service provides a unique identifier
-	// when it launches the application. If you have written a custom task runner,
-	// you should assign a unique identifier for the task runner.
+	// The ID of the task runner. This value should be unique across your AWS account.
+	// In the case of AWS Data Pipeline Task Runner launched on a resource managed
+	// by AWS Data Pipeline, the web service provides a unique identifier when it
+	// launches the application. If you have written a custom task runner, you should
+	// assign a unique identifier for the task runner.
 	TaskRunnerID *string `locationName:"taskrunnerId" type:"string" required:"true"`
 
-	// Indicates the type of task the task runner is configured to accept and process.
-	// The worker group is set as a field on objects in the pipeline when they are
-	// created. You can only specify a single value for workerGroup in the call
-	// to ReportTaskRunnerHeartbeat. There are no wildcard values permitted in workerGroup,
-	// the string must be an exact, case-sensitive, match.
+	// The type of task the task runner is configured to accept and process. The
+	// worker group is set as a field on objects in the pipeline when they are created.
+	// You can only specify a single value for workerGroup. There are no wildcard
+	// values permitted in workerGroup; the string must be an exact, case-sensitive,
+	// match.
 	WorkerGroup *string `locationName:"workerGroup" type:"string"`
 
-	metadataReportTaskRunnerHeartbeatInput `json:"-", xml:"-"`
+	metadataReportTaskRunnerHeartbeatInput `json:"-" xml:"-"`
 }
 
 type metadataReportTaskRunnerHeartbeatInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Contains the output from the ReportTaskRunnerHeartbeat action.
+// String returns the string representation
+func (s ReportTaskRunnerHeartbeatInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReportTaskRunnerHeartbeatInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of ReportTaskRunnerHeartbeat.
 type ReportTaskRunnerHeartbeatOutput struct {
-	// Indicates whether the calling task runner should terminate. If True, the
-	// task runner that called ReportTaskRunnerHeartbeat should terminate.
+	// Indicates whether the calling task runner should terminate.
 	Terminate *bool `locationName:"terminate" type:"boolean" required:"true"`
 
-	metadataReportTaskRunnerHeartbeatOutput `json:"-", xml:"-"`
+	metadataReportTaskRunnerHeartbeatOutput `json:"-" xml:"-"`
 }
 
 type metadataReportTaskRunnerHeartbeatOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ReportTaskRunnerHeartbeatOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReportTaskRunnerHeartbeatOutput) GoString() string {
+	return s.String()
 }
 
 // A comparision that is used to determine whether a query should return this
@@ -1426,48 +1826,77 @@ type Selector struct {
 	// value.
 	Operator *Operator `locationName:"operator" type:"structure"`
 
-	metadataSelector `json:"-", xml:"-"`
+	metadataSelector `json:"-" xml:"-"`
 }
 
 type metadataSelector struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The input to the SetStatus action.
+// String returns the string representation
+func (s Selector) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Selector) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for SetStatus.
 type SetStatusInput struct {
-	// Identifies an array of objects. The corresponding objects can be either physical
+	// The IDs of the objects. The corresponding objects can be either physical
 	// or components, but not a mix of both types.
 	ObjectIDs []*string `locationName:"objectIds" type:"list" required:"true"`
 
-	// Identifies the pipeline that contains the objects.
+	// The ID of the pipeline that contains the objects.
 	PipelineID *string `locationName:"pipelineId" type:"string" required:"true"`
 
-	// Specifies the status to be set on all the objects in objectIds. For components,
-	// this can be either PAUSE or RESUME. For instances, this can be either TRY_CANCEL,
-	// RERUN, or MARK_FINISHED.
+	// The status to be set on all the objects specified in objectIds. For components,
+	// use PAUSE or RESUME. For instances, use TRY_CANCEL, RERUN, or MARK_FINISHED.
 	Status *string `locationName:"status" type:"string" required:"true"`
 
-	metadataSetStatusInput `json:"-", xml:"-"`
+	metadataSetStatusInput `json:"-" xml:"-"`
 }
 
 type metadataSetStatusInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s SetStatusInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetStatusInput) GoString() string {
+	return s.String()
+}
+
 type SetStatusOutput struct {
-	metadataSetStatusOutput `json:"-", xml:"-"`
+	metadataSetStatusOutput `json:"-" xml:"-"`
 }
 
 type metadataSetStatusOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The input of the SetTaskStatus action.
+// String returns the string representation
+func (s SetStatusOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetStatusOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for SetTaskStatus.
 type SetTaskStatusInput struct {
-	// If an error occurred during the task, this value specifies an id value that
-	// represents the error. This value is set on the physical attempt object. It
-	// is used to display error information to the user. It should not start with
-	// string "Service_" which is reserved by the system.
+	// If an error occurred during the task, this value specifies the error code.
+	// This value is set on the physical attempt object. It is used to display error
+	// information to the user. It should not start with string "Service_" which
+	// is reserved by the system.
 	ErrorID *string `locationName:"errorId" type:"string"`
 
 	// If an error occurred during the task, this value specifies a text description
@@ -1482,28 +1911,48 @@ type SetTaskStatusInput struct {
 	// not parse this value.
 	ErrorStackTrace *string `locationName:"errorStackTrace" type:"string"`
 
-	// Identifies the task assigned to the task runner. This value is set in the
-	// TaskObject that is returned by the PollForTask action.
+	// The ID of the task assigned to the task runner. This value is provided in
+	// the response for PollForTask.
 	TaskID *string `locationName:"taskId" type:"string" required:"true"`
 
-	// If FINISHED, the task successfully completed. If FAILED the task ended unsuccessfully.
-	// The FALSE value is used by preconditions.
+	// If FINISHED, the task successfully completed. If FAILED, the task ended unsuccessfully.
+	// Preconditions use false.
 	TaskStatus *string `locationName:"taskStatus" type:"string" required:"true"`
 
-	metadataSetTaskStatusInput `json:"-", xml:"-"`
+	metadataSetTaskStatusInput `json:"-" xml:"-"`
 }
 
 type metadataSetTaskStatusInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The output from the SetTaskStatus action.
+// String returns the string representation
+func (s SetTaskStatusInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetTaskStatusInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of SetTaskStatus.
 type SetTaskStatusOutput struct {
-	metadataSetTaskStatusOutput `json:"-", xml:"-"`
+	metadataSetTaskStatusOutput `json:"-" xml:"-"`
 }
 
 type metadataSetTaskStatusOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SetTaskStatusOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetTaskStatusOutput) GoString() string {
+	return s.String()
 }
 
 // Tags are key/value pairs defined by a user and associated with a pipeline
@@ -1522,80 +1971,119 @@ type Tag struct {
 	// in the AWS Data Pipeline Developer Guide.
 	Value *string `locationName:"value" type:"string" required:"true"`
 
-	metadataTag `json:"-", xml:"-"`
+	metadataTag `json:"-" xml:"-"`
 }
 
 type metadataTag struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s Tag) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Tag) GoString() string {
+	return s.String()
+}
+
 // Contains information about a pipeline task that is assigned to a task runner.
 type TaskObject struct {
-	// Identifier of the pipeline task attempt object. AWS Data Pipeline uses this
-	// value to track how many times a task is attempted.
+	// The ID of the pipeline task attempt object. AWS Data Pipeline uses this value
+	// to track how many times a task is attempted.
 	AttemptID *string `locationName:"attemptId" type:"string"`
 
 	// Connection information for the location where the task runner will publish
 	// the output of the task.
-	Objects *map[string]*PipelineObject `locationName:"objects" type:"map"`
+	Objects map[string]*PipelineObject `locationName:"objects" type:"map"`
 
-	// Identifier of the pipeline that provided the task.
+	// The ID of the pipeline that provided the task.
 	PipelineID *string `locationName:"pipelineId" type:"string"`
 
 	// An internal identifier for the task. This ID is passed to the SetTaskStatus
 	// and ReportTaskProgress actions.
 	TaskID *string `locationName:"taskId" type:"string"`
 
-	metadataTaskObject `json:"-", xml:"-"`
+	metadataTaskObject `json:"-" xml:"-"`
 }
 
 type metadataTaskObject struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The input of the ValidatePipelineDefinition action.
+// String returns the string representation
+func (s TaskObject) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TaskObject) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for ValidatePipelineDefinition.
 type ValidatePipelineDefinitionInput struct {
-	// A list of parameter objects used with the pipeline.
+	// The parameter objects used with the pipeline.
 	ParameterObjects []*ParameterObject `locationName:"parameterObjects" type:"list"`
 
-	// A list of parameter values used with the pipeline.
+	// The parameter values used with the pipeline.
 	ParameterValues []*ParameterValue `locationName:"parameterValues" type:"list"`
 
-	// Identifies the pipeline whose definition is to be validated.
+	// The ID of the pipeline.
 	PipelineID *string `locationName:"pipelineId" type:"string" required:"true"`
 
-	// A list of objects that define the pipeline changes to validate against the
-	// pipeline.
+	// The objects that define the pipeline changes to validate against the pipeline.
 	PipelineObjects []*PipelineObject `locationName:"pipelineObjects" type:"list" required:"true"`
 
-	metadataValidatePipelineDefinitionInput `json:"-", xml:"-"`
+	metadataValidatePipelineDefinitionInput `json:"-" xml:"-"`
 }
 
 type metadataValidatePipelineDefinitionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Contains the output from the ValidatePipelineDefinition action.
+// String returns the string representation
+func (s ValidatePipelineDefinitionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ValidatePipelineDefinitionInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of ValidatePipelineDefinition.
 type ValidatePipelineDefinitionOutput struct {
-	// If True, there were validation errors.
+	// Indicates whether there were validation errors.
 	Errored *bool `locationName:"errored" type:"boolean" required:"true"`
 
-	// Lists the validation errors that were found by ValidatePipelineDefinition.
+	// Any validation errors that were found.
 	ValidationErrors []*ValidationError `locationName:"validationErrors" type:"list"`
 
-	// Lists the validation warnings that were found by ValidatePipelineDefinition.
+	// Any validation warnings that were found.
 	ValidationWarnings []*ValidationWarning `locationName:"validationWarnings" type:"list"`
 
-	metadataValidatePipelineDefinitionOutput `json:"-", xml:"-"`
+	metadataValidatePipelineDefinitionOutput `json:"-" xml:"-"`
 }
 
 type metadataValidatePipelineDefinitionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Defines a validation error returned by PutPipelineDefinition or ValidatePipelineDefinition.
-// Validation errors prevent pipeline activation. The set of validation errors
-// that can be returned are defined by AWS Data Pipeline.
+// String returns the string representation
+func (s ValidatePipelineDefinitionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ValidatePipelineDefinitionOutput) GoString() string {
+	return s.String()
+}
+
+// Defines a validation error. Validation errors prevent pipeline activation.
+// The set of validation errors that can be returned are defined by AWS Data
+// Pipeline.
 type ValidationError struct {
 	// A description of the validation error.
 	Errors []*string `locationName:"errors" type:"list"`
@@ -1603,16 +2091,26 @@ type ValidationError struct {
 	// The identifier of the object that contains the validation error.
 	ID *string `locationName:"id" type:"string"`
 
-	metadataValidationError `json:"-", xml:"-"`
+	metadataValidationError `json:"-" xml:"-"`
 }
 
 type metadataValidationError struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Defines a validation warning returned by PutPipelineDefinition or ValidatePipelineDefinition.
-// Validation warnings do not prevent pipeline activation. The set of validation
-// warnings that can be returned are defined by AWS Data Pipeline.
+// String returns the string representation
+func (s ValidationError) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ValidationError) GoString() string {
+	return s.String()
+}
+
+// Defines a validation warning. Validation warnings do not prevent pipeline
+// activation. The set of validation warnings that can be returned are defined
+// by AWS Data Pipeline.
 type ValidationWarning struct {
 	// The identifier of the object that contains the validation warning.
 	ID *string `locationName:"id" type:"string"`
@@ -1620,9 +2118,19 @@ type ValidationWarning struct {
 	// A description of the validation warning.
 	Warnings []*string `locationName:"warnings" type:"list"`
 
-	metadataValidationWarning `json:"-", xml:"-"`
+	metadataValidationWarning `json:"-" xml:"-"`
 }
 
 type metadataValidationWarning struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ValidationWarning) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ValidationWarning) GoString() string {
+	return s.String()
 }

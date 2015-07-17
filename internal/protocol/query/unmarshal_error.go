@@ -4,7 +4,8 @@ import (
 	"encoding/xml"
 	"io"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awserr"
 )
 
 type xmlErrorResponse struct {
@@ -14,18 +15,19 @@ type xmlErrorResponse struct {
 	RequestID string   `xml:"RequestId"`
 }
 
+// UnmarshalError unmarshals an error response for an AWS Query service.
 func UnmarshalError(r *aws.Request) {
 	defer r.HTTPResponse.Body.Close()
 
 	resp := &xmlErrorResponse{}
 	err := xml.NewDecoder(r.HTTPResponse.Body).Decode(resp)
 	if err != nil && err != io.EOF {
-		r.Error = err
+		r.Error = awserr.New("SerializationError", "failed to decode query XML error response", err)
 	} else {
-		r.Error = aws.APIError{
-			StatusCode: r.HTTPResponse.StatusCode,
-			Code:       resp.Code,
-			Message:    resp.Message,
-		}
+		r.Error = awserr.NewRequestFailure(
+			awserr.New(resp.Code, resp.Message, nil),
+			r.HTTPResponse.StatusCode,
+			resp.RequestID,
+		)
 	}
 }

@@ -3,7 +3,8 @@ package aws_test
 import (
 	"testing"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awserr"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -17,9 +18,9 @@ var service = func() *aws.Service {
 }()
 
 type StructShape struct {
-	RequiredList   []*ConditionalStructShape           `required:"true"`
-	RequiredMap    *map[string]*ConditionalStructShape `required:"true"`
-	RequiredBool   *bool                               `required:"true"`
+	RequiredList   []*ConditionalStructShape          `required:"true"`
+	RequiredMap    map[string]*ConditionalStructShape `required:"true"`
+	RequiredBool   *bool                              `required:"true"`
 	OptionalStruct *ConditionalStructShape
 
 	hiddenParameter *string
@@ -39,9 +40,9 @@ type ConditionalStructShape struct {
 func TestNoErrors(t *testing.T) {
 	input := &StructShape{
 		RequiredList: []*ConditionalStructShape{},
-		RequiredMap: &map[string]*ConditionalStructShape{
-			"key1": &ConditionalStructShape{Name: aws.String("Name")},
-			"key2": &ConditionalStructShape{Name: aws.String("Name")},
+		RequiredMap: map[string]*ConditionalStructShape{
+			"key1": {Name: aws.String("Name")},
+			"key2": {Name: aws.String("Name")},
 		},
 		RequiredBool:   aws.Boolean(true),
 		OptionalStruct: &ConditionalStructShape{Name: aws.String("Name")},
@@ -56,19 +57,18 @@ func TestMissingRequiredParameters(t *testing.T) {
 	input := &StructShape{}
 	req := aws.NewRequest(service, &aws.Operation{}, input, nil)
 	aws.ValidateParameters(req)
-	err := aws.Error(req.Error)
 
-	assert.Error(t, err)
-	assert.Equal(t, "InvalidParameter", err.Code)
-	assert.Equal(t, "3 validation errors:\n- missing required parameter: RequiredList\n- missing required parameter: RequiredMap\n- missing required parameter: RequiredBool", err.Message)
+	assert.Error(t, req.Error)
+	assert.Equal(t, "InvalidParameter", req.Error.(awserr.Error).Code())
+	assert.Equal(t, "3 validation errors:\n- missing required parameter: RequiredList\n- missing required parameter: RequiredMap\n- missing required parameter: RequiredBool", req.Error.(awserr.Error).Message())
 }
 
 func TestNestedMissingRequiredParameters(t *testing.T) {
 	input := &StructShape{
-		RequiredList: []*ConditionalStructShape{&ConditionalStructShape{}},
-		RequiredMap: &map[string]*ConditionalStructShape{
-			"key1": &ConditionalStructShape{Name: aws.String("Name")},
-			"key2": &ConditionalStructShape{},
+		RequiredList: []*ConditionalStructShape{{}},
+		RequiredMap: map[string]*ConditionalStructShape{
+			"key1": {Name: aws.String("Name")},
+			"key2": {},
 		},
 		RequiredBool:   aws.Boolean(true),
 		OptionalStruct: &ConditionalStructShape{},
@@ -76,10 +76,9 @@ func TestNestedMissingRequiredParameters(t *testing.T) {
 
 	req := aws.NewRequest(service, &aws.Operation{}, input, nil)
 	aws.ValidateParameters(req)
-	err := aws.Error(req.Error)
 
-	assert.Error(t, err)
-	assert.Equal(t, "InvalidParameter", err.Code)
-	assert.Equal(t, "3 validation errors:\n- missing required parameter: RequiredList[0].Name\n- missing required parameter: RequiredMap[\"key2\"].Name\n- missing required parameter: OptionalStruct.Name", err.Message)
+	assert.Error(t, req.Error)
+	assert.Equal(t, "InvalidParameter", req.Error.(awserr.Error).Code())
+	assert.Equal(t, "3 validation errors:\n- missing required parameter: RequiredList[0].Name\n- missing required parameter: RequiredMap[\"key2\"].Name\n- missing required parameter: OptionalStruct.Name", req.Error.(awserr.Error).Message())
 
 }

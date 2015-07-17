@@ -5,32 +5,27 @@ package lambda
 
 import (
 	"io"
-	"sync"
 	"time"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
-var oprw sync.Mutex
+const opAddPermission = "AddPermission"
 
 // AddPermissionRequest generates a request for the AddPermission operation.
 func (c *Lambda) AddPermissionRequest(input *AddPermissionInput) (req *aws.Request, output *AddPermissionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAddPermission == nil {
-		opAddPermission = &aws.Operation{
-			Name:       "AddPermission",
-			HTTPMethod: "POST",
-			HTTPPath:   "/2015-03-31/functions/{FunctionName}/versions/HEAD/policy",
-		}
+	op := &aws.Operation{
+		Name:       opAddPermission,
+		HTTPMethod: "POST",
+		HTTPPath:   "/2015-03-31/functions/{FunctionName}/versions/HEAD/policy",
 	}
 
 	if input == nil {
 		input = &AddPermissionInput{}
 	}
 
-	req = c.newRequest(opAddPermission, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AddPermissionOutput{}
 	req.Data = output
 	return
@@ -46,33 +41,27 @@ func (c *Lambda) AddPermissionRequest(input *AddPermissionInput) (req *aws.Reque
 // policy but it can have multiple permission statements.
 //
 // This operation requires permission for the lambda:AddPermission action.
-func (c *Lambda) AddPermission(input *AddPermissionInput) (output *AddPermissionOutput, err error) {
+func (c *Lambda) AddPermission(input *AddPermissionInput) (*AddPermissionOutput, error) {
 	req, out := c.AddPermissionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAddPermission *aws.Operation
+const opCreateEventSourceMapping = "CreateEventSourceMapping"
 
 // CreateEventSourceMappingRequest generates a request for the CreateEventSourceMapping operation.
 func (c *Lambda) CreateEventSourceMappingRequest(input *CreateEventSourceMappingInput) (req *aws.Request, output *EventSourceMappingConfiguration) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateEventSourceMapping == nil {
-		opCreateEventSourceMapping = &aws.Operation{
-			Name:       "CreateEventSourceMapping",
-			HTTPMethod: "POST",
-			HTTPPath:   "/2015-03-31/event-source-mappings/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateEventSourceMapping,
+		HTTPMethod: "POST",
+		HTTPPath:   "/2015-03-31/event-source-mappings/",
 	}
 
 	if input == nil {
 		input = &CreateEventSourceMappingInput{}
 	}
 
-	req = c.newRequest(opCreateEventSourceMapping, input, output)
+	req = c.newRequest(op, input, output)
 	output = &EventSourceMappingConfiguration{}
 	req.Data = output
 	return
@@ -97,33 +86,27 @@ func (c *Lambda) CreateEventSourceMappingRequest(input *CreateEventSourceMapping
 //
 // This operation requires permission for the lambda:CreateEventSourceMapping
 // action.
-func (c *Lambda) CreateEventSourceMapping(input *CreateEventSourceMappingInput) (output *EventSourceMappingConfiguration, err error) {
+func (c *Lambda) CreateEventSourceMapping(input *CreateEventSourceMappingInput) (*EventSourceMappingConfiguration, error) {
 	req, out := c.CreateEventSourceMappingRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateEventSourceMapping *aws.Operation
+const opCreateFunction = "CreateFunction"
 
 // CreateFunctionRequest generates a request for the CreateFunction operation.
 func (c *Lambda) CreateFunctionRequest(input *CreateFunctionInput) (req *aws.Request, output *FunctionConfiguration) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateFunction == nil {
-		opCreateFunction = &aws.Operation{
-			Name:       "CreateFunction",
-			HTTPMethod: "POST",
-			HTTPPath:   "/2015-03-31/functions",
-		}
+	op := &aws.Operation{
+		Name:       opCreateFunction,
+		HTTPMethod: "POST",
+		HTTPPath:   "/2015-03-31/functions",
 	}
 
 	if input == nil {
 		input = &CreateFunctionInput{}
 	}
 
-	req = c.newRequest(opCreateFunction, input, output)
+	req = c.newRequest(op, input, output)
 	output = &FunctionConfiguration{}
 	req.Data = output
 	return
@@ -135,33 +118,27 @@ func (c *Lambda) CreateFunctionRequest(input *CreateFunctionInput) (req *aws.Req
 // fail. Note that the function name is case-sensitive.
 //
 // This operation requires permission for the lambda:CreateFunction action.
-func (c *Lambda) CreateFunction(input *CreateFunctionInput) (output *FunctionConfiguration, err error) {
+func (c *Lambda) CreateFunction(input *CreateFunctionInput) (*FunctionConfiguration, error) {
 	req, out := c.CreateFunctionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateFunction *aws.Operation
+const opDeleteEventSourceMapping = "DeleteEventSourceMapping"
 
 // DeleteEventSourceMappingRequest generates a request for the DeleteEventSourceMapping operation.
 func (c *Lambda) DeleteEventSourceMappingRequest(input *DeleteEventSourceMappingInput) (req *aws.Request, output *EventSourceMappingConfiguration) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteEventSourceMapping == nil {
-		opDeleteEventSourceMapping = &aws.Operation{
-			Name:       "DeleteEventSourceMapping",
-			HTTPMethod: "DELETE",
-			HTTPPath:   "/2015-03-31/event-source-mappings/{UUID}",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteEventSourceMapping,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/2015-03-31/event-source-mappings/{UUID}",
 	}
 
 	if input == nil {
 		input = &DeleteEventSourceMappingInput{}
 	}
 
-	req = c.newRequest(opDeleteEventSourceMapping, input, output)
+	req = c.newRequest(op, input, output)
 	output = &EventSourceMappingConfiguration{}
 	req.Data = output
 	return
@@ -172,33 +149,27 @@ func (c *Lambda) DeleteEventSourceMappingRequest(input *DeleteEventSourceMapping
 //
 // This operation requires permission for the lambda:DeleteEventSourceMapping
 // action.
-func (c *Lambda) DeleteEventSourceMapping(input *DeleteEventSourceMappingInput) (output *EventSourceMappingConfiguration, err error) {
+func (c *Lambda) DeleteEventSourceMapping(input *DeleteEventSourceMappingInput) (*EventSourceMappingConfiguration, error) {
 	req, out := c.DeleteEventSourceMappingRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteEventSourceMapping *aws.Operation
+const opDeleteFunction = "DeleteFunction"
 
 // DeleteFunctionRequest generates a request for the DeleteFunction operation.
 func (c *Lambda) DeleteFunctionRequest(input *DeleteFunctionInput) (req *aws.Request, output *DeleteFunctionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteFunction == nil {
-		opDeleteFunction = &aws.Operation{
-			Name:       "DeleteFunction",
-			HTTPMethod: "DELETE",
-			HTTPPath:   "/2015-03-31/functions/{FunctionName}",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteFunction,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/2015-03-31/functions/{FunctionName}",
 	}
 
 	if input == nil {
 		input = &DeleteFunctionInput{}
 	}
 
-	req = c.newRequest(opDeleteFunction, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteFunctionOutput{}
 	req.Data = output
 	return
@@ -210,33 +181,27 @@ func (c *Lambda) DeleteFunctionRequest(input *DeleteFunctionInput) (req *aws.Req
 // You will need to delete the event source mappings explicitly.
 //
 // This operation requires permission for the lambda:DeleteFunction action.
-func (c *Lambda) DeleteFunction(input *DeleteFunctionInput) (output *DeleteFunctionOutput, err error) {
+func (c *Lambda) DeleteFunction(input *DeleteFunctionInput) (*DeleteFunctionOutput, error) {
 	req, out := c.DeleteFunctionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteFunction *aws.Operation
+const opGetEventSourceMapping = "GetEventSourceMapping"
 
 // GetEventSourceMappingRequest generates a request for the GetEventSourceMapping operation.
 func (c *Lambda) GetEventSourceMappingRequest(input *GetEventSourceMappingInput) (req *aws.Request, output *EventSourceMappingConfiguration) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetEventSourceMapping == nil {
-		opGetEventSourceMapping = &aws.Operation{
-			Name:       "GetEventSourceMapping",
-			HTTPMethod: "GET",
-			HTTPPath:   "/2015-03-31/event-source-mappings/{UUID}",
-		}
+	op := &aws.Operation{
+		Name:       opGetEventSourceMapping,
+		HTTPMethod: "GET",
+		HTTPPath:   "/2015-03-31/event-source-mappings/{UUID}",
 	}
 
 	if input == nil {
 		input = &GetEventSourceMappingInput{}
 	}
 
-	req = c.newRequest(opGetEventSourceMapping, input, output)
+	req = c.newRequest(op, input, output)
 	output = &EventSourceMappingConfiguration{}
 	req.Data = output
 	return
@@ -247,33 +212,27 @@ func (c *Lambda) GetEventSourceMappingRequest(input *GetEventSourceMappingInput)
 //
 // This operation requires permission for the lambda:GetEventSourceMapping
 // action.
-func (c *Lambda) GetEventSourceMapping(input *GetEventSourceMappingInput) (output *EventSourceMappingConfiguration, err error) {
+func (c *Lambda) GetEventSourceMapping(input *GetEventSourceMappingInput) (*EventSourceMappingConfiguration, error) {
 	req, out := c.GetEventSourceMappingRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetEventSourceMapping *aws.Operation
+const opGetFunction = "GetFunction"
 
 // GetFunctionRequest generates a request for the GetFunction operation.
 func (c *Lambda) GetFunctionRequest(input *GetFunctionInput) (req *aws.Request, output *GetFunctionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetFunction == nil {
-		opGetFunction = &aws.Operation{
-			Name:       "GetFunction",
-			HTTPMethod: "GET",
-			HTTPPath:   "/2015-03-31/functions/{FunctionName}/versions/HEAD",
-		}
+	op := &aws.Operation{
+		Name:       opGetFunction,
+		HTTPMethod: "GET",
+		HTTPPath:   "/2015-03-31/functions/{FunctionName}/versions/HEAD",
 	}
 
 	if input == nil {
 		input = &GetFunctionInput{}
 	}
 
-	req = c.newRequest(opGetFunction, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetFunctionOutput{}
 	req.Data = output
 	return
@@ -286,33 +245,27 @@ func (c *Lambda) GetFunctionRequest(input *GetFunctionInput) (req *aws.Request, 
 // the function.
 //
 // This operation requires permission for the lambda:GetFunction action.
-func (c *Lambda) GetFunction(input *GetFunctionInput) (output *GetFunctionOutput, err error) {
+func (c *Lambda) GetFunction(input *GetFunctionInput) (*GetFunctionOutput, error) {
 	req, out := c.GetFunctionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetFunction *aws.Operation
+const opGetFunctionConfiguration = "GetFunctionConfiguration"
 
 // GetFunctionConfigurationRequest generates a request for the GetFunctionConfiguration operation.
 func (c *Lambda) GetFunctionConfigurationRequest(input *GetFunctionConfigurationInput) (req *aws.Request, output *FunctionConfiguration) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetFunctionConfiguration == nil {
-		opGetFunctionConfiguration = &aws.Operation{
-			Name:       "GetFunctionConfiguration",
-			HTTPMethod: "GET",
-			HTTPPath:   "/2015-03-31/functions/{FunctionName}/versions/HEAD/configuration",
-		}
+	op := &aws.Operation{
+		Name:       opGetFunctionConfiguration,
+		HTTPMethod: "GET",
+		HTTPPath:   "/2015-03-31/functions/{FunctionName}/versions/HEAD/configuration",
 	}
 
 	if input == nil {
 		input = &GetFunctionConfigurationInput{}
 	}
 
-	req = c.newRequest(opGetFunctionConfiguration, input, output)
+	req = c.newRequest(op, input, output)
 	output = &FunctionConfiguration{}
 	req.Data = output
 	return
@@ -324,33 +277,27 @@ func (c *Lambda) GetFunctionConfigurationRequest(input *GetFunctionConfiguration
 //
 // This operation requires permission for the lambda:GetFunctionConfiguration
 // operation.
-func (c *Lambda) GetFunctionConfiguration(input *GetFunctionConfigurationInput) (output *FunctionConfiguration, err error) {
+func (c *Lambda) GetFunctionConfiguration(input *GetFunctionConfigurationInput) (*FunctionConfiguration, error) {
 	req, out := c.GetFunctionConfigurationRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetFunctionConfiguration *aws.Operation
+const opGetPolicy = "GetPolicy"
 
 // GetPolicyRequest generates a request for the GetPolicy operation.
 func (c *Lambda) GetPolicyRequest(input *GetPolicyInput) (req *aws.Request, output *GetPolicyOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetPolicy == nil {
-		opGetPolicy = &aws.Operation{
-			Name:       "GetPolicy",
-			HTTPMethod: "GET",
-			HTTPPath:   "/2015-03-31/functions/{FunctionName}/versions/HEAD/policy",
-		}
+	op := &aws.Operation{
+		Name:       opGetPolicy,
+		HTTPMethod: "GET",
+		HTTPPath:   "/2015-03-31/functions/{FunctionName}/versions/HEAD/policy",
 	}
 
 	if input == nil {
 		input = &GetPolicyInput{}
 	}
 
-	req = c.newRequest(opGetPolicy, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetPolicyOutput{}
 	req.Data = output
 	return
@@ -360,33 +307,27 @@ func (c *Lambda) GetPolicyRequest(input *GetPolicyInput) (req *aws.Request, outp
 // AddPermission API, associated with the specified bucket.
 //
 // You need permission for the lambda:GetPolicy action.
-func (c *Lambda) GetPolicy(input *GetPolicyInput) (output *GetPolicyOutput, err error) {
+func (c *Lambda) GetPolicy(input *GetPolicyInput) (*GetPolicyOutput, error) {
 	req, out := c.GetPolicyRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetPolicy *aws.Operation
+const opInvoke = "Invoke"
 
 // InvokeRequest generates a request for the Invoke operation.
 func (c *Lambda) InvokeRequest(input *InvokeInput) (req *aws.Request, output *InvokeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opInvoke == nil {
-		opInvoke = &aws.Operation{
-			Name:       "Invoke",
-			HTTPMethod: "POST",
-			HTTPPath:   "/2015-03-31/functions/{FunctionName}/invocations",
-		}
+	op := &aws.Operation{
+		Name:       opInvoke,
+		HTTPMethod: "POST",
+		HTTPPath:   "/2015-03-31/functions/{FunctionName}/invocations",
 	}
 
 	if input == nil {
 		input = &InvokeInput{}
 	}
 
-	req = c.newRequest(opInvoke, input, output)
+	req = c.newRequest(op, input, output)
 	output = &InvokeOutput{}
 	req.Data = output
 	return
@@ -395,33 +336,27 @@ func (c *Lambda) InvokeRequest(input *InvokeInput) (req *aws.Request, output *In
 // Invokes a specified Lambda function.
 //
 // This operation requires permission for the lambda:InvokeFunction action.
-func (c *Lambda) Invoke(input *InvokeInput) (output *InvokeOutput, err error) {
+func (c *Lambda) Invoke(input *InvokeInput) (*InvokeOutput, error) {
 	req, out := c.InvokeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opInvoke *aws.Operation
+const opInvokeAsync = "InvokeAsync"
 
 // InvokeAsyncRequest generates a request for the InvokeAsync operation.
 func (c *Lambda) InvokeAsyncRequest(input *InvokeAsyncInput) (req *aws.Request, output *InvokeAsyncOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opInvokeAsync == nil {
-		opInvokeAsync = &aws.Operation{
-			Name:       "InvokeAsync",
-			HTTPMethod: "POST",
-			HTTPPath:   "/2014-11-13/functions/{FunctionName}/invoke-async/",
-		}
+	op := &aws.Operation{
+		Name:       opInvokeAsync,
+		HTTPMethod: "POST",
+		HTTPPath:   "/2014-11-13/functions/{FunctionName}/invoke-async/",
 	}
 
 	if input == nil {
 		input = &InvokeAsyncInput{}
 	}
 
-	req = c.newRequest(opInvokeAsync, input, output)
+	req = c.newRequest(op, input, output)
 	output = &InvokeAsyncOutput{}
 	req.Data = output
 	return
@@ -433,33 +368,33 @@ func (c *Lambda) InvokeAsyncRequest(input *InvokeAsyncInput) (req *aws.Request, 
 // function execution, see the CloudWatch logs console.
 //
 // This operation requires permission for the lambda:InvokeFunction action.
-func (c *Lambda) InvokeAsync(input *InvokeAsyncInput) (output *InvokeAsyncOutput, err error) {
+func (c *Lambda) InvokeAsync(input *InvokeAsyncInput) (*InvokeAsyncOutput, error) {
 	req, out := c.InvokeAsyncRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opInvokeAsync *aws.Operation
+const opListEventSourceMappings = "ListEventSourceMappings"
 
 // ListEventSourceMappingsRequest generates a request for the ListEventSourceMappings operation.
 func (c *Lambda) ListEventSourceMappingsRequest(input *ListEventSourceMappingsInput) (req *aws.Request, output *ListEventSourceMappingsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListEventSourceMappings == nil {
-		opListEventSourceMappings = &aws.Operation{
-			Name:       "ListEventSourceMappings",
-			HTTPMethod: "GET",
-			HTTPPath:   "/2015-03-31/event-source-mappings/",
-		}
+	op := &aws.Operation{
+		Name:       opListEventSourceMappings,
+		HTTPMethod: "GET",
+		HTTPPath:   "/2015-03-31/event-source-mappings/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"NextMarker"},
+			LimitToken:      "MaxItems",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &ListEventSourceMappingsInput{}
 	}
 
-	req = c.newRequest(opListEventSourceMappings, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListEventSourceMappingsOutput{}
 	req.Data = output
 	return
@@ -474,33 +409,40 @@ func (c *Lambda) ListEventSourceMappingsRequest(input *ListEventSourceMappingsIn
 //
 // This operation requires permission for the lambda:ListEventSourceMappings
 // action.
-func (c *Lambda) ListEventSourceMappings(input *ListEventSourceMappingsInput) (output *ListEventSourceMappingsOutput, err error) {
+func (c *Lambda) ListEventSourceMappings(input *ListEventSourceMappingsInput) (*ListEventSourceMappingsOutput, error) {
 	req, out := c.ListEventSourceMappingsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListEventSourceMappings *aws.Operation
+func (c *Lambda) ListEventSourceMappingsPages(input *ListEventSourceMappingsInput, fn func(p *ListEventSourceMappingsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.ListEventSourceMappingsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*ListEventSourceMappingsOutput), lastPage)
+	})
+}
+
+const opListFunctions = "ListFunctions"
 
 // ListFunctionsRequest generates a request for the ListFunctions operation.
 func (c *Lambda) ListFunctionsRequest(input *ListFunctionsInput) (req *aws.Request, output *ListFunctionsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListFunctions == nil {
-		opListFunctions = &aws.Operation{
-			Name:       "ListFunctions",
-			HTTPMethod: "GET",
-			HTTPPath:   "/2015-03-31/functions/",
-		}
+	op := &aws.Operation{
+		Name:       opListFunctions,
+		HTTPMethod: "GET",
+		HTTPPath:   "/2015-03-31/functions/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"NextMarker"},
+			LimitToken:      "MaxItems",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &ListFunctionsInput{}
 	}
 
-	req = c.newRequest(opListFunctions, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListFunctionsOutput{}
 	req.Data = output
 	return
@@ -511,33 +453,34 @@ func (c *Lambda) ListFunctionsRequest(input *ListFunctionsInput) (req *aws.Reque
 // to retrieve the code for your function.
 //
 // This operation requires permission for the lambda:ListFunctions action.
-func (c *Lambda) ListFunctions(input *ListFunctionsInput) (output *ListFunctionsOutput, err error) {
+func (c *Lambda) ListFunctions(input *ListFunctionsInput) (*ListFunctionsOutput, error) {
 	req, out := c.ListFunctionsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListFunctions *aws.Operation
+func (c *Lambda) ListFunctionsPages(input *ListFunctionsInput, fn func(p *ListFunctionsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.ListFunctionsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*ListFunctionsOutput), lastPage)
+	})
+}
+
+const opRemovePermission = "RemovePermission"
 
 // RemovePermissionRequest generates a request for the RemovePermission operation.
 func (c *Lambda) RemovePermissionRequest(input *RemovePermissionInput) (req *aws.Request, output *RemovePermissionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRemovePermission == nil {
-		opRemovePermission = &aws.Operation{
-			Name:       "RemovePermission",
-			HTTPMethod: "DELETE",
-			HTTPPath:   "/2015-03-31/functions/{FunctionName}/versions/HEAD/policy/{StatementId}",
-		}
+	op := &aws.Operation{
+		Name:       opRemovePermission,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/2015-03-31/functions/{FunctionName}/versions/HEAD/policy/{StatementId}",
 	}
 
 	if input == nil {
 		input = &RemovePermissionInput{}
 	}
 
-	req = c.newRequest(opRemovePermission, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RemovePermissionOutput{}
 	req.Data = output
 	return
@@ -550,33 +493,27 @@ func (c *Lambda) RemovePermissionRequest(input *RemovePermissionInput) (req *aws
 // permission to the function.
 //
 // You need permission for the lambda:RemovePermission action.
-func (c *Lambda) RemovePermission(input *RemovePermissionInput) (output *RemovePermissionOutput, err error) {
+func (c *Lambda) RemovePermission(input *RemovePermissionInput) (*RemovePermissionOutput, error) {
 	req, out := c.RemovePermissionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRemovePermission *aws.Operation
+const opUpdateEventSourceMapping = "UpdateEventSourceMapping"
 
 // UpdateEventSourceMappingRequest generates a request for the UpdateEventSourceMapping operation.
 func (c *Lambda) UpdateEventSourceMappingRequest(input *UpdateEventSourceMappingInput) (req *aws.Request, output *EventSourceMappingConfiguration) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUpdateEventSourceMapping == nil {
-		opUpdateEventSourceMapping = &aws.Operation{
-			Name:       "UpdateEventSourceMapping",
-			HTTPMethod: "PUT",
-			HTTPPath:   "/2015-03-31/event-source-mappings/{UUID}",
-		}
+	op := &aws.Operation{
+		Name:       opUpdateEventSourceMapping,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/2015-03-31/event-source-mappings/{UUID}",
 	}
 
 	if input == nil {
 		input = &UpdateEventSourceMappingInput{}
 	}
 
-	req = c.newRequest(opUpdateEventSourceMapping, input, output)
+	req = c.newRequest(op, input, output)
 	output = &EventSourceMappingConfiguration{}
 	req.Data = output
 	return
@@ -589,33 +526,27 @@ func (c *Lambda) UpdateEventSourceMappingRequest(input *UpdateEventSourceMapping
 //
 // This operation requires permission for the lambda:UpdateEventSourceMapping
 // action.
-func (c *Lambda) UpdateEventSourceMapping(input *UpdateEventSourceMappingInput) (output *EventSourceMappingConfiguration, err error) {
+func (c *Lambda) UpdateEventSourceMapping(input *UpdateEventSourceMappingInput) (*EventSourceMappingConfiguration, error) {
 	req, out := c.UpdateEventSourceMappingRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opUpdateEventSourceMapping *aws.Operation
+const opUpdateFunctionCode = "UpdateFunctionCode"
 
 // UpdateFunctionCodeRequest generates a request for the UpdateFunctionCode operation.
 func (c *Lambda) UpdateFunctionCodeRequest(input *UpdateFunctionCodeInput) (req *aws.Request, output *FunctionConfiguration) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUpdateFunctionCode == nil {
-		opUpdateFunctionCode = &aws.Operation{
-			Name:       "UpdateFunctionCode",
-			HTTPMethod: "PUT",
-			HTTPPath:   "/2015-03-31/functions/{FunctionName}/versions/HEAD/code",
-		}
+	op := &aws.Operation{
+		Name:       opUpdateFunctionCode,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/2015-03-31/functions/{FunctionName}/versions/HEAD/code",
 	}
 
 	if input == nil {
 		input = &UpdateFunctionCodeInput{}
 	}
 
-	req = c.newRequest(opUpdateFunctionCode, input, output)
+	req = c.newRequest(op, input, output)
 	output = &FunctionConfiguration{}
 	req.Data = output
 	return
@@ -626,33 +557,27 @@ func (c *Lambda) UpdateFunctionCodeRequest(input *UpdateFunctionCodeInput) (req 
 // configuration.
 //
 // This operation requires permission for the lambda:UpdateFunctionCode action.
-func (c *Lambda) UpdateFunctionCode(input *UpdateFunctionCodeInput) (output *FunctionConfiguration, err error) {
+func (c *Lambda) UpdateFunctionCode(input *UpdateFunctionCodeInput) (*FunctionConfiguration, error) {
 	req, out := c.UpdateFunctionCodeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opUpdateFunctionCode *aws.Operation
+const opUpdateFunctionConfiguration = "UpdateFunctionConfiguration"
 
 // UpdateFunctionConfigurationRequest generates a request for the UpdateFunctionConfiguration operation.
 func (c *Lambda) UpdateFunctionConfigurationRequest(input *UpdateFunctionConfigurationInput) (req *aws.Request, output *FunctionConfiguration) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUpdateFunctionConfiguration == nil {
-		opUpdateFunctionConfiguration = &aws.Operation{
-			Name:       "UpdateFunctionConfiguration",
-			HTTPMethod: "PUT",
-			HTTPPath:   "/2015-03-31/functions/{FunctionName}/versions/HEAD/configuration",
-		}
+	op := &aws.Operation{
+		Name:       opUpdateFunctionConfiguration,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/2015-03-31/functions/{FunctionName}/versions/HEAD/configuration",
 	}
 
 	if input == nil {
 		input = &UpdateFunctionConfigurationInput{}
 	}
 
-	req = c.newRequest(opUpdateFunctionConfiguration, input, output)
+	req = c.newRequest(op, input, output)
 	output = &FunctionConfiguration{}
 	req.Data = output
 	return
@@ -665,14 +590,11 @@ func (c *Lambda) UpdateFunctionConfigurationRequest(input *UpdateFunctionConfigu
 //
 // This operation requires permission for the lambda:UpdateFunctionConfiguration
 // action.
-func (c *Lambda) UpdateFunctionConfiguration(input *UpdateFunctionConfigurationInput) (output *FunctionConfiguration, err error) {
+func (c *Lambda) UpdateFunctionConfiguration(input *UpdateFunctionConfigurationInput) (*FunctionConfiguration, error) {
 	req, out := c.UpdateFunctionConfigurationRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
-
-var opUpdateFunctionConfiguration *aws.Operation
 
 type AddPermissionInput struct {
 	// The AWS Lambda action you want to allow in this statement. Each Lambda action
@@ -710,23 +632,33 @@ type AddPermissionInput struct {
 	// send events to invoke your Lambda function from Amazon S3.
 	SourceARN *string `locationName:"SourceArn" type:"string"`
 
-	// The AWS account ID (without a hyphen) of the source owner. If the SourceArn
-	// identifies a bucket, then this is the bucket owner's account ID. You can
-	// use this additional condition to ensure the bucket you specify is owned by
-	// a specific account (it is possible the bucket owner deleted the bucket and
-	// some other AWS account created the bucket). You can also use this condition
-	// to specify all sources (that is, you don't specify the SourceArn) owned by
-	// a specific account.
+	// The AWS account ID (without a hyphen) of the source owner. For example, if
+	// the SourceArn identifies a bucket, then this is the bucket owner's account
+	// ID. You can use this additional condition to ensure the bucket you specify
+	// is owned by a specific account (it is possible the bucket owner deleted the
+	// bucket and some other AWS account created the bucket). You can also use this
+	// condition to specify all sources (that is, you don't specify the SourceArn)
+	// owned by a specific account.
 	SourceAccount *string `type:"string"`
 
 	// A unique statement identifier.
 	StatementID *string `locationName:"StatementId" type:"string" required:"true"`
 
-	metadataAddPermissionInput `json:"-", xml:"-"`
+	metadataAddPermissionInput `json:"-" xml:"-"`
 }
 
 type metadataAddPermissionInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AddPermissionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddPermissionInput) GoString() string {
+	return s.String()
 }
 
 type AddPermissionOutput struct {
@@ -734,11 +666,21 @@ type AddPermissionOutput struct {
 	// the same as a string using "\" as an escape character in the JSON.
 	Statement *string `type:"string"`
 
-	metadataAddPermissionOutput `json:"-", xml:"-"`
+	metadataAddPermissionOutput `json:"-" xml:"-"`
 }
 
 type metadataAddPermissionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AddPermissionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddPermissionOutput) GoString() string {
+	return s.String()
 }
 
 type CreateEventSourceMappingInput struct {
@@ -747,13 +689,15 @@ type CreateEventSourceMappingInput struct {
 	// with all the retrieved records. The default is 100 records.
 	BatchSize *int64 `type:"integer"`
 
-	// Indicates whether AWS Lambda should begin polling the event source.
+	// Indicates whether AWS Lambda should begin polling the event source, the default
+	// is not enabled.
 	Enabled *bool `type:"boolean"`
 
-	// The Amazon Resource Name (ARN) of the Amazon Kinesis stream that is the event
-	// source. Any record added to this stream could cause AWS Lambda to invoke
-	// your Lambda function, it depends on the BatchSize. AWS Lambda POSTs the Amazon
-	// Kinesis event, containing records, to your Lambda function as JSON.
+	// The Amazon Resource Name (ARN) of the Amazon Kinesis or the Amazon DynamoDB
+	// stream that is the event source. Any record added to this stream could cause
+	// AWS Lambda to invoke your Lambda function, it depends on the BatchSize. AWS
+	// Lambda POSTs the Amazon Kinesis event, containing records, to your Lambda
+	// function as JSON.
 	EventSourceARN *string `locationName:"EventSourceArn" type:"string" required:"true"`
 
 	// The Lambda function to invoke when AWS Lambda detects an event on the stream.
@@ -771,15 +715,25 @@ type CreateEventSourceMappingInput struct {
 	// in the Amazon Kinesis API Reference.
 	StartingPosition *string `type:"string" required:"true"`
 
-	metadataCreateEventSourceMappingInput `json:"-", xml:"-"`
+	metadataCreateEventSourceMappingInput `json:"-" xml:"-"`
 }
 
 type metadataCreateEventSourceMappingInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateEventSourceMappingInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateEventSourceMappingInput) GoString() string {
+	return s.String()
+}
+
 type CreateFunctionInput struct {
-	// A structure that includes ZipFile.
+	// The code for the Lambda function.
 	Code *FunctionCode `type:"structure" required:"true"`
 
 	// A short, user-defined function description. Lambda does not use this value.
@@ -798,7 +752,9 @@ type CreateFunctionInput struct {
 	FunctionName *string `type:"string" required:"true"`
 
 	// The function within your code that Lambda calls to begin execution. For Node.js,
-	// it is the module-name.export value in your function.
+	// it is the module-name.export value in your function. For Java, it can be
+	// package.class-name::handler or package.class-name. For more information,
+	// see Lambda Function Handler (Java) (http://docs.aws.amazon.com/lambda/latest/dg/java-programming-model-handler-types.html).
 	Handler *string `type:"string" required:"true"`
 
 	// The amount of memory, in MB, your Lambda function is given. Lambda uses this
@@ -815,7 +771,7 @@ type CreateFunctionInput struct {
 	Role *string `type:"string" required:"true"`
 
 	// The runtime environment for the Lambda function you are uploading. Currently,
-	// Lambda supports only "nodejs" as the runtime.
+	// Lambda supports "java" and "nodejs" as the runtime.
 	Runtime *string `type:"string" required:"true"`
 
 	// The function execution time at which Lambda should terminate the function.
@@ -823,22 +779,42 @@ type CreateFunctionInput struct {
 	// value based on your expected execution time. The default is 3 seconds.
 	Timeout *int64 `type:"integer"`
 
-	metadataCreateFunctionInput `json:"-", xml:"-"`
+	metadataCreateFunctionInput `json:"-" xml:"-"`
 }
 
 type metadataCreateFunctionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateFunctionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateFunctionInput) GoString() string {
+	return s.String()
+}
+
 type DeleteEventSourceMappingInput struct {
 	// The event source mapping ID.
 	UUID *string `location:"uri" locationName:"UUID" type:"string" required:"true"`
 
-	metadataDeleteEventSourceMappingInput `json:"-", xml:"-"`
+	metadataDeleteEventSourceMappingInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteEventSourceMappingInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteEventSourceMappingInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteEventSourceMappingInput) GoString() string {
+	return s.String()
 }
 
 type DeleteFunctionInput struct {
@@ -852,19 +828,39 @@ type DeleteFunctionInput struct {
 	// the function name, it is limited to 64 character in length.
 	FunctionName *string `location:"uri" locationName:"FunctionName" type:"string" required:"true"`
 
-	metadataDeleteFunctionInput `json:"-", xml:"-"`
+	metadataDeleteFunctionInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteFunctionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteFunctionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteFunctionInput) GoString() string {
+	return s.String()
+}
+
 type DeleteFunctionOutput struct {
-	metadataDeleteFunctionOutput `json:"-", xml:"-"`
+	metadataDeleteFunctionOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteFunctionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteFunctionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteFunctionOutput) GoString() string {
+	return s.String()
 }
 
 // Describes mapping between an Amazon Kinesis stream and a Lambda function.
@@ -898,25 +894,56 @@ type EventSourceMappingConfiguration struct {
 	// The AWS Lambda assigned opaque identifier for the mapping.
 	UUID *string `type:"string"`
 
-	metadataEventSourceMappingConfiguration `json:"-", xml:"-"`
+	metadataEventSourceMappingConfiguration `json:"-" xml:"-"`
 }
 
 type metadataEventSourceMappingConfiguration struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s EventSourceMappingConfiguration) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EventSourceMappingConfiguration) GoString() string {
+	return s.String()
+}
+
 // The code for the Lambda function.
 type FunctionCode struct {
-	// A base64-encoded .zip file containing your packaged source code. For more
-	// information about creating a .zip file, go to Execution Permissions (http://docs.aws.amazon.com/lambda/latest/dg/intro-permission-model.html#lambda-intro-execution-role.html)
+	// Amazon S3 bucket name where the .zip file containing your deployment package
+	// is stored. This bucket must reside in the same AWS region where you are creating
+	// the Lambda function.
+	S3Bucket *string `type:"string"`
+
+	// The Amazon S3 object (the deployment package) key name you want to upload.
+	S3Key *string `type:"string"`
+
+	// The Amazon S3 object (the deployment package) version you want to upload.
+	S3ObjectVersion *string `type:"string"`
+
+	// A base64-encoded .zip file containing your deployment package. For more information
+	// about creating a .zip file, go to Execution Permissions (http://docs.aws.amazon.com/lambda/latest/dg/intro-permission-model.html#lambda-intro-execution-role.html)
 	// in the AWS Lambda Developer Guide.
 	ZipFile []byte `type:"blob"`
 
-	metadataFunctionCode `json:"-", xml:"-"`
+	metadataFunctionCode `json:"-" xml:"-"`
 }
 
 type metadataFunctionCode struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s FunctionCode) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s FunctionCode) GoString() string {
+	return s.String()
 }
 
 // The object for the Lambda function location.
@@ -928,11 +955,21 @@ type FunctionCodeLocation struct {
 	// The repository from which you can download the function.
 	RepositoryType *string `type:"string"`
 
-	metadataFunctionCodeLocation `json:"-", xml:"-"`
+	metadataFunctionCodeLocation `json:"-" xml:"-"`
 }
 
 type metadataFunctionCodeLocation struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s FunctionCodeLocation) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s FunctionCodeLocation) GoString() string {
+	return s.String()
 }
 
 // A complex type that describes function metadata.
@@ -971,22 +1008,42 @@ type FunctionConfiguration struct {
 	// value based on your expected execution time. The default is 3 seconds.
 	Timeout *int64 `type:"integer"`
 
-	metadataFunctionConfiguration `json:"-", xml:"-"`
+	metadataFunctionConfiguration `json:"-" xml:"-"`
 }
 
 type metadataFunctionConfiguration struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s FunctionConfiguration) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s FunctionConfiguration) GoString() string {
+	return s.String()
+}
+
 type GetEventSourceMappingInput struct {
 	// The AWS Lambda assigned ID of the event source mapping.
 	UUID *string `location:"uri" locationName:"UUID" type:"string" required:"true"`
 
-	metadataGetEventSourceMappingInput `json:"-", xml:"-"`
+	metadataGetEventSourceMappingInput `json:"-" xml:"-"`
 }
 
 type metadataGetEventSourceMappingInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetEventSourceMappingInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetEventSourceMappingInput) GoString() string {
+	return s.String()
 }
 
 type GetFunctionConfigurationInput struct {
@@ -1001,11 +1058,21 @@ type GetFunctionConfigurationInput struct {
 	// the function name, it is limited to 64 character in length.
 	FunctionName *string `location:"uri" locationName:"FunctionName" type:"string" required:"true"`
 
-	metadataGetFunctionConfigurationInput `json:"-", xml:"-"`
+	metadataGetFunctionConfigurationInput `json:"-" xml:"-"`
 }
 
 type metadataGetFunctionConfigurationInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetFunctionConfigurationInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetFunctionConfigurationInput) GoString() string {
+	return s.String()
 }
 
 type GetFunctionInput struct {
@@ -1019,11 +1086,21 @@ type GetFunctionInput struct {
 	// the function name, it is limited to 64 character in length.
 	FunctionName *string `location:"uri" locationName:"FunctionName" type:"string" required:"true"`
 
-	metadataGetFunctionInput `json:"-", xml:"-"`
+	metadataGetFunctionInput `json:"-" xml:"-"`
 }
 
 type metadataGetFunctionInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetFunctionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetFunctionInput) GoString() string {
+	return s.String()
 }
 
 // This response contains the object for the Lambda function location (see API_FunctionCodeLocation
@@ -1034,11 +1111,21 @@ type GetFunctionOutput struct {
 	// A complex type that describes function metadata.
 	Configuration *FunctionConfiguration `type:"structure"`
 
-	metadataGetFunctionOutput `json:"-", xml:"-"`
+	metadataGetFunctionOutput `json:"-" xml:"-"`
 }
 
 type metadataGetFunctionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetFunctionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetFunctionOutput) GoString() string {
+	return s.String()
 }
 
 type GetPolicyInput struct {
@@ -1052,11 +1139,21 @@ type GetPolicyInput struct {
 	// the function name, it is limited to 64 character in length.
 	FunctionName *string `location:"uri" locationName:"FunctionName" type:"string" required:"true"`
 
-	metadataGetPolicyInput `json:"-", xml:"-"`
+	metadataGetPolicyInput `json:"-" xml:"-"`
 }
 
 type metadataGetPolicyInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetPolicyInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetPolicyInput) GoString() string {
+	return s.String()
 }
 
 type GetPolicyOutput struct {
@@ -1064,11 +1161,21 @@ type GetPolicyOutput struct {
 	// the same as a string using "\" as an escape character in the JSON.
 	Policy *string `type:"string"`
 
-	metadataGetPolicyOutput `json:"-", xml:"-"`
+	metadataGetPolicyOutput `json:"-" xml:"-"`
 }
 
 type metadataGetPolicyOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetPolicyOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetPolicyOutput) GoString() string {
+	return s.String()
 }
 
 type InvokeAsyncInput struct {
@@ -1078,11 +1185,21 @@ type InvokeAsyncInput struct {
 	// JSON that you want to provide to your Lambda function as input.
 	InvokeArgs io.ReadSeeker `type:"blob" required:"true"`
 
-	metadataInvokeAsyncInput `json:"-", xml:"-"`
+	metadataInvokeAsyncInput `json:"-" xml:"-"`
 }
 
 type metadataInvokeAsyncInput struct {
 	SDKShapeTraits bool `type:"structure" payload:"InvokeArgs"`
+}
+
+// String returns the string representation
+func (s InvokeAsyncInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InvokeAsyncInput) GoString() string {
+	return s.String()
 }
 
 // Upon success, it returns empty response. Otherwise, throws an exception.
@@ -1090,11 +1207,21 @@ type InvokeAsyncOutput struct {
 	// It will be 202 upon success.
 	Status *int64 `location:"statusCode" type:"integer"`
 
-	metadataInvokeAsyncOutput `json:"-", xml:"-"`
+	metadataInvokeAsyncOutput `json:"-" xml:"-"`
 }
 
 type metadataInvokeAsyncOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InvokeAsyncOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InvokeAsyncOutput) GoString() string {
+	return s.String()
 }
 
 type InvokeInput struct {
@@ -1135,11 +1262,21 @@ type InvokeInput struct {
 	// JSON that you want to provide to your Lambda function as input.
 	Payload []byte `type:"blob"`
 
-	metadataInvokeInput `json:"-", xml:"-"`
+	metadataInvokeInput `json:"-" xml:"-"`
 }
 
 type metadataInvokeInput struct {
 	SDKShapeTraits bool `type:"structure" payload:"Payload"`
+}
+
+// String returns the string representation
+func (s InvokeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InvokeInput) GoString() string {
+	return s.String()
 }
 
 // Upon success, returns an empty response. Otherwise, throws an exception.
@@ -1171,11 +1308,21 @@ type InvokeOutput struct {
 	// type the status code will be 204.
 	StatusCode *int64 `location:"statusCode" type:"integer"`
 
-	metadataInvokeOutput `json:"-", xml:"-"`
+	metadataInvokeOutput `json:"-" xml:"-"`
 }
 
 type metadataInvokeOutput struct {
 	SDKShapeTraits bool `type:"structure" payload:"Payload"`
+}
+
+// String returns the string representation
+func (s InvokeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InvokeOutput) GoString() string {
+	return s.String()
 }
 
 type ListEventSourceMappingsInput struct {
@@ -1201,11 +1348,21 @@ type ListEventSourceMappingsInput struct {
 	// in response. This value must be greater than 0.
 	MaxItems *int64 `location:"querystring" locationName:"MaxItems" type:"integer"`
 
-	metadataListEventSourceMappingsInput `json:"-", xml:"-"`
+	metadataListEventSourceMappingsInput `json:"-" xml:"-"`
 }
 
 type metadataListEventSourceMappingsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListEventSourceMappingsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListEventSourceMappingsInput) GoString() string {
+	return s.String()
 }
 
 // Contains a list of event sources (see API_EventSourceMappingConfiguration)
@@ -1216,11 +1373,21 @@ type ListEventSourceMappingsOutput struct {
 	// A string, present if there are more event source mappings.
 	NextMarker *string `type:"string"`
 
-	metadataListEventSourceMappingsOutput `json:"-", xml:"-"`
+	metadataListEventSourceMappingsOutput `json:"-" xml:"-"`
 }
 
 type metadataListEventSourceMappingsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListEventSourceMappingsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListEventSourceMappingsOutput) GoString() string {
+	return s.String()
 }
 
 type ListFunctionsInput struct {
@@ -1232,11 +1399,21 @@ type ListFunctionsInput struct {
 	// return in response. This parameter value must be greater than 0.
 	MaxItems *int64 `location:"querystring" locationName:"MaxItems" type:"integer"`
 
-	metadataListFunctionsInput `json:"-", xml:"-"`
+	metadataListFunctionsInput `json:"-" xml:"-"`
 }
 
 type metadataListFunctionsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListFunctionsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListFunctionsInput) GoString() string {
+	return s.String()
 }
 
 // Contains a list of AWS Lambda function configurations (see FunctionConfiguration.
@@ -1247,11 +1424,21 @@ type ListFunctionsOutput struct {
 	// A string, present if there are more functions.
 	NextMarker *string `type:"string"`
 
-	metadataListFunctionsOutput `json:"-", xml:"-"`
+	metadataListFunctionsOutput `json:"-" xml:"-"`
 }
 
 type metadataListFunctionsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListFunctionsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListFunctionsOutput) GoString() string {
+	return s.String()
 }
 
 type RemovePermissionInput struct {
@@ -1268,19 +1455,39 @@ type RemovePermissionInput struct {
 	// Statement ID of the permission to remove.
 	StatementID *string `location:"uri" locationName:"StatementId" type:"string" required:"true"`
 
-	metadataRemovePermissionInput `json:"-", xml:"-"`
+	metadataRemovePermissionInput `json:"-" xml:"-"`
 }
 
 type metadataRemovePermissionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RemovePermissionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RemovePermissionInput) GoString() string {
+	return s.String()
+}
+
 type RemovePermissionOutput struct {
-	metadataRemovePermissionOutput `json:"-", xml:"-"`
+	metadataRemovePermissionOutput `json:"-" xml:"-"`
 }
 
 type metadataRemovePermissionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RemovePermissionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RemovePermissionOutput) GoString() string {
+	return s.String()
 }
 
 type UpdateEventSourceMappingInput struct {
@@ -1305,11 +1512,21 @@ type UpdateEventSourceMappingInput struct {
 	// The event source mapping identifier.
 	UUID *string `location:"uri" locationName:"UUID" type:"string" required:"true"`
 
-	metadataUpdateEventSourceMappingInput `json:"-", xml:"-"`
+	metadataUpdateEventSourceMappingInput `json:"-" xml:"-"`
 }
 
 type metadataUpdateEventSourceMappingInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UpdateEventSourceMappingInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UpdateEventSourceMappingInput) GoString() string {
+	return s.String()
 }
 
 type UpdateFunctionCodeInput struct {
@@ -1323,14 +1540,35 @@ type UpdateFunctionCodeInput struct {
 	// the function name, it is limited to 64 character in length.
 	FunctionName *string `location:"uri" locationName:"FunctionName" type:"string" required:"true"`
 
-	// Based64-encoded .zip file containing your packaged source code.
-	ZipFile []byte `type:"blob" required:"true"`
+	// Amazon S3 bucket name where the .zip file containing your deployment package
+	// is stored. This bucket must reside in the same AWS region where you are creating
+	// the Lambda function.
+	S3Bucket *string `type:"string"`
 
-	metadataUpdateFunctionCodeInput `json:"-", xml:"-"`
+	// The Amazon S3 object (the deployment package) key name you want to upload.
+	S3Key *string `type:"string"`
+
+	// The Amazon S3 object (the deployment package) version you want to upload.
+	S3ObjectVersion *string `type:"string"`
+
+	// Based64-encoded .zip file containing your packaged source code.
+	ZipFile []byte `type:"blob"`
+
+	metadataUpdateFunctionCodeInput `json:"-" xml:"-"`
 }
 
 type metadataUpdateFunctionCodeInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UpdateFunctionCodeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UpdateFunctionCodeInput) GoString() string {
+	return s.String()
 }
 
 type UpdateFunctionConfigurationInput struct {
@@ -1369,9 +1607,19 @@ type UpdateFunctionConfigurationInput struct {
 	// value based on your expected execution time. The default is 3 seconds.
 	Timeout *int64 `type:"integer"`
 
-	metadataUpdateFunctionConfigurationInput `json:"-", xml:"-"`
+	metadataUpdateFunctionConfigurationInput `json:"-" xml:"-"`
 }
 
 type metadataUpdateFunctionConfigurationInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UpdateFunctionConfigurationInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UpdateFunctionConfigurationInput) GoString() string {
+	return s.String()
 }

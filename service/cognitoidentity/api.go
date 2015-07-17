@@ -4,32 +4,27 @@
 package cognitoidentity
 
 import (
-	"sync"
 	"time"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
-var oprw sync.Mutex
+const opCreateIdentityPool = "CreateIdentityPool"
 
 // CreateIdentityPoolRequest generates a request for the CreateIdentityPool operation.
 func (c *CognitoIdentity) CreateIdentityPoolRequest(input *CreateIdentityPoolInput) (req *aws.Request, output *IdentityPool) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateIdentityPool == nil {
-		opCreateIdentityPool = &aws.Operation{
-			Name:       "CreateIdentityPool",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateIdentityPool,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateIdentityPoolInput{}
 	}
 
-	req = c.newRequest(opCreateIdentityPool, input, output)
+	req = c.newRequest(op, input, output)
 	output = &IdentityPool{}
 	req.Data = output
 	return
@@ -37,34 +32,58 @@ func (c *CognitoIdentity) CreateIdentityPoolRequest(input *CreateIdentityPoolInp
 
 // Creates a new identity pool. The identity pool is a store of user identity
 // information that is specific to your AWS account. The limit on identity pools
-// is 60 per account.
-func (c *CognitoIdentity) CreateIdentityPool(input *CreateIdentityPoolInput) (output *IdentityPool, err error) {
+// is 60 per account. You must use AWS Developer credentials to call this API.
+func (c *CognitoIdentity) CreateIdentityPool(input *CreateIdentityPoolInput) (*IdentityPool, error) {
 	req, out := c.CreateIdentityPoolRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opDeleteIdentities = "DeleteIdentities"
+
+// DeleteIdentitiesRequest generates a request for the DeleteIdentities operation.
+func (c *CognitoIdentity) DeleteIdentitiesRequest(input *DeleteIdentitiesInput) (req *aws.Request, output *DeleteIdentitiesOutput) {
+	op := &aws.Operation{
+		Name:       opDeleteIdentities,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DeleteIdentitiesInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &DeleteIdentitiesOutput{}
+	req.Data = output
 	return
 }
 
-var opCreateIdentityPool *aws.Operation
+// Deletes identities from an identity pool. You can specify a list of 1-60
+// identities that you want to delete.
+//
+// You must use AWS Developer credentials to call this API.
+func (c *CognitoIdentity) DeleteIdentities(input *DeleteIdentitiesInput) (*DeleteIdentitiesOutput, error) {
+	req, out := c.DeleteIdentitiesRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opDeleteIdentityPool = "DeleteIdentityPool"
 
 // DeleteIdentityPoolRequest generates a request for the DeleteIdentityPool operation.
 func (c *CognitoIdentity) DeleteIdentityPoolRequest(input *DeleteIdentityPoolInput) (req *aws.Request, output *DeleteIdentityPoolOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteIdentityPool == nil {
-		opDeleteIdentityPool = &aws.Operation{
-			Name:       "DeleteIdentityPool",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteIdentityPool,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteIdentityPoolInput{}
 	}
 
-	req = c.newRequest(opDeleteIdentityPool, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteIdentityPoolOutput{}
 	req.Data = output
 	return
@@ -72,33 +91,29 @@ func (c *CognitoIdentity) DeleteIdentityPoolRequest(input *DeleteIdentityPoolInp
 
 // Deletes a user pool. Once a pool is deleted, users will not be able to authenticate
 // with the pool.
-func (c *CognitoIdentity) DeleteIdentityPool(input *DeleteIdentityPoolInput) (output *DeleteIdentityPoolOutput, err error) {
+//
+// You must use AWS Developer credentials to call this API.
+func (c *CognitoIdentity) DeleteIdentityPool(input *DeleteIdentityPoolInput) (*DeleteIdentityPoolOutput, error) {
 	req, out := c.DeleteIdentityPoolRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteIdentityPool *aws.Operation
+const opDescribeIdentity = "DescribeIdentity"
 
 // DescribeIdentityRequest generates a request for the DescribeIdentity operation.
 func (c *CognitoIdentity) DescribeIdentityRequest(input *DescribeIdentityInput) (req *aws.Request, output *IdentityDescription) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeIdentity == nil {
-		opDescribeIdentity = &aws.Operation{
-			Name:       "DescribeIdentity",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeIdentity,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeIdentityInput{}
 	}
 
-	req = c.newRequest(opDescribeIdentity, input, output)
+	req = c.newRequest(op, input, output)
 	output = &IdentityDescription{}
 	req.Data = output
 	return
@@ -106,33 +121,29 @@ func (c *CognitoIdentity) DescribeIdentityRequest(input *DescribeIdentityInput) 
 
 // Returns metadata related to the given identity, including when the identity
 // was created and any associated linked logins.
-func (c *CognitoIdentity) DescribeIdentity(input *DescribeIdentityInput) (output *IdentityDescription, err error) {
+//
+// You must use AWS Developer credentials to call this API.
+func (c *CognitoIdentity) DescribeIdentity(input *DescribeIdentityInput) (*IdentityDescription, error) {
 	req, out := c.DescribeIdentityRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeIdentity *aws.Operation
+const opDescribeIdentityPool = "DescribeIdentityPool"
 
 // DescribeIdentityPoolRequest generates a request for the DescribeIdentityPool operation.
 func (c *CognitoIdentity) DescribeIdentityPoolRequest(input *DescribeIdentityPoolInput) (req *aws.Request, output *IdentityPool) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeIdentityPool == nil {
-		opDescribeIdentityPool = &aws.Operation{
-			Name:       "DescribeIdentityPool",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeIdentityPool,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeIdentityPoolInput{}
 	}
 
-	req = c.newRequest(opDescribeIdentityPool, input, output)
+	req = c.newRequest(op, input, output)
 	output = &IdentityPool{}
 	req.Data = output
 	return
@@ -140,33 +151,29 @@ func (c *CognitoIdentity) DescribeIdentityPoolRequest(input *DescribeIdentityPoo
 
 // Gets details about a particular identity pool, including the pool name, ID
 // description, creation date, and current number of users.
-func (c *CognitoIdentity) DescribeIdentityPool(input *DescribeIdentityPoolInput) (output *IdentityPool, err error) {
+//
+// You must use AWS Developer credentials to call this API.
+func (c *CognitoIdentity) DescribeIdentityPool(input *DescribeIdentityPoolInput) (*IdentityPool, error) {
 	req, out := c.DescribeIdentityPoolRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeIdentityPool *aws.Operation
+const opGetCredentialsForIdentity = "GetCredentialsForIdentity"
 
 // GetCredentialsForIdentityRequest generates a request for the GetCredentialsForIdentity operation.
 func (c *CognitoIdentity) GetCredentialsForIdentityRequest(input *GetCredentialsForIdentityInput) (req *aws.Request, output *GetCredentialsForIdentityOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetCredentialsForIdentity == nil {
-		opGetCredentialsForIdentity = &aws.Operation{
-			Name:       "GetCredentialsForIdentity",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opGetCredentialsForIdentity,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &GetCredentialsForIdentityInput{}
 	}
 
-	req = c.newRequest(opGetCredentialsForIdentity, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetCredentialsForIdentityOutput{}
 	req.Data = output
 	return
@@ -176,33 +183,29 @@ func (c *CognitoIdentity) GetCredentialsForIdentityRequest(input *GetCredentials
 // will be validated against supported login providers. If the token is for
 // cognito-identity.amazonaws.com, it will be passed through to AWS Security
 // Token Service with the appropriate role for the token.
-func (c *CognitoIdentity) GetCredentialsForIdentity(input *GetCredentialsForIdentityInput) (output *GetCredentialsForIdentityOutput, err error) {
+//
+// This is a public API. You do not need any credentials to call this API.
+func (c *CognitoIdentity) GetCredentialsForIdentity(input *GetCredentialsForIdentityInput) (*GetCredentialsForIdentityOutput, error) {
 	req, out := c.GetCredentialsForIdentityRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetCredentialsForIdentity *aws.Operation
+const opGetID = "GetId"
 
 // GetIDRequest generates a request for the GetID operation.
 func (c *CognitoIdentity) GetIDRequest(input *GetIDInput) (req *aws.Request, output *GetIDOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetID == nil {
-		opGetID = &aws.Operation{
-			Name:       "GetId",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opGetID,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &GetIDInput{}
 	}
 
-	req = c.newRequest(opGetID, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetIDOutput{}
 	req.Data = output
 	return
@@ -210,66 +213,60 @@ func (c *CognitoIdentity) GetIDRequest(input *GetIDInput) (req *aws.Request, out
 
 // Generates (or retrieves) a Cognito ID. Supplying multiple logins will create
 // an implicit linked account.
-func (c *CognitoIdentity) GetID(input *GetIDInput) (output *GetIDOutput, err error) {
+//
+// token+";"+tokenSecret.
+//
+// This is a public API. You do not need any credentials to call this API.
+func (c *CognitoIdentity) GetID(input *GetIDInput) (*GetIDOutput, error) {
 	req, out := c.GetIDRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetID *aws.Operation
+const opGetIdentityPoolRoles = "GetIdentityPoolRoles"
 
 // GetIdentityPoolRolesRequest generates a request for the GetIdentityPoolRoles operation.
 func (c *CognitoIdentity) GetIdentityPoolRolesRequest(input *GetIdentityPoolRolesInput) (req *aws.Request, output *GetIdentityPoolRolesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetIdentityPoolRoles == nil {
-		opGetIdentityPoolRoles = &aws.Operation{
-			Name:       "GetIdentityPoolRoles",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opGetIdentityPoolRoles,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &GetIdentityPoolRolesInput{}
 	}
 
-	req = c.newRequest(opGetIdentityPoolRoles, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetIdentityPoolRolesOutput{}
 	req.Data = output
 	return
 }
 
 // Gets the roles for an identity pool.
-func (c *CognitoIdentity) GetIdentityPoolRoles(input *GetIdentityPoolRolesInput) (output *GetIdentityPoolRolesOutput, err error) {
+//
+// You must use AWS Developer credentials to call this API.
+func (c *CognitoIdentity) GetIdentityPoolRoles(input *GetIdentityPoolRolesInput) (*GetIdentityPoolRolesOutput, error) {
 	req, out := c.GetIdentityPoolRolesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetIdentityPoolRoles *aws.Operation
+const opGetOpenIDToken = "GetOpenIdToken"
 
 // GetOpenIDTokenRequest generates a request for the GetOpenIDToken operation.
 func (c *CognitoIdentity) GetOpenIDTokenRequest(input *GetOpenIDTokenInput) (req *aws.Request, output *GetOpenIDTokenOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetOpenIDToken == nil {
-		opGetOpenIDToken = &aws.Operation{
-			Name:       "GetOpenIdToken",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opGetOpenIDToken,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &GetOpenIDTokenInput{}
 	}
 
-	req = c.newRequest(opGetOpenIDToken, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetOpenIDTokenOutput{}
 	req.Data = output
 	return
@@ -280,33 +277,29 @@ func (c *CognitoIdentity) GetOpenIDTokenRequest(input *GetOpenIDTokenInput) (req
 // Supplying multiple logins creates an implicit link.
 //
 // The OpenId token is valid for 15 minutes.
-func (c *CognitoIdentity) GetOpenIDToken(input *GetOpenIDTokenInput) (output *GetOpenIDTokenOutput, err error) {
+//
+// This is a public API. You do not need any credentials to call this API.
+func (c *CognitoIdentity) GetOpenIDToken(input *GetOpenIDTokenInput) (*GetOpenIDTokenOutput, error) {
 	req, out := c.GetOpenIDTokenRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetOpenIDToken *aws.Operation
+const opGetOpenIDTokenForDeveloperIdentity = "GetOpenIdTokenForDeveloperIdentity"
 
 // GetOpenIDTokenForDeveloperIdentityRequest generates a request for the GetOpenIDTokenForDeveloperIdentity operation.
 func (c *CognitoIdentity) GetOpenIDTokenForDeveloperIdentityRequest(input *GetOpenIDTokenForDeveloperIdentityInput) (req *aws.Request, output *GetOpenIDTokenForDeveloperIdentityOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetOpenIDTokenForDeveloperIdentity == nil {
-		opGetOpenIDTokenForDeveloperIdentity = &aws.Operation{
-			Name:       "GetOpenIdTokenForDeveloperIdentity",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opGetOpenIDTokenForDeveloperIdentity,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &GetOpenIDTokenForDeveloperIdentityInput{}
 	}
 
-	req = c.newRequest(opGetOpenIDTokenForDeveloperIdentity, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetOpenIDTokenForDeveloperIdentityOutput{}
 	req.Data = output
 	return
@@ -326,99 +319,87 @@ func (c *CognitoIdentity) GetOpenIDTokenForDeveloperIdentityRequest(input *GetOp
 // new login with an existing authenticated/unauthenticated identity, you can
 // do so by providing the existing IdentityId. This API will create the identity
 // in the specified IdentityPoolId.
-func (c *CognitoIdentity) GetOpenIDTokenForDeveloperIdentity(input *GetOpenIDTokenForDeveloperIdentityInput) (output *GetOpenIDTokenForDeveloperIdentityOutput, err error) {
+//
+// You must use AWS Developer credentials to call this API.
+func (c *CognitoIdentity) GetOpenIDTokenForDeveloperIdentity(input *GetOpenIDTokenForDeveloperIdentityInput) (*GetOpenIDTokenForDeveloperIdentityOutput, error) {
 	req, out := c.GetOpenIDTokenForDeveloperIdentityRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetOpenIDTokenForDeveloperIdentity *aws.Operation
+const opListIdentities = "ListIdentities"
 
 // ListIdentitiesRequest generates a request for the ListIdentities operation.
 func (c *CognitoIdentity) ListIdentitiesRequest(input *ListIdentitiesInput) (req *aws.Request, output *ListIdentitiesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListIdentities == nil {
-		opListIdentities = &aws.Operation{
-			Name:       "ListIdentities",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opListIdentities,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ListIdentitiesInput{}
 	}
 
-	req = c.newRequest(opListIdentities, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListIdentitiesOutput{}
 	req.Data = output
 	return
 }
 
 // Lists the identities in a pool.
-func (c *CognitoIdentity) ListIdentities(input *ListIdentitiesInput) (output *ListIdentitiesOutput, err error) {
+//
+// You must use AWS Developer credentials to call this API.
+func (c *CognitoIdentity) ListIdentities(input *ListIdentitiesInput) (*ListIdentitiesOutput, error) {
 	req, out := c.ListIdentitiesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListIdentities *aws.Operation
+const opListIdentityPools = "ListIdentityPools"
 
 // ListIdentityPoolsRequest generates a request for the ListIdentityPools operation.
 func (c *CognitoIdentity) ListIdentityPoolsRequest(input *ListIdentityPoolsInput) (req *aws.Request, output *ListIdentityPoolsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListIdentityPools == nil {
-		opListIdentityPools = &aws.Operation{
-			Name:       "ListIdentityPools",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opListIdentityPools,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ListIdentityPoolsInput{}
 	}
 
-	req = c.newRequest(opListIdentityPools, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListIdentityPoolsOutput{}
 	req.Data = output
 	return
 }
 
 // Lists all of the Cognito identity pools registered for your account.
-func (c *CognitoIdentity) ListIdentityPools(input *ListIdentityPoolsInput) (output *ListIdentityPoolsOutput, err error) {
+//
+// This is a public API. You do not need any credentials to call this API.
+func (c *CognitoIdentity) ListIdentityPools(input *ListIdentityPoolsInput) (*ListIdentityPoolsOutput, error) {
 	req, out := c.ListIdentityPoolsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListIdentityPools *aws.Operation
+const opLookupDeveloperIdentity = "LookupDeveloperIdentity"
 
 // LookupDeveloperIdentityRequest generates a request for the LookupDeveloperIdentity operation.
 func (c *CognitoIdentity) LookupDeveloperIdentityRequest(input *LookupDeveloperIdentityInput) (req *aws.Request, output *LookupDeveloperIdentityOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opLookupDeveloperIdentity == nil {
-		opLookupDeveloperIdentity = &aws.Operation{
-			Name:       "LookupDeveloperIdentity",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opLookupDeveloperIdentity,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &LookupDeveloperIdentityInput{}
 	}
 
-	req = c.newRequest(opLookupDeveloperIdentity, input, output)
+	req = c.newRequest(op, input, output)
 	output = &LookupDeveloperIdentityOutput{}
 	req.Data = output
 	return
@@ -432,33 +413,29 @@ func (c *CognitoIdentity) LookupDeveloperIdentityRequest(input *LookupDeveloperI
 // DeveloperUserIdentifier will be matched against IdentityID. If the values
 // are verified against the database, the response returns both values and is
 // the same as the request. Otherwise a ResourceConflictException is thrown.
-func (c *CognitoIdentity) LookupDeveloperIdentity(input *LookupDeveloperIdentityInput) (output *LookupDeveloperIdentityOutput, err error) {
+//
+// You must use AWS Developer credentials to call this API.
+func (c *CognitoIdentity) LookupDeveloperIdentity(input *LookupDeveloperIdentityInput) (*LookupDeveloperIdentityOutput, error) {
 	req, out := c.LookupDeveloperIdentityRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opLookupDeveloperIdentity *aws.Operation
+const opMergeDeveloperIdentities = "MergeDeveloperIdentities"
 
 // MergeDeveloperIdentitiesRequest generates a request for the MergeDeveloperIdentities operation.
 func (c *CognitoIdentity) MergeDeveloperIdentitiesRequest(input *MergeDeveloperIdentitiesInput) (req *aws.Request, output *MergeDeveloperIdentitiesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opMergeDeveloperIdentities == nil {
-		opMergeDeveloperIdentities = &aws.Operation{
-			Name:       "MergeDeveloperIdentities",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opMergeDeveloperIdentities,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &MergeDeveloperIdentitiesInput{}
 	}
 
-	req = c.newRequest(opMergeDeveloperIdentities, input, output)
+	req = c.newRequest(op, input, output)
 	output = &MergeDeveloperIdentitiesOutput{}
 	req.Data = output
 	return
@@ -471,33 +448,29 @@ func (c *CognitoIdentity) MergeDeveloperIdentitiesRequest(input *MergeDeveloperI
 // with the IdentityId of the DestinationUserIdentifier. Only developer-authenticated
 // users can be merged. If the users to be merged are associated with the same
 // public provider, but as two different users, an exception will be thrown.
-func (c *CognitoIdentity) MergeDeveloperIdentities(input *MergeDeveloperIdentitiesInput) (output *MergeDeveloperIdentitiesOutput, err error) {
+//
+// You must use AWS Developer credentials to call this API.
+func (c *CognitoIdentity) MergeDeveloperIdentities(input *MergeDeveloperIdentitiesInput) (*MergeDeveloperIdentitiesOutput, error) {
 	req, out := c.MergeDeveloperIdentitiesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opMergeDeveloperIdentities *aws.Operation
+const opSetIdentityPoolRoles = "SetIdentityPoolRoles"
 
 // SetIdentityPoolRolesRequest generates a request for the SetIdentityPoolRoles operation.
 func (c *CognitoIdentity) SetIdentityPoolRolesRequest(input *SetIdentityPoolRolesInput) (req *aws.Request, output *SetIdentityPoolRolesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opSetIdentityPoolRoles == nil {
-		opSetIdentityPoolRoles = &aws.Operation{
-			Name:       "SetIdentityPoolRoles",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opSetIdentityPoolRoles,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &SetIdentityPoolRolesInput{}
 	}
 
-	req = c.newRequest(opSetIdentityPoolRoles, input, output)
+	req = c.newRequest(op, input, output)
 	output = &SetIdentityPoolRolesOutput{}
 	req.Data = output
 	return
@@ -505,33 +478,29 @@ func (c *CognitoIdentity) SetIdentityPoolRolesRequest(input *SetIdentityPoolRole
 
 // Sets the roles for an identity pool. These roles are used when making calls
 // to GetCredentialsForIdentity action.
-func (c *CognitoIdentity) SetIdentityPoolRoles(input *SetIdentityPoolRolesInput) (output *SetIdentityPoolRolesOutput, err error) {
+//
+// You must use AWS Developer credentials to call this API.
+func (c *CognitoIdentity) SetIdentityPoolRoles(input *SetIdentityPoolRolesInput) (*SetIdentityPoolRolesOutput, error) {
 	req, out := c.SetIdentityPoolRolesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opSetIdentityPoolRoles *aws.Operation
+const opUnlinkDeveloperIdentity = "UnlinkDeveloperIdentity"
 
 // UnlinkDeveloperIdentityRequest generates a request for the UnlinkDeveloperIdentity operation.
 func (c *CognitoIdentity) UnlinkDeveloperIdentityRequest(input *UnlinkDeveloperIdentityInput) (req *aws.Request, output *UnlinkDeveloperIdentityOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUnlinkDeveloperIdentity == nil {
-		opUnlinkDeveloperIdentity = &aws.Operation{
-			Name:       "UnlinkDeveloperIdentity",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opUnlinkDeveloperIdentity,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &UnlinkDeveloperIdentityInput{}
 	}
 
-	req = c.newRequest(opUnlinkDeveloperIdentity, input, output)
+	req = c.newRequest(op, input, output)
 	output = &UnlinkDeveloperIdentityOutput{}
 	req.Data = output
 	return
@@ -541,33 +510,29 @@ func (c *CognitoIdentity) UnlinkDeveloperIdentityRequest(input *UnlinkDeveloperI
 // users will be considered new identities next time they are seen. If, for
 // a given Cognito identity, you remove all federated identities as well as
 // the developer user identifier, the Cognito identity becomes inaccessible.
-func (c *CognitoIdentity) UnlinkDeveloperIdentity(input *UnlinkDeveloperIdentityInput) (output *UnlinkDeveloperIdentityOutput, err error) {
+//
+// This is a public API. You do not need any credentials to call this API.
+func (c *CognitoIdentity) UnlinkDeveloperIdentity(input *UnlinkDeveloperIdentityInput) (*UnlinkDeveloperIdentityOutput, error) {
 	req, out := c.UnlinkDeveloperIdentityRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opUnlinkDeveloperIdentity *aws.Operation
+const opUnlinkIdentity = "UnlinkIdentity"
 
 // UnlinkIdentityRequest generates a request for the UnlinkIdentity operation.
 func (c *CognitoIdentity) UnlinkIdentityRequest(input *UnlinkIdentityInput) (req *aws.Request, output *UnlinkIdentityOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUnlinkIdentity == nil {
-		opUnlinkIdentity = &aws.Operation{
-			Name:       "UnlinkIdentity",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opUnlinkIdentity,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &UnlinkIdentityInput{}
 	}
 
-	req = c.newRequest(opUnlinkIdentity, input, output)
+	req = c.newRequest(op, input, output)
 	output = &UnlinkIdentityOutput{}
 	req.Data = output
 	return
@@ -576,47 +541,42 @@ func (c *CognitoIdentity) UnlinkIdentityRequest(input *UnlinkIdentityInput) (req
 // Unlinks a federated identity from an existing account. Unlinked logins will
 // be considered new identities next time they are seen. Removing the last linked
 // login will make this identity inaccessible.
-func (c *CognitoIdentity) UnlinkIdentity(input *UnlinkIdentityInput) (output *UnlinkIdentityOutput, err error) {
+//
+// This is a public API. You do not need any credentials to call this API.
+func (c *CognitoIdentity) UnlinkIdentity(input *UnlinkIdentityInput) (*UnlinkIdentityOutput, error) {
 	req, out := c.UnlinkIdentityRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opUnlinkIdentity *aws.Operation
+const opUpdateIdentityPool = "UpdateIdentityPool"
 
 // UpdateIdentityPoolRequest generates a request for the UpdateIdentityPool operation.
 func (c *CognitoIdentity) UpdateIdentityPoolRequest(input *IdentityPool) (req *aws.Request, output *IdentityPool) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUpdateIdentityPool == nil {
-		opUpdateIdentityPool = &aws.Operation{
-			Name:       "UpdateIdentityPool",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opUpdateIdentityPool,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &IdentityPool{}
 	}
 
-	req = c.newRequest(opUpdateIdentityPool, input, output)
+	req = c.newRequest(op, input, output)
 	output = &IdentityPool{}
 	req.Data = output
 	return
 }
 
 // Updates a user pool.
-func (c *CognitoIdentity) UpdateIdentityPool(input *IdentityPool) (output *IdentityPool, err error) {
+//
+// You must use AWS Developer credentials to call this API.
+func (c *CognitoIdentity) UpdateIdentityPool(input *IdentityPool) (*IdentityPool, error) {
 	req, out := c.UpdateIdentityPoolRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
-
-var opUpdateIdentityPool *aws.Operation
 
 // Input to the CreateIdentityPool action.
 type CreateIdentityPoolInput struct {
@@ -639,13 +599,23 @@ type CreateIdentityPoolInput struct {
 	OpenIDConnectProviderARNs []*string `locationName:"OpenIdConnectProviderARNs" type:"list"`
 
 	// Optional key:value pairs mapping provider names to provider app IDs.
-	SupportedLoginProviders *map[string]*string `type:"map"`
+	SupportedLoginProviders map[string]*string `type:"map"`
 
-	metadataCreateIdentityPoolInput `json:"-", xml:"-"`
+	metadataCreateIdentityPoolInput `json:"-" xml:"-"`
 }
 
 type metadataCreateIdentityPoolInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateIdentityPoolInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateIdentityPoolInput) GoString() string {
+	return s.String()
 }
 
 // Credentials for the the provided identity ID.
@@ -662,11 +632,66 @@ type Credentials struct {
 	// The Session Token portion of the credentials
 	SessionToken *string `type:"string"`
 
-	metadataCredentials `json:"-", xml:"-"`
+	metadataCredentials `json:"-" xml:"-"`
 }
 
 type metadataCredentials struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Credentials) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Credentials) GoString() string {
+	return s.String()
+}
+
+// Input to the DeleteIdentities action.
+type DeleteIdentitiesInput struct {
+	// A list of 1-60 identities that you want to delete.
+	IdentityIDsToDelete []*string `locationName:"IdentityIdsToDelete" type:"list" required:"true"`
+
+	metadataDeleteIdentitiesInput `json:"-" xml:"-"`
+}
+
+type metadataDeleteIdentitiesInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteIdentitiesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteIdentitiesInput) GoString() string {
+	return s.String()
+}
+
+// Returned in response to a successful DeleteIdentities operation.
+type DeleteIdentitiesOutput struct {
+	// An array of UnprocessedIdentityId objects, each of which contains an ErrorCode
+	// and IdentityId.
+	UnprocessedIdentityIDs []*UnprocessedIdentityID `locationName:"UnprocessedIdentityIds" type:"list"`
+
+	metadataDeleteIdentitiesOutput `json:"-" xml:"-"`
+}
+
+type metadataDeleteIdentitiesOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteIdentitiesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteIdentitiesOutput) GoString() string {
+	return s.String()
 }
 
 // Input to the DeleteIdentityPool action.
@@ -674,19 +699,39 @@ type DeleteIdentityPoolInput struct {
 	// An identity pool ID in the format REGION:GUID.
 	IdentityPoolID *string `locationName:"IdentityPoolId" type:"string" required:"true"`
 
-	metadataDeleteIdentityPoolInput `json:"-", xml:"-"`
+	metadataDeleteIdentityPoolInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteIdentityPoolInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteIdentityPoolInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteIdentityPoolInput) GoString() string {
+	return s.String()
+}
+
 type DeleteIdentityPoolOutput struct {
-	metadataDeleteIdentityPoolOutput `json:"-", xml:"-"`
+	metadataDeleteIdentityPoolOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteIdentityPoolOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteIdentityPoolOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteIdentityPoolOutput) GoString() string {
+	return s.String()
 }
 
 // Input to the DescribeIdentity action.
@@ -694,11 +739,21 @@ type DescribeIdentityInput struct {
 	// A unique identifier in the format REGION:GUID.
 	IdentityID *string `locationName:"IdentityId" type:"string" required:"true"`
 
-	metadataDescribeIdentityInput `json:"-", xml:"-"`
+	metadataDescribeIdentityInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeIdentityInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeIdentityInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeIdentityInput) GoString() string {
+	return s.String()
 }
 
 // Input to the DescribeIdentityPool action.
@@ -706,11 +761,21 @@ type DescribeIdentityPoolInput struct {
 	// An identity pool ID in the format REGION:GUID.
 	IdentityPoolID *string `locationName:"IdentityPoolId" type:"string" required:"true"`
 
-	metadataDescribeIdentityPoolInput `json:"-", xml:"-"`
+	metadataDescribeIdentityPoolInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeIdentityPoolInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeIdentityPoolInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeIdentityPoolInput) GoString() string {
+	return s.String()
 }
 
 // Input to the GetCredentialsForIdentity action.
@@ -719,13 +784,23 @@ type GetCredentialsForIdentityInput struct {
 	IdentityID *string `locationName:"IdentityId" type:"string" required:"true"`
 
 	// A set of optional name-value pairs that map provider names to provider tokens.
-	Logins *map[string]*string `type:"map"`
+	Logins map[string]*string `type:"map"`
 
-	metadataGetCredentialsForIdentityInput `json:"-", xml:"-"`
+	metadataGetCredentialsForIdentityInput `json:"-" xml:"-"`
 }
 
 type metadataGetCredentialsForIdentityInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetCredentialsForIdentityInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetCredentialsForIdentityInput) GoString() string {
+	return s.String()
 }
 
 // Returned in response to a successful GetCredentialsForIdentity operation.
@@ -736,11 +811,21 @@ type GetCredentialsForIdentityOutput struct {
 	// A unique identifier in the format REGION:GUID.
 	IdentityID *string `locationName:"IdentityId" type:"string"`
 
-	metadataGetCredentialsForIdentityOutput `json:"-", xml:"-"`
+	metadataGetCredentialsForIdentityOutput `json:"-" xml:"-"`
 }
 
 type metadataGetCredentialsForIdentityOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetCredentialsForIdentityOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetCredentialsForIdentityOutput) GoString() string {
+	return s.String()
 }
 
 // Input to the GetId action.
@@ -754,14 +839,25 @@ type GetIDInput struct {
 	// A set of optional name-value pairs that map provider names to provider tokens.
 	//
 	// The available provider names for Logins are as follows:  Facebook: graph.facebook.com
-	//  Google: accounts.google.com  Amazon: www.amazon.com
-	Logins *map[string]*string `type:"map"`
+	//  Google: accounts.google.com  Amazon: www.amazon.com  Twitter: www.twitter.com
+	//  Digits: www.digits.com
+	Logins map[string]*string `type:"map"`
 
-	metadataGetIDInput `json:"-", xml:"-"`
+	metadataGetIDInput `json:"-" xml:"-"`
 }
 
 type metadataGetIDInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetIDInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetIDInput) GoString() string {
+	return s.String()
 }
 
 // Returned in response to a GetId request.
@@ -769,23 +865,43 @@ type GetIDOutput struct {
 	// A unique identifier in the format REGION:GUID.
 	IdentityID *string `locationName:"IdentityId" type:"string"`
 
-	metadataGetIDOutput `json:"-", xml:"-"`
+	metadataGetIDOutput `json:"-" xml:"-"`
 }
 
 type metadataGetIDOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s GetIDOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetIDOutput) GoString() string {
+	return s.String()
+}
+
 // Input to the GetIdentityPoolRoles action.
 type GetIdentityPoolRolesInput struct {
 	// An identity pool ID in the format REGION:GUID.
-	IdentityPoolID *string `locationName:"IdentityPoolId" type:"string"`
+	IdentityPoolID *string `locationName:"IdentityPoolId" type:"string" required:"true"`
 
-	metadataGetIdentityPoolRolesInput `json:"-", xml:"-"`
+	metadataGetIdentityPoolRolesInput `json:"-" xml:"-"`
 }
 
 type metadataGetIdentityPoolRolesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetIdentityPoolRolesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetIdentityPoolRolesInput) GoString() string {
+	return s.String()
 }
 
 // Returned in response to a successful GetIdentityPoolRoles operation.
@@ -795,13 +911,23 @@ type GetIdentityPoolRolesOutput struct {
 
 	// The map of roles associated with this pool. Currently only authenticated
 	// and unauthenticated roles are supported.
-	Roles *map[string]*string `type:"map"`
+	Roles map[string]*string `type:"map"`
 
-	metadataGetIdentityPoolRolesOutput `json:"-", xml:"-"`
+	metadataGetIdentityPoolRolesOutput `json:"-" xml:"-"`
 }
 
 type metadataGetIdentityPoolRolesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetIdentityPoolRolesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetIdentityPoolRolesOutput) GoString() string {
+	return s.String()
 }
 
 // Input to the GetOpenIdTokenForDeveloperIdentity action.
@@ -821,7 +947,7 @@ type GetOpenIDTokenForDeveloperIdentityInput struct {
 	// The developer user identifier is an identifier from your backend that uniquely
 	// identifies a user. When you create an identity pool, you can specify the
 	// supported logins.
-	Logins *map[string]*string `type:"map" required:"true"`
+	Logins map[string]*string `type:"map" required:"true"`
 
 	// The expiration time of the token, in seconds. You can specify a custom expiration
 	// time for the token so that you can cache it. If you don't provide an expiration
@@ -833,11 +959,21 @@ type GetOpenIDTokenForDeveloperIdentityInput struct {
 	// AWS resources for the token's duration.
 	TokenDuration *int64 `type:"long"`
 
-	metadataGetOpenIDTokenForDeveloperIdentityInput `json:"-", xml:"-"`
+	metadataGetOpenIDTokenForDeveloperIdentityInput `json:"-" xml:"-"`
 }
 
 type metadataGetOpenIDTokenForDeveloperIdentityInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetOpenIDTokenForDeveloperIdentityInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetOpenIDTokenForDeveloperIdentityInput) GoString() string {
+	return s.String()
 }
 
 // Returned in response to a successful GetOpenIdTokenForDeveloperIdentity request.
@@ -848,11 +984,21 @@ type GetOpenIDTokenForDeveloperIdentityOutput struct {
 	// An OpenID token.
 	Token *string `type:"string"`
 
-	metadataGetOpenIDTokenForDeveloperIdentityOutput `json:"-", xml:"-"`
+	metadataGetOpenIDTokenForDeveloperIdentityOutput `json:"-" xml:"-"`
 }
 
 type metadataGetOpenIDTokenForDeveloperIdentityOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetOpenIDTokenForDeveloperIdentityOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetOpenIDTokenForDeveloperIdentityOutput) GoString() string {
+	return s.String()
 }
 
 // Input to the GetOpenIdToken action.
@@ -861,13 +1007,26 @@ type GetOpenIDTokenInput struct {
 	IdentityID *string `locationName:"IdentityId" type:"string" required:"true"`
 
 	// A set of optional name-value pairs that map provider names to provider tokens.
-	Logins *map[string]*string `type:"map"`
+	// When using graph.facebook.com and www.amazon.com, supply the access_token
+	// returned from the provider's authflow. For accounts.google.com or any other
+	// OpenId Connect provider, always include the id_token.
+	Logins map[string]*string `type:"map"`
 
-	metadataGetOpenIDTokenInput `json:"-", xml:"-"`
+	metadataGetOpenIDTokenInput `json:"-" xml:"-"`
 }
 
 type metadataGetOpenIDTokenInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetOpenIDTokenInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetOpenIDTokenInput) GoString() string {
+	return s.String()
 }
 
 // Returned in response to a successful GetOpenIdToken request.
@@ -879,11 +1038,21 @@ type GetOpenIDTokenOutput struct {
 	// An OpenID token, valid for 15 minutes.
 	Token *string `type:"string"`
 
-	metadataGetOpenIDTokenOutput `json:"-", xml:"-"`
+	metadataGetOpenIDTokenOutput `json:"-" xml:"-"`
 }
 
 type metadataGetOpenIDTokenOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetOpenIDTokenOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetOpenIDTokenOutput) GoString() string {
+	return s.String()
 }
 
 // A description of the identity.
@@ -900,11 +1069,21 @@ type IdentityDescription struct {
 	// A set of optional name-value pairs that map provider names to provider tokens.
 	Logins []*string `type:"list"`
 
-	metadataIdentityDescription `json:"-", xml:"-"`
+	metadataIdentityDescription `json:"-" xml:"-"`
 }
 
 type metadataIdentityDescription struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s IdentityDescription) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s IdentityDescription) GoString() string {
+	return s.String()
 }
 
 // An object representing a Cognito identity pool.
@@ -925,13 +1104,23 @@ type IdentityPool struct {
 	OpenIDConnectProviderARNs []*string `locationName:"OpenIdConnectProviderARNs" type:"list"`
 
 	// Optional key:value pairs mapping provider names to provider app IDs.
-	SupportedLoginProviders *map[string]*string `type:"map"`
+	SupportedLoginProviders map[string]*string `type:"map"`
 
-	metadataIdentityPool `json:"-", xml:"-"`
+	metadataIdentityPool `json:"-" xml:"-"`
 }
 
 type metadataIdentityPool struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s IdentityPool) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s IdentityPool) GoString() string {
+	return s.String()
 }
 
 // A description of the identity pool.
@@ -942,15 +1131,30 @@ type IdentityPoolShortDescription struct {
 	// A string that you provide.
 	IdentityPoolName *string `type:"string"`
 
-	metadataIdentityPoolShortDescription `json:"-", xml:"-"`
+	metadataIdentityPoolShortDescription `json:"-" xml:"-"`
 }
 
 type metadataIdentityPoolShortDescription struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s IdentityPoolShortDescription) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s IdentityPoolShortDescription) GoString() string {
+	return s.String()
+}
+
 // Input to the ListIdentities action.
 type ListIdentitiesInput struct {
+	// An optional boolean parameter that allows you to hide disabled identities.
+	// If omitted, the ListIdentities API will include disabled identities in the
+	// response.
+	HideDisabled *bool `type:"boolean"`
+
 	// An identity pool ID in the format REGION:GUID.
 	IdentityPoolID *string `locationName:"IdentityPoolId" type:"string" required:"true"`
 
@@ -960,11 +1164,21 @@ type ListIdentitiesInput struct {
 	// A pagination token.
 	NextToken *string `type:"string"`
 
-	metadataListIdentitiesInput `json:"-", xml:"-"`
+	metadataListIdentitiesInput `json:"-" xml:"-"`
 }
 
 type metadataListIdentitiesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListIdentitiesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListIdentitiesInput) GoString() string {
+	return s.String()
 }
 
 // The response to a ListIdentities request.
@@ -978,11 +1192,21 @@ type ListIdentitiesOutput struct {
 	// A pagination token.
 	NextToken *string `type:"string"`
 
-	metadataListIdentitiesOutput `json:"-", xml:"-"`
+	metadataListIdentitiesOutput `json:"-" xml:"-"`
 }
 
 type metadataListIdentitiesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListIdentitiesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListIdentitiesOutput) GoString() string {
+	return s.String()
 }
 
 // Input to the ListIdentityPools action.
@@ -993,11 +1217,21 @@ type ListIdentityPoolsInput struct {
 	// A pagination token.
 	NextToken *string `type:"string"`
 
-	metadataListIdentityPoolsInput `json:"-", xml:"-"`
+	metadataListIdentityPoolsInput `json:"-" xml:"-"`
 }
 
 type metadataListIdentityPoolsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListIdentityPoolsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListIdentityPoolsInput) GoString() string {
+	return s.String()
 }
 
 // The result of a successful ListIdentityPools action.
@@ -1008,11 +1242,21 @@ type ListIdentityPoolsOutput struct {
 	// A pagination token.
 	NextToken *string `type:"string"`
 
-	metadataListIdentityPoolsOutput `json:"-", xml:"-"`
+	metadataListIdentityPoolsOutput `json:"-" xml:"-"`
 }
 
 type metadataListIdentityPoolsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListIdentityPoolsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListIdentityPoolsOutput) GoString() string {
+	return s.String()
 }
 
 // Input to the LookupDeveloperIdentityInput action.
@@ -1039,11 +1283,21 @@ type LookupDeveloperIdentityInput struct {
 	// results starting from the 11th match.
 	NextToken *string `type:"string"`
 
-	metadataLookupDeveloperIdentityInput `json:"-", xml:"-"`
+	metadataLookupDeveloperIdentityInput `json:"-" xml:"-"`
 }
 
 type metadataLookupDeveloperIdentityInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s LookupDeveloperIdentityInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s LookupDeveloperIdentityInput) GoString() string {
+	return s.String()
 }
 
 // Returned in response to a successful LookupDeveloperIdentity action.
@@ -1064,11 +1318,21 @@ type LookupDeveloperIdentityOutput struct {
 	// results starting from the 11th match.
 	NextToken *string `type:"string"`
 
-	metadataLookupDeveloperIdentityOutput `json:"-", xml:"-"`
+	metadataLookupDeveloperIdentityOutput `json:"-" xml:"-"`
 }
 
 type metadataLookupDeveloperIdentityOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s LookupDeveloperIdentityOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s LookupDeveloperIdentityOutput) GoString() string {
+	return s.String()
 }
 
 // Input to the MergeDeveloperIdentities action.
@@ -1089,11 +1353,21 @@ type MergeDeveloperIdentitiesInput struct {
 	// User identifier for the source user. The value should be a DeveloperUserIdentifier.
 	SourceUserIdentifier *string `type:"string" required:"true"`
 
-	metadataMergeDeveloperIdentitiesInput `json:"-", xml:"-"`
+	metadataMergeDeveloperIdentitiesInput `json:"-" xml:"-"`
 }
 
 type metadataMergeDeveloperIdentitiesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s MergeDeveloperIdentitiesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s MergeDeveloperIdentitiesInput) GoString() string {
+	return s.String()
 }
 
 // Returned in response to a successful MergeDeveloperIdentities action.
@@ -1101,11 +1375,21 @@ type MergeDeveloperIdentitiesOutput struct {
 	// A unique identifier in the format REGION:GUID.
 	IdentityID *string `locationName:"IdentityId" type:"string"`
 
-	metadataMergeDeveloperIdentitiesOutput `json:"-", xml:"-"`
+	metadataMergeDeveloperIdentitiesOutput `json:"-" xml:"-"`
 }
 
 type metadataMergeDeveloperIdentitiesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s MergeDeveloperIdentitiesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s MergeDeveloperIdentitiesOutput) GoString() string {
+	return s.String()
 }
 
 // Input to the SetIdentityPoolRoles action.
@@ -1113,23 +1397,44 @@ type SetIdentityPoolRolesInput struct {
 	// An identity pool ID in the format REGION:GUID.
 	IdentityPoolID *string `locationName:"IdentityPoolId" type:"string" required:"true"`
 
-	// The map of roles associated with this pool. Currently only authenticated
-	// and unauthenticated roles are supported.
-	Roles *map[string]*string `type:"map" required:"true"`
+	// The map of roles associated with this pool. For a given role, the key will
+	// be either "authenticated" or "unauthenticated" and the value will be the
+	// Role ARN.
+	Roles map[string]*string `type:"map" required:"true"`
 
-	metadataSetIdentityPoolRolesInput `json:"-", xml:"-"`
+	metadataSetIdentityPoolRolesInput `json:"-" xml:"-"`
 }
 
 type metadataSetIdentityPoolRolesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s SetIdentityPoolRolesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetIdentityPoolRolesInput) GoString() string {
+	return s.String()
+}
+
 type SetIdentityPoolRolesOutput struct {
-	metadataSetIdentityPoolRolesOutput `json:"-", xml:"-"`
+	metadataSetIdentityPoolRolesOutput `json:"-" xml:"-"`
 }
 
 type metadataSetIdentityPoolRolesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SetIdentityPoolRolesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetIdentityPoolRolesOutput) GoString() string {
+	return s.String()
 }
 
 // Input to the UnlinkDeveloperIdentity action.
@@ -1146,19 +1451,39 @@ type UnlinkDeveloperIdentityInput struct {
 	// An identity pool ID in the format REGION:GUID.
 	IdentityPoolID *string `locationName:"IdentityPoolId" type:"string" required:"true"`
 
-	metadataUnlinkDeveloperIdentityInput `json:"-", xml:"-"`
+	metadataUnlinkDeveloperIdentityInput `json:"-" xml:"-"`
 }
 
 type metadataUnlinkDeveloperIdentityInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s UnlinkDeveloperIdentityInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UnlinkDeveloperIdentityInput) GoString() string {
+	return s.String()
+}
+
 type UnlinkDeveloperIdentityOutput struct {
-	metadataUnlinkDeveloperIdentityOutput `json:"-", xml:"-"`
+	metadataUnlinkDeveloperIdentityOutput `json:"-" xml:"-"`
 }
 
 type metadataUnlinkDeveloperIdentityOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UnlinkDeveloperIdentityOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UnlinkDeveloperIdentityOutput) GoString() string {
+	return s.String()
 }
 
 // Input to the UnlinkIdentity action.
@@ -1167,22 +1492,68 @@ type UnlinkIdentityInput struct {
 	IdentityID *string `locationName:"IdentityId" type:"string" required:"true"`
 
 	// A set of optional name-value pairs that map provider names to provider tokens.
-	Logins *map[string]*string `type:"map" required:"true"`
+	Logins map[string]*string `type:"map" required:"true"`
 
 	// Provider names to unlink from this identity.
 	LoginsToRemove []*string `type:"list" required:"true"`
 
-	metadataUnlinkIdentityInput `json:"-", xml:"-"`
+	metadataUnlinkIdentityInput `json:"-" xml:"-"`
 }
 
 type metadataUnlinkIdentityInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s UnlinkIdentityInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UnlinkIdentityInput) GoString() string {
+	return s.String()
+}
+
 type UnlinkIdentityOutput struct {
-	metadataUnlinkIdentityOutput `json:"-", xml:"-"`
+	metadataUnlinkIdentityOutput `json:"-" xml:"-"`
 }
 
 type metadataUnlinkIdentityOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UnlinkIdentityOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UnlinkIdentityOutput) GoString() string {
+	return s.String()
+}
+
+// An array of UnprocessedIdentityId objects, each of which contains an ErrorCode
+// and IdentityId.
+type UnprocessedIdentityID struct {
+	// The error code indicating the type of error that occurred.
+	ErrorCode *string `type:"string"`
+
+	// A unique identifier in the format REGION:GUID.
+	IdentityID *string `locationName:"IdentityId" type:"string"`
+
+	metadataUnprocessedIdentityID `json:"-" xml:"-"`
+}
+
+type metadataUnprocessedIdentityID struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UnprocessedIdentityID) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UnprocessedIdentityID) GoString() string {
+	return s.String()
 }

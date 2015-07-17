@@ -4,32 +4,27 @@
 package cloudtrail
 
 import (
-	"sync"
 	"time"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
-var oprw sync.Mutex
+const opCreateTrail = "CreateTrail"
 
 // CreateTrailRequest generates a request for the CreateTrail operation.
 func (c *CloudTrail) CreateTrailRequest(input *CreateTrailInput) (req *aws.Request, output *CreateTrailOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateTrail == nil {
-		opCreateTrail = &aws.Operation{
-			Name:       "CreateTrail",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateTrail,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateTrailInput{}
 	}
 
-	req = c.newRequest(opCreateTrail, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateTrailOutput{}
 	req.Data = output
 	return
@@ -39,66 +34,54 @@ func (c *CloudTrail) CreateTrailRequest(input *CreateTrailInput) (req *aws.Reque
 //
 // Creates a trail that specifies the settings for delivery of log data to
 // an Amazon S3 bucket.
-func (c *CloudTrail) CreateTrail(input *CreateTrailInput) (output *CreateTrailOutput, err error) {
+func (c *CloudTrail) CreateTrail(input *CreateTrailInput) (*CreateTrailOutput, error) {
 	req, out := c.CreateTrailRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateTrail *aws.Operation
+const opDeleteTrail = "DeleteTrail"
 
 // DeleteTrailRequest generates a request for the DeleteTrail operation.
 func (c *CloudTrail) DeleteTrailRequest(input *DeleteTrailInput) (req *aws.Request, output *DeleteTrailOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteTrail == nil {
-		opDeleteTrail = &aws.Operation{
-			Name:       "DeleteTrail",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteTrail,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteTrailInput{}
 	}
 
-	req = c.newRequest(opDeleteTrail, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteTrailOutput{}
 	req.Data = output
 	return
 }
 
 // Deletes a trail.
-func (c *CloudTrail) DeleteTrail(input *DeleteTrailInput) (output *DeleteTrailOutput, err error) {
+func (c *CloudTrail) DeleteTrail(input *DeleteTrailInput) (*DeleteTrailOutput, error) {
 	req, out := c.DeleteTrailRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteTrail *aws.Operation
+const opDescribeTrails = "DescribeTrails"
 
 // DescribeTrailsRequest generates a request for the DescribeTrails operation.
 func (c *CloudTrail) DescribeTrailsRequest(input *DescribeTrailsInput) (req *aws.Request, output *DescribeTrailsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeTrails == nil {
-		opDescribeTrails = &aws.Operation{
-			Name:       "DescribeTrails",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeTrails,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeTrailsInput{}
 	}
 
-	req = c.newRequest(opDescribeTrails, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeTrailsOutput{}
 	req.Data = output
 	return
@@ -106,33 +89,27 @@ func (c *CloudTrail) DescribeTrailsRequest(input *DescribeTrailsInput) (req *aws
 
 // Retrieves settings for the trail associated with the current region for your
 // account.
-func (c *CloudTrail) DescribeTrails(input *DescribeTrailsInput) (output *DescribeTrailsOutput, err error) {
+func (c *CloudTrail) DescribeTrails(input *DescribeTrailsInput) (*DescribeTrailsOutput, error) {
 	req, out := c.DescribeTrailsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeTrails *aws.Operation
+const opGetTrailStatus = "GetTrailStatus"
 
 // GetTrailStatusRequest generates a request for the GetTrailStatus operation.
 func (c *CloudTrail) GetTrailStatusRequest(input *GetTrailStatusInput) (req *aws.Request, output *GetTrailStatusOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetTrailStatus == nil {
-		opGetTrailStatus = &aws.Operation{
-			Name:       "GetTrailStatus",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opGetTrailStatus,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &GetTrailStatusInput{}
 	}
 
-	req = c.newRequest(opGetTrailStatus, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetTrailStatusOutput{}
 	req.Data = output
 	return
@@ -141,33 +118,27 @@ func (c *CloudTrail) GetTrailStatusRequest(input *GetTrailStatusInput) (req *aws
 // Returns a JSON-formatted list of information about the specified trail. Fields
 // include information on delivery errors, Amazon SNS and Amazon S3 errors,
 // and start and stop logging times for each trail.
-func (c *CloudTrail) GetTrailStatus(input *GetTrailStatusInput) (output *GetTrailStatusOutput, err error) {
+func (c *CloudTrail) GetTrailStatus(input *GetTrailStatusInput) (*GetTrailStatusOutput, error) {
 	req, out := c.GetTrailStatusRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetTrailStatus *aws.Operation
+const opLookupEvents = "LookupEvents"
 
 // LookupEventsRequest generates a request for the LookupEvents operation.
 func (c *CloudTrail) LookupEventsRequest(input *LookupEventsInput) (req *aws.Request, output *LookupEventsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opLookupEvents == nil {
-		opLookupEvents = &aws.Operation{
-			Name:       "LookupEvents",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opLookupEvents,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &LookupEventsInput{}
 	}
 
-	req = c.newRequest(opLookupEvents, input, output)
+	req = c.newRequest(op, input, output)
 	output = &LookupEventsOutput{}
 	req.Data = output
 	return
@@ -187,66 +158,54 @@ func (c *CloudTrail) LookupEventsRequest(input *LookupEventsInput) (req *aws.Req
 //
 // Events that occurred during the selected time range will not be available
 // for lookup if CloudTrail logging was not enabled when the events occurred.
-func (c *CloudTrail) LookupEvents(input *LookupEventsInput) (output *LookupEventsOutput, err error) {
+func (c *CloudTrail) LookupEvents(input *LookupEventsInput) (*LookupEventsOutput, error) {
 	req, out := c.LookupEventsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opLookupEvents *aws.Operation
+const opStartLogging = "StartLogging"
 
 // StartLoggingRequest generates a request for the StartLogging operation.
 func (c *CloudTrail) StartLoggingRequest(input *StartLoggingInput) (req *aws.Request, output *StartLoggingOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opStartLogging == nil {
-		opStartLogging = &aws.Operation{
-			Name:       "StartLogging",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opStartLogging,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &StartLoggingInput{}
 	}
 
-	req = c.newRequest(opStartLogging, input, output)
+	req = c.newRequest(op, input, output)
 	output = &StartLoggingOutput{}
 	req.Data = output
 	return
 }
 
 // Starts the recording of AWS API calls and log file delivery for a trail.
-func (c *CloudTrail) StartLogging(input *StartLoggingInput) (output *StartLoggingOutput, err error) {
+func (c *CloudTrail) StartLogging(input *StartLoggingInput) (*StartLoggingOutput, error) {
 	req, out := c.StartLoggingRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opStartLogging *aws.Operation
+const opStopLogging = "StopLogging"
 
 // StopLoggingRequest generates a request for the StopLogging operation.
 func (c *CloudTrail) StopLoggingRequest(input *StopLoggingInput) (req *aws.Request, output *StopLoggingOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opStopLogging == nil {
-		opStopLogging = &aws.Operation{
-			Name:       "StopLogging",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opStopLogging,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &StopLoggingInput{}
 	}
 
-	req = c.newRequest(opStopLogging, input, output)
+	req = c.newRequest(op, input, output)
 	output = &StopLoggingOutput{}
 	req.Data = output
 	return
@@ -256,33 +215,27 @@ func (c *CloudTrail) StopLoggingRequest(input *StopLoggingInput) (req *aws.Reque
 // trail. Under most circumstances, there is no need to use this action. You
 // can update a trail without stopping it first. This action is the only way
 // to stop recording.
-func (c *CloudTrail) StopLogging(input *StopLoggingInput) (output *StopLoggingOutput, err error) {
+func (c *CloudTrail) StopLogging(input *StopLoggingInput) (*StopLoggingOutput, error) {
 	req, out := c.StopLoggingRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opStopLogging *aws.Operation
+const opUpdateTrail = "UpdateTrail"
 
 // UpdateTrailRequest generates a request for the UpdateTrail operation.
 func (c *CloudTrail) UpdateTrailRequest(input *UpdateTrailInput) (req *aws.Request, output *UpdateTrailOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUpdateTrail == nil {
-		opUpdateTrail = &aws.Operation{
-			Name:       "UpdateTrail",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opUpdateTrail,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &UpdateTrailInput{}
 	}
 
-	req = c.newRequest(opUpdateTrail, input, output)
+	req = c.newRequest(op, input, output)
 	output = &UpdateTrailOutput{}
 	req.Data = output
 	return
@@ -294,14 +247,11 @@ func (c *CloudTrail) UpdateTrailRequest(input *UpdateTrailInput) (req *aws.Reque
 // do not require stopping the CloudTrail service. Use this action to designate
 // an existing bucket for log delivery. If the existing bucket has previously
 // been a target for CloudTrail log files, an IAM policy exists for the bucket.
-func (c *CloudTrail) UpdateTrail(input *UpdateTrailInput) (output *UpdateTrailOutput, err error) {
+func (c *CloudTrail) UpdateTrail(input *UpdateTrailInput) (*UpdateTrailOutput, error) {
 	req, out := c.UpdateTrailRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
-
-var opUpdateTrail *aws.Operation
 
 // Specifies the settings for each trail.
 type CreateTrailInput struct {
@@ -333,11 +283,21 @@ type CreateTrailInput struct {
 	// file delivery.
 	SNSTopicName *string `locationName:"SnsTopicName" type:"string"`
 
-	metadataCreateTrailInput `json:"-", xml:"-"`
+	metadataCreateTrailInput `json:"-" xml:"-"`
 }
 
 type metadataCreateTrailInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateTrailInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateTrailInput) GoString() string {
+	return s.String()
 }
 
 // Returns the objects or data listed below if successful. Otherwise, returns
@@ -370,11 +330,21 @@ type CreateTrailOutput struct {
 	// file delivery.
 	SNSTopicName *string `locationName:"SnsTopicName" type:"string"`
 
-	metadataCreateTrailOutput `json:"-", xml:"-"`
+	metadataCreateTrailOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateTrailOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateTrailOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateTrailOutput) GoString() string {
+	return s.String()
 }
 
 // The request that specifies the name of a trail to delete.
@@ -382,21 +352,41 @@ type DeleteTrailInput struct {
 	// The name of a trail to be deleted.
 	Name *string `type:"string" required:"true"`
 
-	metadataDeleteTrailInput `json:"-", xml:"-"`
+	metadataDeleteTrailInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteTrailInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteTrailInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteTrailInput) GoString() string {
+	return s.String()
+}
+
 // Returns the objects or data listed below if successful. Otherwise, returns
 // an error.
 type DeleteTrailOutput struct {
-	metadataDeleteTrailOutput `json:"-", xml:"-"`
+	metadataDeleteTrailOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteTrailOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteTrailOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteTrailOutput) GoString() string {
+	return s.String()
 }
 
 // Returns information about the trail.
@@ -404,11 +394,21 @@ type DescribeTrailsInput struct {
 	// The trail returned.
 	TrailNameList []*string `locationName:"trailNameList" type:"list"`
 
-	metadataDescribeTrailsInput `json:"-", xml:"-"`
+	metadataDescribeTrailsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeTrailsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeTrailsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeTrailsInput) GoString() string {
+	return s.String()
 }
 
 // Returns the objects or data listed below if successful. Otherwise, returns
@@ -417,11 +417,21 @@ type DescribeTrailsOutput struct {
 	// The list of trails.
 	TrailList []*Trail `locationName:"trailList" type:"list"`
 
-	metadataDescribeTrailsOutput `json:"-", xml:"-"`
+	metadataDescribeTrailsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeTrailsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeTrailsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeTrailsOutput) GoString() string {
+	return s.String()
 }
 
 // Contains information about an event that was returned by a lookup request.
@@ -446,11 +456,21 @@ type Event struct {
 	// returned.
 	Username *string `type:"string"`
 
-	metadataEvent `json:"-", xml:"-"`
+	metadataEvent `json:"-" xml:"-"`
 }
 
 type metadataEvent struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Event) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Event) GoString() string {
+	return s.String()
 }
 
 // The name of a trail about which you want the current status.
@@ -458,11 +478,21 @@ type GetTrailStatusInput struct {
 	// The name of the trail for which you are requesting the current status.
 	Name *string `type:"string" required:"true"`
 
-	metadataGetTrailStatusInput `json:"-", xml:"-"`
+	metadataGetTrailStatusInput `json:"-" xml:"-"`
 }
 
 type metadataGetTrailStatusInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetTrailStatusInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetTrailStatusInput) GoString() string {
+	return s.String()
 }
 
 // Returns the objects or data listed below if successful. Otherwise, returns
@@ -506,11 +536,21 @@ type GetTrailStatusOutput struct {
 	// API calls for an AWS account.
 	StopLoggingTime *time.Time `type:"timestamp" timestampFormat:"unix"`
 
-	metadataGetTrailStatusOutput `json:"-", xml:"-"`
+	metadataGetTrailStatusOutput `json:"-" xml:"-"`
 }
 
 type metadataGetTrailStatusOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetTrailStatusOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetTrailStatusOutput) GoString() string {
+	return s.String()
 }
 
 // Specifies an attribute and value that filter the events returned.
@@ -521,11 +561,21 @@ type LookupAttribute struct {
 	// Specifies a value for the specified AttributeKey.
 	AttributeValue *string `type:"string" required:"true"`
 
-	metadataLookupAttribute `json:"-", xml:"-"`
+	metadataLookupAttribute `json:"-" xml:"-"`
 }
 
 type metadataLookupAttribute struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s LookupAttribute) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s LookupAttribute) GoString() string {
+	return s.String()
 }
 
 // Contains a request for LookupEvents.
@@ -555,11 +605,21 @@ type LookupEventsInput struct {
 	// error is returned.
 	StartTime *time.Time `type:"timestamp" timestampFormat:"unix"`
 
-	metadataLookupEventsInput `json:"-", xml:"-"`
+	metadataLookupEventsInput `json:"-" xml:"-"`
 }
 
 type metadataLookupEventsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s LookupEventsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s LookupEventsInput) GoString() string {
+	return s.String()
 }
 
 // Contains a response to a LookupEvents action.
@@ -576,11 +636,21 @@ type LookupEventsOutput struct {
 	// of 'root', the call with NextToken should include those same parameters.
 	NextToken *string `type:"string"`
 
-	metadataLookupEventsOutput `json:"-", xml:"-"`
+	metadataLookupEventsOutput `json:"-" xml:"-"`
 }
 
 type metadataLookupEventsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s LookupEventsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s LookupEventsOutput) GoString() string {
+	return s.String()
 }
 
 // Specifies the type and name of a resource referenced by an event.
@@ -598,11 +668,21 @@ type Resource struct {
 	// Types Supported for Event Lookup (http://docs.aws.amazon.com/awscloudtrail/latest/userguide/lookup_supported_resourcetypes.html).
 	ResourceType *string `type:"string"`
 
-	metadataResource `json:"-", xml:"-"`
+	metadataResource `json:"-" xml:"-"`
 }
 
 type metadataResource struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Resource) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Resource) GoString() string {
+	return s.String()
 }
 
 // The request to CloudTrail to start logging AWS API calls for an account.
@@ -610,21 +690,41 @@ type StartLoggingInput struct {
 	// The name of the trail for which CloudTrail logs AWS API calls.
 	Name *string `type:"string" required:"true"`
 
-	metadataStartLoggingInput `json:"-", xml:"-"`
+	metadataStartLoggingInput `json:"-" xml:"-"`
 }
 
 type metadataStartLoggingInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s StartLoggingInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StartLoggingInput) GoString() string {
+	return s.String()
+}
+
 // Returns the objects or data listed below if successful. Otherwise, returns
 // an error.
 type StartLoggingOutput struct {
-	metadataStartLoggingOutput `json:"-", xml:"-"`
+	metadataStartLoggingOutput `json:"-" xml:"-"`
 }
 
 type metadataStartLoggingOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StartLoggingOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StartLoggingOutput) GoString() string {
+	return s.String()
 }
 
 // Passes the request to CloudTrail to stop logging AWS API calls for the specified
@@ -634,21 +734,41 @@ type StopLoggingInput struct {
 	// AWS API calls.
 	Name *string `type:"string" required:"true"`
 
-	metadataStopLoggingInput `json:"-", xml:"-"`
+	metadataStopLoggingInput `json:"-" xml:"-"`
 }
 
 type metadataStopLoggingInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s StopLoggingInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StopLoggingInput) GoString() string {
+	return s.String()
+}
+
 // Returns the objects or data listed below if successful. Otherwise, returns
 // an error.
 type StopLoggingOutput struct {
-	metadataStopLoggingOutput `json:"-", xml:"-"`
+	metadataStopLoggingOutput `json:"-" xml:"-"`
 }
 
 type metadataStopLoggingOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StopLoggingOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StopLoggingOutput) GoString() string {
+	return s.String()
 }
 
 // The settings for a trail.
@@ -678,11 +798,21 @@ type Trail struct {
 	// account owner when new CloudTrail log files have been delivered.
 	SNSTopicName *string `locationName:"SnsTopicName" type:"string"`
 
-	metadataTrail `json:"-", xml:"-"`
+	metadataTrail `json:"-" xml:"-"`
 }
 
 type metadataTrail struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Trail) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Trail) GoString() string {
+	return s.String()
 }
 
 // Specifies settings to update for the trail.
@@ -715,11 +845,21 @@ type UpdateTrailInput struct {
 	// file delivery.
 	SNSTopicName *string `locationName:"SnsTopicName" type:"string"`
 
-	metadataUpdateTrailInput `json:"-", xml:"-"`
+	metadataUpdateTrailInput `json:"-" xml:"-"`
 }
 
 type metadataUpdateTrailInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UpdateTrailInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UpdateTrailInput) GoString() string {
+	return s.String()
 }
 
 // Returns the objects or data listed below if successful. Otherwise, returns
@@ -752,9 +892,19 @@ type UpdateTrailOutput struct {
 	// file delivery.
 	SNSTopicName *string `locationName:"SnsTopicName" type:"string"`
 
-	metadataUpdateTrailOutput `json:"-", xml:"-"`
+	metadataUpdateTrailOutput `json:"-" xml:"-"`
 }
 
 type metadataUpdateTrailOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UpdateTrailOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UpdateTrailOutput) GoString() string {
+	return s.String()
 }

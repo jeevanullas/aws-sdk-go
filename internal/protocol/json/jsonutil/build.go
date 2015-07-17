@@ -1,3 +1,4 @@
+// Package jsonutil provides JSON serialisation of AWS requests and responses.
 package jsonutil
 
 import (
@@ -11,6 +12,7 @@ import (
 	"time"
 )
 
+// BuildJSON builds a JSON string for a given object v.
 func BuildJSON(v interface{}) ([]byte, error) {
 	var buf bytes.Buffer
 
@@ -70,7 +72,7 @@ func buildStruct(value reflect.Value, buf *bytes.Buffer, tag reflect.StructTag) 
 	for i := 0; i < t.NumField(); i++ {
 		field := t.Field(i)
 		member := value.FieldByName(field.Name)
-		if (member.Kind() == reflect.Ptr || member.Kind() == reflect.Slice) && member.IsNil() {
+		if (member.Kind() == reflect.Ptr || member.Kind() == reflect.Slice || member.Kind() == reflect.Map) && member.IsNil() {
 			continue // ignore unset fields
 		}
 		if c := field.Name[0:1]; strings.ToLower(c) == c {
@@ -175,6 +177,18 @@ func writeString(s string, buf *bytes.Buffer) {
 	for _, r := range s {
 		if r == '"' {
 			buf.WriteString(`\"`)
+		} else if r == '\\' {
+			buf.WriteString(`\\`)
+		} else if r == '\b' {
+			buf.WriteString(`\b`)
+		} else if r == '\f' {
+			buf.WriteString(`\f`)
+		} else if r == '\r' {
+			buf.WriteString(`\r`)
+		} else if r == '\t' {
+			buf.WriteString(`\t`)
+		} else if r == '\n' {
+			buf.WriteString(`\n`)
 		} else if r < 32 {
 			fmt.Fprintf(buf, "\\u%0.4x", r)
 		} else {

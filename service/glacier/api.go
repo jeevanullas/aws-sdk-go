@@ -5,31 +5,26 @@ package glacier
 
 import (
 	"io"
-	"sync"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
-var oprw sync.Mutex
+const opAbortMultipartUpload = "AbortMultipartUpload"
 
 // AbortMultipartUploadRequest generates a request for the AbortMultipartUpload operation.
 func (c *Glacier) AbortMultipartUploadRequest(input *AbortMultipartUploadInput) (req *aws.Request, output *AbortMultipartUploadOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAbortMultipartUpload == nil {
-		opAbortMultipartUpload = &aws.Operation{
-			Name:       "AbortMultipartUpload",
-			HTTPMethod: "DELETE",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}/multipart-uploads/{uploadId}",
-		}
+	op := &aws.Operation{
+		Name:       opAbortMultipartUpload,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/multipart-uploads/{uploadId}",
 	}
 
 	if input == nil {
 		input = &AbortMultipartUploadInput{}
 	}
 
-	req = c.newRequest(opAbortMultipartUpload, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AbortMultipartUploadOutput{}
 	req.Data = output
 	return
@@ -55,33 +50,59 @@ func (c *Glacier) AbortMultipartUploadRequest(input *AbortMultipartUploadInput) 
 // Archives in Amazon Glacier (http://docs.aws.amazon.com/amazonglacier/latest/dev/working-with-archives.html)
 // and Abort Multipart Upload (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-multipart-abort-upload.html)
 // in the Amazon Glacier Developer Guide.
-func (c *Glacier) AbortMultipartUpload(input *AbortMultipartUploadInput) (output *AbortMultipartUploadOutput, err error) {
+func (c *Glacier) AbortMultipartUpload(input *AbortMultipartUploadInput) (*AbortMultipartUploadOutput, error) {
 	req, out := c.AbortMultipartUploadRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opAddTagsToVault = "AddTagsToVault"
+
+// AddTagsToVaultRequest generates a request for the AddTagsToVault operation.
+func (c *Glacier) AddTagsToVaultRequest(input *AddTagsToVaultInput) (req *aws.Request, output *AddTagsToVaultOutput) {
+	op := &aws.Operation{
+		Name:       opAddTagsToVault,
+		HTTPMethod: "POST",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/tags?operation=add",
+	}
+
+	if input == nil {
+		input = &AddTagsToVaultInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &AddTagsToVaultOutput{}
+	req.Data = output
 	return
 }
 
-var opAbortMultipartUpload *aws.Operation
+// This operation adds the specified tags to a vault. Each tag is composed of
+// a key and a value. Each vault can have up to 10 tags. If your request would
+// cause the tag limit for the vault to be exceeded, the operation throws the
+// LimitExceededException error. If a tag already exists on the vault under
+// a specified key, the existing key value will be overwritten. For more information
+// about tags, see Tagging Amazon Glacier Resources (http://docs.aws.amazon.com/amazonglacier/latest/dev/tagging.html).
+func (c *Glacier) AddTagsToVault(input *AddTagsToVaultInput) (*AddTagsToVaultOutput, error) {
+	req, out := c.AddTagsToVaultRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opCompleteMultipartUpload = "CompleteMultipartUpload"
 
 // CompleteMultipartUploadRequest generates a request for the CompleteMultipartUpload operation.
 func (c *Glacier) CompleteMultipartUploadRequest(input *CompleteMultipartUploadInput) (req *aws.Request, output *ArchiveCreationOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCompleteMultipartUpload == nil {
-		opCompleteMultipartUpload = &aws.Operation{
-			Name:       "CompleteMultipartUpload",
-			HTTPMethod: "POST",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}/multipart-uploads/{uploadId}",
-		}
+	op := &aws.Operation{
+		Name:       opCompleteMultipartUpload,
+		HTTPMethod: "POST",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/multipart-uploads/{uploadId}",
 	}
 
 	if input == nil {
 		input = &CompleteMultipartUploadInput{}
 	}
 
-	req = c.newRequest(opCompleteMultipartUpload, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ArchiveCreationOutput{}
 	req.Data = output
 	return
@@ -131,33 +152,27 @@ func (c *Glacier) CompleteMultipartUploadRequest(input *CompleteMultipartUploadI
 // Archives in Parts (Multipart Upload) (http://docs.aws.amazon.com/amazonglacier/latest/dev/uploading-archive-mpu.html)
 // and Complete Multipart Upload (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-multipart-complete-upload.html)
 // in the Amazon Glacier Developer Guide.
-func (c *Glacier) CompleteMultipartUpload(input *CompleteMultipartUploadInput) (output *ArchiveCreationOutput, err error) {
+func (c *Glacier) CompleteMultipartUpload(input *CompleteMultipartUploadInput) (*ArchiveCreationOutput, error) {
 	req, out := c.CompleteMultipartUploadRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCompleteMultipartUpload *aws.Operation
+const opCreateVault = "CreateVault"
 
 // CreateVaultRequest generates a request for the CreateVault operation.
 func (c *Glacier) CreateVaultRequest(input *CreateVaultInput) (req *aws.Request, output *CreateVaultOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateVault == nil {
-		opCreateVault = &aws.Operation{
-			Name:       "CreateVault",
-			HTTPMethod: "PUT",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}",
-		}
+	op := &aws.Operation{
+		Name:       opCreateVault,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}",
 	}
 
 	if input == nil {
 		input = &CreateVaultInput{}
 	}
 
-	req = c.newRequest(opCreateVault, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateVaultOutput{}
 	req.Data = output
 	return
@@ -187,33 +202,27 @@ func (c *Glacier) CreateVaultRequest(input *CreateVaultInput) (req *aws.Request,
 // in Amazon Glacier (http://docs.aws.amazon.com/amazonglacier/latest/dev/creating-vaults.html)
 // and Create Vault  (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-vault-put.html)
 // in the Amazon Glacier Developer Guide.
-func (c *Glacier) CreateVault(input *CreateVaultInput) (output *CreateVaultOutput, err error) {
+func (c *Glacier) CreateVault(input *CreateVaultInput) (*CreateVaultOutput, error) {
 	req, out := c.CreateVaultRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateVault *aws.Operation
+const opDeleteArchive = "DeleteArchive"
 
 // DeleteArchiveRequest generates a request for the DeleteArchive operation.
 func (c *Glacier) DeleteArchiveRequest(input *DeleteArchiveInput) (req *aws.Request, output *DeleteArchiveOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteArchive == nil {
-		opDeleteArchive = &aws.Operation{
-			Name:       "DeleteArchive",
-			HTTPMethod: "DELETE",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}/archives/{archiveId}",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteArchive,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/archives/{archiveId}",
 	}
 
 	if input == nil {
 		input = &DeleteArchiveInput{}
 	}
 
-	req = c.newRequest(opDeleteArchive, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteArchiveOutput{}
 	req.Data = output
 	return
@@ -240,33 +249,27 @@ func (c *Glacier) DeleteArchiveRequest(input *DeleteArchiveInput) (req *aws.Requ
 // in Amazon Glacier (http://docs.aws.amazon.com/amazonglacier/latest/dev/deleting-an-archive.html)
 // and Delete Archive (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-archive-delete.html)
 // in the Amazon Glacier Developer Guide.
-func (c *Glacier) DeleteArchive(input *DeleteArchiveInput) (output *DeleteArchiveOutput, err error) {
+func (c *Glacier) DeleteArchive(input *DeleteArchiveInput) (*DeleteArchiveOutput, error) {
 	req, out := c.DeleteArchiveRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteArchive *aws.Operation
+const opDeleteVault = "DeleteVault"
 
 // DeleteVaultRequest generates a request for the DeleteVault operation.
 func (c *Glacier) DeleteVaultRequest(input *DeleteVaultInput) (req *aws.Request, output *DeleteVaultOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteVault == nil {
-		opDeleteVault = &aws.Operation{
-			Name:       "DeleteVault",
-			HTTPMethod: "DELETE",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteVault,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}",
 	}
 
 	if input == nil {
 		input = &DeleteVaultInput{}
 	}
 
-	req = c.newRequest(opDeleteVault, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteVaultOutput{}
 	req.Data = output
 	return
@@ -295,42 +298,72 @@ func (c *Glacier) DeleteVaultRequest(input *DeleteVaultInput) (req *aws.Request,
 // in Amazon Glacier (http://docs.aws.amazon.com/amazonglacier/latest/dev/deleting-vaults.html)
 // and Delete Vault  (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-vault-delete.html)
 // in the Amazon Glacier Developer Guide.
-func (c *Glacier) DeleteVault(input *DeleteVaultInput) (output *DeleteVaultOutput, err error) {
+func (c *Glacier) DeleteVault(input *DeleteVaultInput) (*DeleteVaultOutput, error) {
 	req, out := c.DeleteVaultRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opDeleteVaultAccessPolicy = "DeleteVaultAccessPolicy"
+
+// DeleteVaultAccessPolicyRequest generates a request for the DeleteVaultAccessPolicy operation.
+func (c *Glacier) DeleteVaultAccessPolicyRequest(input *DeleteVaultAccessPolicyInput) (req *aws.Request, output *DeleteVaultAccessPolicyOutput) {
+	op := &aws.Operation{
+		Name:       opDeleteVaultAccessPolicy,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/access-policy",
+	}
+
+	if input == nil {
+		input = &DeleteVaultAccessPolicyInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &DeleteVaultAccessPolicyOutput{}
+	req.Data = output
 	return
 }
 
-var opDeleteVault *aws.Operation
+// This operation deletes the access policy associated with the specified vault.
+// The operation is eventually consistent; that is, it might take some time
+// for Amazon Glacier to completely remove the access policy, and you might
+// still see the effect of the policy for a short time after you send the delete
+// request.
+//
+// This operation is idempotent. You can invoke delete multiple times, even
+// if there is no policy associated with the vault. For more information about
+// vault access policies, see Amazon Glacier Access Control with Vault Access
+// Policies (http://docs.aws.amazon.com/amazonglacier/latest/dev/vault-access-policy.html).
+func (c *Glacier) DeleteVaultAccessPolicy(input *DeleteVaultAccessPolicyInput) (*DeleteVaultAccessPolicyOutput, error) {
+	req, out := c.DeleteVaultAccessPolicyRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opDeleteVaultNotifications = "DeleteVaultNotifications"
 
 // DeleteVaultNotificationsRequest generates a request for the DeleteVaultNotifications operation.
 func (c *Glacier) DeleteVaultNotificationsRequest(input *DeleteVaultNotificationsInput) (req *aws.Request, output *DeleteVaultNotificationsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteVaultNotifications == nil {
-		opDeleteVaultNotifications = &aws.Operation{
-			Name:       "DeleteVaultNotifications",
-			HTTPMethod: "DELETE",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}/notification-configuration",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteVaultNotifications,
+		HTTPMethod: "DELETE",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/notification-configuration",
 	}
 
 	if input == nil {
 		input = &DeleteVaultNotificationsInput{}
 	}
 
-	req = c.newRequest(opDeleteVaultNotifications, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteVaultNotificationsOutput{}
 	req.Data = output
 	return
 }
 
 // This operation deletes the notification configuration set for a vault. The
-// operation is eventually consistent;that is, it might take some time for Amazon
-// Glacier to completely disable the notifications and you might still receive
-// some notifications for a short time after you send the delete request.
+// operation is eventually consistent; that is, it might take some time for
+// Amazon Glacier to completely disable the notifications and you might still
+// receive some notifications for a short time after you send the delete request.
 //
 // An AWS account has full permission to perform all operations (actions).
 // However, AWS Identity and Access Management (IAM) users don't have any permissions
@@ -342,34 +375,28 @@ func (c *Glacier) DeleteVaultNotificationsRequest(input *DeleteVaultNotification
 // Notifications in Amazon Glacier (http://docs.aws.amazon.com/amazonglacier/latest/dev/configuring-notifications.html)
 // and Delete Vault Notification Configuration  (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-vault-notifications-delete.html)
 // in the Amazon Glacier Developer Guide.
-func (c *Glacier) DeleteVaultNotifications(input *DeleteVaultNotificationsInput) (output *DeleteVaultNotificationsOutput, err error) {
+func (c *Glacier) DeleteVaultNotifications(input *DeleteVaultNotificationsInput) (*DeleteVaultNotificationsOutput, error) {
 	req, out := c.DeleteVaultNotificationsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteVaultNotifications *aws.Operation
+const opDescribeJob = "DescribeJob"
 
 // DescribeJobRequest generates a request for the DescribeJob operation.
-func (c *Glacier) DescribeJobRequest(input *DescribeJobInput) (req *aws.Request, output *GlacierJobDescription) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeJob == nil {
-		opDescribeJob = &aws.Operation{
-			Name:       "DescribeJob",
-			HTTPMethod: "GET",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}/jobs/{jobId}",
-		}
+func (c *Glacier) DescribeJobRequest(input *DescribeJobInput) (req *aws.Request, output *JobDescription) {
+	op := &aws.Operation{
+		Name:       opDescribeJob,
+		HTTPMethod: "GET",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/jobs/{jobId}",
 	}
 
 	if input == nil {
 		input = &DescribeJobInput{}
 	}
 
-	req = c.newRequest(opDescribeJob, input, output)
-	output = &GlacierJobDescription{}
+	req = c.newRequest(op, input, output)
+	output = &JobDescription{}
 	req.Data = output
 	return
 }
@@ -396,33 +423,27 @@ func (c *Glacier) DescribeJobRequest(input *DescribeJobInput) (req *aws.Request,
 //  For information about the underlying REST API, go to Working with Archives
 // in Amazon Glacier (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-describe-job-get.html)
 // in the Amazon Glacier Developer Guide.
-func (c *Glacier) DescribeJob(input *DescribeJobInput) (output *GlacierJobDescription, err error) {
+func (c *Glacier) DescribeJob(input *DescribeJobInput) (*JobDescription, error) {
 	req, out := c.DescribeJobRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeJob *aws.Operation
+const opDescribeVault = "DescribeVault"
 
 // DescribeVaultRequest generates a request for the DescribeVault operation.
 func (c *Glacier) DescribeVaultRequest(input *DescribeVaultInput) (req *aws.Request, output *DescribeVaultOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeVault == nil {
-		opDescribeVault = &aws.Operation{
-			Name:       "DescribeVault",
-			HTTPMethod: "GET",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeVault,
+		HTTPMethod: "GET",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}",
 	}
 
 	if input == nil {
 		input = &DescribeVaultInput{}
 	}
 
-	req = c.newRequest(opDescribeVault, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeVaultOutput{}
 	req.Data = output
 	return
@@ -448,65 +469,56 @@ func (c *Glacier) DescribeVaultRequest(input *DescribeVaultInput) (req *aws.Requ
 // Metadata in Amazon Glacier (http://docs.aws.amazon.com/amazonglacier/latest/dev/retrieving-vault-info.html)
 // and Describe Vault  (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-vault-get.html)
 // in the Amazon Glacier Developer Guide.
-func (c *Glacier) DescribeVault(input *DescribeVaultInput) (output *DescribeVaultOutput, err error) {
+func (c *Glacier) DescribeVault(input *DescribeVaultInput) (*DescribeVaultOutput, error) {
 	req, out := c.DescribeVaultRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeVault *aws.Operation
+const opGetDataRetrievalPolicy = "GetDataRetrievalPolicy"
 
 // GetDataRetrievalPolicyRequest generates a request for the GetDataRetrievalPolicy operation.
 func (c *Glacier) GetDataRetrievalPolicyRequest(input *GetDataRetrievalPolicyInput) (req *aws.Request, output *GetDataRetrievalPolicyOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetDataRetrievalPolicy == nil {
-		opGetDataRetrievalPolicy = &aws.Operation{
-			Name:       "GetDataRetrievalPolicy",
-			HTTPMethod: "GET",
-			HTTPPath:   "/{accountId}/policies/data-retrieval",
-		}
+	op := &aws.Operation{
+		Name:       opGetDataRetrievalPolicy,
+		HTTPMethod: "GET",
+		HTTPPath:   "/{accountId}/policies/data-retrieval",
 	}
 
 	if input == nil {
 		input = &GetDataRetrievalPolicyInput{}
 	}
 
-	req = c.newRequest(opGetDataRetrievalPolicy, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetDataRetrievalPolicyOutput{}
 	req.Data = output
 	return
 }
 
-func (c *Glacier) GetDataRetrievalPolicy(input *GetDataRetrievalPolicyInput) (output *GetDataRetrievalPolicyOutput, err error) {
+// This operation returns the current data retrieval policy for the account
+// and region specified in the GET request. For more information about data
+// retrieval policies, see Amazon Glacier Data Retrieval Policies (http://docs.aws.amazon.com/amazonglacier/latest/dev/data-retrieval-policy.html).
+func (c *Glacier) GetDataRetrievalPolicy(input *GetDataRetrievalPolicyInput) (*GetDataRetrievalPolicyOutput, error) {
 	req, out := c.GetDataRetrievalPolicyRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetDataRetrievalPolicy *aws.Operation
+const opGetJobOutput = "GetJobOutput"
 
 // GetJobOutputRequest generates a request for the GetJobOutput operation.
 func (c *Glacier) GetJobOutputRequest(input *GetJobOutputInput) (req *aws.Request, output *GetJobOutputOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetJobOutput == nil {
-		opGetJobOutput = &aws.Operation{
-			Name:       "GetJobOutput",
-			HTTPMethod: "GET",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}/jobs/{jobId}/output",
-		}
+	op := &aws.Operation{
+		Name:       opGetJobOutput,
+		HTTPMethod: "GET",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/jobs/{jobId}/output",
 	}
 
 	if input == nil {
 		input = &GetJobOutputInput{}
 	}
 
-	req = c.newRequest(opGetJobOutput, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetJobOutputOutput{}
 	req.Data = output
 	return
@@ -530,7 +542,7 @@ func (c *Glacier) GetJobOutputRequest(input *GetJobOutputInput) (req *aws.Reques
 //   Download a 128 MB chunk of output by specifying the appropriate byte range
 // using the Range header.
 //
-//   Along with the data, the response includes a checksum of the payload.
+//   Along with the data, the response includes a SHA256 tree hash of the payload.
 // You compute the checksum of the payload on the client and compare it with
 // the checksum you received in the response to ensure you received all the
 // expected data.
@@ -556,33 +568,59 @@ func (c *Glacier) GetJobOutputRequest(input *GetJobOutputInput) (req *aws.Reques
 // a Vault Inventory (http://docs.aws.amazon.com/amazonglacier/latest/dev/vault-inventory.html),
 // Downloading an Archive (http://docs.aws.amazon.com/amazonglacier/latest/dev/downloading-an-archive.html),
 // and Get Job Output  (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-job-output-get.html)
-func (c *Glacier) GetJobOutput(input *GetJobOutputInput) (output *GetJobOutputOutput, err error) {
+func (c *Glacier) GetJobOutput(input *GetJobOutputInput) (*GetJobOutputOutput, error) {
 	req, out := c.GetJobOutputRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opGetVaultAccessPolicy = "GetVaultAccessPolicy"
+
+// GetVaultAccessPolicyRequest generates a request for the GetVaultAccessPolicy operation.
+func (c *Glacier) GetVaultAccessPolicyRequest(input *GetVaultAccessPolicyInput) (req *aws.Request, output *GetVaultAccessPolicyOutput) {
+	op := &aws.Operation{
+		Name:       opGetVaultAccessPolicy,
+		HTTPMethod: "GET",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/access-policy",
+	}
+
+	if input == nil {
+		input = &GetVaultAccessPolicyInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &GetVaultAccessPolicyOutput{}
+	req.Data = output
 	return
 }
 
-var opGetJobOutput *aws.Operation
+// This operation retrieves the access-policy subresource set on the vault;
+// for more information on setting this subresource, see Set Vault Access Policy
+// (PUT access-policy) (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-SetVaultAccessPolicy.html).
+// If there is no access policy set on the vault, the operation returns a 404
+// Not found error. For more information about vault access policies, see Amazon
+// Glacier Access Control with Vault Access Policies (http://docs.aws.amazon.com/amazonglacier/latest/dev/vault-access-policy.html).
+func (c *Glacier) GetVaultAccessPolicy(input *GetVaultAccessPolicyInput) (*GetVaultAccessPolicyOutput, error) {
+	req, out := c.GetVaultAccessPolicyRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opGetVaultNotifications = "GetVaultNotifications"
 
 // GetVaultNotificationsRequest generates a request for the GetVaultNotifications operation.
 func (c *Glacier) GetVaultNotificationsRequest(input *GetVaultNotificationsInput) (req *aws.Request, output *GetVaultNotificationsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetVaultNotifications == nil {
-		opGetVaultNotifications = &aws.Operation{
-			Name:       "GetVaultNotifications",
-			HTTPMethod: "GET",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}/notification-configuration",
-		}
+	op := &aws.Operation{
+		Name:       opGetVaultNotifications,
+		HTTPMethod: "GET",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/notification-configuration",
 	}
 
 	if input == nil {
 		input = &GetVaultNotificationsInput{}
 	}
 
-	req = c.newRequest(opGetVaultNotifications, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetVaultNotificationsOutput{}
 	req.Data = output
 	return
@@ -607,33 +645,27 @@ func (c *Glacier) GetVaultNotificationsRequest(input *GetVaultNotificationsInput
 // Notifications in Amazon Glacier (http://docs.aws.amazon.com/amazonglacier/latest/dev/configuring-notifications.html)
 // and Get Vault Notification Configuration  (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-vault-notifications-get.html)
 // in the Amazon Glacier Developer Guide.
-func (c *Glacier) GetVaultNotifications(input *GetVaultNotificationsInput) (output *GetVaultNotificationsOutput, err error) {
+func (c *Glacier) GetVaultNotifications(input *GetVaultNotificationsInput) (*GetVaultNotificationsOutput, error) {
 	req, out := c.GetVaultNotificationsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetVaultNotifications *aws.Operation
+const opInitiateJob = "InitiateJob"
 
 // InitiateJobRequest generates a request for the InitiateJob operation.
 func (c *Glacier) InitiateJobRequest(input *InitiateJobInput) (req *aws.Request, output *InitiateJobOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opInitiateJob == nil {
-		opInitiateJob = &aws.Operation{
-			Name:       "InitiateJob",
-			HTTPMethod: "POST",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}/jobs",
-		}
+	op := &aws.Operation{
+		Name:       opInitiateJob,
+		HTTPMethod: "POST",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/jobs",
 	}
 
 	if input == nil {
 		input = &InitiateJobInput{}
 	}
 
-	req = c.newRequest(opInitiateJob, input, output)
+	req = c.newRequest(op, input, output)
 	output = &InitiateJobOutput{}
 	req.Data = output
 	return
@@ -645,9 +677,15 @@ func (c *Glacier) InitiateJobRequest(input *InitiateJobInput) (req *aws.Request,
 //
 // Retrieving data from Amazon Glacier is a two-step process:
 //
-//  Initiate a retrieval job.
+//   Initiate a retrieval job.
 //
-// After the job completes, download the bytes.
+// A data retrieval policy can cause your initiate retrieval job request to
+// fail with a PolicyEnforcedException exception. For more information about
+// data retrieval policies, see Amazon Glacier Data Retrieval Policies (http://docs.aws.amazon.com/amazonglacier/latest/dev/data-retrieval-policy.html).
+// For more information about the PolicyEnforcedException exception, see Error
+// Responses (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-error-responses.html).
+//
+//   After the job completes, download the bytes.
 //
 //  The retrieval request is executed asynchronously. When you initiate a retrieval
 // job, Amazon Glacier creates a job and returns a job ID in the response. When
@@ -749,33 +787,27 @@ func (c *Glacier) InitiateJobRequest(input *InitiateJobInput) (req *aws.Request,
 // For conceptual information and the underlying REST API, go to Initiate a
 // Job (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-initiate-job-post.html)
 // and Downloading a Vault Inventory (http://docs.aws.amazon.com/amazonglacier/latest/dev/vault-inventory.html)
-func (c *Glacier) InitiateJob(input *InitiateJobInput) (output *InitiateJobOutput, err error) {
+func (c *Glacier) InitiateJob(input *InitiateJobInput) (*InitiateJobOutput, error) {
 	req, out := c.InitiateJobRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opInitiateJob *aws.Operation
+const opInitiateMultipartUpload = "InitiateMultipartUpload"
 
 // InitiateMultipartUploadRequest generates a request for the InitiateMultipartUpload operation.
 func (c *Glacier) InitiateMultipartUploadRequest(input *InitiateMultipartUploadInput) (req *aws.Request, output *InitiateMultipartUploadOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opInitiateMultipartUpload == nil {
-		opInitiateMultipartUpload = &aws.Operation{
-			Name:       "InitiateMultipartUpload",
-			HTTPMethod: "POST",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}/multipart-uploads",
-		}
+	op := &aws.Operation{
+		Name:       opInitiateMultipartUpload,
+		HTTPMethod: "POST",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/multipart-uploads",
 	}
 
 	if input == nil {
 		input = &InitiateMultipartUploadInput{}
 	}
 
-	req = c.newRequest(opInitiateMultipartUpload, input, output)
+	req = c.newRequest(op, input, output)
 	output = &InitiateMultipartUploadOutput{}
 	req.Data = output
 	return
@@ -816,33 +848,33 @@ func (c *Glacier) InitiateMultipartUploadRequest(input *InitiateMultipartUploadI
 // Archives in Parts (Multipart Upload) (http://docs.aws.amazon.com/amazonglacier/latest/dev/uploading-archive-mpu.html)
 // and Initiate Multipart Upload (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-multipart-initiate-upload.html)
 // in the Amazon Glacier Developer Guide.
-func (c *Glacier) InitiateMultipartUpload(input *InitiateMultipartUploadInput) (output *InitiateMultipartUploadOutput, err error) {
+func (c *Glacier) InitiateMultipartUpload(input *InitiateMultipartUploadInput) (*InitiateMultipartUploadOutput, error) {
 	req, out := c.InitiateMultipartUploadRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opInitiateMultipartUpload *aws.Operation
+const opListJobs = "ListJobs"
 
 // ListJobsRequest generates a request for the ListJobs operation.
 func (c *Glacier) ListJobsRequest(input *ListJobsInput) (req *aws.Request, output *ListJobsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListJobs == nil {
-		opListJobs = &aws.Operation{
-			Name:       "ListJobs",
-			HTTPMethod: "GET",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}/jobs",
-		}
+	op := &aws.Operation{
+		Name:       opListJobs,
+		HTTPMethod: "GET",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/jobs",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "limit",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &ListJobsInput{}
 	}
 
-	req = c.newRequest(opListJobs, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListJobsOutput{}
 	req.Data = output
 	return
@@ -888,33 +920,40 @@ func (c *Glacier) ListJobsRequest(input *ListJobsInput) (req *aws.Request, outpu
 // (IAM) (http://docs.aws.amazon.com/amazonglacier/latest/dev/using-iam-with-amazon-glacier.html).
 //
 // For the underlying REST API, go to List Jobs  (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-jobs-get.html)
-func (c *Glacier) ListJobs(input *ListJobsInput) (output *ListJobsOutput, err error) {
+func (c *Glacier) ListJobs(input *ListJobsInput) (*ListJobsOutput, error) {
 	req, out := c.ListJobsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListJobs *aws.Operation
+func (c *Glacier) ListJobsPages(input *ListJobsInput, fn func(p *ListJobsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.ListJobsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*ListJobsOutput), lastPage)
+	})
+}
+
+const opListMultipartUploads = "ListMultipartUploads"
 
 // ListMultipartUploadsRequest generates a request for the ListMultipartUploads operation.
 func (c *Glacier) ListMultipartUploadsRequest(input *ListMultipartUploadsInput) (req *aws.Request, output *ListMultipartUploadsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListMultipartUploads == nil {
-		opListMultipartUploads = &aws.Operation{
-			Name:       "ListMultipartUploads",
-			HTTPMethod: "GET",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}/multipart-uploads",
-		}
+	op := &aws.Operation{
+		Name:       opListMultipartUploads,
+		HTTPMethod: "GET",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/multipart-uploads",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "limit",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &ListMultipartUploadsInput{}
 	}
 
-	req = c.newRequest(opListMultipartUploads, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListMultipartUploadsOutput{}
 	req.Data = output
 	return
@@ -950,33 +989,40 @@ func (c *Glacier) ListMultipartUploadsRequest(input *ListMultipartUploadsInput) 
 // Archives in Amazon Glacier (http://docs.aws.amazon.com/amazonglacier/latest/dev/working-with-archives.html)
 // and List Multipart Uploads  (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-multipart-list-uploads.html)
 // in the Amazon Glacier Developer Guide.
-func (c *Glacier) ListMultipartUploads(input *ListMultipartUploadsInput) (output *ListMultipartUploadsOutput, err error) {
+func (c *Glacier) ListMultipartUploads(input *ListMultipartUploadsInput) (*ListMultipartUploadsOutput, error) {
 	req, out := c.ListMultipartUploadsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListMultipartUploads *aws.Operation
+func (c *Glacier) ListMultipartUploadsPages(input *ListMultipartUploadsInput, fn func(p *ListMultipartUploadsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.ListMultipartUploadsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*ListMultipartUploadsOutput), lastPage)
+	})
+}
+
+const opListParts = "ListParts"
 
 // ListPartsRequest generates a request for the ListParts operation.
 func (c *Glacier) ListPartsRequest(input *ListPartsInput) (req *aws.Request, output *ListPartsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListParts == nil {
-		opListParts = &aws.Operation{
-			Name:       "ListParts",
-			HTTPMethod: "GET",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}/multipart-uploads/{uploadId}",
-		}
+	op := &aws.Operation{
+		Name:       opListParts,
+		HTTPMethod: "GET",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/multipart-uploads/{uploadId}",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "limit",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &ListPartsInput{}
 	}
 
-	req = c.newRequest(opListParts, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListPartsOutput{}
 	req.Data = output
 	return
@@ -1006,33 +1052,69 @@ func (c *Glacier) ListPartsRequest(input *ListPartsInput) (req *aws.Request, out
 // Archives in Amazon Glacier (http://docs.aws.amazon.com/amazonglacier/latest/dev/working-with-archives.html)
 // and List Parts (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-multipart-list-parts.html)
 // in the Amazon Glacier Developer Guide.
-func (c *Glacier) ListParts(input *ListPartsInput) (output *ListPartsOutput, err error) {
+func (c *Glacier) ListParts(input *ListPartsInput) (*ListPartsOutput, error) {
 	req, out := c.ListPartsRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+func (c *Glacier) ListPartsPages(input *ListPartsInput, fn func(p *ListPartsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.ListPartsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*ListPartsOutput), lastPage)
+	})
+}
+
+const opListTagsForVault = "ListTagsForVault"
+
+// ListTagsForVaultRequest generates a request for the ListTagsForVault operation.
+func (c *Glacier) ListTagsForVaultRequest(input *ListTagsForVaultInput) (req *aws.Request, output *ListTagsForVaultOutput) {
+	op := &aws.Operation{
+		Name:       opListTagsForVault,
+		HTTPMethod: "GET",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/tags",
+	}
+
+	if input == nil {
+		input = &ListTagsForVaultInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &ListTagsForVaultOutput{}
+	req.Data = output
 	return
 }
 
-var opListParts *aws.Operation
+// This operation lists all the tags attached to a vault. The operation returns
+// an empty map if there are no tags. For more information about tags, see Tagging
+// Amazon Glacier Resources (http://docs.aws.amazon.com/amazonglacier/latest/dev/tagging.html).
+func (c *Glacier) ListTagsForVault(input *ListTagsForVaultInput) (*ListTagsForVaultOutput, error) {
+	req, out := c.ListTagsForVaultRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opListVaults = "ListVaults"
 
 // ListVaultsRequest generates a request for the ListVaults operation.
 func (c *Glacier) ListVaultsRequest(input *ListVaultsInput) (req *aws.Request, output *ListVaultsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListVaults == nil {
-		opListVaults = &aws.Operation{
-			Name:       "ListVaults",
-			HTTPMethod: "GET",
-			HTTPPath:   "/{accountId}/vaults",
-		}
+	op := &aws.Operation{
+		Name:       opListVaults,
+		HTTPMethod: "GET",
+		HTTPPath:   "/{accountId}/vaults",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "limit",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &ListVaultsInput{}
 	}
 
-	req = c.newRequest(opListVaults, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListVaultsOutput{}
 	req.Data = output
 	return
@@ -1060,65 +1142,131 @@ func (c *Glacier) ListVaultsRequest(input *ListVaultsInput) (req *aws.Request, o
 // Metadata in Amazon Glacier (http://docs.aws.amazon.com/amazonglacier/latest/dev/retrieving-vault-info.html)
 // and List Vaults  (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-vaults-get.html)
 // in the Amazon Glacier Developer Guide.
-func (c *Glacier) ListVaults(input *ListVaultsInput) (output *ListVaultsOutput, err error) {
+func (c *Glacier) ListVaults(input *ListVaultsInput) (*ListVaultsOutput, error) {
 	req, out := c.ListVaultsRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+func (c *Glacier) ListVaultsPages(input *ListVaultsInput, fn func(p *ListVaultsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.ListVaultsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*ListVaultsOutput), lastPage)
+	})
+}
+
+const opRemoveTagsFromVault = "RemoveTagsFromVault"
+
+// RemoveTagsFromVaultRequest generates a request for the RemoveTagsFromVault operation.
+func (c *Glacier) RemoveTagsFromVaultRequest(input *RemoveTagsFromVaultInput) (req *aws.Request, output *RemoveTagsFromVaultOutput) {
+	op := &aws.Operation{
+		Name:       opRemoveTagsFromVault,
+		HTTPMethod: "POST",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/tags?operation=remove",
+	}
+
+	if input == nil {
+		input = &RemoveTagsFromVaultInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &RemoveTagsFromVaultOutput{}
+	req.Data = output
 	return
 }
 
-var opListVaults *aws.Operation
+// This operation removes one or more tags from the set of tags attached to
+// a vault. For more information about tags, see Tagging Amazon Glacier Resources
+// (http://docs.aws.amazon.com/amazonglacier/latest/dev/tagging.html). This
+// operation is idempotent. The operation will be successful, even if there
+// are no tags attached to the vault.
+func (c *Glacier) RemoveTagsFromVault(input *RemoveTagsFromVaultInput) (*RemoveTagsFromVaultOutput, error) {
+	req, out := c.RemoveTagsFromVaultRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opSetDataRetrievalPolicy = "SetDataRetrievalPolicy"
 
 // SetDataRetrievalPolicyRequest generates a request for the SetDataRetrievalPolicy operation.
 func (c *Glacier) SetDataRetrievalPolicyRequest(input *SetDataRetrievalPolicyInput) (req *aws.Request, output *SetDataRetrievalPolicyOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opSetDataRetrievalPolicy == nil {
-		opSetDataRetrievalPolicy = &aws.Operation{
-			Name:       "SetDataRetrievalPolicy",
-			HTTPMethod: "PUT",
-			HTTPPath:   "/{accountId}/policies/data-retrieval",
-		}
+	op := &aws.Operation{
+		Name:       opSetDataRetrievalPolicy,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/{accountId}/policies/data-retrieval",
 	}
 
 	if input == nil {
 		input = &SetDataRetrievalPolicyInput{}
 	}
 
-	req = c.newRequest(opSetDataRetrievalPolicy, input, output)
+	req = c.newRequest(op, input, output)
 	output = &SetDataRetrievalPolicyOutput{}
 	req.Data = output
 	return
 }
 
-func (c *Glacier) SetDataRetrievalPolicy(input *SetDataRetrievalPolicyInput) (output *SetDataRetrievalPolicyOutput, err error) {
+// This operation sets and then enacts a data retrieval policy in the region
+// specified in the PUT request. You can set one policy per region for an AWS
+// account. The policy is enacted within a few minutes of a successful PUT operation.
+//
+// The set policy operation does not affect retrieval jobs that were in progress
+// before the policy was enacted. For more information about data retrieval
+// policies, see Amazon Glacier Data Retrieval Policies (http://docs.aws.amazon.com/amazonglacier/latest/dev/data-retrieval-policy.html).
+func (c *Glacier) SetDataRetrievalPolicy(input *SetDataRetrievalPolicyInput) (*SetDataRetrievalPolicyOutput, error) {
 	req, out := c.SetDataRetrievalPolicyRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opSetVaultAccessPolicy = "SetVaultAccessPolicy"
+
+// SetVaultAccessPolicyRequest generates a request for the SetVaultAccessPolicy operation.
+func (c *Glacier) SetVaultAccessPolicyRequest(input *SetVaultAccessPolicyInput) (req *aws.Request, output *SetVaultAccessPolicyOutput) {
+	op := &aws.Operation{
+		Name:       opSetVaultAccessPolicy,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/access-policy",
+	}
+
+	if input == nil {
+		input = &SetVaultAccessPolicyInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &SetVaultAccessPolicyOutput{}
+	req.Data = output
 	return
 }
 
-var opSetDataRetrievalPolicy *aws.Operation
+// This operation configures an access policy for a vault and will overwrite
+// an existing policy. To configure a vault access policy, send a PUT request
+// to the access-policy subresource of the vault. An access policy is specific
+// to a vault and is also called a vault subresource. You can set one access
+// policy per vault and the policy can be up to 20 KB in size. For more information
+// about vault access policies, see Amazon Glacier Access Control with Vault
+// Access Policies (http://docs.aws.amazon.com/amazonglacier/latest/dev/vault-access-policy.html).
+func (c *Glacier) SetVaultAccessPolicy(input *SetVaultAccessPolicyInput) (*SetVaultAccessPolicyOutput, error) {
+	req, out := c.SetVaultAccessPolicyRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opSetVaultNotifications = "SetVaultNotifications"
 
 // SetVaultNotificationsRequest generates a request for the SetVaultNotifications operation.
 func (c *Glacier) SetVaultNotificationsRequest(input *SetVaultNotificationsInput) (req *aws.Request, output *SetVaultNotificationsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opSetVaultNotifications == nil {
-		opSetVaultNotifications = &aws.Operation{
-			Name:       "SetVaultNotifications",
-			HTTPMethod: "PUT",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}/notification-configuration",
-		}
+	op := &aws.Operation{
+		Name:       opSetVaultNotifications,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/notification-configuration",
 	}
 
 	if input == nil {
 		input = &SetVaultNotificationsInput{}
 	}
 
-	req = c.newRequest(opSetVaultNotifications, input, output)
+	req = c.newRequest(op, input, output)
 	output = &SetVaultNotificationsOutput{}
 	req.Data = output
 	return
@@ -1153,33 +1301,27 @@ func (c *Glacier) SetVaultNotificationsRequest(input *SetVaultNotificationsInput
 // Notifications in Amazon Glacier (http://docs.aws.amazon.com/amazonglacier/latest/dev/configuring-notifications.html)
 // and Set Vault Notification Configuration  (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-vault-notifications-put.html)
 // in the Amazon Glacier Developer Guide.
-func (c *Glacier) SetVaultNotifications(input *SetVaultNotificationsInput) (output *SetVaultNotificationsOutput, err error) {
+func (c *Glacier) SetVaultNotifications(input *SetVaultNotificationsInput) (*SetVaultNotificationsOutput, error) {
 	req, out := c.SetVaultNotificationsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opSetVaultNotifications *aws.Operation
+const opUploadArchive = "UploadArchive"
 
 // UploadArchiveRequest generates a request for the UploadArchive operation.
 func (c *Glacier) UploadArchiveRequest(input *UploadArchiveInput) (req *aws.Request, output *ArchiveCreationOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUploadArchive == nil {
-		opUploadArchive = &aws.Operation{
-			Name:       "UploadArchive",
-			HTTPMethod: "POST",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}/archives",
-		}
+	op := &aws.Operation{
+		Name:       opUploadArchive,
+		HTTPMethod: "POST",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/archives",
 	}
 
 	if input == nil {
 		input = &UploadArchiveInput{}
 	}
 
-	req = c.newRequest(opUploadArchive, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ArchiveCreationOutput{}
 	req.Data = output
 	return
@@ -1221,33 +1363,27 @@ func (c *Glacier) UploadArchiveRequest(input *UploadArchiveInput) (req *aws.Requ
 // Archive in Amazon Glacier (http://docs.aws.amazon.com/amazonglacier/latest/dev/uploading-an-archive.html)
 // and Upload Archive (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-archive-post.html)
 // in the Amazon Glacier Developer Guide.
-func (c *Glacier) UploadArchive(input *UploadArchiveInput) (output *ArchiveCreationOutput, err error) {
+func (c *Glacier) UploadArchive(input *UploadArchiveInput) (*ArchiveCreationOutput, error) {
 	req, out := c.UploadArchiveRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opUploadArchive *aws.Operation
+const opUploadMultipartPart = "UploadMultipartPart"
 
 // UploadMultipartPartRequest generates a request for the UploadMultipartPart operation.
 func (c *Glacier) UploadMultipartPartRequest(input *UploadMultipartPartInput) (req *aws.Request, output *UploadMultipartPartOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUploadMultipartPart == nil {
-		opUploadMultipartPart = &aws.Operation{
-			Name:       "UploadMultipartPart",
-			HTTPMethod: "PUT",
-			HTTPPath:   "/{accountId}/vaults/{vaultName}/multipart-uploads/{uploadId}",
-		}
+	op := &aws.Operation{
+		Name:       opUploadMultipartPart,
+		HTTPMethod: "PUT",
+		HTTPPath:   "/{accountId}/vaults/{vaultName}/multipart-uploads/{uploadId}",
 	}
 
 	if input == nil {
 		input = &UploadMultipartPartInput{}
 	}
 
-	req = c.newRequest(opUploadMultipartPart, input, output)
+	req = c.newRequest(op, input, output)
 	output = &UploadMultipartPartOutput{}
 	req.Data = output
 	return
@@ -1296,14 +1432,11 @@ func (c *Glacier) UploadMultipartPartRequest(input *UploadMultipartPartInput) (r
 // Archives in Parts (Multipart Upload) (http://docs.aws.amazon.com/amazonglacier/latest/dev/uploading-archive-mpu.html)
 // and Upload Part  (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-upload-part.html)
 // in the Amazon Glacier Developer Guide.
-func (c *Glacier) UploadMultipartPart(input *UploadMultipartPartInput) (output *UploadMultipartPartOutput, err error) {
+func (c *Glacier) UploadMultipartPart(input *UploadMultipartPartInput) (*UploadMultipartPartOutput, error) {
 	req, out := c.UploadMultipartPartRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
-
-var opUploadMultipartPart *aws.Operation
 
 // Provides options to abort a multipart upload identified by the upload ID.
 //
@@ -1312,10 +1445,11 @@ var opUploadMultipartPart *aws.Operation
 // For conceptual information, go to Working with Archives in Amazon Glacier
 // (http://docs.aws.amazon.com/amazonglacier/latest/dev/working-with-archives.html).
 type AbortMultipartUploadInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
 	// The upload ID of the multipart upload to delete.
@@ -1324,19 +1458,90 @@ type AbortMultipartUploadInput struct {
 	// The name of the vault.
 	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
 
-	metadataAbortMultipartUploadInput `json:"-", xml:"-"`
+	metadataAbortMultipartUploadInput `json:"-" xml:"-"`
 }
 
 type metadataAbortMultipartUploadInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AbortMultipartUploadInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AbortMultipartUploadInput) GoString() string {
+	return s.String()
+}
+
 type AbortMultipartUploadOutput struct {
-	metadataAbortMultipartUploadOutput `json:"-", xml:"-"`
+	metadataAbortMultipartUploadOutput `json:"-" xml:"-"`
 }
 
 type metadataAbortMultipartUploadOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AbortMultipartUploadOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AbortMultipartUploadOutput) GoString() string {
+	return s.String()
+}
+
+// The input value for AddTagsToVault.
+type AddTagsToVaultInput struct {
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
+	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
+
+	// The tags to add to the vault. Each tag is composed of a key and a value.
+	// The value can be an empty string.
+	Tags map[string]*string `type:"map"`
+
+	// The name of the vault.
+	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
+
+	metadataAddTagsToVaultInput `json:"-" xml:"-"`
+}
+
+type metadataAddTagsToVaultInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AddTagsToVaultInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddTagsToVaultInput) GoString() string {
+	return s.String()
+}
+
+type AddTagsToVaultOutput struct {
+	metadataAddTagsToVaultOutput `json:"-" xml:"-"`
+}
+
+type metadataAddTagsToVaultOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AddTagsToVaultOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddTagsToVaultOutput) GoString() string {
+	return s.String()
 }
 
 // Contains the Amazon Glacier response to your request.
@@ -1354,11 +1559,21 @@ type ArchiveCreationOutput struct {
 	// The relative URI path of the newly added archive resource.
 	Location *string `location:"header" locationName:"Location" type:"string"`
 
-	metadataArchiveCreationOutput `json:"-", xml:"-"`
+	metadataArchiveCreationOutput `json:"-" xml:"-"`
 }
 
 type metadataArchiveCreationOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ArchiveCreationOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ArchiveCreationOutput) GoString() string {
+	return s.String()
 }
 
 // Provides options to complete a multipart upload operation. This informs Amazon
@@ -1367,10 +1582,11 @@ type metadataArchiveCreationOutput struct {
 // saving the archive to the vault, Amazon Glacier returns the URI path of the
 // newly created archive resource.
 type CompleteMultipartUploadInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
 	// The total size, in bytes, of the entire archive. This value should be the
@@ -1389,29 +1605,51 @@ type CompleteMultipartUploadInput struct {
 	// The name of the vault.
 	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
 
-	metadataCompleteMultipartUploadInput `json:"-", xml:"-"`
+	metadataCompleteMultipartUploadInput `json:"-" xml:"-"`
 }
 
 type metadataCompleteMultipartUploadInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CompleteMultipartUploadInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CompleteMultipartUploadInput) GoString() string {
+	return s.String()
+}
+
 // Provides options to create a vault.
 type CreateVaultInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
+	// The AccountId value is the AWS account ID. This value must match the AWS
+	// account ID associated with the credentials used to sign the request. You
+	// can either specify an AWS account ID or optionally a single apos-apos (hyphen),
+	// in which case Amazon Glacier uses the AWS account ID associated with the
+	// credentials used to sign the request. If you specify your Account ID, do
+	// not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
 	// The name of the vault.
 	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
 
-	metadataCreateVaultInput `json:"-", xml:"-"`
+	metadataCreateVaultInput `json:"-" xml:"-"`
 }
 
 type metadataCreateVaultInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateVaultInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateVaultInput) GoString() string {
+	return s.String()
 }
 
 // Contains the Amazon Glacier response to your request.
@@ -1419,41 +1657,84 @@ type CreateVaultOutput struct {
 	// The URI of the vault that was created.
 	Location *string `location:"header" locationName:"Location" type:"string"`
 
-	metadataCreateVaultOutput `json:"-", xml:"-"`
+	metadataCreateVaultOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateVaultOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateVaultOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateVaultOutput) GoString() string {
+	return s.String()
+}
+
+// Data retrieval policy.
 type DataRetrievalPolicy struct {
+	// The policy rule. Although this is a list type, currently there must be only
+	// one rule, which contains a Strategy field and optionally a BytesPerHour field.
 	Rules []*DataRetrievalRule `type:"list"`
 
-	metadataDataRetrievalPolicy `json:"-", xml:"-"`
+	metadataDataRetrievalPolicy `json:"-" xml:"-"`
 }
 
 type metadataDataRetrievalPolicy struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DataRetrievalPolicy) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DataRetrievalPolicy) GoString() string {
+	return s.String()
+}
+
+// Data retrieval policy rule.
 type DataRetrievalRule struct {
+	// The maximum number of bytes that can be retrieved in an hour.
+	//
+	// This field is required only if the value of the Strategy field is BytesPerHour.
+	// Your PUT operation will be rejected if the Strategy field is not set to BytesPerHour
+	// and you set this field.
 	BytesPerHour *int64 `type:"long"`
 
+	// The type of data retrieval policy to set.
+	//
+	// Valid values: BytesPerHour|FreeTier|None
 	Strategy *string `type:"string"`
 
-	metadataDataRetrievalRule `json:"-", xml:"-"`
+	metadataDataRetrievalRule `json:"-" xml:"-"`
 }
 
 type metadataDataRetrievalRule struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DataRetrievalRule) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DataRetrievalRule) GoString() string {
+	return s.String()
+}
+
 // Provides options for deleting an archive from an Amazon Glacier vault.
 type DeleteArchiveInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
 	// The ID of the archive to delete.
@@ -1462,80 +1743,190 @@ type DeleteArchiveInput struct {
 	// The name of the vault.
 	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
 
-	metadataDeleteArchiveInput `json:"-", xml:"-"`
+	metadataDeleteArchiveInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteArchiveInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteArchiveInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteArchiveInput) GoString() string {
+	return s.String()
+}
+
 type DeleteArchiveOutput struct {
-	metadataDeleteArchiveOutput `json:"-", xml:"-"`
+	metadataDeleteArchiveOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteArchiveOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Provides options for deleting a vault from Amazon Glacier.
-type DeleteVaultInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
+// String returns the string representation
+func (s DeleteArchiveOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteArchiveOutput) GoString() string {
+	return s.String()
+}
+
+// DeleteVaultAccessPolicy input.
+type DeleteVaultAccessPolicyInput struct {
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
 	// The name of the vault.
 	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
 
-	metadataDeleteVaultInput `json:"-", xml:"-"`
+	metadataDeleteVaultAccessPolicyInput `json:"-" xml:"-"`
+}
+
+type metadataDeleteVaultAccessPolicyInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteVaultAccessPolicyInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVaultAccessPolicyInput) GoString() string {
+	return s.String()
+}
+
+type DeleteVaultAccessPolicyOutput struct {
+	metadataDeleteVaultAccessPolicyOutput `json:"-" xml:"-"`
+}
+
+type metadataDeleteVaultAccessPolicyOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteVaultAccessPolicyOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVaultAccessPolicyOutput) GoString() string {
+	return s.String()
+}
+
+// Provides options for deleting a vault from Amazon Glacier.
+type DeleteVaultInput struct {
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
+	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
+
+	// The name of the vault.
+	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
+
+	metadataDeleteVaultInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVaultInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteVaultInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVaultInput) GoString() string {
+	return s.String()
+}
+
 // Provides options for deleting a vault notification configuration from an
 // Amazon Glacier vault.
 type DeleteVaultNotificationsInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
 	// The name of the vault.
 	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
 
-	metadataDeleteVaultNotificationsInput `json:"-", xml:"-"`
+	metadataDeleteVaultNotificationsInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVaultNotificationsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteVaultNotificationsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVaultNotificationsInput) GoString() string {
+	return s.String()
+}
+
 type DeleteVaultNotificationsOutput struct {
-	metadataDeleteVaultNotificationsOutput `json:"-", xml:"-"`
+	metadataDeleteVaultNotificationsOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVaultNotificationsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteVaultNotificationsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVaultNotificationsOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteVaultOutput struct {
-	metadataDeleteVaultOutput `json:"-", xml:"-"`
+	metadataDeleteVaultOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVaultOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteVaultOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVaultOutput) GoString() string {
+	return s.String()
+}
+
 // Provides options for retrieving a job description.
 type DescribeJobInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
 	// The ID of the job to describe.
@@ -1544,29 +1935,50 @@ type DescribeJobInput struct {
 	// The name of the vault.
 	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
 
-	metadataDescribeJobInput `json:"-", xml:"-"`
+	metadataDescribeJobInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeJobInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeJobInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeJobInput) GoString() string {
+	return s.String()
+}
+
 // Provides options for retrieving metadata for a specific vault in Amazon Glacier.
 type DescribeVaultInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
 	// The name of the vault.
 	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
 
-	metadataDescribeVaultInput `json:"-", xml:"-"`
+	metadataDescribeVaultInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVaultInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeVaultInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVaultInput) GoString() string {
+	return s.String()
 }
 
 // Contains the Amazon Glacier response to your request.
@@ -1595,39 +2007,79 @@ type DescribeVaultOutput struct {
 	// The name of the vault.
 	VaultName *string `type:"string"`
 
-	metadataDescribeVaultOutput `json:"-", xml:"-"`
+	metadataDescribeVaultOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVaultOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeVaultOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVaultOutput) GoString() string {
+	return s.String()
+}
+
+// Input for GetDataRetrievalPolicy.
 type GetDataRetrievalPolicyInput struct {
+	// The AccountId value is the AWS account ID. This value must match the AWS
+	// account ID associated with the credentials used to sign the request. You
+	// can either specify an AWS account ID or optionally a single apos-apos (hyphen),
+	// in which case Amazon Glacier uses the AWS account ID associated with the
+	// credentials used to sign the request. If you specify your Account ID, do
+	// not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
-	metadataGetDataRetrievalPolicyInput `json:"-", xml:"-"`
+	metadataGetDataRetrievalPolicyInput `json:"-" xml:"-"`
 }
 
 type metadataGetDataRetrievalPolicyInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s GetDataRetrievalPolicyInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetDataRetrievalPolicyInput) GoString() string {
+	return s.String()
+}
+
+// Contains the Amazon Glacier response to the GetDataRetrievalPolicy request.
 type GetDataRetrievalPolicyOutput struct {
+	// Contains the returned data retrieval policy in JSON format.
 	Policy *DataRetrievalPolicy `type:"structure"`
 
-	metadataGetDataRetrievalPolicyOutput `json:"-", xml:"-"`
+	metadataGetDataRetrievalPolicyOutput `json:"-" xml:"-"`
 }
 
 type metadataGetDataRetrievalPolicyOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s GetDataRetrievalPolicyOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetDataRetrievalPolicyOutput) GoString() string {
+	return s.String()
+}
+
 // Provides options for downloading output of an Amazon Glacier job.
 type GetJobOutputInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
 	// The job ID whose data is downloaded.
@@ -1641,11 +2093,21 @@ type GetJobOutputInput struct {
 	// The name of the vault.
 	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
 
-	metadataGetJobOutputInput `json:"-", xml:"-"`
+	metadataGetJobOutputInput `json:"-" xml:"-"`
 }
 
 type metadataGetJobOutputInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetJobOutputInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetJobOutputInput) GoString() string {
+	return s.String()
 }
 
 // Contains the Amazon Glacier response to your request.
@@ -1688,30 +2150,102 @@ type GetJobOutputOutput struct {
 	// a range was specified in the request.
 	Status *int64 `location:"statusCode" locationName:"status" type:"integer"`
 
-	metadataGetJobOutputOutput `json:"-", xml:"-"`
+	metadataGetJobOutputOutput `json:"-" xml:"-"`
 }
 
 type metadataGetJobOutputOutput struct {
 	SDKShapeTraits bool `type:"structure" payload:"Body"`
 }
 
-// Provides options for retrieving the notification configuration set on an
-// Amazon Glacier vault.
-type GetVaultNotificationsInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
+// String returns the string representation
+func (s GetJobOutputOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetJobOutputOutput) GoString() string {
+	return s.String()
+}
+
+// Input for GetVaultAccessPolicy.
+type GetVaultAccessPolicyInput struct {
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
 	// The name of the vault.
 	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
 
-	metadataGetVaultNotificationsInput `json:"-", xml:"-"`
+	metadataGetVaultAccessPolicyInput `json:"-" xml:"-"`
+}
+
+type metadataGetVaultAccessPolicyInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetVaultAccessPolicyInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetVaultAccessPolicyInput) GoString() string {
+	return s.String()
+}
+
+// Output for GetVaultAccessPolicy.
+type GetVaultAccessPolicyOutput struct {
+	// Contains the returned vault access policy as a JSON string.
+	Policy *VaultAccessPolicy `locationName:"policy" type:"structure"`
+
+	metadataGetVaultAccessPolicyOutput `json:"-" xml:"-"`
+}
+
+type metadataGetVaultAccessPolicyOutput struct {
+	SDKShapeTraits bool `type:"structure" payload:"Policy"`
+}
+
+// String returns the string representation
+func (s GetVaultAccessPolicyOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetVaultAccessPolicyOutput) GoString() string {
+	return s.String()
+}
+
+// Provides options for retrieving the notification configuration set on an
+// Amazon Glacier vault.
+type GetVaultNotificationsInput struct {
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
+	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
+
+	// The name of the vault.
+	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
+
+	metadataGetVaultNotificationsInput `json:"-" xml:"-"`
 }
 
 type metadataGetVaultNotificationsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetVaultNotificationsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetVaultNotificationsInput) GoString() string {
+	return s.String()
 }
 
 // Contains the Amazon Glacier response to your request.
@@ -1719,15 +2253,234 @@ type GetVaultNotificationsOutput struct {
 	// Returns the notification configuration set on the vault.
 	VaultNotificationConfig *VaultNotificationConfig `locationName:"vaultNotificationConfig" type:"structure"`
 
-	metadataGetVaultNotificationsOutput `json:"-", xml:"-"`
+	metadataGetVaultNotificationsOutput `json:"-" xml:"-"`
 }
 
 type metadataGetVaultNotificationsOutput struct {
 	SDKShapeTraits bool `type:"structure" payload:"VaultNotificationConfig"`
 }
 
+// String returns the string representation
+func (s GetVaultNotificationsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetVaultNotificationsOutput) GoString() string {
+	return s.String()
+}
+
+// Provides options for initiating an Amazon Glacier job.
+type InitiateJobInput struct {
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
+	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
+
+	// Provides options for specifying job information.
+	JobParameters *JobParameters `locationName:"jobParameters" type:"structure"`
+
+	// The name of the vault.
+	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
+
+	metadataInitiateJobInput `json:"-" xml:"-"`
+}
+
+type metadataInitiateJobInput struct {
+	SDKShapeTraits bool `type:"structure" payload:"JobParameters"`
+}
+
+// String returns the string representation
+func (s InitiateJobInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InitiateJobInput) GoString() string {
+	return s.String()
+}
+
+// Contains the Amazon Glacier response to your request.
+type InitiateJobOutput struct {
+	// The ID of the job.
+	JobID *string `location:"header" locationName:"x-amz-job-id" type:"string"`
+
+	// The relative URI path of the job.
+	Location *string `location:"header" locationName:"Location" type:"string"`
+
+	metadataInitiateJobOutput `json:"-" xml:"-"`
+}
+
+type metadataInitiateJobOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InitiateJobOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InitiateJobOutput) GoString() string {
+	return s.String()
+}
+
+// Provides options for initiating a multipart upload to an Amazon Glacier vault.
+type InitiateMultipartUploadInput struct {
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
+	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
+
+	// The archive description that you are uploading in parts.
+	//
+	// The part size must be a megabyte (1024 KB) multiplied by a power of 2, for
+	// example 1048576 (1 MB), 2097152 (2 MB), 4194304 (4 MB), 8388608 (8 MB), and
+	// so on. The minimum allowable part size is 1 MB, and the maximum is 4 GB (4096
+	// MB).
+	ArchiveDescription *string `location:"header" locationName:"x-amz-archive-description" type:"string"`
+
+	// The size of each part except the last, in bytes. The last part can be smaller
+	// than this part size.
+	PartSize *string `location:"header" locationName:"x-amz-part-size" type:"string"`
+
+	// The name of the vault.
+	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
+
+	metadataInitiateMultipartUploadInput `json:"-" xml:"-"`
+}
+
+type metadataInitiateMultipartUploadInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InitiateMultipartUploadInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InitiateMultipartUploadInput) GoString() string {
+	return s.String()
+}
+
+// The Amazon Glacier response to your request.
+type InitiateMultipartUploadOutput struct {
+	// The relative URI path of the multipart upload ID Amazon Glacier created.
+	Location *string `location:"header" locationName:"Location" type:"string"`
+
+	// The ID of the multipart upload. This value is also included as part of the
+	// location.
+	UploadID *string `location:"header" locationName:"x-amz-multipart-upload-id" type:"string"`
+
+	metadataInitiateMultipartUploadOutput `json:"-" xml:"-"`
+}
+
+type metadataInitiateMultipartUploadOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InitiateMultipartUploadOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InitiateMultipartUploadOutput) GoString() string {
+	return s.String()
+}
+
+// Describes the options for a range inventory retrieval job.
+type InventoryRetrievalJobDescription struct {
+	// The end of the date range in UTC for vault inventory retrieval that includes
+	// archives created before this date. A string representation of ISO 8601 date
+	// format, for example, 2013-03-20T17:03:43Z.
+	EndDate *string `type:"string"`
+
+	// The output format for the vault inventory list, which is set by the InitiateJob
+	// request when initiating a job to retrieve a vault inventory. Valid values
+	// are "CSV" and "JSON".
+	Format *string `type:"string"`
+
+	// Specifies the maximum number of inventory items returned per vault inventory
+	// retrieval request. This limit is set when initiating the job with the a InitiateJob
+	// request.
+	Limit *string `type:"string"`
+
+	// An opaque string that represents where to continue pagination of the vault
+	// inventory retrieval results. You use the marker in a new InitiateJob request
+	// to obtain additional inventory items. If there are no more inventory items,
+	// this value is null. For more information, see  Range Inventory Retrieval
+	// (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-initiate-job-post.html#api-initiate-job-post-vault-inventory-list-filtering).
+	Marker *string `type:"string"`
+
+	// The start of the date range in UTC for vault inventory retrieval that includes
+	// archives created on or after this date. A string representation of ISO 8601
+	// date format, for example, 2013-03-20T17:03:43Z.
+	StartDate *string `type:"string"`
+
+	metadataInventoryRetrievalJobDescription `json:"-" xml:"-"`
+}
+
+type metadataInventoryRetrievalJobDescription struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InventoryRetrievalJobDescription) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InventoryRetrievalJobDescription) GoString() string {
+	return s.String()
+}
+
+// Provides options for specifying a range inventory retrieval job.
+type InventoryRetrievalJobInput struct {
+	// The end of the date range in UTC for vault inventory retrieval that includes
+	// archives created before this date. A string representation of ISO 8601 date
+	// format, for example, 2013-03-20T17:03:43Z.
+	EndDate *string `type:"string"`
+
+	// Specifies the maximum number of inventory items returned per vault inventory
+	// retrieval request. Valid values are greater than or equal to 1.
+	Limit *string `type:"string"`
+
+	// An opaque string that represents where to continue pagination of the vault
+	// inventory retrieval results. You use the marker in a new InitiateJob request
+	// to obtain additional inventory items. If there are no more inventory items,
+	// this value is null.
+	Marker *string `type:"string"`
+
+	// The start of the date range in UTC for vault inventory retrieval that includes
+	// archives created on or after this date. A string representation of ISO 8601
+	// date format, for example, 2013-03-20T17:03:43Z.
+	StartDate *string `type:"string"`
+
+	metadataInventoryRetrievalJobInput `json:"-" xml:"-"`
+}
+
+type metadataInventoryRetrievalJobInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InventoryRetrievalJobInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InventoryRetrievalJobInput) GoString() string {
+	return s.String()
+}
+
 // Describes an Amazon Glacier job.
-type GlacierJobDescription struct {
+type JobDescription struct {
 	// The job type. It is either ArchiveRetrieval or InventoryRetrieval.
 	Action *string `type:"string"`
 
@@ -1806,158 +2559,21 @@ type GlacierJobDescription struct {
 	// was requested.
 	VaultARN *string `type:"string"`
 
-	metadataGlacierJobDescription `json:"-", xml:"-"`
+	metadataJobDescription `json:"-" xml:"-"`
 }
 
-type metadataGlacierJobDescription struct {
+type metadataJobDescription struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Provides options for initiating an Amazon Glacier job.
-type InitiateJobInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
-	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
-
-	// Provides options for specifying job information.
-	JobParameters *JobParameters `locationName:"jobParameters" type:"structure"`
-
-	// The name of the vault.
-	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
-
-	metadataInitiateJobInput `json:"-", xml:"-"`
+// String returns the string representation
+func (s JobDescription) String() string {
+	return awsutil.StringValue(s)
 }
 
-type metadataInitiateJobInput struct {
-	SDKShapeTraits bool `type:"structure" payload:"JobParameters"`
-}
-
-// Contains the Amazon Glacier response to your request.
-type InitiateJobOutput struct {
-	// The ID of the job.
-	JobID *string `location:"header" locationName:"x-amz-job-id" type:"string"`
-
-	// The relative URI path of the job.
-	Location *string `location:"header" locationName:"Location" type:"string"`
-
-	metadataInitiateJobOutput `json:"-", xml:"-"`
-}
-
-type metadataInitiateJobOutput struct {
-	SDKShapeTraits bool `type:"structure"`
-}
-
-// Provides options for initiating a multipart upload to an Amazon Glacier vault.
-type InitiateMultipartUploadInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
-	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
-
-	// The archive description that you are uploading in parts.
-	//
-	// The part size must be a megabyte (1024 KB) multiplied by a power of 2—for
-	// example, 1048576 (1 MB), 2097152 (2 MB), 4194304 (4 MB), 8388608 (8 MB),
-	// and so on. The minimum allowable part size is 1 MB, and the maximum is 4
-	// GB (4096 MB).
-	ArchiveDescription *string `location:"header" locationName:"x-amz-archive-description" type:"string"`
-
-	// The size of each part except the last, in bytes. The last part can be smaller
-	// than this part size.
-	PartSize *string `location:"header" locationName:"x-amz-part-size" type:"string"`
-
-	// The name of the vault.
-	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
-
-	metadataInitiateMultipartUploadInput `json:"-", xml:"-"`
-}
-
-type metadataInitiateMultipartUploadInput struct {
-	SDKShapeTraits bool `type:"structure"`
-}
-
-// Contains the Amazon Glacier response to your request.
-type InitiateMultipartUploadOutput struct {
-	// The relative URI path of the multipart upload ID Amazon Glacier created.
-	Location *string `location:"header" locationName:"Location" type:"string"`
-
-	// The ID of the multipart upload. This value is also included as part of the
-	// location.
-	UploadID *string `location:"header" locationName:"x-amz-multipart-upload-id" type:"string"`
-
-	metadataInitiateMultipartUploadOutput `json:"-", xml:"-"`
-}
-
-type metadataInitiateMultipartUploadOutput struct {
-	SDKShapeTraits bool `type:"structure"`
-}
-
-// Describes the options for a range inventory retrieval job.
-type InventoryRetrievalJobDescription struct {
-	// The end of the date range in UTC for vault inventory retrieval that includes
-	// archives created before this date. A string representation of ISO 8601 date
-	// format, for example, 2013-03-20T17:03:43Z.
-	EndDate *string `type:"string"`
-
-	// The output format for the vault inventory list, which is set by the InitiateJob
-	// request when initiating a job to retrieve a vault inventory. Valid values
-	// are "CSV" and "JSON".
-	Format *string `type:"string"`
-
-	// Specifies the maximum number of inventory items returned per vault inventory
-	// retrieval request. This limit is set when initiating the job with the a InitiateJob
-	// request.
-	Limit *string `type:"string"`
-
-	// An opaque string that represents where to continue pagination of the vault
-	// inventory retrieval results. You use the marker in a new InitiateJob request
-	// to obtain additional inventory items. If there are no more inventory items,
-	// this value is null. For more information, see  Range Inventory Retrieval
-	// (http://docs.aws.amazon.com/amazonglacier/latest/dev/api-initiate-job-post.html#api-initiate-job-post-vault-inventory-list-filtering).
-	Marker *string `type:"string"`
-
-	// The start of the date range in UTC for vault inventory retrieval that includes
-	// archives created on or after this date. A string representation of ISO 8601
-	// date format, for example, 2013-03-20T17:03:43Z.
-	StartDate *string `type:"string"`
-
-	metadataInventoryRetrievalJobDescription `json:"-", xml:"-"`
-}
-
-type metadataInventoryRetrievalJobDescription struct {
-	SDKShapeTraits bool `type:"structure"`
-}
-
-// Provides options for specifying a range inventory retrieval job.
-type InventoryRetrievalJobInput struct {
-	// The end of the date range in UTC for vault inventory retrieval that includes
-	// archives created before this date. A string representation of ISO 8601 date
-	// format, for example, 2013-03-20T17:03:43Z.
-	EndDate *string `type:"string"`
-
-	// Specifies the maximum number of inventory items returned per vault inventory
-	// retrieval request. Valid values are greater than or equal to 1.
-	Limit *string `type:"string"`
-
-	// An opaque string that represents where to continue pagination of the vault
-	// inventory retrieval results. You use the marker in a new InitiateJob request
-	// to obtain additional inventory items. If there are no more inventory items,
-	// this value is null.
-	Marker *string `type:"string"`
-
-	// The start of the date range in UTC for vault inventory retrieval that includes
-	// archives created on or after this date. A string representation of ISO 8601
-	// date format, for example, 2013-03-20T17:03:43Z.
-	StartDate *string `type:"string"`
-
-	metadataInventoryRetrievalJobInput `json:"-", xml:"-"`
-}
-
-type metadataInventoryRetrievalJobInput struct {
-	SDKShapeTraits bool `type:"structure"`
+// GoString returns the string representation
+func (s JobDescription) GoString() string {
+	return s.String()
 }
 
 // Provides options for defining a job.
@@ -2002,19 +2618,30 @@ type JobParameters struct {
 	// of a vault. Valid values are "archive-retrieval" and "inventory-retrieval".
 	Type *string `type:"string"`
 
-	metadataJobParameters `json:"-", xml:"-"`
+	metadataJobParameters `json:"-" xml:"-"`
 }
 
 type metadataJobParameters struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s JobParameters) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s JobParameters) GoString() string {
+	return s.String()
+}
+
 // Provides options for retrieving a job list for an Amazon Glacier vault.
 type ListJobsInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
 	// Specifies the state of the jobs to return. You can specify true or false.
@@ -2037,37 +2664,58 @@ type ListJobsInput struct {
 	// The name of the vault.
 	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
 
-	metadataListJobsInput `json:"-", xml:"-"`
+	metadataListJobsInput `json:"-" xml:"-"`
 }
 
 type metadataListJobsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ListJobsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListJobsInput) GoString() string {
+	return s.String()
+}
+
 // Contains the Amazon Glacier response to your request.
 type ListJobsOutput struct {
 	// A list of job objects. Each job object contains metadata describing the job.
-	JobList []*GlacierJobDescription `type:"list"`
+	JobList []*JobDescription `type:"list"`
 
 	// An opaque string that represents where to continue pagination of the results.
 	// You use this value in a new List Jobs request to obtain more jobs in the
 	// list. If there are no more jobs, this value is null.
 	Marker *string `type:"string"`
 
-	metadataListJobsOutput `json:"-", xml:"-"`
+	metadataListJobsOutput `json:"-" xml:"-"`
 }
 
 type metadataListJobsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ListJobsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListJobsOutput) GoString() string {
+	return s.String()
+}
+
 // Provides options for retrieving list of in-progress multipart uploads for
 // an Amazon Glacier vault.
 type ListMultipartUploadsInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
 	// Specifies the maximum number of uploads returned in the response body. If
@@ -2084,11 +2732,21 @@ type ListMultipartUploadsInput struct {
 	// The name of the vault.
 	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
 
-	metadataListMultipartUploadsInput `json:"-", xml:"-"`
+	metadataListMultipartUploadsInput `json:"-" xml:"-"`
 }
 
 type metadataListMultipartUploadsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListMultipartUploadsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListMultipartUploadsInput) GoString() string {
+	return s.String()
 }
 
 // Contains the Amazon Glacier response to your request.
@@ -2101,20 +2759,31 @@ type ListMultipartUploadsOutput struct {
 	// A list of in-progress multipart uploads.
 	UploadsList []*UploadListElement `type:"list"`
 
-	metadataListMultipartUploadsOutput `json:"-", xml:"-"`
+	metadataListMultipartUploadsOutput `json:"-" xml:"-"`
 }
 
 type metadataListMultipartUploadsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ListMultipartUploadsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListMultipartUploadsOutput) GoString() string {
+	return s.String()
+}
+
 // Provides options for retrieving a list of parts of an archive that have been
 // uploaded in a specific multipart upload.
 type ListPartsInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
 	// Specifies the maximum number of parts returned in the response body. If this
@@ -2134,11 +2803,21 @@ type ListPartsInput struct {
 	// The name of the vault.
 	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
 
-	metadataListPartsInput `json:"-", xml:"-"`
+	metadataListPartsInput `json:"-" xml:"-"`
 }
 
 type metadataListPartsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListPartsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListPartsInput) GoString() string {
+	return s.String()
 }
 
 // Contains the Amazon Glacier response to your request.
@@ -2168,20 +2847,83 @@ type ListPartsOutput struct {
 	// was initiated.
 	VaultARN *string `type:"string"`
 
-	metadataListPartsOutput `json:"-", xml:"-"`
+	metadataListPartsOutput `json:"-" xml:"-"`
 }
 
 type metadataListPartsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ListPartsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListPartsOutput) GoString() string {
+	return s.String()
+}
+
+// The input value for ListTagsForVaultInput.
+type ListTagsForVaultInput struct {
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
+	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
+
+	// The name of the vault.
+	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
+
+	metadataListTagsForVaultInput `json:"-" xml:"-"`
+}
+
+type metadataListTagsForVaultInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListTagsForVaultInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListTagsForVaultInput) GoString() string {
+	return s.String()
+}
+
+// Contains the Amazon Glacier response to your request.
+type ListTagsForVaultOutput struct {
+	// The tags attached to the vault. Each tag is composed of a key and a value.
+	Tags map[string]*string `type:"map"`
+
+	metadataListTagsForVaultOutput `json:"-" xml:"-"`
+}
+
+type metadataListTagsForVaultOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListTagsForVaultOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListTagsForVaultOutput) GoString() string {
+	return s.String()
+}
+
 // Provides options to retrieve the vault list owned by the calling user's account.
 // The list provides metadata information for each vault.
 type ListVaultsInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
+	// The AccountId value is the AWS account ID. This value must match the AWS
+	// account ID associated with the credentials used to sign the request. You
+	// can either specify an AWS account ID or optionally a single apos-apos (hyphen),
+	// in which case Amazon Glacier uses the AWS account ID associated with the
+	// credentials used to sign the request. If you specify your Account ID, do
+	// not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
 	// The maximum number of items returned in the response. If you don't specify
@@ -2192,11 +2934,21 @@ type ListVaultsInput struct {
 	// the listing of vaults should begin.
 	Marker *string `location:"querystring" locationName:"marker" type:"string"`
 
-	metadataListVaultsInput `json:"-", xml:"-"`
+	metadataListVaultsInput `json:"-" xml:"-"`
 }
 
 type metadataListVaultsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListVaultsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListVaultsInput) GoString() string {
+	return s.String()
 }
 
 // Contains the Amazon Glacier response to your request.
@@ -2208,11 +2960,21 @@ type ListVaultsOutput struct {
 	// List of vaults.
 	VaultList []*DescribeVaultOutput `type:"list"`
 
-	metadataListVaultsOutput `json:"-", xml:"-"`
+	metadataListVaultsOutput `json:"-" xml:"-"`
 }
 
 type metadataListVaultsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListVaultsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListVaultsOutput) GoString() string {
+	return s.String()
 }
 
 // A list of the part sizes of the multipart upload.
@@ -2224,40 +2986,179 @@ type PartListElement struct {
 	// field is never null.
 	SHA256TreeHash *string `type:"string"`
 
-	metadataPartListElement `json:"-", xml:"-"`
+	metadataPartListElement `json:"-" xml:"-"`
 }
 
 type metadataPartListElement struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-type SetDataRetrievalPolicyInput struct {
+// String returns the string representation
+func (s PartListElement) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PartListElement) GoString() string {
+	return s.String()
+}
+
+// The input value for RemoveTagsFromVaultInput.
+type RemoveTagsFromVaultInput struct {
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
+	// A list of tag keys. Each corresponding tag is removed from the vault.
+	TagKeys []*string `type:"list"`
+
+	// The name of the vault.
+	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
+
+	metadataRemoveTagsFromVaultInput `json:"-" xml:"-"`
+}
+
+type metadataRemoveTagsFromVaultInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RemoveTagsFromVaultInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RemoveTagsFromVaultInput) GoString() string {
+	return s.String()
+}
+
+type RemoveTagsFromVaultOutput struct {
+	metadataRemoveTagsFromVaultOutput `json:"-" xml:"-"`
+}
+
+type metadataRemoveTagsFromVaultOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RemoveTagsFromVaultOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RemoveTagsFromVaultOutput) GoString() string {
+	return s.String()
+}
+
+// SetDataRetrievalPolicy input.
+type SetDataRetrievalPolicyInput struct {
+	// The AccountId value is the AWS account ID. This value must match the AWS
+	// account ID associated with the credentials used to sign the request. You
+	// can either specify an AWS account ID or optionally a single apos-apos (hyphen),
+	// in which case Amazon Glacier uses the AWS account ID associated with the
+	// credentials used to sign the request. If you specify your Account ID, do
+	// not include any hyphens (apos-apos) in the ID.
+	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
+
+	// The data retrieval policy in JSON format.
 	Policy *DataRetrievalPolicy `type:"structure"`
 
-	metadataSetDataRetrievalPolicyInput `json:"-", xml:"-"`
+	metadataSetDataRetrievalPolicyInput `json:"-" xml:"-"`
 }
 
 type metadataSetDataRetrievalPolicyInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s SetDataRetrievalPolicyInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetDataRetrievalPolicyInput) GoString() string {
+	return s.String()
+}
+
 type SetDataRetrievalPolicyOutput struct {
-	metadataSetDataRetrievalPolicyOutput `json:"-", xml:"-"`
+	metadataSetDataRetrievalPolicyOutput `json:"-" xml:"-"`
 }
 
 type metadataSetDataRetrievalPolicyOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s SetDataRetrievalPolicyOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetDataRetrievalPolicyOutput) GoString() string {
+	return s.String()
+}
+
+// SetVaultAccessPolicy input.
+type SetVaultAccessPolicyInput struct {
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
+	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
+
+	// The vault access policy as a JSON string.
+	Policy *VaultAccessPolicy `locationName:"policy" type:"structure"`
+
+	// The name of the vault.
+	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
+
+	metadataSetVaultAccessPolicyInput `json:"-" xml:"-"`
+}
+
+type metadataSetVaultAccessPolicyInput struct {
+	SDKShapeTraits bool `type:"structure" payload:"Policy"`
+}
+
+// String returns the string representation
+func (s SetVaultAccessPolicyInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetVaultAccessPolicyInput) GoString() string {
+	return s.String()
+}
+
+type SetVaultAccessPolicyOutput struct {
+	metadataSetVaultAccessPolicyOutput `json:"-" xml:"-"`
+}
+
+type metadataSetVaultAccessPolicyOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SetVaultAccessPolicyOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetVaultAccessPolicyOutput) GoString() string {
+	return s.String()
+}
+
 // Provides options to configure notifications that will be sent when specific
 // events happen to a vault.
 type SetVaultNotificationsInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
 	// The name of the vault.
@@ -2266,27 +3167,48 @@ type SetVaultNotificationsInput struct {
 	// Provides options for specifying notification configuration.
 	VaultNotificationConfig *VaultNotificationConfig `locationName:"vaultNotificationConfig" type:"structure"`
 
-	metadataSetVaultNotificationsInput `json:"-", xml:"-"`
+	metadataSetVaultNotificationsInput `json:"-" xml:"-"`
 }
 
 type metadataSetVaultNotificationsInput struct {
 	SDKShapeTraits bool `type:"structure" payload:"VaultNotificationConfig"`
 }
 
+// String returns the string representation
+func (s SetVaultNotificationsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetVaultNotificationsInput) GoString() string {
+	return s.String()
+}
+
 type SetVaultNotificationsOutput struct {
-	metadataSetVaultNotificationsOutput `json:"-", xml:"-"`
+	metadataSetVaultNotificationsOutput `json:"-" xml:"-"`
 }
 
 type metadataSetVaultNotificationsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s SetVaultNotificationsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SetVaultNotificationsOutput) GoString() string {
+	return s.String()
+}
+
 // Provides options to add an archive to a vault.
 type UploadArchiveInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
 	// The optional description of the archive you are uploading.
@@ -2295,17 +3217,27 @@ type UploadArchiveInput struct {
 	// The data to upload.
 	Body io.ReadSeeker `locationName:"body" type:"blob"`
 
-	// The SHA256 checksum (a linear hash) of the payload.
+	// The SHA256 tree hash of the data being uploaded.
 	Checksum *string `location:"header" locationName:"x-amz-sha256-tree-hash" type:"string"`
 
 	// The name of the vault.
 	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
 
-	metadataUploadArchiveInput `json:"-", xml:"-"`
+	metadataUploadArchiveInput `json:"-" xml:"-"`
 }
 
 type metadataUploadArchiveInput struct {
 	SDKShapeTraits bool `type:"structure" payload:"Body"`
+}
+
+// String returns the string representation
+func (s UploadArchiveInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UploadArchiveInput) GoString() string {
+	return s.String()
 }
 
 // A list of in-progress multipart uploads for a vault.
@@ -2328,19 +3260,30 @@ type UploadListElement struct {
 	// The Amazon Resource Name (ARN) of the vault that contains the archive.
 	VaultARN *string `type:"string"`
 
-	metadataUploadListElement `json:"-", xml:"-"`
+	metadataUploadListElement `json:"-" xml:"-"`
 }
 
 type metadataUploadListElement struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s UploadListElement) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UploadListElement) GoString() string {
+	return s.String()
+}
+
 // Provides options to upload a part of an archive in a multipart upload operation.
 type UploadMultipartPartInput struct {
-	// The AccountId is the AWS Account ID. You can specify either the AWS Account
-	// ID or optionally a '-', in which case Amazon Glacier uses the AWS Account
-	// ID associated with the credentials used to sign the request. If you specify
-	// your Account ID, do not include hyphens in it.
+	// The AccountId value is the AWS account ID of the account that owns the vault.
+	// You can either specify an AWS account ID or optionally a single apos-apos
+	// (hyphen), in which case Amazon Glacier uses the AWS account ID associated
+	// with the credentials used to sign the request. If you use an account ID,
+	// do not include any hyphens (apos-apos) in the ID.
 	AccountID *string `location:"uri" locationName:"accountId" type:"string" required:"true"`
 
 	// The data to upload.
@@ -2361,11 +3304,21 @@ type UploadMultipartPartInput struct {
 	// The name of the vault.
 	VaultName *string `location:"uri" locationName:"vaultName" type:"string" required:"true"`
 
-	metadataUploadMultipartPartInput `json:"-", xml:"-"`
+	metadataUploadMultipartPartInput `json:"-" xml:"-"`
 }
 
 type metadataUploadMultipartPartInput struct {
 	SDKShapeTraits bool `type:"structure" payload:"Body"`
+}
+
+// String returns the string representation
+func (s UploadMultipartPartInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UploadMultipartPartInput) GoString() string {
+	return s.String()
 }
 
 // Contains the Amazon Glacier response to your request.
@@ -2373,11 +3326,43 @@ type UploadMultipartPartOutput struct {
 	// The SHA256 tree hash that Amazon Glacier computed for the uploaded part.
 	Checksum *string `location:"header" locationName:"x-amz-sha256-tree-hash" type:"string"`
 
-	metadataUploadMultipartPartOutput `json:"-", xml:"-"`
+	metadataUploadMultipartPartOutput `json:"-" xml:"-"`
 }
 
 type metadataUploadMultipartPartOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UploadMultipartPartOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UploadMultipartPartOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the vault access policy.
+type VaultAccessPolicy struct {
+	// The vault access policy.
+	Policy *string `type:"string"`
+
+	metadataVaultAccessPolicy `json:"-" xml:"-"`
+}
+
+type metadataVaultAccessPolicy struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VaultAccessPolicy) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VaultAccessPolicy) GoString() string {
+	return s.String()
 }
 
 // Represents a vault's notification configuration.
@@ -2390,9 +3375,19 @@ type VaultNotificationConfig struct {
 	// Name (ARN).
 	SNSTopic *string `type:"string"`
 
-	metadataVaultNotificationConfig `json:"-", xml:"-"`
+	metadataVaultNotificationConfig `json:"-" xml:"-"`
 }
 
 type metadataVaultNotificationConfig struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VaultNotificationConfig) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VaultNotificationConfig) GoString() string {
+	return s.String()
 }

@@ -3,21 +3,21 @@ package awsutil_test
 import (
 	"testing"
 
-	"github.com/awslabs/aws-sdk-go/aws/awsutil"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 	"github.com/stretchr/testify/assert"
 )
 
 type Struct struct {
 	A []Struct
-	a []Struct
+	z []Struct
 	B *Struct
 	D *Struct
 	C string
 }
 
 var data = Struct{
-	A: []Struct{Struct{C: "value1"}, Struct{C: "value2"}, Struct{C: "value3"}},
-	a: []Struct{Struct{C: "value1"}, Struct{C: "value2"}, Struct{C: "value3"}},
+	A: []Struct{{C: "value1"}, {C: "value2"}, {C: "value3"}},
+	z: []Struct{{C: "value1"}, {C: "value2"}, {C: "value3"}},
 	B: &Struct{B: &Struct{C: "terminal"}, D: &Struct{C: "terminal2"}},
 	C: "initial",
 }
@@ -27,6 +27,7 @@ func TestValueAtPathSuccess(t *testing.T) {
 	assert.Equal(t, []interface{}{"value1"}, awsutil.ValuesAtPath(data, "A[0].C"))
 	assert.Equal(t, []interface{}{"value2"}, awsutil.ValuesAtPath(data, "A[1].C"))
 	assert.Equal(t, []interface{}{"value3"}, awsutil.ValuesAtPath(data, "A[2].C"))
+	assert.Equal(t, []interface{}{"value3"}, awsutil.ValuesAtAnyPath(data, "a[2].c"))
 	assert.Equal(t, []interface{}{"value3"}, awsutil.ValuesAtPath(data, "A[-1].C"))
 	assert.Equal(t, []interface{}{"value1", "value2", "value3"}, awsutil.ValuesAtPath(data, "A[].C"))
 	assert.Equal(t, []interface{}{"terminal"}, awsutil.ValuesAtPath(data, "B . B . C"))
@@ -41,8 +42,9 @@ func TestValueAtPathFailure(t *testing.T) {
 	assert.Equal(t, []interface{}{}, awsutil.ValuesAtPath(data, "A[100].C"))
 	assert.Equal(t, []interface{}{}, awsutil.ValuesAtPath(data, "A[3].C"))
 	assert.Equal(t, []interface{}{}, awsutil.ValuesAtPath(data, "B.B.C.Z"))
-	assert.Equal(t, []interface{}(nil), awsutil.ValuesAtPath(data, "a[-1].C"))
+	assert.Equal(t, []interface{}(nil), awsutil.ValuesAtPath(data, "z[-1].C"))
 	assert.Equal(t, []interface{}{}, awsutil.ValuesAtPath(nil, "A.B.C"))
+	assert.Equal(t, []interface{}{}, awsutil.ValuesAtPath(Struct{}, "A"))
 }
 
 func TestSetValueAtPathSuccess(t *testing.T) {
@@ -57,4 +59,10 @@ func TestSetValueAtPathSuccess(t *testing.T) {
 	awsutil.SetValueAtPath(&s, "B.*.C", "test0")
 	assert.Equal(t, "test0", s.B.B.C)
 	assert.Equal(t, "test0", s.B.D.C)
+
+	var s2 Struct
+	awsutil.SetValueAtAnyPath(&s2, "b.b.c", "test0")
+	assert.Equal(t, "test0", s2.B.B.C)
+	awsutil.SetValueAtAnyPath(&s2, "A", []Struct{Struct{}})
+	assert.Equal(t, []Struct{Struct{}}, s2.A)
 }

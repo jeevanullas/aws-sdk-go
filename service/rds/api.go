@@ -4,65 +4,54 @@
 package rds
 
 import (
-	"sync"
 	"time"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
-var oprw sync.Mutex
+const opAddSourceIdentifierToSubscription = "AddSourceIdentifierToSubscription"
 
 // AddSourceIdentifierToSubscriptionRequest generates a request for the AddSourceIdentifierToSubscription operation.
 func (c *RDS) AddSourceIdentifierToSubscriptionRequest(input *AddSourceIdentifierToSubscriptionInput) (req *aws.Request, output *AddSourceIdentifierToSubscriptionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAddSourceIdentifierToSubscription == nil {
-		opAddSourceIdentifierToSubscription = &aws.Operation{
-			Name:       "AddSourceIdentifierToSubscription",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAddSourceIdentifierToSubscription,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AddSourceIdentifierToSubscriptionInput{}
 	}
 
-	req = c.newRequest(opAddSourceIdentifierToSubscription, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AddSourceIdentifierToSubscriptionOutput{}
 	req.Data = output
 	return
 }
 
 // Adds a source identifier to an existing RDS event notification subscription.
-func (c *RDS) AddSourceIdentifierToSubscription(input *AddSourceIdentifierToSubscriptionInput) (output *AddSourceIdentifierToSubscriptionOutput, err error) {
+func (c *RDS) AddSourceIdentifierToSubscription(input *AddSourceIdentifierToSubscriptionInput) (*AddSourceIdentifierToSubscriptionOutput, error) {
 	req, out := c.AddSourceIdentifierToSubscriptionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAddSourceIdentifierToSubscription *aws.Operation
+const opAddTagsToResource = "AddTagsToResource"
 
 // AddTagsToResourceRequest generates a request for the AddTagsToResource operation.
 func (c *RDS) AddTagsToResourceRequest(input *AddTagsToResourceInput) (req *aws.Request, output *AddTagsToResourceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAddTagsToResource == nil {
-		opAddTagsToResource = &aws.Operation{
-			Name:       "AddTagsToResource",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAddTagsToResource,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AddTagsToResourceInput{}
 	}
 
-	req = c.newRequest(opAddTagsToResource, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AddTagsToResourceOutput{}
 	req.Data = output
 	return
@@ -74,66 +63,54 @@ func (c *RDS) AddTagsToResourceRequest(input *AddTagsToResourceInput) (req *aws.
 //
 // For an overview on tagging Amazon RDS resources, see Tagging Amazon RDS
 // Resources (http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Tagging.html).
-func (c *RDS) AddTagsToResource(input *AddTagsToResourceInput) (output *AddTagsToResourceOutput, err error) {
+func (c *RDS) AddTagsToResource(input *AddTagsToResourceInput) (*AddTagsToResourceOutput, error) {
 	req, out := c.AddTagsToResourceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAddTagsToResource *aws.Operation
+const opApplyPendingMaintenanceAction = "ApplyPendingMaintenanceAction"
 
 // ApplyPendingMaintenanceActionRequest generates a request for the ApplyPendingMaintenanceAction operation.
 func (c *RDS) ApplyPendingMaintenanceActionRequest(input *ApplyPendingMaintenanceActionInput) (req *aws.Request, output *ApplyPendingMaintenanceActionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opApplyPendingMaintenanceAction == nil {
-		opApplyPendingMaintenanceAction = &aws.Operation{
-			Name:       "ApplyPendingMaintenanceAction",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opApplyPendingMaintenanceAction,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ApplyPendingMaintenanceActionInput{}
 	}
 
-	req = c.newRequest(opApplyPendingMaintenanceAction, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ApplyPendingMaintenanceActionOutput{}
 	req.Data = output
 	return
 }
 
-// Applies a pending maintenance action to a resource.
-func (c *RDS) ApplyPendingMaintenanceAction(input *ApplyPendingMaintenanceActionInput) (output *ApplyPendingMaintenanceActionOutput, err error) {
+// Applies a pending maintenance action to a resource (for example, a DB instance).
+func (c *RDS) ApplyPendingMaintenanceAction(input *ApplyPendingMaintenanceActionInput) (*ApplyPendingMaintenanceActionOutput, error) {
 	req, out := c.ApplyPendingMaintenanceActionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opApplyPendingMaintenanceAction *aws.Operation
+const opAuthorizeDBSecurityGroupIngress = "AuthorizeDBSecurityGroupIngress"
 
 // AuthorizeDBSecurityGroupIngressRequest generates a request for the AuthorizeDBSecurityGroupIngress operation.
 func (c *RDS) AuthorizeDBSecurityGroupIngressRequest(input *AuthorizeDBSecurityGroupIngressInput) (req *aws.Request, output *AuthorizeDBSecurityGroupIngressOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAuthorizeDBSecurityGroupIngress == nil {
-		opAuthorizeDBSecurityGroupIngress = &aws.Operation{
-			Name:       "AuthorizeDBSecurityGroupIngress",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAuthorizeDBSecurityGroupIngress,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AuthorizeDBSecurityGroupIngressInput{}
 	}
 
-	req = c.newRequest(opAuthorizeDBSecurityGroupIngress, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AuthorizeDBSecurityGroupIngressOutput{}
 	req.Data = output
 	return
@@ -151,66 +128,54 @@ func (c *RDS) AuthorizeDBSecurityGroupIngressRequest(input *AuthorizeDBSecurityG
 // an Amazon RDS DB instance in another. You cannot authorize ingress from a
 // VPC security group in one VPC to an Amazon RDS DB instance in another.  For
 // an overview of CIDR ranges, go to the Wikipedia Tutorial (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing).
-func (c *RDS) AuthorizeDBSecurityGroupIngress(input *AuthorizeDBSecurityGroupIngressInput) (output *AuthorizeDBSecurityGroupIngressOutput, err error) {
+func (c *RDS) AuthorizeDBSecurityGroupIngress(input *AuthorizeDBSecurityGroupIngressInput) (*AuthorizeDBSecurityGroupIngressOutput, error) {
 	req, out := c.AuthorizeDBSecurityGroupIngressRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAuthorizeDBSecurityGroupIngress *aws.Operation
+const opCopyDBParameterGroup = "CopyDBParameterGroup"
 
 // CopyDBParameterGroupRequest generates a request for the CopyDBParameterGroup operation.
 func (c *RDS) CopyDBParameterGroupRequest(input *CopyDBParameterGroupInput) (req *aws.Request, output *CopyDBParameterGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCopyDBParameterGroup == nil {
-		opCopyDBParameterGroup = &aws.Operation{
-			Name:       "CopyDBParameterGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCopyDBParameterGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CopyDBParameterGroupInput{}
 	}
 
-	req = c.newRequest(opCopyDBParameterGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CopyDBParameterGroupOutput{}
 	req.Data = output
 	return
 }
 
 // Copies the specified DB parameter group.
-func (c *RDS) CopyDBParameterGroup(input *CopyDBParameterGroupInput) (output *CopyDBParameterGroupOutput, err error) {
+func (c *RDS) CopyDBParameterGroup(input *CopyDBParameterGroupInput) (*CopyDBParameterGroupOutput, error) {
 	req, out := c.CopyDBParameterGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCopyDBParameterGroup *aws.Operation
+const opCopyDBSnapshot = "CopyDBSnapshot"
 
 // CopyDBSnapshotRequest generates a request for the CopyDBSnapshot operation.
 func (c *RDS) CopyDBSnapshotRequest(input *CopyDBSnapshotInput) (req *aws.Request, output *CopyDBSnapshotOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCopyDBSnapshot == nil {
-		opCopyDBSnapshot = &aws.Operation{
-			Name:       "CopyDBSnapshot",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCopyDBSnapshot,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CopyDBSnapshotInput{}
 	}
 
-	req = c.newRequest(opCopyDBSnapshot, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CopyDBSnapshotOutput{}
 	req.Data = output
 	return
@@ -218,99 +183,81 @@ func (c *RDS) CopyDBSnapshotRequest(input *CopyDBSnapshotInput) (req *aws.Reques
 
 // Copies the specified DBSnapshot. The source DBSnapshot must be in the "available"
 // state.
-func (c *RDS) CopyDBSnapshot(input *CopyDBSnapshotInput) (output *CopyDBSnapshotOutput, err error) {
+func (c *RDS) CopyDBSnapshot(input *CopyDBSnapshotInput) (*CopyDBSnapshotOutput, error) {
 	req, out := c.CopyDBSnapshotRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCopyDBSnapshot *aws.Operation
+const opCopyOptionGroup = "CopyOptionGroup"
 
 // CopyOptionGroupRequest generates a request for the CopyOptionGroup operation.
 func (c *RDS) CopyOptionGroupRequest(input *CopyOptionGroupInput) (req *aws.Request, output *CopyOptionGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCopyOptionGroup == nil {
-		opCopyOptionGroup = &aws.Operation{
-			Name:       "CopyOptionGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCopyOptionGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CopyOptionGroupInput{}
 	}
 
-	req = c.newRequest(opCopyOptionGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CopyOptionGroupOutput{}
 	req.Data = output
 	return
 }
 
 // Copies the specified option group.
-func (c *RDS) CopyOptionGroup(input *CopyOptionGroupInput) (output *CopyOptionGroupOutput, err error) {
+func (c *RDS) CopyOptionGroup(input *CopyOptionGroupInput) (*CopyOptionGroupOutput, error) {
 	req, out := c.CopyOptionGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCopyOptionGroup *aws.Operation
+const opCreateDBInstance = "CreateDBInstance"
 
 // CreateDBInstanceRequest generates a request for the CreateDBInstance operation.
 func (c *RDS) CreateDBInstanceRequest(input *CreateDBInstanceInput) (req *aws.Request, output *CreateDBInstanceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateDBInstance == nil {
-		opCreateDBInstance = &aws.Operation{
-			Name:       "CreateDBInstance",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateDBInstance,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateDBInstanceInput{}
 	}
 
-	req = c.newRequest(opCreateDBInstance, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateDBInstanceOutput{}
 	req.Data = output
 	return
 }
 
 // Creates a new DB instance.
-func (c *RDS) CreateDBInstance(input *CreateDBInstanceInput) (output *CreateDBInstanceOutput, err error) {
+func (c *RDS) CreateDBInstance(input *CreateDBInstanceInput) (*CreateDBInstanceOutput, error) {
 	req, out := c.CreateDBInstanceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateDBInstance *aws.Operation
+const opCreateDBInstanceReadReplica = "CreateDBInstanceReadReplica"
 
 // CreateDBInstanceReadReplicaRequest generates a request for the CreateDBInstanceReadReplica operation.
 func (c *RDS) CreateDBInstanceReadReplicaRequest(input *CreateDBInstanceReadReplicaInput) (req *aws.Request, output *CreateDBInstanceReadReplicaOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateDBInstanceReadReplica == nil {
-		opCreateDBInstanceReadReplica = &aws.Operation{
-			Name:       "CreateDBInstanceReadReplica",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateDBInstanceReadReplica,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateDBInstanceReadReplicaInput{}
 	}
 
-	req = c.newRequest(opCreateDBInstanceReadReplica, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateDBInstanceReadReplicaOutput{}
 	req.Data = output
 	return
@@ -324,33 +271,27 @@ func (c *RDS) CreateDBInstanceReadReplicaRequest(input *CreateDBInstanceReadRepl
 // except as specified below.
 //
 //   The source DB instance must have backup retention enabled.
-func (c *RDS) CreateDBInstanceReadReplica(input *CreateDBInstanceReadReplicaInput) (output *CreateDBInstanceReadReplicaOutput, err error) {
+func (c *RDS) CreateDBInstanceReadReplica(input *CreateDBInstanceReadReplicaInput) (*CreateDBInstanceReadReplicaOutput, error) {
 	req, out := c.CreateDBInstanceReadReplicaRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateDBInstanceReadReplica *aws.Operation
+const opCreateDBParameterGroup = "CreateDBParameterGroup"
 
 // CreateDBParameterGroupRequest generates a request for the CreateDBParameterGroup operation.
 func (c *RDS) CreateDBParameterGroupRequest(input *CreateDBParameterGroupInput) (req *aws.Request, output *CreateDBParameterGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateDBParameterGroup == nil {
-		opCreateDBParameterGroup = &aws.Operation{
-			Name:       "CreateDBParameterGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateDBParameterGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateDBParameterGroupInput{}
 	}
 
-	req = c.newRequest(opCreateDBParameterGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateDBParameterGroupOutput{}
 	req.Data = output
 	return
@@ -377,33 +318,27 @@ func (c *RDS) CreateDBParameterGroupRequest(input *CreateDBParameterGroupInput) 
 // You can use the Parameter Groups option of the Amazon RDS console (https://console.aws.amazon.com/rds/)
 // or the DescribeDBParameters command to verify that your DB parameter group
 // has been created or modified.
-func (c *RDS) CreateDBParameterGroup(input *CreateDBParameterGroupInput) (output *CreateDBParameterGroupOutput, err error) {
+func (c *RDS) CreateDBParameterGroup(input *CreateDBParameterGroupInput) (*CreateDBParameterGroupOutput, error) {
 	req, out := c.CreateDBParameterGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateDBParameterGroup *aws.Operation
+const opCreateDBSecurityGroup = "CreateDBSecurityGroup"
 
 // CreateDBSecurityGroupRequest generates a request for the CreateDBSecurityGroup operation.
 func (c *RDS) CreateDBSecurityGroupRequest(input *CreateDBSecurityGroupInput) (req *aws.Request, output *CreateDBSecurityGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateDBSecurityGroup == nil {
-		opCreateDBSecurityGroup = &aws.Operation{
-			Name:       "CreateDBSecurityGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateDBSecurityGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateDBSecurityGroupInput{}
 	}
 
-	req = c.newRequest(opCreateDBSecurityGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateDBSecurityGroupOutput{}
 	req.Data = output
 	return
@@ -411,66 +346,54 @@ func (c *RDS) CreateDBSecurityGroupRequest(input *CreateDBSecurityGroupInput) (r
 
 // Creates a new DB security group. DB security groups control access to a DB
 // instance.
-func (c *RDS) CreateDBSecurityGroup(input *CreateDBSecurityGroupInput) (output *CreateDBSecurityGroupOutput, err error) {
+func (c *RDS) CreateDBSecurityGroup(input *CreateDBSecurityGroupInput) (*CreateDBSecurityGroupOutput, error) {
 	req, out := c.CreateDBSecurityGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateDBSecurityGroup *aws.Operation
+const opCreateDBSnapshot = "CreateDBSnapshot"
 
 // CreateDBSnapshotRequest generates a request for the CreateDBSnapshot operation.
 func (c *RDS) CreateDBSnapshotRequest(input *CreateDBSnapshotInput) (req *aws.Request, output *CreateDBSnapshotOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateDBSnapshot == nil {
-		opCreateDBSnapshot = &aws.Operation{
-			Name:       "CreateDBSnapshot",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateDBSnapshot,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateDBSnapshotInput{}
 	}
 
-	req = c.newRequest(opCreateDBSnapshot, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateDBSnapshotOutput{}
 	req.Data = output
 	return
 }
 
 // Creates a DBSnapshot. The source DBInstance must be in "available" state.
-func (c *RDS) CreateDBSnapshot(input *CreateDBSnapshotInput) (output *CreateDBSnapshotOutput, err error) {
+func (c *RDS) CreateDBSnapshot(input *CreateDBSnapshotInput) (*CreateDBSnapshotOutput, error) {
 	req, out := c.CreateDBSnapshotRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateDBSnapshot *aws.Operation
+const opCreateDBSubnetGroup = "CreateDBSubnetGroup"
 
 // CreateDBSubnetGroupRequest generates a request for the CreateDBSubnetGroup operation.
 func (c *RDS) CreateDBSubnetGroupRequest(input *CreateDBSubnetGroupInput) (req *aws.Request, output *CreateDBSubnetGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateDBSubnetGroup == nil {
-		opCreateDBSubnetGroup = &aws.Operation{
-			Name:       "CreateDBSubnetGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateDBSubnetGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateDBSubnetGroupInput{}
 	}
 
-	req = c.newRequest(opCreateDBSubnetGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateDBSubnetGroupOutput{}
 	req.Data = output
 	return
@@ -478,33 +401,27 @@ func (c *RDS) CreateDBSubnetGroupRequest(input *CreateDBSubnetGroupInput) (req *
 
 // Creates a new DB subnet group. DB subnet groups must contain at least one
 // subnet in at least two AZs in the region.
-func (c *RDS) CreateDBSubnetGroup(input *CreateDBSubnetGroupInput) (output *CreateDBSubnetGroupOutput, err error) {
+func (c *RDS) CreateDBSubnetGroup(input *CreateDBSubnetGroupInput) (*CreateDBSubnetGroupOutput, error) {
 	req, out := c.CreateDBSubnetGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateDBSubnetGroup *aws.Operation
+const opCreateEventSubscription = "CreateEventSubscription"
 
 // CreateEventSubscriptionRequest generates a request for the CreateEventSubscription operation.
 func (c *RDS) CreateEventSubscriptionRequest(input *CreateEventSubscriptionInput) (req *aws.Request, output *CreateEventSubscriptionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateEventSubscription == nil {
-		opCreateEventSubscription = &aws.Operation{
-			Name:       "CreateEventSubscription",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateEventSubscription,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateEventSubscriptionInput{}
 	}
 
-	req = c.newRequest(opCreateEventSubscription, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateEventSubscriptionOutput{}
 	req.Data = output
 	return
@@ -529,66 +446,54 @@ func (c *RDS) CreateEventSubscriptionRequest(input *CreateEventSubscriptionInput
 // type for all your RDS sources. If you do not specify either the SourceType
 // nor the SourceIdentifier, you will be notified of events generated from all
 // RDS sources belonging to your customer account.
-func (c *RDS) CreateEventSubscription(input *CreateEventSubscriptionInput) (output *CreateEventSubscriptionOutput, err error) {
+func (c *RDS) CreateEventSubscription(input *CreateEventSubscriptionInput) (*CreateEventSubscriptionOutput, error) {
 	req, out := c.CreateEventSubscriptionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateEventSubscription *aws.Operation
+const opCreateOptionGroup = "CreateOptionGroup"
 
 // CreateOptionGroupRequest generates a request for the CreateOptionGroup operation.
 func (c *RDS) CreateOptionGroupRequest(input *CreateOptionGroupInput) (req *aws.Request, output *CreateOptionGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateOptionGroup == nil {
-		opCreateOptionGroup = &aws.Operation{
-			Name:       "CreateOptionGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateOptionGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateOptionGroupInput{}
 	}
 
-	req = c.newRequest(opCreateOptionGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateOptionGroupOutput{}
 	req.Data = output
 	return
 }
 
 // Creates a new option group. You can create up to 20 option groups.
-func (c *RDS) CreateOptionGroup(input *CreateOptionGroupInput) (output *CreateOptionGroupOutput, err error) {
+func (c *RDS) CreateOptionGroup(input *CreateOptionGroupInput) (*CreateOptionGroupOutput, error) {
 	req, out := c.CreateOptionGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateOptionGroup *aws.Operation
+const opDeleteDBInstance = "DeleteDBInstance"
 
 // DeleteDBInstanceRequest generates a request for the DeleteDBInstance operation.
 func (c *RDS) DeleteDBInstanceRequest(input *DeleteDBInstanceInput) (req *aws.Request, output *DeleteDBInstanceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteDBInstance == nil {
-		opDeleteDBInstance = &aws.Operation{
-			Name:       "DeleteDBInstance",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteDBInstance,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteDBInstanceInput{}
 	}
 
-	req = c.newRequest(opDeleteDBInstance, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteDBInstanceOutput{}
 	req.Data = output
 	return
@@ -604,33 +509,27 @@ func (c *RDS) DeleteDBInstanceRequest(input *DeleteDBInstanceInput) (req *aws.Re
 // be "deleting" until the DB snapshot is created. The API action DescribeDBInstance
 // is used to monitor the status of this operation. The action cannot be canceled
 // or reverted once submitted.
-func (c *RDS) DeleteDBInstance(input *DeleteDBInstanceInput) (output *DeleteDBInstanceOutput, err error) {
+func (c *RDS) DeleteDBInstance(input *DeleteDBInstanceInput) (*DeleteDBInstanceOutput, error) {
 	req, out := c.DeleteDBInstanceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteDBInstance *aws.Operation
+const opDeleteDBParameterGroup = "DeleteDBParameterGroup"
 
 // DeleteDBParameterGroupRequest generates a request for the DeleteDBParameterGroup operation.
 func (c *RDS) DeleteDBParameterGroupRequest(input *DeleteDBParameterGroupInput) (req *aws.Request, output *DeleteDBParameterGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteDBParameterGroup == nil {
-		opDeleteDBParameterGroup = &aws.Operation{
-			Name:       "DeleteDBParameterGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteDBParameterGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteDBParameterGroupInput{}
 	}
 
-	req = c.newRequest(opDeleteDBParameterGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteDBParameterGroupOutput{}
 	req.Data = output
 	return
@@ -638,35 +537,27 @@ func (c *RDS) DeleteDBParameterGroupRequest(input *DeleteDBParameterGroupInput) 
 
 // Deletes a specified DBParameterGroup. The DBParameterGroup to be deleted
 // cannot be associated with any DB instances.
-//
-//  The specified DB parameter group cannot be associated with any DB instances.
-func (c *RDS) DeleteDBParameterGroup(input *DeleteDBParameterGroupInput) (output *DeleteDBParameterGroupOutput, err error) {
+func (c *RDS) DeleteDBParameterGroup(input *DeleteDBParameterGroupInput) (*DeleteDBParameterGroupOutput, error) {
 	req, out := c.DeleteDBParameterGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteDBParameterGroup *aws.Operation
+const opDeleteDBSecurityGroup = "DeleteDBSecurityGroup"
 
 // DeleteDBSecurityGroupRequest generates a request for the DeleteDBSecurityGroup operation.
 func (c *RDS) DeleteDBSecurityGroupRequest(input *DeleteDBSecurityGroupInput) (req *aws.Request, output *DeleteDBSecurityGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteDBSecurityGroup == nil {
-		opDeleteDBSecurityGroup = &aws.Operation{
-			Name:       "DeleteDBSecurityGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteDBSecurityGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteDBSecurityGroupInput{}
 	}
 
-	req = c.newRequest(opDeleteDBSecurityGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteDBSecurityGroupOutput{}
 	req.Data = output
 	return
@@ -675,33 +566,27 @@ func (c *RDS) DeleteDBSecurityGroupRequest(input *DeleteDBSecurityGroupInput) (r
 // Deletes a DB security group.
 //
 // The specified DB security group must not be associated with any DB instances.
-func (c *RDS) DeleteDBSecurityGroup(input *DeleteDBSecurityGroupInput) (output *DeleteDBSecurityGroupOutput, err error) {
+func (c *RDS) DeleteDBSecurityGroup(input *DeleteDBSecurityGroupInput) (*DeleteDBSecurityGroupOutput, error) {
 	req, out := c.DeleteDBSecurityGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteDBSecurityGroup *aws.Operation
+const opDeleteDBSnapshot = "DeleteDBSnapshot"
 
 // DeleteDBSnapshotRequest generates a request for the DeleteDBSnapshot operation.
 func (c *RDS) DeleteDBSnapshotRequest(input *DeleteDBSnapshotInput) (req *aws.Request, output *DeleteDBSnapshotOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteDBSnapshot == nil {
-		opDeleteDBSnapshot = &aws.Operation{
-			Name:       "DeleteDBSnapshot",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteDBSnapshot,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteDBSnapshotInput{}
 	}
 
-	req = c.newRequest(opDeleteDBSnapshot, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteDBSnapshotOutput{}
 	req.Data = output
 	return
@@ -711,33 +596,27 @@ func (c *RDS) DeleteDBSnapshotRequest(input *DeleteDBSnapshotInput) (req *aws.Re
 // is terminated.
 //
 // The DBSnapshot must be in the available state to be deleted.
-func (c *RDS) DeleteDBSnapshot(input *DeleteDBSnapshotInput) (output *DeleteDBSnapshotOutput, err error) {
+func (c *RDS) DeleteDBSnapshot(input *DeleteDBSnapshotInput) (*DeleteDBSnapshotOutput, error) {
 	req, out := c.DeleteDBSnapshotRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteDBSnapshot *aws.Operation
+const opDeleteDBSubnetGroup = "DeleteDBSubnetGroup"
 
 // DeleteDBSubnetGroupRequest generates a request for the DeleteDBSubnetGroup operation.
 func (c *RDS) DeleteDBSubnetGroupRequest(input *DeleteDBSubnetGroupInput) (req *aws.Request, output *DeleteDBSubnetGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteDBSubnetGroup == nil {
-		opDeleteDBSubnetGroup = &aws.Operation{
-			Name:       "DeleteDBSubnetGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteDBSubnetGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteDBSubnetGroupInput{}
 	}
 
-	req = c.newRequest(opDeleteDBSubnetGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteDBSubnetGroupOutput{}
 	req.Data = output
 	return
@@ -746,198 +625,266 @@ func (c *RDS) DeleteDBSubnetGroupRequest(input *DeleteDBSubnetGroupInput) (req *
 // Deletes a DB subnet group.
 //
 // The specified database subnet group must not be associated with any DB instances.
-func (c *RDS) DeleteDBSubnetGroup(input *DeleteDBSubnetGroupInput) (output *DeleteDBSubnetGroupOutput, err error) {
+func (c *RDS) DeleteDBSubnetGroup(input *DeleteDBSubnetGroupInput) (*DeleteDBSubnetGroupOutput, error) {
 	req, out := c.DeleteDBSubnetGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteDBSubnetGroup *aws.Operation
+const opDeleteEventSubscription = "DeleteEventSubscription"
 
 // DeleteEventSubscriptionRequest generates a request for the DeleteEventSubscription operation.
 func (c *RDS) DeleteEventSubscriptionRequest(input *DeleteEventSubscriptionInput) (req *aws.Request, output *DeleteEventSubscriptionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteEventSubscription == nil {
-		opDeleteEventSubscription = &aws.Operation{
-			Name:       "DeleteEventSubscription",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteEventSubscription,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteEventSubscriptionInput{}
 	}
 
-	req = c.newRequest(opDeleteEventSubscription, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteEventSubscriptionOutput{}
 	req.Data = output
 	return
 }
 
 // Deletes an RDS event notification subscription.
-func (c *RDS) DeleteEventSubscription(input *DeleteEventSubscriptionInput) (output *DeleteEventSubscriptionOutput, err error) {
+func (c *RDS) DeleteEventSubscription(input *DeleteEventSubscriptionInput) (*DeleteEventSubscriptionOutput, error) {
 	req, out := c.DeleteEventSubscriptionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteEventSubscription *aws.Operation
+const opDeleteOptionGroup = "DeleteOptionGroup"
 
 // DeleteOptionGroupRequest generates a request for the DeleteOptionGroup operation.
 func (c *RDS) DeleteOptionGroupRequest(input *DeleteOptionGroupInput) (req *aws.Request, output *DeleteOptionGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteOptionGroup == nil {
-		opDeleteOptionGroup = &aws.Operation{
-			Name:       "DeleteOptionGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteOptionGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteOptionGroupInput{}
 	}
 
-	req = c.newRequest(opDeleteOptionGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteOptionGroupOutput{}
 	req.Data = output
 	return
 }
 
 // Deletes an existing option group.
-func (c *RDS) DeleteOptionGroup(input *DeleteOptionGroupInput) (output *DeleteOptionGroupOutput, err error) {
+func (c *RDS) DeleteOptionGroup(input *DeleteOptionGroupInput) (*DeleteOptionGroupOutput, error) {
 	req, out := c.DeleteOptionGroupRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opDescribeAccountAttributes = "DescribeAccountAttributes"
+
+// DescribeAccountAttributesRequest generates a request for the DescribeAccountAttributes operation.
+func (c *RDS) DescribeAccountAttributesRequest(input *DescribeAccountAttributesInput) (req *aws.Request, output *DescribeAccountAttributesOutput) {
+	op := &aws.Operation{
+		Name:       opDescribeAccountAttributes,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DescribeAccountAttributesInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &DescribeAccountAttributesOutput{}
+	req.Data = output
 	return
 }
 
-var opDeleteOptionGroup *aws.Operation
+// Lists all of the attributes for a customer account. The attributes include
+// Amazon RDS quotas for the account, such as the number of DB instances allowed.
+// The description for a quota includes the quota name, current usage toward
+// that quota, and the quota's maximum value.
+//
+// This command does not take any parameters.
+func (c *RDS) DescribeAccountAttributes(input *DescribeAccountAttributesInput) (*DescribeAccountAttributesOutput, error) {
+	req, out := c.DescribeAccountAttributesRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opDescribeCertificates = "DescribeCertificates"
+
+// DescribeCertificatesRequest generates a request for the DescribeCertificates operation.
+func (c *RDS) DescribeCertificatesRequest(input *DescribeCertificatesInput) (req *aws.Request, output *DescribeCertificatesOutput) {
+	op := &aws.Operation{
+		Name:       opDescribeCertificates,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DescribeCertificatesInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &DescribeCertificatesOutput{}
+	req.Data = output
+	return
+}
+
+// Lists the set of CA certificates provided by Amazon RDS for this AWS account.
+func (c *RDS) DescribeCertificates(input *DescribeCertificatesInput) (*DescribeCertificatesOutput, error) {
+	req, out := c.DescribeCertificatesRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opDescribeDBEngineVersions = "DescribeDBEngineVersions"
 
 // DescribeDBEngineVersionsRequest generates a request for the DescribeDBEngineVersions operation.
 func (c *RDS) DescribeDBEngineVersionsRequest(input *DescribeDBEngineVersionsInput) (req *aws.Request, output *DescribeDBEngineVersionsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeDBEngineVersions == nil {
-		opDescribeDBEngineVersions = &aws.Operation{
-			Name:       "DescribeDBEngineVersions",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeDBEngineVersions,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeDBEngineVersionsInput{}
 	}
 
-	req = c.newRequest(opDescribeDBEngineVersions, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeDBEngineVersionsOutput{}
 	req.Data = output
 	return
 }
 
 // Returns a list of the available DB engines.
-func (c *RDS) DescribeDBEngineVersions(input *DescribeDBEngineVersionsInput) (output *DescribeDBEngineVersionsOutput, err error) {
+func (c *RDS) DescribeDBEngineVersions(input *DescribeDBEngineVersionsInput) (*DescribeDBEngineVersionsOutput, error) {
 	req, out := c.DescribeDBEngineVersionsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeDBEngineVersions *aws.Operation
+func (c *RDS) DescribeDBEngineVersionsPages(input *DescribeDBEngineVersionsInput, fn func(p *DescribeDBEngineVersionsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeDBEngineVersionsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeDBEngineVersionsOutput), lastPage)
+	})
+}
+
+const opDescribeDBInstances = "DescribeDBInstances"
 
 // DescribeDBInstancesRequest generates a request for the DescribeDBInstances operation.
 func (c *RDS) DescribeDBInstancesRequest(input *DescribeDBInstancesInput) (req *aws.Request, output *DescribeDBInstancesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeDBInstances == nil {
-		opDescribeDBInstances = &aws.Operation{
-			Name:       "DescribeDBInstances",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeDBInstances,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeDBInstancesInput{}
 	}
 
-	req = c.newRequest(opDescribeDBInstances, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeDBInstancesOutput{}
 	req.Data = output
 	return
 }
 
 // Returns information about provisioned RDS instances. This API supports pagination.
-func (c *RDS) DescribeDBInstances(input *DescribeDBInstancesInput) (output *DescribeDBInstancesOutput, err error) {
+func (c *RDS) DescribeDBInstances(input *DescribeDBInstancesInput) (*DescribeDBInstancesOutput, error) {
 	req, out := c.DescribeDBInstancesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeDBInstances *aws.Operation
+func (c *RDS) DescribeDBInstancesPages(input *DescribeDBInstancesInput, fn func(p *DescribeDBInstancesOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeDBInstancesRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeDBInstancesOutput), lastPage)
+	})
+}
+
+const opDescribeDBLogFiles = "DescribeDBLogFiles"
 
 // DescribeDBLogFilesRequest generates a request for the DescribeDBLogFiles operation.
 func (c *RDS) DescribeDBLogFilesRequest(input *DescribeDBLogFilesInput) (req *aws.Request, output *DescribeDBLogFilesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeDBLogFiles == nil {
-		opDescribeDBLogFiles = &aws.Operation{
-			Name:       "DescribeDBLogFiles",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeDBLogFiles,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeDBLogFilesInput{}
 	}
 
-	req = c.newRequest(opDescribeDBLogFiles, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeDBLogFilesOutput{}
 	req.Data = output
 	return
 }
 
 // Returns a list of DB log files for the DB instance.
-func (c *RDS) DescribeDBLogFiles(input *DescribeDBLogFilesInput) (output *DescribeDBLogFilesOutput, err error) {
+func (c *RDS) DescribeDBLogFiles(input *DescribeDBLogFilesInput) (*DescribeDBLogFilesOutput, error) {
 	req, out := c.DescribeDBLogFilesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeDBLogFiles *aws.Operation
+func (c *RDS) DescribeDBLogFilesPages(input *DescribeDBLogFilesInput, fn func(p *DescribeDBLogFilesOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeDBLogFilesRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeDBLogFilesOutput), lastPage)
+	})
+}
+
+const opDescribeDBParameterGroups = "DescribeDBParameterGroups"
 
 // DescribeDBParameterGroupsRequest generates a request for the DescribeDBParameterGroups operation.
 func (c *RDS) DescribeDBParameterGroupsRequest(input *DescribeDBParameterGroupsInput) (req *aws.Request, output *DescribeDBParameterGroupsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeDBParameterGroups == nil {
-		opDescribeDBParameterGroups = &aws.Operation{
-			Name:       "DescribeDBParameterGroups",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeDBParameterGroups,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeDBParameterGroupsInput{}
 	}
 
-	req = c.newRequest(opDescribeDBParameterGroups, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeDBParameterGroupsOutput{}
 	req.Data = output
 	return
@@ -946,66 +893,80 @@ func (c *RDS) DescribeDBParameterGroupsRequest(input *DescribeDBParameterGroupsI
 // Returns a list of DBParameterGroup descriptions. If a DBParameterGroupName
 // is specified, the list will contain only the description of the specified
 // DB parameter group.
-func (c *RDS) DescribeDBParameterGroups(input *DescribeDBParameterGroupsInput) (output *DescribeDBParameterGroupsOutput, err error) {
+func (c *RDS) DescribeDBParameterGroups(input *DescribeDBParameterGroupsInput) (*DescribeDBParameterGroupsOutput, error) {
 	req, out := c.DescribeDBParameterGroupsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeDBParameterGroups *aws.Operation
+func (c *RDS) DescribeDBParameterGroupsPages(input *DescribeDBParameterGroupsInput, fn func(p *DescribeDBParameterGroupsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeDBParameterGroupsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeDBParameterGroupsOutput), lastPage)
+	})
+}
+
+const opDescribeDBParameters = "DescribeDBParameters"
 
 // DescribeDBParametersRequest generates a request for the DescribeDBParameters operation.
 func (c *RDS) DescribeDBParametersRequest(input *DescribeDBParametersInput) (req *aws.Request, output *DescribeDBParametersOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeDBParameters == nil {
-		opDescribeDBParameters = &aws.Operation{
-			Name:       "DescribeDBParameters",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeDBParameters,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeDBParametersInput{}
 	}
 
-	req = c.newRequest(opDescribeDBParameters, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeDBParametersOutput{}
 	req.Data = output
 	return
 }
 
 // Returns the detailed parameter list for a particular DB parameter group.
-func (c *RDS) DescribeDBParameters(input *DescribeDBParametersInput) (output *DescribeDBParametersOutput, err error) {
+func (c *RDS) DescribeDBParameters(input *DescribeDBParametersInput) (*DescribeDBParametersOutput, error) {
 	req, out := c.DescribeDBParametersRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeDBParameters *aws.Operation
+func (c *RDS) DescribeDBParametersPages(input *DescribeDBParametersInput, fn func(p *DescribeDBParametersOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeDBParametersRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeDBParametersOutput), lastPage)
+	})
+}
+
+const opDescribeDBSecurityGroups = "DescribeDBSecurityGroups"
 
 // DescribeDBSecurityGroupsRequest generates a request for the DescribeDBSecurityGroups operation.
 func (c *RDS) DescribeDBSecurityGroupsRequest(input *DescribeDBSecurityGroupsInput) (req *aws.Request, output *DescribeDBSecurityGroupsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeDBSecurityGroups == nil {
-		opDescribeDBSecurityGroups = &aws.Operation{
-			Name:       "DescribeDBSecurityGroups",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeDBSecurityGroups,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeDBSecurityGroupsInput{}
 	}
 
-	req = c.newRequest(opDescribeDBSecurityGroups, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeDBSecurityGroupsOutput{}
 	req.Data = output
 	return
@@ -1014,66 +975,80 @@ func (c *RDS) DescribeDBSecurityGroupsRequest(input *DescribeDBSecurityGroupsInp
 // Returns a list of DBSecurityGroup descriptions. If a DBSecurityGroupName
 // is specified, the list will contain only the descriptions of the specified
 // DB security group.
-func (c *RDS) DescribeDBSecurityGroups(input *DescribeDBSecurityGroupsInput) (output *DescribeDBSecurityGroupsOutput, err error) {
+func (c *RDS) DescribeDBSecurityGroups(input *DescribeDBSecurityGroupsInput) (*DescribeDBSecurityGroupsOutput, error) {
 	req, out := c.DescribeDBSecurityGroupsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeDBSecurityGroups *aws.Operation
+func (c *RDS) DescribeDBSecurityGroupsPages(input *DescribeDBSecurityGroupsInput, fn func(p *DescribeDBSecurityGroupsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeDBSecurityGroupsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeDBSecurityGroupsOutput), lastPage)
+	})
+}
+
+const opDescribeDBSnapshots = "DescribeDBSnapshots"
 
 // DescribeDBSnapshotsRequest generates a request for the DescribeDBSnapshots operation.
 func (c *RDS) DescribeDBSnapshotsRequest(input *DescribeDBSnapshotsInput) (req *aws.Request, output *DescribeDBSnapshotsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeDBSnapshots == nil {
-		opDescribeDBSnapshots = &aws.Operation{
-			Name:       "DescribeDBSnapshots",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeDBSnapshots,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeDBSnapshotsInput{}
 	}
 
-	req = c.newRequest(opDescribeDBSnapshots, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeDBSnapshotsOutput{}
 	req.Data = output
 	return
 }
 
 // Returns information about DB snapshots. This API supports pagination.
-func (c *RDS) DescribeDBSnapshots(input *DescribeDBSnapshotsInput) (output *DescribeDBSnapshotsOutput, err error) {
+func (c *RDS) DescribeDBSnapshots(input *DescribeDBSnapshotsInput) (*DescribeDBSnapshotsOutput, error) {
 	req, out := c.DescribeDBSnapshotsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeDBSnapshots *aws.Operation
+func (c *RDS) DescribeDBSnapshotsPages(input *DescribeDBSnapshotsInput, fn func(p *DescribeDBSnapshotsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeDBSnapshotsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeDBSnapshotsOutput), lastPage)
+	})
+}
+
+const opDescribeDBSubnetGroups = "DescribeDBSubnetGroups"
 
 // DescribeDBSubnetGroupsRequest generates a request for the DescribeDBSubnetGroups operation.
 func (c *RDS) DescribeDBSubnetGroupsRequest(input *DescribeDBSubnetGroupsInput) (req *aws.Request, output *DescribeDBSubnetGroupsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeDBSubnetGroups == nil {
-		opDescribeDBSubnetGroups = &aws.Operation{
-			Name:       "DescribeDBSubnetGroups",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeDBSubnetGroups,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeDBSubnetGroupsInput{}
 	}
 
-	req = c.newRequest(opDescribeDBSubnetGroups, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeDBSubnetGroupsOutput{}
 	req.Data = output
 	return
@@ -1083,33 +1058,40 @@ func (c *RDS) DescribeDBSubnetGroupsRequest(input *DescribeDBSubnetGroupsInput) 
 // the list will contain only the descriptions of the specified DBSubnetGroup.
 //
 // For an overview of CIDR ranges, go to the Wikipedia Tutorial (http://en.wikipedia.org/wiki/Classless_Inter-Domain_Routing).
-func (c *RDS) DescribeDBSubnetGroups(input *DescribeDBSubnetGroupsInput) (output *DescribeDBSubnetGroupsOutput, err error) {
+func (c *RDS) DescribeDBSubnetGroups(input *DescribeDBSubnetGroupsInput) (*DescribeDBSubnetGroupsOutput, error) {
 	req, out := c.DescribeDBSubnetGroupsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeDBSubnetGroups *aws.Operation
+func (c *RDS) DescribeDBSubnetGroupsPages(input *DescribeDBSubnetGroupsInput, fn func(p *DescribeDBSubnetGroupsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeDBSubnetGroupsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeDBSubnetGroupsOutput), lastPage)
+	})
+}
+
+const opDescribeEngineDefaultParameters = "DescribeEngineDefaultParameters"
 
 // DescribeEngineDefaultParametersRequest generates a request for the DescribeEngineDefaultParameters operation.
 func (c *RDS) DescribeEngineDefaultParametersRequest(input *DescribeEngineDefaultParametersInput) (req *aws.Request, output *DescribeEngineDefaultParametersOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeEngineDefaultParameters == nil {
-		opDescribeEngineDefaultParameters = &aws.Operation{
-			Name:       "DescribeEngineDefaultParameters",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeEngineDefaultParameters,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"EngineDefaults.Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeEngineDefaultParametersInput{}
 	}
 
-	req = c.newRequest(opDescribeEngineDefaultParameters, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeEngineDefaultParametersOutput{}
 	req.Data = output
 	return
@@ -1117,33 +1099,34 @@ func (c *RDS) DescribeEngineDefaultParametersRequest(input *DescribeEngineDefaul
 
 // Returns the default engine and system parameter information for the specified
 // database engine.
-func (c *RDS) DescribeEngineDefaultParameters(input *DescribeEngineDefaultParametersInput) (output *DescribeEngineDefaultParametersOutput, err error) {
+func (c *RDS) DescribeEngineDefaultParameters(input *DescribeEngineDefaultParametersInput) (*DescribeEngineDefaultParametersOutput, error) {
 	req, out := c.DescribeEngineDefaultParametersRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeEngineDefaultParameters *aws.Operation
+func (c *RDS) DescribeEngineDefaultParametersPages(input *DescribeEngineDefaultParametersInput, fn func(p *DescribeEngineDefaultParametersOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeEngineDefaultParametersRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeEngineDefaultParametersOutput), lastPage)
+	})
+}
+
+const opDescribeEventCategories = "DescribeEventCategories"
 
 // DescribeEventCategoriesRequest generates a request for the DescribeEventCategories operation.
 func (c *RDS) DescribeEventCategoriesRequest(input *DescribeEventCategoriesInput) (req *aws.Request, output *DescribeEventCategoriesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeEventCategories == nil {
-		opDescribeEventCategories = &aws.Operation{
-			Name:       "DescribeEventCategories",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeEventCategories,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeEventCategoriesInput{}
 	}
 
-	req = c.newRequest(opDescribeEventCategories, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeEventCategoriesOutput{}
 	req.Data = output
 	return
@@ -1153,33 +1136,33 @@ func (c *RDS) DescribeEventCategoriesRequest(input *DescribeEventCategoriesInput
 // for a specified source type. You can see a list of the event categories and
 // source types in the  Events (http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.html)
 // topic in the Amazon RDS User Guide.
-func (c *RDS) DescribeEventCategories(input *DescribeEventCategoriesInput) (output *DescribeEventCategoriesOutput, err error) {
+func (c *RDS) DescribeEventCategories(input *DescribeEventCategoriesInput) (*DescribeEventCategoriesOutput, error) {
 	req, out := c.DescribeEventCategoriesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeEventCategories *aws.Operation
+const opDescribeEventSubscriptions = "DescribeEventSubscriptions"
 
 // DescribeEventSubscriptionsRequest generates a request for the DescribeEventSubscriptions operation.
 func (c *RDS) DescribeEventSubscriptionsRequest(input *DescribeEventSubscriptionsInput) (req *aws.Request, output *DescribeEventSubscriptionsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeEventSubscriptions == nil {
-		opDescribeEventSubscriptions = &aws.Operation{
-			Name:       "DescribeEventSubscriptions",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeEventSubscriptions,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeEventSubscriptionsInput{}
 	}
 
-	req = c.newRequest(opDescribeEventSubscriptions, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeEventSubscriptionsOutput{}
 	req.Data = output
 	return
@@ -1190,33 +1173,40 @@ func (c *RDS) DescribeEventSubscriptionsRequest(input *DescribeEventSubscription
 // SourceID, CreationTime, and Status.
 //
 // If you specify a SubscriptionName, lists the description for that subscription.
-func (c *RDS) DescribeEventSubscriptions(input *DescribeEventSubscriptionsInput) (output *DescribeEventSubscriptionsOutput, err error) {
+func (c *RDS) DescribeEventSubscriptions(input *DescribeEventSubscriptionsInput) (*DescribeEventSubscriptionsOutput, error) {
 	req, out := c.DescribeEventSubscriptionsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeEventSubscriptions *aws.Operation
+func (c *RDS) DescribeEventSubscriptionsPages(input *DescribeEventSubscriptionsInput, fn func(p *DescribeEventSubscriptionsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeEventSubscriptionsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeEventSubscriptionsOutput), lastPage)
+	})
+}
+
+const opDescribeEvents = "DescribeEvents"
 
 // DescribeEventsRequest generates a request for the DescribeEvents operation.
 func (c *RDS) DescribeEventsRequest(input *DescribeEventsInput) (req *aws.Request, output *DescribeEventsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeEvents == nil {
-		opDescribeEvents = &aws.Operation{
-			Name:       "DescribeEvents",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeEvents,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeEventsInput{}
 	}
 
-	req = c.newRequest(opDescribeEvents, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeEventsOutput{}
 	req.Data = output
 	return
@@ -1227,166 +1217,188 @@ func (c *RDS) DescribeEventsRequest(input *DescribeEventsInput) (req *aws.Reques
 // DB instance, DB security group, database snapshot, or DB parameter group
 // can be obtained by providing the name as a parameter. By default, the past
 // hour of events are returned.
-func (c *RDS) DescribeEvents(input *DescribeEventsInput) (output *DescribeEventsOutput, err error) {
+func (c *RDS) DescribeEvents(input *DescribeEventsInput) (*DescribeEventsOutput, error) {
 	req, out := c.DescribeEventsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeEvents *aws.Operation
+func (c *RDS) DescribeEventsPages(input *DescribeEventsInput, fn func(p *DescribeEventsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeEventsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeEventsOutput), lastPage)
+	})
+}
+
+const opDescribeOptionGroupOptions = "DescribeOptionGroupOptions"
 
 // DescribeOptionGroupOptionsRequest generates a request for the DescribeOptionGroupOptions operation.
 func (c *RDS) DescribeOptionGroupOptionsRequest(input *DescribeOptionGroupOptionsInput) (req *aws.Request, output *DescribeOptionGroupOptionsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeOptionGroupOptions == nil {
-		opDescribeOptionGroupOptions = &aws.Operation{
-			Name:       "DescribeOptionGroupOptions",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeOptionGroupOptions,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeOptionGroupOptionsInput{}
 	}
 
-	req = c.newRequest(opDescribeOptionGroupOptions, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeOptionGroupOptionsOutput{}
 	req.Data = output
 	return
 }
 
 // Describes all available options.
-func (c *RDS) DescribeOptionGroupOptions(input *DescribeOptionGroupOptionsInput) (output *DescribeOptionGroupOptionsOutput, err error) {
+func (c *RDS) DescribeOptionGroupOptions(input *DescribeOptionGroupOptionsInput) (*DescribeOptionGroupOptionsOutput, error) {
 	req, out := c.DescribeOptionGroupOptionsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeOptionGroupOptions *aws.Operation
+func (c *RDS) DescribeOptionGroupOptionsPages(input *DescribeOptionGroupOptionsInput, fn func(p *DescribeOptionGroupOptionsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeOptionGroupOptionsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeOptionGroupOptionsOutput), lastPage)
+	})
+}
+
+const opDescribeOptionGroups = "DescribeOptionGroups"
 
 // DescribeOptionGroupsRequest generates a request for the DescribeOptionGroups operation.
 func (c *RDS) DescribeOptionGroupsRequest(input *DescribeOptionGroupsInput) (req *aws.Request, output *DescribeOptionGroupsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeOptionGroups == nil {
-		opDescribeOptionGroups = &aws.Operation{
-			Name:       "DescribeOptionGroups",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeOptionGroups,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeOptionGroupsInput{}
 	}
 
-	req = c.newRequest(opDescribeOptionGroups, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeOptionGroupsOutput{}
 	req.Data = output
 	return
 }
 
 // Describes the available option groups.
-func (c *RDS) DescribeOptionGroups(input *DescribeOptionGroupsInput) (output *DescribeOptionGroupsOutput, err error) {
+func (c *RDS) DescribeOptionGroups(input *DescribeOptionGroupsInput) (*DescribeOptionGroupsOutput, error) {
 	req, out := c.DescribeOptionGroupsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeOptionGroups *aws.Operation
+func (c *RDS) DescribeOptionGroupsPages(input *DescribeOptionGroupsInput, fn func(p *DescribeOptionGroupsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeOptionGroupsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeOptionGroupsOutput), lastPage)
+	})
+}
+
+const opDescribeOrderableDBInstanceOptions = "DescribeOrderableDBInstanceOptions"
 
 // DescribeOrderableDBInstanceOptionsRequest generates a request for the DescribeOrderableDBInstanceOptions operation.
 func (c *RDS) DescribeOrderableDBInstanceOptionsRequest(input *DescribeOrderableDBInstanceOptionsInput) (req *aws.Request, output *DescribeOrderableDBInstanceOptionsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeOrderableDBInstanceOptions == nil {
-		opDescribeOrderableDBInstanceOptions = &aws.Operation{
-			Name:       "DescribeOrderableDBInstanceOptions",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeOrderableDBInstanceOptions,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeOrderableDBInstanceOptionsInput{}
 	}
 
-	req = c.newRequest(opDescribeOrderableDBInstanceOptions, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeOrderableDBInstanceOptionsOutput{}
 	req.Data = output
 	return
 }
 
 // Returns a list of orderable DB instance options for the specified engine.
-func (c *RDS) DescribeOrderableDBInstanceOptions(input *DescribeOrderableDBInstanceOptionsInput) (output *DescribeOrderableDBInstanceOptionsOutput, err error) {
+func (c *RDS) DescribeOrderableDBInstanceOptions(input *DescribeOrderableDBInstanceOptionsInput) (*DescribeOrderableDBInstanceOptionsOutput, error) {
 	req, out := c.DescribeOrderableDBInstanceOptionsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeOrderableDBInstanceOptions *aws.Operation
+func (c *RDS) DescribeOrderableDBInstanceOptionsPages(input *DescribeOrderableDBInstanceOptionsInput, fn func(p *DescribeOrderableDBInstanceOptionsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeOrderableDBInstanceOptionsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeOrderableDBInstanceOptionsOutput), lastPage)
+	})
+}
+
+const opDescribePendingMaintenanceActions = "DescribePendingMaintenanceActions"
 
 // DescribePendingMaintenanceActionsRequest generates a request for the DescribePendingMaintenanceActions operation.
 func (c *RDS) DescribePendingMaintenanceActionsRequest(input *DescribePendingMaintenanceActionsInput) (req *aws.Request, output *DescribePendingMaintenanceActionsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribePendingMaintenanceActions == nil {
-		opDescribePendingMaintenanceActions = &aws.Operation{
-			Name:       "DescribePendingMaintenanceActions",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribePendingMaintenanceActions,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribePendingMaintenanceActionsInput{}
 	}
 
-	req = c.newRequest(opDescribePendingMaintenanceActions, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribePendingMaintenanceActionsOutput{}
 	req.Data = output
 	return
 }
 
-// Returns a list of resources (for example, DB Instances) that have at least
+// Returns a list of resources (for example, DB instances) that have at least
 // one pending maintenance action.
-func (c *RDS) DescribePendingMaintenanceActions(input *DescribePendingMaintenanceActionsInput) (output *DescribePendingMaintenanceActionsOutput, err error) {
+func (c *RDS) DescribePendingMaintenanceActions(input *DescribePendingMaintenanceActionsInput) (*DescribePendingMaintenanceActionsOutput, error) {
 	req, out := c.DescribePendingMaintenanceActionsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribePendingMaintenanceActions *aws.Operation
+const opDescribeReservedDBInstances = "DescribeReservedDBInstances"
 
 // DescribeReservedDBInstancesRequest generates a request for the DescribeReservedDBInstances operation.
 func (c *RDS) DescribeReservedDBInstancesRequest(input *DescribeReservedDBInstancesInput) (req *aws.Request, output *DescribeReservedDBInstancesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeReservedDBInstances == nil {
-		opDescribeReservedDBInstances = &aws.Operation{
-			Name:       "DescribeReservedDBInstances",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeReservedDBInstances,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeReservedDBInstancesInput{}
 	}
 
-	req = c.newRequest(opDescribeReservedDBInstances, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeReservedDBInstancesOutput{}
 	req.Data = output
 	return
@@ -1394,99 +1406,114 @@ func (c *RDS) DescribeReservedDBInstancesRequest(input *DescribeReservedDBInstan
 
 // Returns information about reserved DB instances for this account, or about
 // a specified reserved DB instance.
-func (c *RDS) DescribeReservedDBInstances(input *DescribeReservedDBInstancesInput) (output *DescribeReservedDBInstancesOutput, err error) {
+func (c *RDS) DescribeReservedDBInstances(input *DescribeReservedDBInstancesInput) (*DescribeReservedDBInstancesOutput, error) {
 	req, out := c.DescribeReservedDBInstancesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeReservedDBInstances *aws.Operation
+func (c *RDS) DescribeReservedDBInstancesPages(input *DescribeReservedDBInstancesInput, fn func(p *DescribeReservedDBInstancesOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeReservedDBInstancesRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeReservedDBInstancesOutput), lastPage)
+	})
+}
+
+const opDescribeReservedDBInstancesOfferings = "DescribeReservedDBInstancesOfferings"
 
 // DescribeReservedDBInstancesOfferingsRequest generates a request for the DescribeReservedDBInstancesOfferings operation.
 func (c *RDS) DescribeReservedDBInstancesOfferingsRequest(input *DescribeReservedDBInstancesOfferingsInput) (req *aws.Request, output *DescribeReservedDBInstancesOfferingsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeReservedDBInstancesOfferings == nil {
-		opDescribeReservedDBInstancesOfferings = &aws.Operation{
-			Name:       "DescribeReservedDBInstancesOfferings",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeReservedDBInstancesOfferings,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "MaxRecords",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeReservedDBInstancesOfferingsInput{}
 	}
 
-	req = c.newRequest(opDescribeReservedDBInstancesOfferings, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeReservedDBInstancesOfferingsOutput{}
 	req.Data = output
 	return
 }
 
 // Lists available reserved DB instance offerings.
-func (c *RDS) DescribeReservedDBInstancesOfferings(input *DescribeReservedDBInstancesOfferingsInput) (output *DescribeReservedDBInstancesOfferingsOutput, err error) {
+func (c *RDS) DescribeReservedDBInstancesOfferings(input *DescribeReservedDBInstancesOfferingsInput) (*DescribeReservedDBInstancesOfferingsOutput, error) {
 	req, out := c.DescribeReservedDBInstancesOfferingsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeReservedDBInstancesOfferings *aws.Operation
+func (c *RDS) DescribeReservedDBInstancesOfferingsPages(input *DescribeReservedDBInstancesOfferingsInput, fn func(p *DescribeReservedDBInstancesOfferingsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeReservedDBInstancesOfferingsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeReservedDBInstancesOfferingsOutput), lastPage)
+	})
+}
+
+const opDownloadDBLogFilePortion = "DownloadDBLogFilePortion"
 
 // DownloadDBLogFilePortionRequest generates a request for the DownloadDBLogFilePortion operation.
 func (c *RDS) DownloadDBLogFilePortionRequest(input *DownloadDBLogFilePortionInput) (req *aws.Request, output *DownloadDBLogFilePortionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDownloadDBLogFilePortion == nil {
-		opDownloadDBLogFilePortion = &aws.Operation{
-			Name:       "DownloadDBLogFilePortion",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDownloadDBLogFilePortion,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"Marker"},
+			OutputTokens:    []string{"Marker"},
+			LimitToken:      "NumberOfLines",
+			TruncationToken: "AdditionalDataPending",
+		},
 	}
 
 	if input == nil {
 		input = &DownloadDBLogFilePortionInput{}
 	}
 
-	req = c.newRequest(opDownloadDBLogFilePortion, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DownloadDBLogFilePortionOutput{}
 	req.Data = output
 	return
 }
 
 // Downloads all or a portion of the specified log file.
-func (c *RDS) DownloadDBLogFilePortion(input *DownloadDBLogFilePortionInput) (output *DownloadDBLogFilePortionOutput, err error) {
+func (c *RDS) DownloadDBLogFilePortion(input *DownloadDBLogFilePortionInput) (*DownloadDBLogFilePortionOutput, error) {
 	req, out := c.DownloadDBLogFilePortionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDownloadDBLogFilePortion *aws.Operation
+func (c *RDS) DownloadDBLogFilePortionPages(input *DownloadDBLogFilePortionInput, fn func(p *DownloadDBLogFilePortionOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DownloadDBLogFilePortionRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DownloadDBLogFilePortionOutput), lastPage)
+	})
+}
+
+const opListTagsForResource = "ListTagsForResource"
 
 // ListTagsForResourceRequest generates a request for the ListTagsForResource operation.
 func (c *RDS) ListTagsForResourceRequest(input *ListTagsForResourceInput) (req *aws.Request, output *ListTagsForResourceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opListTagsForResource == nil {
-		opListTagsForResource = &aws.Operation{
-			Name:       "ListTagsForResource",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opListTagsForResource,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ListTagsForResourceInput{}
 	}
 
-	req = c.newRequest(opListTagsForResource, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ListTagsForResourceOutput{}
 	req.Data = output
 	return
@@ -1496,33 +1523,27 @@ func (c *RDS) ListTagsForResourceRequest(input *ListTagsForResourceInput) (req *
 //
 // For an overview on tagging an Amazon RDS resource, see Tagging Amazon RDS
 // Resources (http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Tagging.html).
-func (c *RDS) ListTagsForResource(input *ListTagsForResourceInput) (output *ListTagsForResourceOutput, err error) {
+func (c *RDS) ListTagsForResource(input *ListTagsForResourceInput) (*ListTagsForResourceOutput, error) {
 	req, out := c.ListTagsForResourceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opListTagsForResource *aws.Operation
+const opModifyDBInstance = "ModifyDBInstance"
 
 // ModifyDBInstanceRequest generates a request for the ModifyDBInstance operation.
 func (c *RDS) ModifyDBInstanceRequest(input *ModifyDBInstanceInput) (req *aws.Request, output *ModifyDBInstanceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifyDBInstance == nil {
-		opModifyDBInstance = &aws.Operation{
-			Name:       "ModifyDBInstance",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifyDBInstance,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifyDBInstanceInput{}
 	}
 
-	req = c.newRequest(opModifyDBInstance, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ModifyDBInstanceOutput{}
 	req.Data = output
 	return
@@ -1530,33 +1551,27 @@ func (c *RDS) ModifyDBInstanceRequest(input *ModifyDBInstanceInput) (req *aws.Re
 
 // Modify settings for a DB instance. You can change one or more database configuration
 // parameters by specifying these parameters and the new values in the request.
-func (c *RDS) ModifyDBInstance(input *ModifyDBInstanceInput) (output *ModifyDBInstanceOutput, err error) {
+func (c *RDS) ModifyDBInstance(input *ModifyDBInstanceInput) (*ModifyDBInstanceOutput, error) {
 	req, out := c.ModifyDBInstanceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opModifyDBInstance *aws.Operation
+const opModifyDBParameterGroup = "ModifyDBParameterGroup"
 
 // ModifyDBParameterGroupRequest generates a request for the ModifyDBParameterGroup operation.
 func (c *RDS) ModifyDBParameterGroupRequest(input *ModifyDBParameterGroupInput) (req *aws.Request, output *DBParameterGroupNameMessage) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifyDBParameterGroup == nil {
-		opModifyDBParameterGroup = &aws.Operation{
-			Name:       "ModifyDBParameterGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifyDBParameterGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifyDBParameterGroupInput{}
 	}
 
-	req = c.newRequest(opModifyDBParameterGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DBParameterGroupNameMessage{}
 	req.Data = output
 	return
@@ -1580,33 +1595,27 @@ func (c *RDS) ModifyDBParameterGroupRequest(input *ModifyDBParameterGroupInput) 
 // You can use the Parameter Groups option of the Amazon RDS console (https://console.aws.amazon.com/rds/)
 // or the DescribeDBParameters command to verify that your DB parameter group
 // has been created or modified.
-func (c *RDS) ModifyDBParameterGroup(input *ModifyDBParameterGroupInput) (output *DBParameterGroupNameMessage, err error) {
+func (c *RDS) ModifyDBParameterGroup(input *ModifyDBParameterGroupInput) (*DBParameterGroupNameMessage, error) {
 	req, out := c.ModifyDBParameterGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opModifyDBParameterGroup *aws.Operation
+const opModifyDBSubnetGroup = "ModifyDBSubnetGroup"
 
 // ModifyDBSubnetGroupRequest generates a request for the ModifyDBSubnetGroup operation.
 func (c *RDS) ModifyDBSubnetGroupRequest(input *ModifyDBSubnetGroupInput) (req *aws.Request, output *ModifyDBSubnetGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifyDBSubnetGroup == nil {
-		opModifyDBSubnetGroup = &aws.Operation{
-			Name:       "ModifyDBSubnetGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifyDBSubnetGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifyDBSubnetGroupInput{}
 	}
 
-	req = c.newRequest(opModifyDBSubnetGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ModifyDBSubnetGroupOutput{}
 	req.Data = output
 	return
@@ -1614,33 +1623,27 @@ func (c *RDS) ModifyDBSubnetGroupRequest(input *ModifyDBSubnetGroupInput) (req *
 
 // Modifies an existing DB subnet group. DB subnet groups must contain at least
 // one subnet in at least two AZs in the region.
-func (c *RDS) ModifyDBSubnetGroup(input *ModifyDBSubnetGroupInput) (output *ModifyDBSubnetGroupOutput, err error) {
+func (c *RDS) ModifyDBSubnetGroup(input *ModifyDBSubnetGroupInput) (*ModifyDBSubnetGroupOutput, error) {
 	req, out := c.ModifyDBSubnetGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opModifyDBSubnetGroup *aws.Operation
+const opModifyEventSubscription = "ModifyEventSubscription"
 
 // ModifyEventSubscriptionRequest generates a request for the ModifyEventSubscription operation.
 func (c *RDS) ModifyEventSubscriptionRequest(input *ModifyEventSubscriptionInput) (req *aws.Request, output *ModifyEventSubscriptionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifyEventSubscription == nil {
-		opModifyEventSubscription = &aws.Operation{
-			Name:       "ModifyEventSubscription",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifyEventSubscription,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifyEventSubscriptionInput{}
 	}
 
-	req = c.newRequest(opModifyEventSubscription, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ModifyEventSubscriptionOutput{}
 	req.Data = output
 	return
@@ -1655,66 +1658,54 @@ func (c *RDS) ModifyEventSubscriptionRequest(input *ModifyEventSubscriptionInput
 // Events (http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Events.html)
 // topic in the Amazon RDS User Guide or by using the DescribeEventCategories
 // action.
-func (c *RDS) ModifyEventSubscription(input *ModifyEventSubscriptionInput) (output *ModifyEventSubscriptionOutput, err error) {
+func (c *RDS) ModifyEventSubscription(input *ModifyEventSubscriptionInput) (*ModifyEventSubscriptionOutput, error) {
 	req, out := c.ModifyEventSubscriptionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opModifyEventSubscription *aws.Operation
+const opModifyOptionGroup = "ModifyOptionGroup"
 
 // ModifyOptionGroupRequest generates a request for the ModifyOptionGroup operation.
 func (c *RDS) ModifyOptionGroupRequest(input *ModifyOptionGroupInput) (req *aws.Request, output *ModifyOptionGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifyOptionGroup == nil {
-		opModifyOptionGroup = &aws.Operation{
-			Name:       "ModifyOptionGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifyOptionGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifyOptionGroupInput{}
 	}
 
-	req = c.newRequest(opModifyOptionGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ModifyOptionGroupOutput{}
 	req.Data = output
 	return
 }
 
 // Modifies an existing option group.
-func (c *RDS) ModifyOptionGroup(input *ModifyOptionGroupInput) (output *ModifyOptionGroupOutput, err error) {
+func (c *RDS) ModifyOptionGroup(input *ModifyOptionGroupInput) (*ModifyOptionGroupOutput, error) {
 	req, out := c.ModifyOptionGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opModifyOptionGroup *aws.Operation
+const opPromoteReadReplica = "PromoteReadReplica"
 
 // PromoteReadReplicaRequest generates a request for the PromoteReadReplica operation.
 func (c *RDS) PromoteReadReplicaRequest(input *PromoteReadReplicaInput) (req *aws.Request, output *PromoteReadReplicaOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opPromoteReadReplica == nil {
-		opPromoteReadReplica = &aws.Operation{
-			Name:       "PromoteReadReplica",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opPromoteReadReplica,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &PromoteReadReplicaInput{}
 	}
 
-	req = c.newRequest(opPromoteReadReplica, input, output)
+	req = c.newRequest(op, input, output)
 	output = &PromoteReadReplicaOutput{}
 	req.Data = output
 	return
@@ -1722,70 +1713,58 @@ func (c *RDS) PromoteReadReplicaRequest(input *PromoteReadReplicaInput) (req *aw
 
 // Promotes a Read Replica DB instance to a standalone DB instance.
 //
-// We recommend that you enable automated backups on your Read Replica before
+//  We recommend that you enable automated backups on your Read Replica before
 // promoting the Read Replica. This ensures that no backup is taken during the
 // promotion process. Once the instance is promoted to a primary instance, backups
 // are taken based on your backup settings.
-func (c *RDS) PromoteReadReplica(input *PromoteReadReplicaInput) (output *PromoteReadReplicaOutput, err error) {
+func (c *RDS) PromoteReadReplica(input *PromoteReadReplicaInput) (*PromoteReadReplicaOutput, error) {
 	req, out := c.PromoteReadReplicaRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opPromoteReadReplica *aws.Operation
+const opPurchaseReservedDBInstancesOffering = "PurchaseReservedDBInstancesOffering"
 
 // PurchaseReservedDBInstancesOfferingRequest generates a request for the PurchaseReservedDBInstancesOffering operation.
 func (c *RDS) PurchaseReservedDBInstancesOfferingRequest(input *PurchaseReservedDBInstancesOfferingInput) (req *aws.Request, output *PurchaseReservedDBInstancesOfferingOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opPurchaseReservedDBInstancesOffering == nil {
-		opPurchaseReservedDBInstancesOffering = &aws.Operation{
-			Name:       "PurchaseReservedDBInstancesOffering",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opPurchaseReservedDBInstancesOffering,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &PurchaseReservedDBInstancesOfferingInput{}
 	}
 
-	req = c.newRequest(opPurchaseReservedDBInstancesOffering, input, output)
+	req = c.newRequest(op, input, output)
 	output = &PurchaseReservedDBInstancesOfferingOutput{}
 	req.Data = output
 	return
 }
 
 // Purchases a reserved DB instance offering.
-func (c *RDS) PurchaseReservedDBInstancesOffering(input *PurchaseReservedDBInstancesOfferingInput) (output *PurchaseReservedDBInstancesOfferingOutput, err error) {
+func (c *RDS) PurchaseReservedDBInstancesOffering(input *PurchaseReservedDBInstancesOfferingInput) (*PurchaseReservedDBInstancesOfferingOutput, error) {
 	req, out := c.PurchaseReservedDBInstancesOfferingRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opPurchaseReservedDBInstancesOffering *aws.Operation
+const opRebootDBInstance = "RebootDBInstance"
 
 // RebootDBInstanceRequest generates a request for the RebootDBInstance operation.
 func (c *RDS) RebootDBInstanceRequest(input *RebootDBInstanceInput) (req *aws.Request, output *RebootDBInstanceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRebootDBInstance == nil {
-		opRebootDBInstance = &aws.Operation{
-			Name:       "RebootDBInstance",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRebootDBInstance,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RebootDBInstanceInput{}
 	}
 
-	req = c.newRequest(opRebootDBInstance, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RebootDBInstanceOutput{}
 	req.Data = output
 	return
@@ -1808,66 +1787,54 @@ func (c *RDS) RebootDBInstanceRequest(input *RebootDBInstanceInput) (req *aws.Re
 // crash recovery process. To improve the reboot time, we recommend that you
 // reduce database activities as much as possible during the reboot process
 // to reduce rollback activity for in-transit transactions.
-func (c *RDS) RebootDBInstance(input *RebootDBInstanceInput) (output *RebootDBInstanceOutput, err error) {
+func (c *RDS) RebootDBInstance(input *RebootDBInstanceInput) (*RebootDBInstanceOutput, error) {
 	req, out := c.RebootDBInstanceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRebootDBInstance *aws.Operation
+const opRemoveSourceIdentifierFromSubscription = "RemoveSourceIdentifierFromSubscription"
 
 // RemoveSourceIdentifierFromSubscriptionRequest generates a request for the RemoveSourceIdentifierFromSubscription operation.
 func (c *RDS) RemoveSourceIdentifierFromSubscriptionRequest(input *RemoveSourceIdentifierFromSubscriptionInput) (req *aws.Request, output *RemoveSourceIdentifierFromSubscriptionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRemoveSourceIdentifierFromSubscription == nil {
-		opRemoveSourceIdentifierFromSubscription = &aws.Operation{
-			Name:       "RemoveSourceIdentifierFromSubscription",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRemoveSourceIdentifierFromSubscription,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RemoveSourceIdentifierFromSubscriptionInput{}
 	}
 
-	req = c.newRequest(opRemoveSourceIdentifierFromSubscription, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RemoveSourceIdentifierFromSubscriptionOutput{}
 	req.Data = output
 	return
 }
 
 // Removes a source identifier from an existing RDS event notification subscription.
-func (c *RDS) RemoveSourceIdentifierFromSubscription(input *RemoveSourceIdentifierFromSubscriptionInput) (output *RemoveSourceIdentifierFromSubscriptionOutput, err error) {
+func (c *RDS) RemoveSourceIdentifierFromSubscription(input *RemoveSourceIdentifierFromSubscriptionInput) (*RemoveSourceIdentifierFromSubscriptionOutput, error) {
 	req, out := c.RemoveSourceIdentifierFromSubscriptionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRemoveSourceIdentifierFromSubscription *aws.Operation
+const opRemoveTagsFromResource = "RemoveTagsFromResource"
 
 // RemoveTagsFromResourceRequest generates a request for the RemoveTagsFromResource operation.
 func (c *RDS) RemoveTagsFromResourceRequest(input *RemoveTagsFromResourceInput) (req *aws.Request, output *RemoveTagsFromResourceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRemoveTagsFromResource == nil {
-		opRemoveTagsFromResource = &aws.Operation{
-			Name:       "RemoveTagsFromResource",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRemoveTagsFromResource,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RemoveTagsFromResourceInput{}
 	}
 
-	req = c.newRequest(opRemoveTagsFromResource, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RemoveTagsFromResourceOutput{}
 	req.Data = output
 	return
@@ -1877,33 +1844,27 @@ func (c *RDS) RemoveTagsFromResourceRequest(input *RemoveTagsFromResourceInput) 
 //
 // For an overview on tagging an Amazon RDS resource, see Tagging Amazon RDS
 // Resources (http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/Overview.Tagging.html).
-func (c *RDS) RemoveTagsFromResource(input *RemoveTagsFromResourceInput) (output *RemoveTagsFromResourceOutput, err error) {
+func (c *RDS) RemoveTagsFromResource(input *RemoveTagsFromResourceInput) (*RemoveTagsFromResourceOutput, error) {
 	req, out := c.RemoveTagsFromResourceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRemoveTagsFromResource *aws.Operation
+const opResetDBParameterGroup = "ResetDBParameterGroup"
 
 // ResetDBParameterGroupRequest generates a request for the ResetDBParameterGroup operation.
 func (c *RDS) ResetDBParameterGroupRequest(input *ResetDBParameterGroupInput) (req *aws.Request, output *DBParameterGroupNameMessage) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opResetDBParameterGroup == nil {
-		opResetDBParameterGroup = &aws.Operation{
-			Name:       "ResetDBParameterGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opResetDBParameterGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ResetDBParameterGroupInput{}
 	}
 
-	req = c.newRequest(opResetDBParameterGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DBParameterGroupNameMessage{}
 	req.Data = output
 	return
@@ -1916,33 +1877,27 @@ func (c *RDS) ResetDBParameterGroupRequest(input *ResetDBParameterGroupInput) (r
 // dynamic parameters are updated immediately and static parameters are set
 // to pending-reboot to take effect on the next DB instance restart or RebootDBInstance
 // request.
-func (c *RDS) ResetDBParameterGroup(input *ResetDBParameterGroupInput) (output *DBParameterGroupNameMessage, err error) {
+func (c *RDS) ResetDBParameterGroup(input *ResetDBParameterGroupInput) (*DBParameterGroupNameMessage, error) {
 	req, out := c.ResetDBParameterGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opResetDBParameterGroup *aws.Operation
+const opRestoreDBInstanceFromDBSnapshot = "RestoreDBInstanceFromDBSnapshot"
 
 // RestoreDBInstanceFromDBSnapshotRequest generates a request for the RestoreDBInstanceFromDBSnapshot operation.
 func (c *RDS) RestoreDBInstanceFromDBSnapshotRequest(input *RestoreDBInstanceFromDBSnapshotInput) (req *aws.Request, output *RestoreDBInstanceFromDBSnapshotOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRestoreDBInstanceFromDBSnapshot == nil {
-		opRestoreDBInstanceFromDBSnapshot = &aws.Operation{
-			Name:       "RestoreDBInstanceFromDBSnapshot",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRestoreDBInstanceFromDBSnapshot,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RestoreDBInstanceFromDBSnapshotInput{}
 	}
 
-	req = c.newRequest(opRestoreDBInstanceFromDBSnapshot, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RestoreDBInstanceFromDBSnapshotOutput{}
 	req.Data = output
 	return
@@ -1961,33 +1916,27 @@ func (c *RDS) RestoreDBInstanceFromDBSnapshotRequest(input *RestoreDBInstanceFro
 // in the call to the RestoreDBInstanceFromDBSnapshot action. The result is
 // that you will replace the original DB instance with the DB instance created
 // from the snapshot.
-func (c *RDS) RestoreDBInstanceFromDBSnapshot(input *RestoreDBInstanceFromDBSnapshotInput) (output *RestoreDBInstanceFromDBSnapshotOutput, err error) {
+func (c *RDS) RestoreDBInstanceFromDBSnapshot(input *RestoreDBInstanceFromDBSnapshotInput) (*RestoreDBInstanceFromDBSnapshotOutput, error) {
 	req, out := c.RestoreDBInstanceFromDBSnapshotRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRestoreDBInstanceFromDBSnapshot *aws.Operation
+const opRestoreDBInstanceToPointInTime = "RestoreDBInstanceToPointInTime"
 
 // RestoreDBInstanceToPointInTimeRequest generates a request for the RestoreDBInstanceToPointInTime operation.
 func (c *RDS) RestoreDBInstanceToPointInTimeRequest(input *RestoreDBInstanceToPointInTimeInput) (req *aws.Request, output *RestoreDBInstanceToPointInTimeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRestoreDBInstanceToPointInTime == nil {
-		opRestoreDBInstanceToPointInTime = &aws.Operation{
-			Name:       "RestoreDBInstanceToPointInTime",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRestoreDBInstanceToPointInTime,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RestoreDBInstanceToPointInTimeInput{}
 	}
 
-	req = c.newRequest(opRestoreDBInstanceToPointInTime, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RestoreDBInstanceToPointInTimeOutput{}
 	req.Data = output
 	return
@@ -1998,33 +1947,27 @@ func (c *RDS) RestoreDBInstanceToPointInTimeRequest(input *RestoreDBInstanceToPo
 // days. The target database is created from the source database with the same
 // configuration as the original database except that the DB instance is created
 // with the default DB security group.
-func (c *RDS) RestoreDBInstanceToPointInTime(input *RestoreDBInstanceToPointInTimeInput) (output *RestoreDBInstanceToPointInTimeOutput, err error) {
+func (c *RDS) RestoreDBInstanceToPointInTime(input *RestoreDBInstanceToPointInTimeInput) (*RestoreDBInstanceToPointInTimeOutput, error) {
 	req, out := c.RestoreDBInstanceToPointInTimeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRestoreDBInstanceToPointInTime *aws.Operation
+const opRevokeDBSecurityGroupIngress = "RevokeDBSecurityGroupIngress"
 
 // RevokeDBSecurityGroupIngressRequest generates a request for the RevokeDBSecurityGroupIngress operation.
 func (c *RDS) RevokeDBSecurityGroupIngressRequest(input *RevokeDBSecurityGroupIngressInput) (req *aws.Request, output *RevokeDBSecurityGroupIngressOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRevokeDBSecurityGroupIngress == nil {
-		opRevokeDBSecurityGroupIngress = &aws.Operation{
-			Name:       "RevokeDBSecurityGroupIngress",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRevokeDBSecurityGroupIngress,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RevokeDBSecurityGroupIngressInput{}
 	}
 
-	req = c.newRequest(opRevokeDBSecurityGroupIngress, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RevokeDBSecurityGroupIngressOutput{}
 	req.Data = output
 	return
@@ -2034,14 +1977,40 @@ func (c *RDS) RevokeDBSecurityGroupIngressRequest(input *RevokeDBSecurityGroupIn
 // or EC2 or VPC Security Groups. Required parameters for this API are one of
 // CIDRIP, EC2SecurityGroupId for VPC, or (EC2SecurityGroupOwnerId and either
 // EC2SecurityGroupName or EC2SecurityGroupId).
-func (c *RDS) RevokeDBSecurityGroupIngress(input *RevokeDBSecurityGroupIngressInput) (output *RevokeDBSecurityGroupIngressOutput, err error) {
+func (c *RDS) RevokeDBSecurityGroupIngress(input *RevokeDBSecurityGroupIngressInput) (*RevokeDBSecurityGroupIngressOutput, error) {
 	req, out := c.RevokeDBSecurityGroupIngressRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRevokeDBSecurityGroupIngress *aws.Operation
+// Describes a quota for an AWS account, for example, the number of DB instances
+// allowed.
+type AccountQuota struct {
+	// The name of the Amazon RDS quota for this AWS account.
+	AccountQuotaName *string `type:"string"`
+
+	// The maximum allowed value for the quota.
+	Max *int64 `type:"long"`
+
+	// The amount currently used toward the quota maximum.
+	Used *int64 `type:"long"`
+
+	metadataAccountQuota `json:"-" xml:"-"`
+}
+
+type metadataAccountQuota struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AccountQuota) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AccountQuota) GoString() string {
+	return s.String()
+}
 
 type AddSourceIdentifierToSubscriptionInput struct {
 	// The identifier of the event source to be added. An identifier must begin
@@ -2061,11 +2030,21 @@ type AddSourceIdentifierToSubscriptionInput struct {
 	// identifier to.
 	SubscriptionName *string `type:"string" required:"true"`
 
-	metadataAddSourceIdentifierToSubscriptionInput `json:"-", xml:"-"`
+	metadataAddSourceIdentifierToSubscriptionInput `json:"-" xml:"-"`
 }
 
 type metadataAddSourceIdentifierToSubscriptionInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AddSourceIdentifierToSubscriptionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddSourceIdentifierToSubscriptionInput) GoString() string {
+	return s.String()
 }
 
 type AddSourceIdentifierToSubscriptionOutput struct {
@@ -2073,11 +2052,21 @@ type AddSourceIdentifierToSubscriptionOutput struct {
 	// action.
 	EventSubscription *EventSubscription `type:"structure"`
 
-	metadataAddSourceIdentifierToSubscriptionOutput `json:"-", xml:"-"`
+	metadataAddSourceIdentifierToSubscriptionOutput `json:"-" xml:"-"`
 }
 
 type metadataAddSourceIdentifierToSubscriptionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AddSourceIdentifierToSubscriptionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddSourceIdentifierToSubscriptionOutput) GoString() string {
+	return s.String()
 }
 
 type AddTagsToResourceInput struct {
@@ -2089,27 +2078,47 @@ type AddTagsToResourceInput struct {
 	// The tags to be assigned to the Amazon RDS resource.
 	Tags []*Tag `locationNameList:"Tag" type:"list" required:"true"`
 
-	metadataAddTagsToResourceInput `json:"-", xml:"-"`
+	metadataAddTagsToResourceInput `json:"-" xml:"-"`
 }
 
 type metadataAddTagsToResourceInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AddTagsToResourceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddTagsToResourceInput) GoString() string {
+	return s.String()
+}
+
 type AddTagsToResourceOutput struct {
-	metadataAddTagsToResourceOutput `json:"-", xml:"-"`
+	metadataAddTagsToResourceOutput `json:"-" xml:"-"`
 }
 
 type metadataAddTagsToResourceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AddTagsToResourceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AddTagsToResourceOutput) GoString() string {
+	return s.String()
+}
+
 type ApplyPendingMaintenanceActionInput struct {
 	// The pending maintenance action to apply to this resource.
 	ApplyAction *string `type:"string" required:"true"`
 
-	// Specify an opt-in request, or undo an opt-in request. An opt-in request of
-	// type immediate cannot be undone.
+	// A value that specifies the type of opt-in request, or undoes an opt-in request.
+	// An opt-in request of type immediate cannot be undone.
 	//
 	// Valid values:
 	//
@@ -2118,26 +2127,45 @@ type ApplyPendingMaintenanceActionInput struct {
 	// resource.  undo-opt-in - Cancel any existing next-maintenance opt-in requests.
 	OptInType *string `type:"string" required:"true"`
 
-	// The ARN of the resource (for example, a DB Instance) that the pending maintenance
-	// action applies to.
+	// The ARN of the resource that the pending maintenance action applies to.
 	ResourceIdentifier *string `type:"string" required:"true"`
 
-	metadataApplyPendingMaintenanceActionInput `json:"-", xml:"-"`
+	metadataApplyPendingMaintenanceActionInput `json:"-" xml:"-"`
 }
 
 type metadataApplyPendingMaintenanceActionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ApplyPendingMaintenanceActionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ApplyPendingMaintenanceActionInput) GoString() string {
+	return s.String()
+}
+
 type ApplyPendingMaintenanceActionOutput struct {
 	// Describes the pending maintenance actions for a resource.
 	ResourcePendingMaintenanceActions *ResourcePendingMaintenanceActions `type:"structure"`
 
-	metadataApplyPendingMaintenanceActionOutput `json:"-", xml:"-"`
+	metadataApplyPendingMaintenanceActionOutput `json:"-" xml:"-"`
 }
 
 type metadataApplyPendingMaintenanceActionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ApplyPendingMaintenanceActionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ApplyPendingMaintenanceActionOutput) GoString() string {
+	return s.String()
 }
 
 type AuthorizeDBSecurityGroupIngressInput struct {
@@ -2164,40 +2192,104 @@ type AuthorizeDBSecurityGroupIngressInput struct {
 	// must be provided.
 	EC2SecurityGroupOwnerID *string `locationName:"EC2SecurityGroupOwnerId" type:"string"`
 
-	metadataAuthorizeDBSecurityGroupIngressInput `json:"-", xml:"-"`
+	metadataAuthorizeDBSecurityGroupIngressInput `json:"-" xml:"-"`
 }
 
 type metadataAuthorizeDBSecurityGroupIngressInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AuthorizeDBSecurityGroupIngressInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AuthorizeDBSecurityGroupIngressInput) GoString() string {
+	return s.String()
+}
+
 type AuthorizeDBSecurityGroupIngressOutput struct {
 	// Contains the result of a successful invocation of the following actions:
 	//
-	//  DescribeDBSecurityGroups AuthorizeDBSecurityGroupIngress CreateDBSecurityGroup
-	// RevokeDBSecurityGroupIngress  This data type is used as a response element
+	//   DescribeDBSecurityGroups   AuthorizeDBSecurityGroupIngress   CreateDBSecurityGroup
+	//   RevokeDBSecurityGroupIngress   This data type is used as a response element
 	// in the DescribeDBSecurityGroups action.
 	DBSecurityGroup *DBSecurityGroup `type:"structure"`
 
-	metadataAuthorizeDBSecurityGroupIngressOutput `json:"-", xml:"-"`
+	metadataAuthorizeDBSecurityGroupIngressOutput `json:"-" xml:"-"`
 }
 
 type metadataAuthorizeDBSecurityGroupIngressOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AuthorizeDBSecurityGroupIngressOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AuthorizeDBSecurityGroupIngressOutput) GoString() string {
+	return s.String()
+}
+
 // Contains Availability Zone information.
 //
-//  This data type is used as an element in the following data type:  OrderableDBInstanceOption
+//  This data type is used as an element in the following data type: OrderableDBInstanceOption
 type AvailabilityZone struct {
 	// The name of the availability zone.
 	Name *string `type:"string"`
 
-	metadataAvailabilityZone `json:"-", xml:"-"`
+	metadataAvailabilityZone `json:"-" xml:"-"`
 }
 
 type metadataAvailabilityZone struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AvailabilityZone) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AvailabilityZone) GoString() string {
+	return s.String()
+}
+
+// A CA certificate for an AWS account.
+type Certificate struct {
+	// The unique key that identifies a certificate.
+	CertificateIdentifier *string `type:"string"`
+
+	// The type of the certificate.
+	CertificateType *string `type:"string"`
+
+	// The thumbprint of the certificate.
+	Thumbprint *string `type:"string"`
+
+	// The starting date from which the certificate is valid.
+	ValidFrom *time.Time `type:"timestamp" timestampFormat:"iso8601"`
+
+	// The final date that the certificate continues to be valid.
+	ValidTill *time.Time `type:"timestamp" timestampFormat:"iso8601"`
+
+	metadataCertificate `json:"-" xml:"-"`
+}
+
+type metadataCertificate struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Certificate) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Certificate) GoString() string {
+	return s.String()
 }
 
 // This data type is used as a response element in the action DescribeDBEngineVersions.
@@ -2208,11 +2300,21 @@ type CharacterSet struct {
 	// The name of the character set.
 	CharacterSetName *string `type:"string"`
 
-	metadataCharacterSet `json:"-", xml:"-"`
+	metadataCharacterSet `json:"-" xml:"-"`
 }
 
 type metadataCharacterSet struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CharacterSet) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CharacterSet) GoString() string {
+	return s.String()
 }
 
 type CopyDBParameterGroupInput struct {
@@ -2242,11 +2344,21 @@ type CopyDBParameterGroupInput struct {
 	// hyphen or contain two consecutive hyphens  Example: my-db-parameter-group
 	TargetDBParameterGroupIdentifier *string `type:"string" required:"true"`
 
-	metadataCopyDBParameterGroupInput `json:"-", xml:"-"`
+	metadataCopyDBParameterGroupInput `json:"-" xml:"-"`
 }
 
 type metadataCopyDBParameterGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CopyDBParameterGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CopyDBParameterGroupInput) GoString() string {
+	return s.String()
 }
 
 type CopyDBParameterGroupOutput struct {
@@ -2257,11 +2369,21 @@ type CopyDBParameterGroupOutput struct {
 	// action, and as a response element in the DescribeDBParameterGroups action.
 	DBParameterGroup *DBParameterGroup `type:"structure"`
 
-	metadataCopyDBParameterGroupOutput `json:"-", xml:"-"`
+	metadataCopyDBParameterGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataCopyDBParameterGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CopyDBParameterGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CopyDBParameterGroupOutput) GoString() string {
+	return s.String()
 }
 
 type CopyDBSnapshotInput struct {
@@ -2291,25 +2413,45 @@ type CopyDBSnapshotInput struct {
 	// hyphen or contain two consecutive hyphens  Example: my-db-snapshot
 	TargetDBSnapshotIdentifier *string `type:"string" required:"true"`
 
-	metadataCopyDBSnapshotInput `json:"-", xml:"-"`
+	metadataCopyDBSnapshotInput `json:"-" xml:"-"`
 }
 
 type metadataCopyDBSnapshotInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CopyDBSnapshotInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CopyDBSnapshotInput) GoString() string {
+	return s.String()
+}
+
 type CopyDBSnapshotOutput struct {
 	// Contains the result of a successful invocation of the following actions:
 	//
-	//  CreateDBSnapshot DeleteDBSnapshot  This data type is used as a response
+	//   CreateDBSnapshot   DeleteDBSnapshot   This data type is used as a response
 	// element in the DescribeDBSnapshots action.
 	DBSnapshot *DBSnapshot `type:"structure"`
 
-	metadataCopyDBSnapshotOutput `json:"-", xml:"-"`
+	metadataCopyDBSnapshotOutput `json:"-" xml:"-"`
 }
 
 type metadataCopyDBSnapshotOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CopyDBSnapshotOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CopyDBSnapshotOutput) GoString() string {
+	return s.String()
 }
 
 type CopyOptionGroupInput struct {
@@ -2338,21 +2480,41 @@ type CopyOptionGroupInput struct {
 	// hyphen or contain two consecutive hyphens  Example: my-option-group
 	TargetOptionGroupIdentifier *string `type:"string" required:"true"`
 
-	metadataCopyOptionGroupInput `json:"-", xml:"-"`
+	metadataCopyOptionGroupInput `json:"-" xml:"-"`
 }
 
 type metadataCopyOptionGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CopyOptionGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CopyOptionGroupInput) GoString() string {
+	return s.String()
+}
+
 type CopyOptionGroupOutput struct {
 	OptionGroup *OptionGroup `type:"structure"`
 
-	metadataCopyOptionGroupOutput `json:"-", xml:"-"`
+	metadataCopyOptionGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataCopyOptionGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CopyOptionGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CopyOptionGroupOutput) GoString() string {
+	return s.String()
 }
 
 type CreateDBInstanceInput struct {
@@ -2361,19 +2523,19 @@ type CreateDBInstanceInput struct {
 	//
 	//  Type: Integer
 	//
-	// MySQL
+	//  MySQL
 	//
 	//  Constraints: Must be an integer from 5 to 3072.
 	//
-	// PostgreSQL
+	//  PostgreSQL
 	//
 	//  Constraints: Must be an integer from 5 to 3072.
 	//
-	// Oracle
+	//  Oracle
 	//
 	//  Constraints: Must be an integer from 10 to 3072.
 	//
-	// SQL Server
+	//  SQL Server
 	//
 	//  Constraints: Must be an integer from 200 to 1024 (Standard Edition and
 	// Enterprise Edition) or from 20 to 1024 (Express Edition and Web Edition)
@@ -2437,7 +2599,7 @@ type CreateDBInstanceInput struct {
 	//
 	// Type: String
 	//
-	// MySQL
+	//  MySQL
 	//
 	// The name of the database to create when the DB instance is created. If this
 	// parameter is not specified, no database is created in the DB instance.
@@ -2445,7 +2607,7 @@ type CreateDBInstanceInput struct {
 	// Constraints:
 	//
 	//  Must contain 1 to 64 alphanumeric characters Cannot be a word reserved
-	// by the specified database engine  PostgreSQL
+	// by the specified database engine   PostgreSQL
 	//
 	// The name of the database to create when the DB instance is created. If this
 	// parameter is not specified, no database is created in the DB instance.
@@ -2454,7 +2616,7 @@ type CreateDBInstanceInput struct {
 	//
 	//  Must contain 1 to 63 alphanumeric characters Must begin with a letter or
 	// an underscore. Subsequent characters can be letters, underscores, or digits
-	// (0-9). Cannot be a word reserved by the specified database engine  Oracle
+	// (0-9). Cannot be a word reserved by the specified database engine   Oracle
 	//
 	//  The Oracle System ID (SID) of the created DB instance.
 	//
@@ -2462,7 +2624,7 @@ type CreateDBInstanceInput struct {
 	//
 	// Constraints:
 	//
-	//  Cannot be longer than 8 characters  SQL Server
+	//  Cannot be longer than 8 characters   SQL Server
 	//
 	// Not applicable. Must be null.
 	DBName *string `type:"string"`
@@ -2501,38 +2663,117 @@ type CreateDBInstanceInput struct {
 	// are available with Amazon RDS. Not every database engine is available for
 	// every AWS region.
 	//
-	// MySQL
+	//  MySQL
 	//
-	//   Version 5.1:  5.1.45 | 5.1.49 | 5.1.50 | 5.1.57 | 5.1.61 | 5.1.62 | 5.1.63
-	// | 5.1.69 | 5.1.71 | 5.1.73   Version 5.5:  5.5.12 | 5.5.20 | 5.5.23 | 5.5.25a
-	// | 5.5.27 | 5.5.31 | 5.5.33 | 5.5.37 | 5.5.38 | 5.5.8   Version 5.6:  5.6.12
-	// | 5.6.13 | 5.6.17 | 5.6.19 | 5.6.21   Oracle Database Enterprise Edition
-	// (oracle-ee)
+	//   Version 5.1 (Only available in the following regions: ap-northeast-1,
+	// ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):
+	//  5.1.73a | 5.1.73b   Version 5.5 (Only available in the following regions:
+	// ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1,
+	// us-west-2):  5.5.40 | 5.5.40a   Version 5.5 (Available in all regions):
+	// 5.5.40b | 5.5.41   Version 5.6 (Available in all regions):  5.6.19a | 5.6.19b
+	// | 5.6.21 | 5.6.21b | 5.6.22    MySQL
 	//
-	//   Version 11.2:  11.2.0.2.v3 | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 |
-	// 11.2.0.2.v7 | 11.2.0.3.v1 | 11.2.0.4.v1   Oracle Database Standard Edition
+	//   Version 5.1 (Only available in the following regions: ap-northeast-1,
+	// ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):
+	//  5.1.73a | 5.1.73b   Version 5.5 (Only available in the following regions:
+	// ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1,
+	// us-west-2):  5.5.40 | 5.5.40a   Version 5.5 (Available in all regions):
+	// 5.5.40b | 5.5.41   Version 5.6 (Available in all regions):  5.6.19a | 5.6.19b
+	// | 5.6.21 | 5.6.21b | 5.6.22    MySQL
+	//
+	//   Version 5.1 (Only available in the following regions: ap-northeast-1,
+	// ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):
+	//  5.1.73a | 5.1.73b   Version 5.5 (Only available in the following regions:
+	// ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1,
+	// us-west-2):  5.5.40 | 5.5.40a   Version 5.5 (Available in all regions):
+	// 5.5.40b | 5.5.41   Version 5.6 (Available in all regions):  5.6.19a | 5.6.19b
+	// | 5.6.21 | 5.6.21b | 5.6.22    MySQL
+	//
+	//   Version 5.1 (Only available in the following regions: ap-northeast-1,
+	// ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):
+	//  5.1.73a | 5.1.73b   Version 5.5 (Only available in the following regions:
+	// ap-northeast-1, ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1,
+	// us-west-2):  5.5.40 | 5.5.40a   Version 5.5 (Available in all regions):
+	// 5.5.40b | 5.5.41   Version 5.6 (Available in all regions):  5.6.19a | 5.6.19b
+	// | 5.6.21 | 5.6.21b | 5.6.22    Oracle Database Enterprise Edition (oracle-ee)
+	//
+	//   Version 11.2 (Only available in the following regions: ap-northeast-1,
+	// ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):
+	//  11.2.0.2.v3 | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7   Version
+	// 11.2 (Available in all regions):  11.2.0.3.v1 | 11.2.0.3.v2 | 11.2.0.4.v1
+	// | 11.2.0.4.v3    Oracle Database Enterprise Edition (oracle-ee)
+	//
+	//   Version 11.2 (Only available in the following regions: ap-northeast-1,
+	// ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):
+	//  11.2.0.2.v3 | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7   Version
+	// 11.2 (Available in all regions):  11.2.0.3.v1 | 11.2.0.3.v2 | 11.2.0.4.v1
+	// | 11.2.0.4.v3    Oracle Database Standard Edition (oracle-se)
+	//
+	//   Version 11.2 (Only available in the following regions: us-west-1):  11.2.0.2.v3
+	// | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7   Version 11.2 (Only
+	// available in the following regions: eu-central-1, us-west-1):  11.2.0.3.v1
+	// | 11.2.0.3.v2 | 11.2.0.4.v1 | 11.2.0.4.v3    Oracle Database Standard Edition
 	// (oracle-se)
 	//
-	//   Version 11.2:  11.2.0.2.v3 | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 |
-	// 11.2.0.2.v7 | 11.2.0.3.v1 | 11.2.0.4.v1   Oracle Database Standard Edition
+	//   Version 11.2 (Only available in the following regions: us-west-1):  11.2.0.2.v3
+	// | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7   Version 11.2 (Only
+	// available in the following regions: eu-central-1, us-west-1):  11.2.0.3.v1
+	// | 11.2.0.3.v2 | 11.2.0.4.v1 | 11.2.0.4.v3    Oracle Database Standard Edition
 	// One (oracle-se1)
 	//
-	//   Version 11.2:  11.2.0.2.v3 | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 |
-	// 11.2.0.2.v7 | 11.2.0.3.v1 | 11.2.0.4.v1   PostgreSQL
+	//   Version 11.2 (Only available in the following regions: us-west-1):  11.2.0.2.v3
+	// | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7   Version 11.2 (Only
+	// available in the following regions: eu-central-1, us-west-1):  11.2.0.3.v1
+	// | 11.2.0.3.v2 | 11.2.0.4.v1 | 11.2.0.4.v3    Oracle Database Standard Edition
+	// One (oracle-se1)
 	//
-	//   Version 9.3:  9.3.1 | 9.3.2 | 9.3.3   Microsoft SQL Server Enterprise
-	// Edition (sqlserver-ee)
+	//   Version 11.2 (Only available in the following regions: us-west-1):  11.2.0.2.v3
+	// | 11.2.0.2.v4 | 11.2.0.2.v5 | 11.2.0.2.v6 | 11.2.0.2.v7   Version 11.2 (Only
+	// available in the following regions: eu-central-1, us-west-1):  11.2.0.3.v1
+	// | 11.2.0.3.v2 | 11.2.0.4.v1 | 11.2.0.4.v3    PostgreSQL
 	//
-	//   Version 10.5:  10.50.2789.0.v1   Version 11.0:  11.00.2100.60.v1   Microsoft
-	// SQL Server Express Edition (sqlserver-ex)
+	//   Version 9.3 (Only available in the following regions: ap-northeast-1,
+	// ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):
+	//  9.3.1 | 9.3.2   Version 9.3 (Available in all regions):  9.3.3 | 9.3.5
+	//   PostgreSQL
 	//
-	//   Version 10.5:  10.50.2789.0.v1   Version 11.0:  11.00.2100.60.v1   Microsoft
-	// SQL Server Standard Edition (sqlserver-se)
+	//   Version 9.3 (Only available in the following regions: ap-northeast-1,
+	// ap-southeast-1, ap-southeast-2, eu-west-1, sa-east-1, us-west-1, us-west-2):
+	//  9.3.1 | 9.3.2   Version 9.3 (Available in all regions):  9.3.3 | 9.3.5
+	//   Microsoft SQL Server Enterprise Edition (sqlserver-ee)
 	//
-	//   Version 10.5:  10.50.2789.0.v1   Version 11.0:  11.00.2100.60.v1   Microsoft
-	// SQL Server Web Edition (sqlserver-web)
+	//   Version 10.50 (Only available in the following regions: eu-central-1,
+	// us-west-1):  10.50.2789.0.v1   Version 11.00 (Only available in the following
+	// regions: eu-central-1, us-west-1):  11.00.2100.60.v1    Microsoft SQL Server
+	// Enterprise Edition (sqlserver-ee)
 	//
-	//   Version 10.5:  10.50.2789.0.v1   Version 11.0:  11.00.2100.60.v1
+	//   Version 10.50 (Only available in the following regions: eu-central-1,
+	// us-west-1):  10.50.2789.0.v1   Version 11.00 (Only available in the following
+	// regions: eu-central-1, us-west-1):  11.00.2100.60.v1    Microsoft SQL Server
+	// Express Edition (sqlserver-ex)
+	//
+	//   Version 10.50 (Available in all regions):  10.50.2789.0.v1   Version 11.00
+	// (Available in all regions):  11.00.2100.60.v1    Microsoft SQL Server Express
+	// Edition (sqlserver-ex)
+	//
+	//   Version 10.50 (Available in all regions):  10.50.2789.0.v1   Version 11.00
+	// (Available in all regions):  11.00.2100.60.v1    Microsoft SQL Server Standard
+	// Edition (sqlserver-se)
+	//
+	//   Version 10.50 (Available in all regions):  10.50.2789.0.v1   Version 11.00
+	// (Available in all regions):  11.00.2100.60.v1    Microsoft SQL Server Standard
+	// Edition (sqlserver-se)
+	//
+	//   Version 10.50 (Available in all regions):  10.50.2789.0.v1   Version 11.00
+	// (Available in all regions):  11.00.2100.60.v1    Microsoft SQL Server Web
+	// Edition (sqlserver-web)
+	//
+	//   Version 10.50 (Available in all regions):  10.50.2789.0.v1   Version 11.00
+	// (Available in all regions):  11.00.2100.60.v1    Microsoft SQL Server Web
+	// Edition (sqlserver-web)
+	//
+	//   Version 10.50 (Available in all regions):  10.50.2789.0.v1   Version 11.00
+	// (Available in all regions):  11.00.2100.60.v1
 	EngineVersion *string `type:"string"`
 
 	// The amount of Provisioned IOPS (input/output operations per second) to be
@@ -2564,38 +2805,47 @@ type CreateDBInstanceInput struct {
 	//
 	// Type: String
 	//
-	// MySQL
+	//  MySQL
 	//
 	//  Constraints: Must contain from 8 to 41 characters.
 	//
-	// Oracle
+	//  Oracle
 	//
 	//  Constraints: Must contain from 8 to 30 characters.
 	//
-	// SQL Server
+	//  SQL Server
+	//
+	//  Constraints: Must contain from 8 to 128 characters.
+	//
+	//  PostgreSQL
 	//
 	//  Constraints: Must contain from 8 to 128 characters.
 	MasterUserPassword *string `type:"string" required:"true"`
 
 	// The name of master user for the client DB instance.
 	//
-	// MySQL
+	//  MySQL
 	//
 	// Constraints:
 	//
 	//  Must be 1 to 16 alphanumeric characters. First character must be a letter.
 	// Cannot be a reserved word for the chosen database engine.  Type: String
 	//
-	// Oracle
+	//  Oracle
 	//
 	// Constraints:
 	//
 	//  Must be 1 to 30 alphanumeric characters. First character must be a letter.
-	// Cannot be a reserved word for the chosen database engine.  SQL Server
+	// Cannot be a reserved word for the chosen database engine.   SQL Server
 	//
 	// Constraints:
 	//
 	//  Must be 1 to 128 alphanumeric characters. First character must be a letter.
+	// Cannot be a reserved word for the chosen database engine.   PostgreSQL
+	//
+	// Constraints:
+	//
+	//  Must be 1 to 63 alphanumeric characters. First character must be a letter.
 	// Cannot be a reserved word for the chosen database engine.
 	MasterUsername *string `type:"string" required:"true"`
 
@@ -2613,7 +2863,7 @@ type CreateDBInstanceInput struct {
 
 	// The port number on which the database accepts connections.
 	//
-	// MySQL
+	//  MySQL
 	//
 	//  Default: 3306
 	//
@@ -2621,7 +2871,7 @@ type CreateDBInstanceInput struct {
 	//
 	// Type: Integer
 	//
-	// PostgreSQL
+	//  PostgreSQL
 	//
 	//  Default: 5432
 	//
@@ -2629,13 +2879,13 @@ type CreateDBInstanceInput struct {
 	//
 	// Type: Integer
 	//
-	// Oracle
+	//  Oracle
 	//
 	//  Default: 1521
 	//
 	//  Valid Values: 1150-65535
 	//
-	// SQL Server
+	//  SQL Server
 	//
 	//  Default: 1433
 	//
@@ -2715,25 +2965,45 @@ type CreateDBInstanceInput struct {
 	//  Default: The default EC2 VPC security group for the DB subnet group's VPC.
 	VPCSecurityGroupIDs []*string `locationName:"VpcSecurityGroupIds" locationNameList:"VpcSecurityGroupId" type:"list"`
 
-	metadataCreateDBInstanceInput `json:"-", xml:"-"`
+	metadataCreateDBInstanceInput `json:"-" xml:"-"`
 }
 
 type metadataCreateDBInstanceInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateDBInstanceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateDBInstanceInput) GoString() string {
+	return s.String()
+}
+
 type CreateDBInstanceOutput struct {
 	// Contains the result of a successful invocation of the following actions:
 	//
-	//  CreateDBInstance DeleteDBInstance ModifyDBInstance  This data type is used
-	// as a response element in the DescribeDBInstances action.
+	//   CreateDBInstance   DeleteDBInstance   ModifyDBInstance   This data type
+	// is used as a response element in the DescribeDBInstances action.
 	DBInstance *DBInstance `type:"structure"`
 
-	metadataCreateDBInstanceOutput `json:"-", xml:"-"`
+	metadataCreateDBInstanceOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateDBInstanceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateDBInstanceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateDBInstanceOutput) GoString() string {
+	return s.String()
 }
 
 type CreateDBInstanceReadReplicaInput struct {
@@ -2837,25 +3107,45 @@ type CreateDBInstanceReadReplicaInput struct {
 	// A list of tags.
 	Tags []*Tag `locationNameList:"Tag" type:"list"`
 
-	metadataCreateDBInstanceReadReplicaInput `json:"-", xml:"-"`
+	metadataCreateDBInstanceReadReplicaInput `json:"-" xml:"-"`
 }
 
 type metadataCreateDBInstanceReadReplicaInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateDBInstanceReadReplicaInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateDBInstanceReadReplicaInput) GoString() string {
+	return s.String()
+}
+
 type CreateDBInstanceReadReplicaOutput struct {
 	// Contains the result of a successful invocation of the following actions:
 	//
-	//  CreateDBInstance DeleteDBInstance ModifyDBInstance  This data type is used
-	// as a response element in the DescribeDBInstances action.
+	//   CreateDBInstance   DeleteDBInstance   ModifyDBInstance   This data type
+	// is used as a response element in the DescribeDBInstances action.
 	DBInstance *DBInstance `type:"structure"`
 
-	metadataCreateDBInstanceReadReplicaOutput `json:"-", xml:"-"`
+	metadataCreateDBInstanceReadReplicaOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateDBInstanceReadReplicaOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateDBInstanceReadReplicaOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateDBInstanceReadReplicaOutput) GoString() string {
+	return s.String()
 }
 
 type CreateDBParameterGroupInput struct {
@@ -2880,11 +3170,21 @@ type CreateDBParameterGroupInput struct {
 	// A list of tags.
 	Tags []*Tag `locationNameList:"Tag" type:"list"`
 
-	metadataCreateDBParameterGroupInput `json:"-", xml:"-"`
+	metadataCreateDBParameterGroupInput `json:"-" xml:"-"`
 }
 
 type metadataCreateDBParameterGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateDBParameterGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateDBParameterGroupInput) GoString() string {
+	return s.String()
 }
 
 type CreateDBParameterGroupOutput struct {
@@ -2895,11 +3195,21 @@ type CreateDBParameterGroupOutput struct {
 	// action, and as a response element in the DescribeDBParameterGroups action.
 	DBParameterGroup *DBParameterGroup `type:"structure"`
 
-	metadataCreateDBParameterGroupOutput `json:"-", xml:"-"`
+	metadataCreateDBParameterGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateDBParameterGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateDBParameterGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateDBParameterGroupOutput) GoString() string {
+	return s.String()
 }
 
 type CreateDBSecurityGroupInput struct {
@@ -2918,26 +3228,46 @@ type CreateDBSecurityGroupInput struct {
 	// A list of tags.
 	Tags []*Tag `locationNameList:"Tag" type:"list"`
 
-	metadataCreateDBSecurityGroupInput `json:"-", xml:"-"`
+	metadataCreateDBSecurityGroupInput `json:"-" xml:"-"`
 }
 
 type metadataCreateDBSecurityGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateDBSecurityGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateDBSecurityGroupInput) GoString() string {
+	return s.String()
+}
+
 type CreateDBSecurityGroupOutput struct {
 	// Contains the result of a successful invocation of the following actions:
 	//
-	//  DescribeDBSecurityGroups AuthorizeDBSecurityGroupIngress CreateDBSecurityGroup
-	// RevokeDBSecurityGroupIngress  This data type is used as a response element
+	//   DescribeDBSecurityGroups   AuthorizeDBSecurityGroupIngress   CreateDBSecurityGroup
+	//   RevokeDBSecurityGroupIngress   This data type is used as a response element
 	// in the DescribeDBSecurityGroups action.
 	DBSecurityGroup *DBSecurityGroup `type:"structure"`
 
-	metadataCreateDBSecurityGroupOutput `json:"-", xml:"-"`
+	metadataCreateDBSecurityGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateDBSecurityGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateDBSecurityGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateDBSecurityGroupOutput) GoString() string {
+	return s.String()
 }
 
 type CreateDBSnapshotInput struct {
@@ -2961,25 +3291,45 @@ type CreateDBSnapshotInput struct {
 	// A list of tags.
 	Tags []*Tag `locationNameList:"Tag" type:"list"`
 
-	metadataCreateDBSnapshotInput `json:"-", xml:"-"`
+	metadataCreateDBSnapshotInput `json:"-" xml:"-"`
 }
 
 type metadataCreateDBSnapshotInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateDBSnapshotInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateDBSnapshotInput) GoString() string {
+	return s.String()
+}
+
 type CreateDBSnapshotOutput struct {
 	// Contains the result of a successful invocation of the following actions:
 	//
-	//  CreateDBSnapshot DeleteDBSnapshot  This data type is used as a response
+	//   CreateDBSnapshot   DeleteDBSnapshot   This data type is used as a response
 	// element in the DescribeDBSnapshots action.
 	DBSnapshot *DBSnapshot `type:"structure"`
 
-	metadataCreateDBSnapshotOutput `json:"-", xml:"-"`
+	metadataCreateDBSnapshotOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateDBSnapshotOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateDBSnapshotOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateDBSnapshotOutput) GoString() string {
+	return s.String()
 }
 
 type CreateDBSubnetGroupInput struct {
@@ -3000,26 +3350,46 @@ type CreateDBSubnetGroupInput struct {
 	// A list of tags.
 	Tags []*Tag `locationNameList:"Tag" type:"list"`
 
-	metadataCreateDBSubnetGroupInput `json:"-", xml:"-"`
+	metadataCreateDBSubnetGroupInput `json:"-" xml:"-"`
 }
 
 type metadataCreateDBSubnetGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateDBSubnetGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateDBSubnetGroupInput) GoString() string {
+	return s.String()
+}
+
 type CreateDBSubnetGroupOutput struct {
 	// Contains the result of a successful invocation of the following actions:
 	//
-	//  CreateDBSubnetGroup ModifyDBSubnetGroup DescribeDBSubnetGroups DeleteDBSubnetGroup
-	//  This data type is used as a response element in the DescribeDBSubnetGroups
+	//   CreateDBSubnetGroup   ModifyDBSubnetGroup   DescribeDBSubnetGroups   DeleteDBSubnetGroup
+	//   This data type is used as a response element in the DescribeDBSubnetGroups
 	// action.
 	DBSubnetGroup *DBSubnetGroup `type:"structure"`
 
-	metadataCreateDBSubnetGroupOutput `json:"-", xml:"-"`
+	metadataCreateDBSubnetGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateDBSubnetGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateDBSubnetGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateDBSubnetGroupOutput) GoString() string {
+	return s.String()
 }
 
 type CreateEventSubscriptionInput struct {
@@ -3070,11 +3440,21 @@ type CreateEventSubscriptionInput struct {
 	// A list of tags.
 	Tags []*Tag `locationNameList:"Tag" type:"list"`
 
-	metadataCreateEventSubscriptionInput `json:"-", xml:"-"`
+	metadataCreateEventSubscriptionInput `json:"-" xml:"-"`
 }
 
 type metadataCreateEventSubscriptionInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateEventSubscriptionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateEventSubscriptionInput) GoString() string {
+	return s.String()
 }
 
 type CreateEventSubscriptionOutput struct {
@@ -3082,11 +3462,21 @@ type CreateEventSubscriptionOutput struct {
 	// action.
 	EventSubscription *EventSubscription `type:"structure"`
 
-	metadataCreateEventSubscriptionOutput `json:"-", xml:"-"`
+	metadataCreateEventSubscriptionOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateEventSubscriptionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateEventSubscriptionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateEventSubscriptionOutput) GoString() string {
+	return s.String()
 }
 
 type CreateOptionGroupInput struct {
@@ -3113,21 +3503,41 @@ type CreateOptionGroupInput struct {
 	// A list of tags.
 	Tags []*Tag `locationNameList:"Tag" type:"list"`
 
-	metadataCreateOptionGroupInput `json:"-", xml:"-"`
+	metadataCreateOptionGroupInput `json:"-" xml:"-"`
 }
 
 type metadataCreateOptionGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateOptionGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateOptionGroupInput) GoString() string {
+	return s.String()
+}
+
 type CreateOptionGroupOutput struct {
 	OptionGroup *OptionGroup `type:"structure"`
 
-	metadataCreateOptionGroupOutput `json:"-", xml:"-"`
+	metadataCreateOptionGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateOptionGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateOptionGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateOptionGroupOutput) GoString() string {
+	return s.String()
 }
 
 // This data type is used as a response element in the action DescribeDBEngineVersions.
@@ -3155,17 +3565,27 @@ type DBEngineVersion struct {
 	// parameter of the CreateDBInstance API.
 	SupportedCharacterSets []*CharacterSet `locationNameList:"CharacterSet" type:"list"`
 
-	metadataDBEngineVersion `json:"-", xml:"-"`
+	metadataDBEngineVersion `json:"-" xml:"-"`
 }
 
 type metadataDBEngineVersion struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DBEngineVersion) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DBEngineVersion) GoString() string {
+	return s.String()
+}
+
 // Contains the result of a successful invocation of the following actions:
 //
-//  CreateDBInstance DeleteDBInstance ModifyDBInstance  This data type is used
-// as a response element in the DescribeDBInstances action.
+//   CreateDBInstance   DeleteDBInstance   ModifyDBInstance   This data type
+// is used as a response element in the DescribeDBInstances action.
 type DBInstance struct {
 	// Specifies the allocated storage size specified in gigabytes.
 	AllocatedStorage *int64 `type:"integer"`
@@ -3179,9 +3599,17 @@ type DBInstance struct {
 	// Specifies the number of days for which automatic DB snapshots are retained.
 	BackupRetentionPeriod *int64 `type:"integer"`
 
+	// The identifier of the CA certificate for this DB instance.
+	CACertificateIdentifier *string `type:"string"`
+
 	// If present, specifies the name of the character set that this instance is
 	// associated with.
 	CharacterSetName *string `type:"string"`
+
+	// If StorageEncrypted is true, the region-unique, immutable identifier for
+	// the encrypted DB instance. This identifier is found in AWS CloudTrail log
+	// entries whenever the KMS key for the DB instance is accessed.
+	DBIResourceID *string `locationName:"DbiResourceId" type:"string"`
 
 	// Contains the name of the compute and memory capacity class of the DB instance.
 	DBInstanceClass *string `type:"string"`
@@ -3198,7 +3626,7 @@ type DBInstance struct {
 	// when returning values from CreateDBInstanceReadReplica since Read Replicas
 	// are only supported for MySQL and PostgreSQL.
 	//
-	// MySQL, SQL Server, PostgreSQL
+	//  MySQL, SQL Server, PostgreSQL
 	//
 	//  Contains the name of the initial database of this instance that was provided
 	// at create time, if one was specified when the DB instance was created. This
@@ -3206,7 +3634,7 @@ type DBInstance struct {
 	//
 	// Type: String
 	//
-	// Oracle
+	//  Oracle
 	//
 	//  Contains the Oracle System ID (SID) of the created DB instance. Not shown
 	// when the returned parameters do not apply to an Oracle DB instance.
@@ -3222,11 +3650,6 @@ type DBInstance struct {
 	// Specifies information on the subnet group associated with the DB instance,
 	// including the name, description, and subnets in the subnet group.
 	DBSubnetGroup *DBSubnetGroup `type:"structure"`
-
-	// If StorageEncrypted is true, the region-unique, immutable identifier for
-	// the encrypted DB instance. This identifier is found in AWS CloudTrail log
-	// entries whenever the KMS key for the DB instance is accessed.
-	DBiResourceID *string `locationName:"DbiResourceId" type:"string"`
 
 	// Specifies the connection endpoint.
 	Endpoint *Endpoint `type:"structure"`
@@ -3320,11 +3743,21 @@ type DBInstance struct {
 	// to.
 	VPCSecurityGroups []*VPCSecurityGroupMembership `locationName:"VpcSecurityGroups" locationNameList:"VpcSecurityGroupMembership" type:"list"`
 
-	metadataDBInstance `json:"-", xml:"-"`
+	metadataDBInstance `json:"-" xml:"-"`
 }
 
 type metadataDBInstance struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DBInstance) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DBInstance) GoString() string {
+	return s.String()
 }
 
 // Provides a list of status information for a DB instance.
@@ -3344,11 +3777,21 @@ type DBInstanceStatusInfo struct {
 	// This value is currently "read replication."
 	StatusType *string `type:"string"`
 
-	metadataDBInstanceStatusInfo `json:"-", xml:"-"`
+	metadataDBInstanceStatusInfo `json:"-" xml:"-"`
 }
 
 type metadataDBInstanceStatusInfo struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DBInstanceStatusInfo) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DBInstanceStatusInfo) GoString() string {
+	return s.String()
 }
 
 // Contains the result of a successful invocation of the CreateDBParameterGroup
@@ -3367,11 +3810,21 @@ type DBParameterGroup struct {
 	// Provides the customer-specified description for this DB parameter group.
 	Description *string `type:"string"`
 
-	metadataDBParameterGroup `json:"-", xml:"-"`
+	metadataDBParameterGroup `json:"-" xml:"-"`
 }
 
 type metadataDBParameterGroup struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DBParameterGroup) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DBParameterGroup) GoString() string {
+	return s.String()
 }
 
 // Contains the result of a successful invocation of the ModifyDBParameterGroup
@@ -3380,19 +3833,29 @@ type DBParameterGroupNameMessage struct {
 	// The name of the DB parameter group.
 	DBParameterGroupName *string `type:"string"`
 
-	metadataDBParameterGroupNameMessage `json:"-", xml:"-"`
+	metadataDBParameterGroupNameMessage `json:"-" xml:"-"`
 }
 
 type metadataDBParameterGroupNameMessage struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DBParameterGroupNameMessage) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DBParameterGroupNameMessage) GoString() string {
+	return s.String()
+}
+
 // The status of the DB parameter group.
 //
 // This data type is used as a response element in the following actions:
 //
-//  CreateDBInstance CreateDBInstanceReadReplica DeleteDBInstance ModifyDBInstance
-// RebootDBInstance RestoreDBInstanceFromDBSnapshot
+//   CreateDBInstance   CreateDBInstanceReadReplica   DeleteDBInstance   ModifyDBInstance
+//   RebootDBInstance   RestoreDBInstanceFromDBSnapshot
 type DBParameterGroupStatus struct {
 	// The name of the DP parameter group.
 	DBParameterGroupName *string `type:"string"`
@@ -3400,17 +3863,27 @@ type DBParameterGroupStatus struct {
 	// The status of parameter updates.
 	ParameterApplyStatus *string `type:"string"`
 
-	metadataDBParameterGroupStatus `json:"-", xml:"-"`
+	metadataDBParameterGroupStatus `json:"-" xml:"-"`
 }
 
 type metadataDBParameterGroupStatus struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DBParameterGroupStatus) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DBParameterGroupStatus) GoString() string {
+	return s.String()
+}
+
 // Contains the result of a successful invocation of the following actions:
 //
-//  DescribeDBSecurityGroups AuthorizeDBSecurityGroupIngress CreateDBSecurityGroup
-// RevokeDBSecurityGroupIngress  This data type is used as a response element
+//   DescribeDBSecurityGroups   AuthorizeDBSecurityGroupIngress   CreateDBSecurityGroup
+//   RevokeDBSecurityGroupIngress   This data type is used as a response element
 // in the DescribeDBSecurityGroups action.
 type DBSecurityGroup struct {
 	// Provides the description of the DB security group.
@@ -3431,16 +3904,27 @@ type DBSecurityGroup struct {
 	// Provides the VpcId of the DB security group.
 	VPCID *string `locationName:"VpcId" type:"string"`
 
-	metadataDBSecurityGroup `json:"-", xml:"-"`
+	metadataDBSecurityGroup `json:"-" xml:"-"`
 }
 
 type metadataDBSecurityGroup struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DBSecurityGroup) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DBSecurityGroup) GoString() string {
+	return s.String()
+}
+
 // This data type is used as a response element in the following actions:
 //
-//  ModifyDBInstance RebootDBInstance RestoreDBInstanceFromDBSnapshot RestoreDBInstanceToPointInTime
+//   ModifyDBInstance   RebootDBInstance   RestoreDBInstanceFromDBSnapshot
+//   RestoreDBInstanceToPointInTime
 type DBSecurityGroupMembership struct {
 	// The name of the DB security group.
 	DBSecurityGroupName *string `type:"string"`
@@ -3448,16 +3932,26 @@ type DBSecurityGroupMembership struct {
 	// The status of the DB security group.
 	Status *string `type:"string"`
 
-	metadataDBSecurityGroupMembership `json:"-", xml:"-"`
+	metadataDBSecurityGroupMembership `json:"-" xml:"-"`
 }
 
 type metadataDBSecurityGroupMembership struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DBSecurityGroupMembership) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DBSecurityGroupMembership) GoString() string {
+	return s.String()
+}
+
 // Contains the result of a successful invocation of the following actions:
 //
-//  CreateDBSnapshot DeleteDBSnapshot  This data type is used as a response
+//   CreateDBSnapshot   DeleteDBSnapshot   This data type is used as a response
 // element in the DescribeDBSnapshots action.
 type DBSnapshot struct {
 	// Specifies the allocated storage size in gigabytes (GB).
@@ -3530,17 +4024,27 @@ type DBSnapshot struct {
 	// Provides the Vpc Id associated with the DB snapshot.
 	VPCID *string `locationName:"VpcId" type:"string"`
 
-	metadataDBSnapshot `json:"-", xml:"-"`
+	metadataDBSnapshot `json:"-" xml:"-"`
 }
 
 type metadataDBSnapshot struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DBSnapshot) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DBSnapshot) GoString() string {
+	return s.String()
+}
+
 // Contains the result of a successful invocation of the following actions:
 //
-//  CreateDBSubnetGroup ModifyDBSubnetGroup DescribeDBSubnetGroups DeleteDBSubnetGroup
-//  This data type is used as a response element in the DescribeDBSubnetGroups
+//   CreateDBSubnetGroup   ModifyDBSubnetGroup   DescribeDBSubnetGroups   DeleteDBSubnetGroup
+//   This data type is used as a response element in the DescribeDBSubnetGroups
 // action.
 type DBSubnetGroup struct {
 	// Provides the description of the DB subnet group.
@@ -3558,11 +4062,21 @@ type DBSubnetGroup struct {
 	// Provides the VpcId of the DB subnet group.
 	VPCID *string `locationName:"VpcId" type:"string"`
 
-	metadataDBSubnetGroup `json:"-", xml:"-"`
+	metadataDBSubnetGroup `json:"-" xml:"-"`
 }
 
 type metadataDBSubnetGroup struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DBSubnetGroup) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DBSubnetGroup) GoString() string {
+	return s.String()
 }
 
 type DeleteDBInstanceInput struct {
@@ -3596,25 +4110,45 @@ type DeleteDBInstanceInput struct {
 	// is false. Default: false
 	SkipFinalSnapshot *bool `type:"boolean"`
 
-	metadataDeleteDBInstanceInput `json:"-", xml:"-"`
+	metadataDeleteDBInstanceInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteDBInstanceInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteDBInstanceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteDBInstanceInput) GoString() string {
+	return s.String()
+}
+
 type DeleteDBInstanceOutput struct {
 	// Contains the result of a successful invocation of the following actions:
 	//
-	//  CreateDBInstance DeleteDBInstance ModifyDBInstance  This data type is used
-	// as a response element in the DescribeDBInstances action.
+	//   CreateDBInstance   DeleteDBInstance   ModifyDBInstance   This data type
+	// is used as a response element in the DescribeDBInstances action.
 	DBInstance *DBInstance `type:"structure"`
 
-	metadataDeleteDBInstanceOutput `json:"-", xml:"-"`
+	metadataDeleteDBInstanceOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteDBInstanceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteDBInstanceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteDBInstanceOutput) GoString() string {
+	return s.String()
 }
 
 type DeleteDBParameterGroupInput struct {
@@ -3626,19 +4160,39 @@ type DeleteDBParameterGroupInput struct {
 	// default DB parameter group Cannot be associated with any DB instances
 	DBParameterGroupName *string `type:"string" required:"true"`
 
-	metadataDeleteDBParameterGroupInput `json:"-", xml:"-"`
+	metadataDeleteDBParameterGroupInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteDBParameterGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteDBParameterGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteDBParameterGroupInput) GoString() string {
+	return s.String()
+}
+
 type DeleteDBParameterGroupOutput struct {
-	metadataDeleteDBParameterGroupOutput `json:"-", xml:"-"`
+	metadataDeleteDBParameterGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteDBParameterGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteDBParameterGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteDBParameterGroupOutput) GoString() string {
+	return s.String()
 }
 
 type DeleteDBSecurityGroupInput struct {
@@ -3651,19 +4205,39 @@ type DeleteDBSecurityGroupInput struct {
 	// May not contain spaces
 	DBSecurityGroupName *string `type:"string" required:"true"`
 
-	metadataDeleteDBSecurityGroupInput `json:"-", xml:"-"`
+	metadataDeleteDBSecurityGroupInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteDBSecurityGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteDBSecurityGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteDBSecurityGroupInput) GoString() string {
+	return s.String()
+}
+
 type DeleteDBSecurityGroupOutput struct {
-	metadataDeleteDBSecurityGroupOutput `json:"-", xml:"-"`
+	metadataDeleteDBSecurityGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteDBSecurityGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteDBSecurityGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteDBSecurityGroupOutput) GoString() string {
+	return s.String()
 }
 
 type DeleteDBSnapshotInput struct {
@@ -3673,25 +4247,45 @@ type DeleteDBSnapshotInput struct {
 	// state.
 	DBSnapshotIdentifier *string `type:"string" required:"true"`
 
-	metadataDeleteDBSnapshotInput `json:"-", xml:"-"`
+	metadataDeleteDBSnapshotInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteDBSnapshotInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteDBSnapshotInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteDBSnapshotInput) GoString() string {
+	return s.String()
+}
+
 type DeleteDBSnapshotOutput struct {
 	// Contains the result of a successful invocation of the following actions:
 	//
-	//  CreateDBSnapshot DeleteDBSnapshot  This data type is used as a response
+	//   CreateDBSnapshot   DeleteDBSnapshot   This data type is used as a response
 	// element in the DescribeDBSnapshots action.
 	DBSnapshot *DBSnapshot `type:"structure"`
 
-	metadataDeleteDBSnapshotOutput `json:"-", xml:"-"`
+	metadataDeleteDBSnapshotOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteDBSnapshotOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteDBSnapshotOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteDBSnapshotOutput) GoString() string {
+	return s.String()
 }
 
 type DeleteDBSubnetGroupInput struct {
@@ -3703,30 +4297,60 @@ type DeleteDBSubnetGroupInput struct {
 	// Cannot end with a hyphen or contain two consecutive hyphens
 	DBSubnetGroupName *string `type:"string" required:"true"`
 
-	metadataDeleteDBSubnetGroupInput `json:"-", xml:"-"`
+	metadataDeleteDBSubnetGroupInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteDBSubnetGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteDBSubnetGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteDBSubnetGroupInput) GoString() string {
+	return s.String()
+}
+
 type DeleteDBSubnetGroupOutput struct {
-	metadataDeleteDBSubnetGroupOutput `json:"-", xml:"-"`
+	metadataDeleteDBSubnetGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteDBSubnetGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteDBSubnetGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteDBSubnetGroupOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteEventSubscriptionInput struct {
 	// The name of the RDS event notification subscription you want to delete.
 	SubscriptionName *string `type:"string" required:"true"`
 
-	metadataDeleteEventSubscriptionInput `json:"-", xml:"-"`
+	metadataDeleteEventSubscriptionInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteEventSubscriptionInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteEventSubscriptionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteEventSubscriptionInput) GoString() string {
+	return s.String()
 }
 
 type DeleteEventSubscriptionOutput struct {
@@ -3734,11 +4358,21 @@ type DeleteEventSubscriptionOutput struct {
 	// action.
 	EventSubscription *EventSubscription `type:"structure"`
 
-	metadataDeleteEventSubscriptionOutput `json:"-", xml:"-"`
+	metadataDeleteEventSubscriptionOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteEventSubscriptionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteEventSubscriptionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteEventSubscriptionOutput) GoString() string {
+	return s.String()
 }
 
 type DeleteOptionGroupInput struct {
@@ -3747,19 +4381,152 @@ type DeleteOptionGroupInput struct {
 	// You cannot delete default option groups.
 	OptionGroupName *string `type:"string" required:"true"`
 
-	metadataDeleteOptionGroupInput `json:"-", xml:"-"`
+	metadataDeleteOptionGroupInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteOptionGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteOptionGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteOptionGroupInput) GoString() string {
+	return s.String()
+}
+
 type DeleteOptionGroupOutput struct {
-	metadataDeleteOptionGroupOutput `json:"-", xml:"-"`
+	metadataDeleteOptionGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteOptionGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteOptionGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteOptionGroupOutput) GoString() string {
+	return s.String()
+}
+
+type DescribeAccountAttributesInput struct {
+	metadataDescribeAccountAttributesInput `json:"-" xml:"-"`
+}
+
+type metadataDescribeAccountAttributesInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeAccountAttributesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeAccountAttributesInput) GoString() string {
+	return s.String()
+}
+
+// Data returned by the DescribeAccountAttributes action.
+type DescribeAccountAttributesOutput struct {
+	// A list of AccountQuota objects. Within this list, each quota has a name,
+	// a count of usage toward the quota maximum, and a maximum value for the quota.
+	AccountQuotas []*AccountQuota `locationNameList:"AccountQuota" type:"list"`
+
+	metadataDescribeAccountAttributesOutput `json:"-" xml:"-"`
+}
+
+type metadataDescribeAccountAttributesOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeAccountAttributesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeAccountAttributesOutput) GoString() string {
+	return s.String()
+}
+
+type DescribeCertificatesInput struct {
+	// The user-supplied certificate identifier. If this parameter is specified,
+	// information for only the identified certificate is returned. This parameter
+	// isn't case-sensitive.
+	//
+	// Constraints:
+	//
+	//  Must contain from 1 to 63 alphanumeric characters or hyphens First character
+	// must be a letter Cannot end with a hyphen or contain two consecutive hyphens
+	CertificateIdentifier *string `type:"string"`
+
+	// This parameter is not currently supported.
+	Filters []*Filter `locationNameList:"Filter" type:"list"`
+
+	// An optional pagination token provided by a previous DescribeCertificates
+	// request. If this parameter is specified, the response includes only records
+	// beyond the marker, up to the value specified by MaxRecords.
+	Marker *string `type:"string"`
+
+	// The maximum number of records to include in the response. If more records
+	// exist than the specified MaxRecords value, a pagination token called a marker
+	// is included in the response so that the remaining results can be retrieved.
+	//
+	// Default: 100
+	//
+	// Constraints: Minimum 20, maximum 100
+	MaxRecords *int64 `type:"integer"`
+
+	metadataDescribeCertificatesInput `json:"-" xml:"-"`
+}
+
+type metadataDescribeCertificatesInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCertificatesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCertificatesInput) GoString() string {
+	return s.String()
+}
+
+// Data returned by the DescribeCertificates action.
+type DescribeCertificatesOutput struct {
+	// The list of Certificate objects for the AWS account.
+	Certificates []*Certificate `locationNameList:"Certificate" type:"list"`
+
+	// An optional pagination token provided by a previous DescribeCertificates
+	// request. If this parameter is specified, the response includes only records
+	// beyond the marker, up to the value specified by MaxRecords .
+	Marker *string `type:"string"`
+
+	metadataDescribeCertificatesOutput `json:"-" xml:"-"`
+}
+
+type metadataDescribeCertificatesOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCertificatesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCertificatesOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeDBEngineVersionsInput struct {
@@ -3805,11 +4572,21 @@ type DescribeDBEngineVersionsInput struct {
 	// Constraints: minimum 20, maximum 100
 	MaxRecords *int64 `type:"integer"`
 
-	metadataDescribeDBEngineVersionsInput `json:"-", xml:"-"`
+	metadataDescribeDBEngineVersionsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDBEngineVersionsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDBEngineVersionsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDBEngineVersionsInput) GoString() string {
+	return s.String()
 }
 
 // Contains the result of a successful invocation of the DescribeDBEngineVersions
@@ -3823,11 +4600,21 @@ type DescribeDBEngineVersionsOutput struct {
 	// the value specified by MaxRecords.
 	Marker *string `type:"string"`
 
-	metadataDescribeDBEngineVersionsOutput `json:"-", xml:"-"`
+	metadataDescribeDBEngineVersionsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDBEngineVersionsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDBEngineVersionsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDBEngineVersionsOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeDBInstancesInput struct {
@@ -3858,11 +4645,21 @@ type DescribeDBInstancesInput struct {
 	// Constraints: minimum 20, maximum 100
 	MaxRecords *int64 `type:"integer"`
 
-	metadataDescribeDBInstancesInput `json:"-", xml:"-"`
+	metadataDescribeDBInstancesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDBInstancesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDBInstancesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDBInstancesInput) GoString() string {
+	return s.String()
 }
 
 // Contains the result of a successful invocation of the DescribeDBInstances
@@ -3876,11 +4673,21 @@ type DescribeDBInstancesOutput struct {
 	// the value specified by MaxRecords .
 	Marker *string `type:"string"`
 
-	metadataDescribeDBInstancesOutput `json:"-", xml:"-"`
+	metadataDescribeDBInstancesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDBInstancesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDBInstancesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDBInstancesOutput) GoString() string {
+	return s.String()
 }
 
 // This data type is used as a response element to DescribeDBLogFiles.
@@ -3894,11 +4701,21 @@ type DescribeDBLogFilesDetails struct {
 	// The size, in bytes, of the log file for the specified DB instance.
 	Size *int64 `type:"long"`
 
-	metadataDescribeDBLogFilesDetails `json:"-", xml:"-"`
+	metadataDescribeDBLogFilesDetails `json:"-" xml:"-"`
 }
 
 type metadataDescribeDBLogFilesDetails struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDBLogFilesDetails) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDBLogFilesDetails) GoString() string {
+	return s.String()
 }
 
 type DescribeDBLogFilesInput struct {
@@ -3935,11 +4752,21 @@ type DescribeDBLogFilesInput struct {
 	// is included in the response so that the remaining results can be retrieved.
 	MaxRecords *int64 `type:"integer"`
 
-	metadataDescribeDBLogFilesInput `json:"-", xml:"-"`
+	metadataDescribeDBLogFilesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDBLogFilesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDBLogFilesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDBLogFilesInput) GoString() string {
+	return s.String()
 }
 
 // The response from a call to DescribeDBLogFiles.
@@ -3950,11 +4777,21 @@ type DescribeDBLogFilesOutput struct {
 	// A pagination token that can be used in a subsequent DescribeDBLogFiles request.
 	Marker *string `type:"string"`
 
-	metadataDescribeDBLogFilesOutput `json:"-", xml:"-"`
+	metadataDescribeDBLogFilesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDBLogFilesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDBLogFilesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDBLogFilesOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeDBParameterGroupsInput struct {
@@ -3983,11 +4820,21 @@ type DescribeDBParameterGroupsInput struct {
 	// Constraints: minimum 20, maximum 100
 	MaxRecords *int64 `type:"integer"`
 
-	metadataDescribeDBParameterGroupsInput `json:"-", xml:"-"`
+	metadataDescribeDBParameterGroupsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDBParameterGroupsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDBParameterGroupsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDBParameterGroupsInput) GoString() string {
+	return s.String()
 }
 
 // Contains the result of a successful invocation of the DescribeDBParameterGroups
@@ -4001,11 +4848,21 @@ type DescribeDBParameterGroupsOutput struct {
 	// the value specified by MaxRecords.
 	Marker *string `type:"string"`
 
-	metadataDescribeDBParameterGroupsOutput `json:"-", xml:"-"`
+	metadataDescribeDBParameterGroupsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDBParameterGroupsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDBParameterGroupsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDBParameterGroupsOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeDBParametersInput struct {
@@ -4041,11 +4898,21 @@ type DescribeDBParametersInput struct {
 	// Valid Values: user | system | engine-default
 	Source *string `type:"string"`
 
-	metadataDescribeDBParametersInput `json:"-", xml:"-"`
+	metadataDescribeDBParametersInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDBParametersInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDBParametersInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDBParametersInput) GoString() string {
+	return s.String()
 }
 
 // Contains the result of a successful invocation of the DescribeDBParameters
@@ -4059,11 +4926,21 @@ type DescribeDBParametersOutput struct {
 	// A list of Parameter values.
 	Parameters []*Parameter `locationNameList:"Parameter" type:"list"`
 
-	metadataDescribeDBParametersOutput `json:"-", xml:"-"`
+	metadataDescribeDBParametersOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDBParametersOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDBParametersOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDBParametersOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeDBSecurityGroupsInput struct {
@@ -4087,11 +4964,21 @@ type DescribeDBSecurityGroupsInput struct {
 	// Constraints: minimum 20, maximum 100
 	MaxRecords *int64 `type:"integer"`
 
-	metadataDescribeDBSecurityGroupsInput `json:"-", xml:"-"`
+	metadataDescribeDBSecurityGroupsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDBSecurityGroupsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDBSecurityGroupsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDBSecurityGroupsInput) GoString() string {
+	return s.String()
 }
 
 // Contains the result of a successful invocation of the DescribeDBSecurityGroups
@@ -4105,11 +4992,21 @@ type DescribeDBSecurityGroupsOutput struct {
 	// the value specified by MaxRecords.
 	Marker *string `type:"string"`
 
-	metadataDescribeDBSecurityGroupsOutput `json:"-", xml:"-"`
+	metadataDescribeDBSecurityGroupsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDBSecurityGroupsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDBSecurityGroupsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDBSecurityGroupsOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeDBSnapshotsInput struct {
@@ -4156,11 +5053,21 @@ type DescribeDBSnapshotsInput struct {
 	// types.
 	SnapshotType *string `type:"string"`
 
-	metadataDescribeDBSnapshotsInput `json:"-", xml:"-"`
+	metadataDescribeDBSnapshotsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDBSnapshotsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDBSnapshotsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDBSnapshotsInput) GoString() string {
+	return s.String()
 }
 
 // Contains the result of a successful invocation of the DescribeDBSnapshots
@@ -4174,11 +5081,21 @@ type DescribeDBSnapshotsOutput struct {
 	// the value specified by MaxRecords.
 	Marker *string `type:"string"`
 
-	metadataDescribeDBSnapshotsOutput `json:"-", xml:"-"`
+	metadataDescribeDBSnapshotsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDBSnapshotsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDBSnapshotsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDBSnapshotsOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeDBSubnetGroupsInput struct {
@@ -4202,11 +5119,21 @@ type DescribeDBSubnetGroupsInput struct {
 	// Constraints: minimum 20, maximum 100
 	MaxRecords *int64 `type:"integer"`
 
-	metadataDescribeDBSubnetGroupsInput `json:"-", xml:"-"`
+	metadataDescribeDBSubnetGroupsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDBSubnetGroupsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDBSubnetGroupsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDBSubnetGroupsInput) GoString() string {
+	return s.String()
 }
 
 // Contains the result of a successful invocation of the DescribeDBSubnetGroups
@@ -4220,11 +5147,21 @@ type DescribeDBSubnetGroupsOutput struct {
 	// the value specified by MaxRecords.
 	Marker *string `type:"string"`
 
-	metadataDescribeDBSubnetGroupsOutput `json:"-", xml:"-"`
+	metadataDescribeDBSubnetGroupsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDBSubnetGroupsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeDBSubnetGroupsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDBSubnetGroupsOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeEngineDefaultParametersInput struct {
@@ -4248,11 +5185,21 @@ type DescribeEngineDefaultParametersInput struct {
 	// Constraints: minimum 20, maximum 100
 	MaxRecords *int64 `type:"integer"`
 
-	metadataDescribeEngineDefaultParametersInput `json:"-", xml:"-"`
+	metadataDescribeEngineDefaultParametersInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeEngineDefaultParametersInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeEngineDefaultParametersInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeEngineDefaultParametersInput) GoString() string {
+	return s.String()
 }
 
 type DescribeEngineDefaultParametersOutput struct {
@@ -4260,11 +5207,21 @@ type DescribeEngineDefaultParametersOutput struct {
 	// action.
 	EngineDefaults *EngineDefaults `type:"structure"`
 
-	metadataDescribeEngineDefaultParametersOutput `json:"-", xml:"-"`
+	metadataDescribeEngineDefaultParametersOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeEngineDefaultParametersOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeEngineDefaultParametersOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeEngineDefaultParametersOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeEventCategoriesInput struct {
@@ -4276,11 +5233,21 @@ type DescribeEventCategoriesInput struct {
 	// Valid values: db-instance | db-parameter-group | db-security-group | db-snapshot
 	SourceType *string `type:"string"`
 
-	metadataDescribeEventCategoriesInput `json:"-", xml:"-"`
+	metadataDescribeEventCategoriesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeEventCategoriesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeEventCategoriesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeEventCategoriesInput) GoString() string {
+	return s.String()
 }
 
 // Data returned from the DescribeEventCategories action.
@@ -4288,11 +5255,21 @@ type DescribeEventCategoriesOutput struct {
 	// A list of EventCategoriesMap data types.
 	EventCategoriesMapList []*EventCategoriesMap `locationNameList:"EventCategoriesMap" type:"list"`
 
-	metadataDescribeEventCategoriesOutput `json:"-", xml:"-"`
+	metadataDescribeEventCategoriesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeEventCategoriesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeEventCategoriesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeEventCategoriesOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeEventSubscriptionsInput struct {
@@ -4316,11 +5293,21 @@ type DescribeEventSubscriptionsInput struct {
 	// The name of the RDS event notification subscription you want to describe.
 	SubscriptionName *string `type:"string"`
 
-	metadataDescribeEventSubscriptionsInput `json:"-", xml:"-"`
+	metadataDescribeEventSubscriptionsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeEventSubscriptionsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeEventSubscriptionsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeEventSubscriptionsInput) GoString() string {
+	return s.String()
 }
 
 // Data returned by the DescribeEventSubscriptions action.
@@ -4333,11 +5320,21 @@ type DescribeEventSubscriptionsOutput struct {
 	// beyond the marker, up to the value specified by MaxRecords.
 	Marker *string `type:"string"`
 
-	metadataDescribeEventSubscriptionsOutput `json:"-", xml:"-"`
+	metadataDescribeEventSubscriptionsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeEventSubscriptionsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeEventSubscriptionsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeEventSubscriptionsOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeEventsInput struct {
@@ -4398,11 +5395,21 @@ type DescribeEventsInput struct {
 	// Example: 2009-07-08T18:00Z
 	StartTime *time.Time `type:"timestamp" timestampFormat:"iso8601"`
 
-	metadataDescribeEventsInput `json:"-", xml:"-"`
+	metadataDescribeEventsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeEventsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeEventsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeEventsInput) GoString() string {
+	return s.String()
 }
 
 // Contains the result of a successful invocation of the DescribeEvents action.
@@ -4415,11 +5422,21 @@ type DescribeEventsOutput struct {
 	// up to the value specified by MaxRecords .
 	Marker *string `type:"string"`
 
-	metadataDescribeEventsOutput `json:"-", xml:"-"`
+	metadataDescribeEventsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeEventsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeEventsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeEventsOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeOptionGroupOptionsInput struct {
@@ -4448,11 +5465,21 @@ type DescribeOptionGroupOptionsInput struct {
 	// Constraints: minimum 20, maximum 100
 	MaxRecords *int64 `type:"integer"`
 
-	metadataDescribeOptionGroupOptionsInput `json:"-", xml:"-"`
+	metadataDescribeOptionGroupOptionsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeOptionGroupOptionsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeOptionGroupOptionsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeOptionGroupOptionsInput) GoString() string {
+	return s.String()
 }
 
 type DescribeOptionGroupOptionsOutput struct {
@@ -4464,11 +5491,21 @@ type DescribeOptionGroupOptionsOutput struct {
 	// List of available option group options.
 	OptionGroupOptions []*OptionGroupOption `locationNameList:"OptionGroupOption" type:"list"`
 
-	metadataDescribeOptionGroupOptionsOutput `json:"-", xml:"-"`
+	metadataDescribeOptionGroupOptionsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeOptionGroupOptionsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeOptionGroupOptionsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeOptionGroupOptionsOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeOptionGroupsInput struct {
@@ -4502,11 +5539,21 @@ type DescribeOptionGroupsInput struct {
 	// EngineName or MajorEngineVersion.
 	OptionGroupName *string `type:"string"`
 
-	metadataDescribeOptionGroupsInput `json:"-", xml:"-"`
+	metadataDescribeOptionGroupsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeOptionGroupsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeOptionGroupsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeOptionGroupsInput) GoString() string {
+	return s.String()
 }
 
 // List of option groups.
@@ -4519,11 +5566,21 @@ type DescribeOptionGroupsOutput struct {
 	// List of option groups.
 	OptionGroupsList []*OptionGroup `locationNameList:"OptionGroup" type:"list"`
 
-	metadataDescribeOptionGroupsOutput `json:"-", xml:"-"`
+	metadataDescribeOptionGroupsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeOptionGroupsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeOptionGroupsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeOptionGroupsOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeOrderableDBInstanceOptionsInput struct {
@@ -4563,11 +5620,21 @@ type DescribeOrderableDBInstanceOptionsInput struct {
 	// or non-VPC offerings.
 	VPC *bool `locationName:"Vpc" type:"boolean"`
 
-	metadataDescribeOrderableDBInstanceOptionsInput `json:"-", xml:"-"`
+	metadataDescribeOrderableDBInstanceOptionsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeOrderableDBInstanceOptionsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeOrderableDBInstanceOptionsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeOrderableDBInstanceOptionsInput) GoString() string {
+	return s.String()
 }
 
 // Contains the result of a successful invocation of the DescribeOrderableDBInstanceOptions
@@ -4582,24 +5649,37 @@ type DescribeOrderableDBInstanceOptionsOutput struct {
 	// options for the DB instance.
 	OrderableDBInstanceOptions []*OrderableDBInstanceOption `locationNameList:"OrderableDBInstanceOption" type:"list"`
 
-	metadataDescribeOrderableDBInstanceOptionsOutput `json:"-", xml:"-"`
+	metadataDescribeOrderableDBInstanceOptionsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeOrderableDBInstanceOptionsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeOrderableDBInstanceOptionsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeOrderableDBInstanceOptionsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribePendingMaintenanceActionsInput struct {
+	// A filter that specifies one or more resources to return pending maintenance
+	// actions for.
+	//
 	// Supported filters:
 	//
-	//  db-instance-id - Accepts DB instance identifiers and DB instance ARNs.
-	// The result list will only include maintenance actions for the specified DB
-	// Instances.
+	//   db-instance-id - Accepts DB instance identifiers and DB instance Amazon
+	// Resource Names (ARNs). The results list will only include pending maintenance
+	// actions for the DB instances identified by these ARNs.
 	Filters []*Filter `locationNameList:"Filter" type:"list"`
 
 	// An optional pagination token provided by a previous DescribePendingMaintenanceActions
 	// request. If this parameter is specified, the response includes only records
-	// beyond the marker, up to a number of records specified by MaxRecords .
+	// beyond the marker, up to a number of records specified by MaxRecords.
 	Marker *string `type:"string"`
 
 	// The maximum number of records to include in the response. If more records
@@ -4611,31 +5691,51 @@ type DescribePendingMaintenanceActionsInput struct {
 	// Constraints: minimum 20, maximum 100
 	MaxRecords *int64 `type:"integer"`
 
-	// The ARN of the resource to return pending maintenance actions for.
+	// The ARN of a resource to return pending maintenance actions for.
 	ResourceIdentifier *string `type:"string"`
 
-	metadataDescribePendingMaintenanceActionsInput `json:"-", xml:"-"`
+	metadataDescribePendingMaintenanceActionsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribePendingMaintenanceActionsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribePendingMaintenanceActionsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribePendingMaintenanceActionsInput) GoString() string {
+	return s.String()
+}
+
 // Data returned from the DescribePendingMaintenanceActions action.
 type DescribePendingMaintenanceActionsOutput struct {
 	// An optional pagination token provided by a previous DescribePendingMaintenanceActions
 	// request. If this parameter is specified, the response includes only records
-	// beyond the marker, up to a number of records specified by MaxRecords .
+	// beyond the marker, up to a number of records specified by MaxRecords.
 	Marker *string `type:"string"`
 
-	// Provides a list of the pending maintenance actions for the resource.
+	// A list of the pending maintenance actions for the resource.
 	PendingMaintenanceActions []*ResourcePendingMaintenanceActions `locationNameList:"ResourcePendingMaintenanceActions" type:"list"`
 
-	metadataDescribePendingMaintenanceActionsOutput `json:"-", xml:"-"`
+	metadataDescribePendingMaintenanceActionsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribePendingMaintenanceActionsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribePendingMaintenanceActionsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribePendingMaintenanceActionsOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeReservedDBInstancesInput struct {
@@ -4688,11 +5788,21 @@ type DescribeReservedDBInstancesInput struct {
 	// purchased reservations matching the specified offering identifier.
 	ReservedDBInstancesOfferingID *string `locationName:"ReservedDBInstancesOfferingId" type:"string"`
 
-	metadataDescribeReservedDBInstancesInput `json:"-", xml:"-"`
+	metadataDescribeReservedDBInstancesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReservedDBInstancesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeReservedDBInstancesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReservedDBInstancesInput) GoString() string {
+	return s.String()
 }
 
 type DescribeReservedDBInstancesOfferingsInput struct {
@@ -4743,11 +5853,21 @@ type DescribeReservedDBInstancesOfferingsInput struct {
 	// Example: 438012d3-4052-4cc7-b2e3-8d3372e0e706
 	ReservedDBInstancesOfferingID *string `locationName:"ReservedDBInstancesOfferingId" type:"string"`
 
-	metadataDescribeReservedDBInstancesOfferingsInput `json:"-", xml:"-"`
+	metadataDescribeReservedDBInstancesOfferingsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReservedDBInstancesOfferingsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeReservedDBInstancesOfferingsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReservedDBInstancesOfferingsInput) GoString() string {
+	return s.String()
 }
 
 // Contains the result of a successful invocation of the DescribeReservedDBInstancesOfferings
@@ -4761,11 +5881,21 @@ type DescribeReservedDBInstancesOfferingsOutput struct {
 	// A list of reserved DB instance offerings.
 	ReservedDBInstancesOfferings []*ReservedDBInstancesOffering `locationNameList:"ReservedDBInstancesOffering" type:"list"`
 
-	metadataDescribeReservedDBInstancesOfferingsOutput `json:"-", xml:"-"`
+	metadataDescribeReservedDBInstancesOfferingsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReservedDBInstancesOfferingsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeReservedDBInstancesOfferingsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReservedDBInstancesOfferingsOutput) GoString() string {
+	return s.String()
 }
 
 // Contains the result of a successful invocation of the DescribeReservedDBInstances
@@ -4779,11 +5909,21 @@ type DescribeReservedDBInstancesOutput struct {
 	// A list of reserved DB instances.
 	ReservedDBInstances []*ReservedDBInstance `locationNameList:"ReservedDBInstance" type:"list"`
 
-	metadataDescribeReservedDBInstancesOutput `json:"-", xml:"-"`
+	metadataDescribeReservedDBInstancesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReservedDBInstancesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeReservedDBInstancesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReservedDBInstancesOutput) GoString() string {
+	return s.String()
 }
 
 type DownloadDBLogFilePortionInput struct {
@@ -4824,11 +5964,21 @@ type DownloadDBLogFilePortionInput struct {
 	// continuing until the AdditionalDataPending response element returns false.
 	NumberOfLines *int64 `type:"integer"`
 
-	metadataDownloadDBLogFilePortionInput `json:"-", xml:"-"`
+	metadataDownloadDBLogFilePortionInput `json:"-" xml:"-"`
 }
 
 type metadataDownloadDBLogFilePortionInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DownloadDBLogFilePortionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DownloadDBLogFilePortionInput) GoString() string {
+	return s.String()
 }
 
 // This data type is used as a response element to DownloadDBLogFilePortion.
@@ -4843,16 +5993,26 @@ type DownloadDBLogFilePortionOutput struct {
 	// request.
 	Marker *string `type:"string"`
 
-	metadataDownloadDBLogFilePortionOutput `json:"-", xml:"-"`
+	metadataDownloadDBLogFilePortionOutput `json:"-" xml:"-"`
 }
 
 type metadataDownloadDBLogFilePortionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DownloadDBLogFilePortionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DownloadDBLogFilePortionOutput) GoString() string {
+	return s.String()
+}
+
 // This data type is used as a response element in the following actions:
 //
-//  AuthorizeDBSecurityGroupIngress DescribeDBSecurityGroups RevokeDBSecurityGroupIngress
+//   AuthorizeDBSecurityGroupIngress   DescribeDBSecurityGroups   RevokeDBSecurityGroupIngress
 type EC2SecurityGroup struct {
 	// Specifies the id of the EC2 security group.
 	EC2SecurityGroupID *string `locationName:"EC2SecurityGroupId" type:"string"`
@@ -4868,16 +6028,26 @@ type EC2SecurityGroup struct {
 	// "authorized", "revoking", and "revoked".
 	Status *string `type:"string"`
 
-	metadataEC2SecurityGroup `json:"-", xml:"-"`
+	metadataEC2SecurityGroup `json:"-" xml:"-"`
 }
 
 type metadataEC2SecurityGroup struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s EC2SecurityGroup) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EC2SecurityGroup) GoString() string {
+	return s.String()
+}
+
 // This data type is used as a response element in the following actions:
 //
-//  CreateDBInstance DescribeDBInstances DeleteDBInstance
+//   CreateDBInstance   DescribeDBInstances   DeleteDBInstance
 type Endpoint struct {
 	// Specifies the DNS address of the DB instance.
 	Address *string `type:"string"`
@@ -4885,11 +6055,21 @@ type Endpoint struct {
 	// Specifies the port that the database engine is listening on.
 	Port *int64 `type:"integer"`
 
-	metadataEndpoint `json:"-", xml:"-"`
+	metadataEndpoint `json:"-" xml:"-"`
 }
 
 type metadataEndpoint struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Endpoint) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Endpoint) GoString() string {
+	return s.String()
 }
 
 // Contains the result of a successful invocation of the DescribeEngineDefaultParameters
@@ -4907,11 +6087,21 @@ type EngineDefaults struct {
 	// Contains a list of engine default parameters.
 	Parameters []*Parameter `locationNameList:"Parameter" type:"list"`
 
-	metadataEngineDefaults `json:"-", xml:"-"`
+	metadataEngineDefaults `json:"-" xml:"-"`
 }
 
 type metadataEngineDefaults struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s EngineDefaults) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EngineDefaults) GoString() string {
+	return s.String()
 }
 
 // This data type is used as a response element in the DescribeEvents action.
@@ -4931,11 +6121,21 @@ type Event struct {
 	// Specifies the source type for this event.
 	SourceType *string `type:"string"`
 
-	metadataEvent `json:"-", xml:"-"`
+	metadataEvent `json:"-" xml:"-"`
 }
 
 type metadataEvent struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Event) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Event) GoString() string {
+	return s.String()
 }
 
 // Contains the results of a successful invocation of the DescribeEventCategories
@@ -4947,11 +6147,21 @@ type EventCategoriesMap struct {
 	// The source type that the returned categories belong to
 	SourceType *string `type:"string"`
 
-	metadataEventCategoriesMap `json:"-", xml:"-"`
+	metadataEventCategoriesMap `json:"-" xml:"-"`
 }
 
 type metadataEventCategoriesMap struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s EventCategoriesMap) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EventCategoriesMap) GoString() string {
+	return s.String()
 }
 
 // Contains the results of a successful invocation of the DescribeEventSubscriptions
@@ -4994,11 +6204,21 @@ type EventSubscription struct {
 	// The time the RDS event notification subscription was created.
 	SubscriptionCreationTime *string `type:"string"`
 
-	metadataEventSubscription `json:"-", xml:"-"`
+	metadataEventSubscription `json:"-" xml:"-"`
 }
 
 type metadataEventSubscription struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s EventSubscription) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EventSubscription) GoString() string {
+	return s.String()
 }
 
 type Filter struct {
@@ -5008,11 +6228,21 @@ type Filter struct {
 	// This parameter is not currently supported.
 	Values []*string `locationNameList:"Value" type:"list" required:"true"`
 
-	metadataFilter `json:"-", xml:"-"`
+	metadataFilter `json:"-" xml:"-"`
 }
 
 type metadataFilter struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Filter) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Filter) GoString() string {
+	return s.String()
 }
 
 // This data type is used as a response element in the DescribeDBSecurityGroups
@@ -5025,11 +6255,21 @@ type IPRange struct {
 	// "revoking", and "revoked".
 	Status *string `type:"string"`
 
-	metadataIPRange `json:"-", xml:"-"`
+	metadataIPRange `json:"-" xml:"-"`
 }
 
 type metadataIPRange struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s IPRange) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s IPRange) GoString() string {
+	return s.String()
 }
 
 type ListTagsForResourceInput struct {
@@ -5041,22 +6281,42 @@ type ListTagsForResourceInput struct {
 	// Amazon Resource Name (ARN) (http://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_Tagging.html#USER_Tagging.ARN).
 	ResourceName *string `type:"string" required:"true"`
 
-	metadataListTagsForResourceInput `json:"-", xml:"-"`
+	metadataListTagsForResourceInput `json:"-" xml:"-"`
 }
 
 type metadataListTagsForResourceInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ListTagsForResourceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListTagsForResourceInput) GoString() string {
+	return s.String()
+}
+
 type ListTagsForResourceOutput struct {
 	// List of tags returned by the ListTagsForResource operation.
 	TagList []*Tag `locationNameList:"Tag" type:"list"`
 
-	metadataListTagsForResourceOutput `json:"-", xml:"-"`
+	metadataListTagsForResourceOutput `json:"-" xml:"-"`
 }
 
 type metadataListTagsForResourceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ListTagsForResourceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ListTagsForResourceOutput) GoString() string {
+	return s.String()
 }
 
 type ModifyDBInstanceInput struct {
@@ -5064,7 +6324,7 @@ type ModifyDBInstanceInput struct {
 	// not result in an outage and the change is applied during the next maintenance
 	// window unless ApplyImmediately is set to true for this request.
 	//
-	// MySQL
+	//  MySQL
 	//
 	// Default: Uses existing setting
 	//
@@ -5076,7 +6336,7 @@ type ModifyDBInstanceInput struct {
 	//
 	// Type: Integer
 	//
-	// PostgreSQL
+	//  PostgreSQL
 	//
 	// Default: Uses existing setting
 	//
@@ -5088,7 +6348,7 @@ type ModifyDBInstanceInput struct {
 	//
 	// Type: Integer
 	//
-	// Oracle
+	//  Oracle
 	//
 	// Default: Uses existing setting
 	//
@@ -5098,7 +6358,7 @@ type ModifyDBInstanceInput struct {
 	// value. Values that are not at least 10% greater than the existing value are
 	// rounded up so that they are 10% greater than the current value.
 	//
-	// SQL Server
+	//  SQL Server
 	//
 	// Cannot be modified.
 	//
@@ -5169,6 +6429,9 @@ type ModifyDBInstanceInput struct {
 	// Read Replica only if the source is running PostgreSQL 9.3.5 Cannot be set
 	// to 0 if the DB instance is a source to Read Replicas
 	BackupRetentionPeriod *int64 `type:"integer"`
+
+	// Indicates the certificate which needs to be associated with the instance.
+	CACertificateIdentifier *string `type:"string"`
 
 	// The new compute and memory capacity of the DB instance. To determine the
 	// instance classes that are available for a particular DB engine, use the DescribeOrderableDBInstanceOptions
@@ -5244,7 +6507,7 @@ type ModifyDBInstanceInput struct {
 	// The DB instance will require a reboot for the change in storage type to take
 	// effect.
 	//
-	// SQL Server
+	//  SQL Server
 	//
 	// Setting the IOPS value for the SQL Server database engine is not supported.
 	//
@@ -5279,7 +6542,7 @@ type ModifyDBInstanceInput struct {
 	// characters (Oracle), or 8 to 128 alphanumeric characters (SQL Server).
 	//
 	//  Amazon RDS API actions never return the password, so this action provides
-	// a way to regain access to a master instance user if the password is lost.
+	// a way to regain access to a primary instance user if the password is lost.
 	// This includes restoring privileges that may have been accidentally revoked.
 	MasterUserPassword *string `type:"string"`
 
@@ -5370,25 +6633,45 @@ type ModifyDBInstanceInput struct {
 	// Cannot end with a hyphen or contain two consecutive hyphens
 	VPCSecurityGroupIDs []*string `locationName:"VpcSecurityGroupIds" locationNameList:"VpcSecurityGroupId" type:"list"`
 
-	metadataModifyDBInstanceInput `json:"-", xml:"-"`
+	metadataModifyDBInstanceInput `json:"-" xml:"-"`
 }
 
 type metadataModifyDBInstanceInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ModifyDBInstanceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyDBInstanceInput) GoString() string {
+	return s.String()
+}
+
 type ModifyDBInstanceOutput struct {
 	// Contains the result of a successful invocation of the following actions:
 	//
-	//  CreateDBInstance DeleteDBInstance ModifyDBInstance  This data type is used
-	// as a response element in the DescribeDBInstances action.
+	//   CreateDBInstance   DeleteDBInstance   ModifyDBInstance   This data type
+	// is used as a response element in the DescribeDBInstances action.
 	DBInstance *DBInstance `type:"structure"`
 
-	metadataModifyDBInstanceOutput `json:"-", xml:"-"`
+	metadataModifyDBInstanceOutput `json:"-" xml:"-"`
 }
 
 type metadataModifyDBInstanceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyDBInstanceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyDBInstanceOutput) GoString() string {
+	return s.String()
 }
 
 type ModifyDBParameterGroupInput struct {
@@ -5413,11 +6696,21 @@ type ModifyDBParameterGroupInput struct {
 	// are applied when you reboot the DB instance without failover.
 	Parameters []*Parameter `locationNameList:"Parameter" type:"list" required:"true"`
 
-	metadataModifyDBParameterGroupInput `json:"-", xml:"-"`
+	metadataModifyDBParameterGroupInput `json:"-" xml:"-"`
 }
 
 type metadataModifyDBParameterGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyDBParameterGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyDBParameterGroupInput) GoString() string {
+	return s.String()
 }
 
 type ModifyDBSubnetGroupInput struct {
@@ -5435,26 +6728,46 @@ type ModifyDBSubnetGroupInput struct {
 	// The EC2 subnet IDs for the DB subnet group.
 	SubnetIDs []*string `locationName:"SubnetIds" locationNameList:"SubnetIdentifier" type:"list" required:"true"`
 
-	metadataModifyDBSubnetGroupInput `json:"-", xml:"-"`
+	metadataModifyDBSubnetGroupInput `json:"-" xml:"-"`
 }
 
 type metadataModifyDBSubnetGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ModifyDBSubnetGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyDBSubnetGroupInput) GoString() string {
+	return s.String()
+}
+
 type ModifyDBSubnetGroupOutput struct {
 	// Contains the result of a successful invocation of the following actions:
 	//
-	//  CreateDBSubnetGroup ModifyDBSubnetGroup DescribeDBSubnetGroups DeleteDBSubnetGroup
-	//  This data type is used as a response element in the DescribeDBSubnetGroups
+	//   CreateDBSubnetGroup   ModifyDBSubnetGroup   DescribeDBSubnetGroups   DeleteDBSubnetGroup
+	//   This data type is used as a response element in the DescribeDBSubnetGroups
 	// action.
 	DBSubnetGroup *DBSubnetGroup `type:"structure"`
 
-	metadataModifyDBSubnetGroupOutput `json:"-", xml:"-"`
+	metadataModifyDBSubnetGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataModifyDBSubnetGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyDBSubnetGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyDBSubnetGroupOutput) GoString() string {
+	return s.String()
 }
 
 type ModifyEventSubscriptionInput struct {
@@ -5484,11 +6797,21 @@ type ModifyEventSubscriptionInput struct {
 	// The name of the RDS event notification subscription.
 	SubscriptionName *string `type:"string" required:"true"`
 
-	metadataModifyEventSubscriptionInput `json:"-", xml:"-"`
+	metadataModifyEventSubscriptionInput `json:"-" xml:"-"`
 }
 
 type metadataModifyEventSubscriptionInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyEventSubscriptionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyEventSubscriptionInput) GoString() string {
+	return s.String()
 }
 
 type ModifyEventSubscriptionOutput struct {
@@ -5496,11 +6819,21 @@ type ModifyEventSubscriptionOutput struct {
 	// action.
 	EventSubscription *EventSubscription `type:"structure"`
 
-	metadataModifyEventSubscriptionOutput `json:"-", xml:"-"`
+	metadataModifyEventSubscriptionOutput `json:"-" xml:"-"`
 }
 
 type metadataModifyEventSubscriptionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyEventSubscriptionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyEventSubscriptionOutput) GoString() string {
+	return s.String()
 }
 
 type ModifyOptionGroupInput struct {
@@ -5522,21 +6855,41 @@ type ModifyOptionGroupInput struct {
 	// Options in this list are removed from the option group.
 	OptionsToRemove []*string `type:"list"`
 
-	metadataModifyOptionGroupInput `json:"-", xml:"-"`
+	metadataModifyOptionGroupInput `json:"-" xml:"-"`
 }
 
 type metadataModifyOptionGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ModifyOptionGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyOptionGroupInput) GoString() string {
+	return s.String()
+}
+
 type ModifyOptionGroupOutput struct {
 	OptionGroup *OptionGroup `type:"structure"`
 
-	metadataModifyOptionGroupOutput `json:"-", xml:"-"`
+	metadataModifyOptionGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataModifyOptionGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyOptionGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyOptionGroupOutput) GoString() string {
+	return s.String()
 }
 
 // Option details.
@@ -5567,11 +6920,21 @@ type Option struct {
 	// access to the port.
 	VPCSecurityGroupMemberships []*VPCSecurityGroupMembership `locationName:"VpcSecurityGroupMemberships" locationNameList:"VpcSecurityGroupMembership" type:"list"`
 
-	metadataOption `json:"-", xml:"-"`
+	metadataOption `json:"-" xml:"-"`
 }
 
 type metadataOption struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Option) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Option) GoString() string {
+	return s.String()
 }
 
 // A list of all available options
@@ -5591,11 +6954,21 @@ type OptionConfiguration struct {
 	// A list of VpcSecurityGroupMemebrship name strings used for this option.
 	VPCSecurityGroupMemberships []*string `locationName:"VpcSecurityGroupMemberships" locationNameList:"VpcSecurityGroupId" type:"list"`
 
-	metadataOptionConfiguration `json:"-", xml:"-"`
+	metadataOptionConfiguration `json:"-" xml:"-"`
 }
 
 type metadataOptionConfiguration struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s OptionConfiguration) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s OptionConfiguration) GoString() string {
+	return s.String()
 }
 
 type OptionGroup struct {
@@ -5626,11 +6999,21 @@ type OptionGroup struct {
 	// that are in the VPC indicated by this field.
 	VPCID *string `locationName:"VpcId" type:"string"`
 
-	metadataOptionGroup `json:"-", xml:"-"`
+	metadataOptionGroup `json:"-" xml:"-"`
 }
 
 type metadataOptionGroup struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s OptionGroup) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s OptionGroup) GoString() string {
+	return s.String()
 }
 
 // Provides information on the option groups the DB instance is a member of.
@@ -5642,11 +7025,21 @@ type OptionGroupMembership struct {
 	// pending-maintenance, applying).
 	Status *string `type:"string"`
 
-	metadataOptionGroupMembership `json:"-", xml:"-"`
+	metadataOptionGroupMembership `json:"-" xml:"-"`
 }
 
 type metadataOptionGroupMembership struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s OptionGroupMembership) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s OptionGroupMembership) GoString() string {
+	return s.String()
 }
 
 // Available option.
@@ -5690,11 +7083,21 @@ type OptionGroupOption struct {
 	// Specifies whether the option requires a port.
 	PortRequired *bool `type:"boolean"`
 
-	metadataOptionGroupOption `json:"-", xml:"-"`
+	metadataOptionGroupOption `json:"-" xml:"-"`
 }
 
 type metadataOptionGroupOption struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s OptionGroupOption) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s OptionGroupOption) GoString() string {
+	return s.String()
 }
 
 // Option group option settings are used to display settings available for each
@@ -5720,11 +7123,21 @@ type OptionGroupOptionSetting struct {
 	// The name of the option group option.
 	SettingName *string `type:"string"`
 
-	metadataOptionGroupOptionSetting `json:"-", xml:"-"`
+	metadataOptionGroupOptionSetting `json:"-" xml:"-"`
 }
 
 type metadataOptionGroupOptionSetting struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s OptionGroupOptionSetting) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s OptionGroupOptionSetting) GoString() string {
+	return s.String()
 }
 
 // Option settings are the actual settings being applied or configured for that
@@ -5760,11 +7173,21 @@ type OptionSetting struct {
 	// The current value of the option setting.
 	Value *string `type:"string"`
 
-	metadataOptionSetting `json:"-", xml:"-"`
+	metadataOptionSetting `json:"-" xml:"-"`
 }
 
 type metadataOptionSetting struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s OptionSetting) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s OptionSetting) GoString() string {
+	return s.String()
 }
 
 // Contains a list of available options for a DB instance
@@ -5805,11 +7228,21 @@ type OrderableDBInstanceOption struct {
 	// Indicates whether this is a VPC orderable DB instance.
 	VPC *bool `locationName:"Vpc" type:"boolean"`
 
-	metadataOrderableDBInstanceOption `json:"-", xml:"-"`
+	metadataOrderableDBInstanceOption `json:"-" xml:"-"`
 }
 
 type metadataOrderableDBInstanceOption struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s OrderableDBInstanceOption) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s OrderableDBInstanceOption) GoString() string {
+	return s.String()
 }
 
 // This data type is used as a request parameter in the ModifyDBParameterGroup
@@ -5850,11 +7283,21 @@ type Parameter struct {
 	// Indicates the source of the parameter value.
 	Source *string `type:"string"`
 
-	metadataParameter `json:"-", xml:"-"`
+	metadataParameter `json:"-" xml:"-"`
 }
 
 type metadataParameter struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Parameter) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Parameter) GoString() string {
+	return s.String()
 }
 
 // Provides information about a pending maintenance action for a resource.
@@ -5869,11 +7312,14 @@ type PendingMaintenanceAction struct {
 	AutoAppliedAfterDate *time.Time `type:"timestamp" timestampFormat:"iso8601"`
 
 	// The effective date when the pending maintenance action will be applied to
-	// the resource. This takes into account opt-in requests received from the ApplyPendingMaintenanceAction
-	// API, the AutoAppliedAfterDate, and the ForcedApplyDate. This value is blank
-	// if an opt-in request has not been received and no value has been specified
-	// for the AutoAppliedAfterDate or ForcedApplyDate.
+	// the resource. This date takes into account opt-in requests received from
+	// the ApplyPendingMaintenanceAction API, the AutoAppliedAfterDate, and the
+	// ForcedApplyDate. This value is blank if an opt-in request has not been received
+	// and nothing has been specified as AutoAppliedAfterDate or ForcedApplyDate.
 	CurrentApplyDate *time.Time `type:"timestamp" timestampFormat:"iso8601"`
+
+	// A description providing more detail about the maintenance action.
+	Description *string `type:"string"`
 
 	// The date when the maintenance action will be automatically applied. The maintenance
 	// action will be applied to the resource on this date regardless of the maintenance
@@ -5884,11 +7330,21 @@ type PendingMaintenanceAction struct {
 	// Indicates the type of opt-in request that has been received for the resource.
 	OptInStatus *string `type:"string"`
 
-	metadataPendingMaintenanceAction `json:"-", xml:"-"`
+	metadataPendingMaintenanceAction `json:"-" xml:"-"`
 }
 
 type metadataPendingMaintenanceAction struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PendingMaintenanceAction) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PendingMaintenanceAction) GoString() string {
+	return s.String()
 }
 
 // This data type is used as a response element in the ModifyDBInstance action.
@@ -5899,6 +7355,9 @@ type PendingModifiedValues struct {
 
 	// Specifies the pending number of days for which automated backups are retained.
 	BackupRetentionPeriod *int64 `type:"integer"`
+
+	// Specifies the identifier of the CA certificate for the DB instance.
+	CACertificateIdentifier *string `type:"string"`
 
 	// Contains the new DBInstanceClass for the DB instance that will be applied
 	// or is in progress.
@@ -5928,11 +7387,21 @@ type PendingModifiedValues struct {
 	// Specifies the storage type to be associated with the DB instance.
 	StorageType *string `type:"string"`
 
-	metadataPendingModifiedValues `json:"-", xml:"-"`
+	metadataPendingModifiedValues `json:"-" xml:"-"`
 }
 
 type metadataPendingModifiedValues struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PendingModifiedValues) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PendingModifiedValues) GoString() string {
+	return s.String()
 }
 
 type PromoteReadReplicaInput struct {
@@ -5969,25 +7438,45 @@ type PromoteReadReplicaInput struct {
 	// window. Must be at least 30 minutes.
 	PreferredBackupWindow *string `type:"string"`
 
-	metadataPromoteReadReplicaInput `json:"-", xml:"-"`
+	metadataPromoteReadReplicaInput `json:"-" xml:"-"`
 }
 
 type metadataPromoteReadReplicaInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s PromoteReadReplicaInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PromoteReadReplicaInput) GoString() string {
+	return s.String()
+}
+
 type PromoteReadReplicaOutput struct {
 	// Contains the result of a successful invocation of the following actions:
 	//
-	//  CreateDBInstance DeleteDBInstance ModifyDBInstance  This data type is used
-	// as a response element in the DescribeDBInstances action.
+	//   CreateDBInstance   DeleteDBInstance   ModifyDBInstance   This data type
+	// is used as a response element in the DescribeDBInstances action.
 	DBInstance *DBInstance `type:"structure"`
 
-	metadataPromoteReadReplicaOutput `json:"-", xml:"-"`
+	metadataPromoteReadReplicaOutput `json:"-" xml:"-"`
 }
 
 type metadataPromoteReadReplicaOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PromoteReadReplicaOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PromoteReadReplicaOutput) GoString() string {
+	return s.String()
 }
 
 type PurchaseReservedDBInstancesOfferingInput struct {
@@ -6009,11 +7498,21 @@ type PurchaseReservedDBInstancesOfferingInput struct {
 	// A list of tags.
 	Tags []*Tag `locationNameList:"Tag" type:"list"`
 
-	metadataPurchaseReservedDBInstancesOfferingInput `json:"-", xml:"-"`
+	metadataPurchaseReservedDBInstancesOfferingInput `json:"-" xml:"-"`
 }
 
 type metadataPurchaseReservedDBInstancesOfferingInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PurchaseReservedDBInstancesOfferingInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PurchaseReservedDBInstancesOfferingInput) GoString() string {
+	return s.String()
 }
 
 type PurchaseReservedDBInstancesOfferingOutput struct {
@@ -6021,11 +7520,21 @@ type PurchaseReservedDBInstancesOfferingOutput struct {
 	// and PurchaseReservedDBInstancesOffering actions.
 	ReservedDBInstance *ReservedDBInstance `type:"structure"`
 
-	metadataPurchaseReservedDBInstancesOfferingOutput `json:"-", xml:"-"`
+	metadataPurchaseReservedDBInstancesOfferingOutput `json:"-" xml:"-"`
 }
 
 type metadataPurchaseReservedDBInstancesOfferingOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PurchaseReservedDBInstancesOfferingOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PurchaseReservedDBInstancesOfferingOutput) GoString() string {
+	return s.String()
 }
 
 type RebootDBInstanceInput struct {
@@ -6043,25 +7552,45 @@ type RebootDBInstanceInput struct {
 	// MultiAZ.
 	ForceFailover *bool `type:"boolean"`
 
-	metadataRebootDBInstanceInput `json:"-", xml:"-"`
+	metadataRebootDBInstanceInput `json:"-" xml:"-"`
 }
 
 type metadataRebootDBInstanceInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RebootDBInstanceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RebootDBInstanceInput) GoString() string {
+	return s.String()
+}
+
 type RebootDBInstanceOutput struct {
 	// Contains the result of a successful invocation of the following actions:
 	//
-	//  CreateDBInstance DeleteDBInstance ModifyDBInstance  This data type is used
-	// as a response element in the DescribeDBInstances action.
+	//   CreateDBInstance   DeleteDBInstance   ModifyDBInstance   This data type
+	// is used as a response element in the DescribeDBInstances action.
 	DBInstance *DBInstance `type:"structure"`
 
-	metadataRebootDBInstanceOutput `json:"-", xml:"-"`
+	metadataRebootDBInstanceOutput `json:"-" xml:"-"`
 }
 
 type metadataRebootDBInstanceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RebootDBInstanceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RebootDBInstanceOutput) GoString() string {
+	return s.String()
 }
 
 // This data type is used as a response element in the DescribeReservedDBInstances
@@ -6073,11 +7602,21 @@ type RecurringCharge struct {
 	// The frequency of the recurring charge.
 	RecurringChargeFrequency *string `type:"string"`
 
-	metadataRecurringCharge `json:"-", xml:"-"`
+	metadataRecurringCharge `json:"-" xml:"-"`
 }
 
 type metadataRecurringCharge struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RecurringCharge) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RecurringCharge) GoString() string {
+	return s.String()
 }
 
 type RemoveSourceIdentifierFromSubscriptionInput struct {
@@ -6089,11 +7628,21 @@ type RemoveSourceIdentifierFromSubscriptionInput struct {
 	// source identifier from.
 	SubscriptionName *string `type:"string" required:"true"`
 
-	metadataRemoveSourceIdentifierFromSubscriptionInput `json:"-", xml:"-"`
+	metadataRemoveSourceIdentifierFromSubscriptionInput `json:"-" xml:"-"`
 }
 
 type metadataRemoveSourceIdentifierFromSubscriptionInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RemoveSourceIdentifierFromSubscriptionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RemoveSourceIdentifierFromSubscriptionInput) GoString() string {
+	return s.String()
 }
 
 type RemoveSourceIdentifierFromSubscriptionOutput struct {
@@ -6101,11 +7650,21 @@ type RemoveSourceIdentifierFromSubscriptionOutput struct {
 	// action.
 	EventSubscription *EventSubscription `type:"structure"`
 
-	metadataRemoveSourceIdentifierFromSubscriptionOutput `json:"-", xml:"-"`
+	metadataRemoveSourceIdentifierFromSubscriptionOutput `json:"-" xml:"-"`
 }
 
 type metadataRemoveSourceIdentifierFromSubscriptionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RemoveSourceIdentifierFromSubscriptionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RemoveSourceIdentifierFromSubscriptionOutput) GoString() string {
+	return s.String()
 }
 
 type RemoveTagsFromResourceInput struct {
@@ -6117,19 +7676,39 @@ type RemoveTagsFromResourceInput struct {
 	// The tag key (name) of the tag to be removed.
 	TagKeys []*string `type:"list" required:"true"`
 
-	metadataRemoveTagsFromResourceInput `json:"-", xml:"-"`
+	metadataRemoveTagsFromResourceInput `json:"-" xml:"-"`
 }
 
 type metadataRemoveTagsFromResourceInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RemoveTagsFromResourceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RemoveTagsFromResourceInput) GoString() string {
+	return s.String()
+}
+
 type RemoveTagsFromResourceOutput struct {
-	metadataRemoveTagsFromResourceOutput `json:"-", xml:"-"`
+	metadataRemoveTagsFromResourceOutput `json:"-" xml:"-"`
 }
 
 type metadataRemoveTagsFromResourceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RemoveTagsFromResourceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RemoveTagsFromResourceOutput) GoString() string {
+	return s.String()
 }
 
 // This data type is used as a response element in the DescribeReservedDBInstances
@@ -6177,11 +7756,21 @@ type ReservedDBInstance struct {
 	// The hourly price charged for this reserved DB instance.
 	UsagePrice *float64 `type:"double"`
 
-	metadataReservedDBInstance `json:"-", xml:"-"`
+	metadataReservedDBInstance `json:"-" xml:"-"`
 }
 
 type metadataReservedDBInstance struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ReservedDBInstance) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReservedDBInstance) GoString() string {
+	return s.String()
 }
 
 // This data type is used as a response element in the DescribeReservedDBInstancesOfferings
@@ -6217,11 +7806,21 @@ type ReservedDBInstancesOffering struct {
 	// The hourly price charged for this offering.
 	UsagePrice *float64 `type:"double"`
 
-	metadataReservedDBInstancesOffering `json:"-", xml:"-"`
+	metadataReservedDBInstancesOffering `json:"-" xml:"-"`
 }
 
 type metadataReservedDBInstancesOffering struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ReservedDBInstancesOffering) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReservedDBInstancesOffering) GoString() string {
+	return s.String()
 }
 
 type ResetDBParameterGroupInput struct {
@@ -6238,7 +7837,7 @@ type ResetDBParameterGroupInput struct {
 	// subsequent arguments are optional. A maximum of 20 parameters may be modified
 	// in a single request.
 	//
-	// MySQL
+	//  MySQL
 	//
 	// Valid Values (for Apply method): immediate | pending-reboot
 	//
@@ -6246,7 +7845,7 @@ type ResetDBParameterGroupInput struct {
 	// the pending-reboot value for both dynamic and static parameters, and changes
 	// are applied when DB instance reboots.
 	//
-	// Oracle
+	//  Oracle
 	//
 	// Valid Values (for Apply method): pending-reboot
 	Parameters []*Parameter `locationNameList:"Parameter" type:"list"`
@@ -6257,26 +7856,47 @@ type ResetDBParameterGroupInput struct {
 	// Default: true
 	ResetAllParameters *bool `type:"boolean"`
 
-	metadataResetDBParameterGroupInput `json:"-", xml:"-"`
+	metadataResetDBParameterGroupInput `json:"-" xml:"-"`
 }
 
 type metadataResetDBParameterGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ResetDBParameterGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ResetDBParameterGroupInput) GoString() string {
+	return s.String()
+}
+
 // Describes the pending maintenance actions for a resource.
 type ResourcePendingMaintenanceActions struct {
-	// Provides details about the pending maintenance actions for the resource.
+	// A list that provides details about the pending maintenance actions for the
+	// resource.
 	PendingMaintenanceActionDetails []*PendingMaintenanceAction `locationNameList:"PendingMaintenanceAction" type:"list"`
 
-	// The ARN of this resource that has pending maintenance actions.
+	// The ARN of the resource that has pending maintenance actions.
 	ResourceIdentifier *string `type:"string"`
 
-	metadataResourcePendingMaintenanceActions `json:"-", xml:"-"`
+	metadataResourcePendingMaintenanceActions `json:"-" xml:"-"`
 }
 
 type metadataResourcePendingMaintenanceActions struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ResourcePendingMaintenanceActions) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ResourcePendingMaintenanceActions) GoString() string {
+	return s.String()
 }
 
 type RestoreDBInstanceFromDBSnapshotInput struct {
@@ -6347,7 +7967,7 @@ type RestoreDBInstanceFromDBSnapshotInput struct {
 	//
 	//  Constraints: Must be an integer greater than 1000.
 	//
-	// SQL Server
+	//  SQL Server
 	//
 	// Setting the IOPS value for the SQL Server database engine is not supported.
 	IOPS *int64 `locationName:"Iops" type:"integer"`
@@ -6413,25 +8033,45 @@ type RestoreDBInstanceFromDBSnapshotInput struct {
 	// A list of tags.
 	Tags []*Tag `locationNameList:"Tag" type:"list"`
 
-	metadataRestoreDBInstanceFromDBSnapshotInput `json:"-", xml:"-"`
+	metadataRestoreDBInstanceFromDBSnapshotInput `json:"-" xml:"-"`
 }
 
 type metadataRestoreDBInstanceFromDBSnapshotInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RestoreDBInstanceFromDBSnapshotInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RestoreDBInstanceFromDBSnapshotInput) GoString() string {
+	return s.String()
+}
+
 type RestoreDBInstanceFromDBSnapshotOutput struct {
 	// Contains the result of a successful invocation of the following actions:
 	//
-	//  CreateDBInstance DeleteDBInstance ModifyDBInstance  This data type is used
-	// as a response element in the DescribeDBInstances action.
+	//   CreateDBInstance   DeleteDBInstance   ModifyDBInstance   This data type
+	// is used as a response element in the DescribeDBInstances action.
 	DBInstance *DBInstance `type:"structure"`
 
-	metadataRestoreDBInstanceFromDBSnapshotOutput `json:"-", xml:"-"`
+	metadataRestoreDBInstanceFromDBSnapshotOutput `json:"-" xml:"-"`
 }
 
 type metadataRestoreDBInstanceFromDBSnapshotOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RestoreDBInstanceFromDBSnapshotOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RestoreDBInstanceFromDBSnapshotOutput) GoString() string {
+	return s.String()
 }
 
 type RestoreDBInstanceToPointInTimeInput struct {
@@ -6482,7 +8122,7 @@ type RestoreDBInstanceToPointInTimeInput struct {
 	//
 	//  Constraints: Must be an integer greater than 1000.
 	//
-	// SQL Server
+	//  SQL Server
 	//
 	// Setting the IOPS value for the SQL Server database engine is not supported.
 	IOPS *int64 `locationName:"Iops" type:"integer"`
@@ -6583,25 +8223,45 @@ type RestoreDBInstanceToPointInTimeInput struct {
 	// Constraints: Cannot be specified if RestoreTime parameter is provided.
 	UseLatestRestorableTime *bool `type:"boolean"`
 
-	metadataRestoreDBInstanceToPointInTimeInput `json:"-", xml:"-"`
+	metadataRestoreDBInstanceToPointInTimeInput `json:"-" xml:"-"`
 }
 
 type metadataRestoreDBInstanceToPointInTimeInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RestoreDBInstanceToPointInTimeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RestoreDBInstanceToPointInTimeInput) GoString() string {
+	return s.String()
+}
+
 type RestoreDBInstanceToPointInTimeOutput struct {
 	// Contains the result of a successful invocation of the following actions:
 	//
-	//  CreateDBInstance DeleteDBInstance ModifyDBInstance  This data type is used
-	// as a response element in the DescribeDBInstances action.
+	//   CreateDBInstance   DeleteDBInstance   ModifyDBInstance   This data type
+	// is used as a response element in the DescribeDBInstances action.
 	DBInstance *DBInstance `type:"structure"`
 
-	metadataRestoreDBInstanceToPointInTimeOutput `json:"-", xml:"-"`
+	metadataRestoreDBInstanceToPointInTimeOutput `json:"-" xml:"-"`
 }
 
 type metadataRestoreDBInstanceToPointInTimeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RestoreDBInstanceToPointInTimeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RestoreDBInstanceToPointInTimeOutput) GoString() string {
+	return s.String()
 }
 
 type RevokeDBSecurityGroupIngressInput struct {
@@ -6630,26 +8290,46 @@ type RevokeDBSecurityGroupIngressInput struct {
 	// must be provided.
 	EC2SecurityGroupOwnerID *string `locationName:"EC2SecurityGroupOwnerId" type:"string"`
 
-	metadataRevokeDBSecurityGroupIngressInput `json:"-", xml:"-"`
+	metadataRevokeDBSecurityGroupIngressInput `json:"-" xml:"-"`
 }
 
 type metadataRevokeDBSecurityGroupIngressInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RevokeDBSecurityGroupIngressInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RevokeDBSecurityGroupIngressInput) GoString() string {
+	return s.String()
+}
+
 type RevokeDBSecurityGroupIngressOutput struct {
 	// Contains the result of a successful invocation of the following actions:
 	//
-	//  DescribeDBSecurityGroups AuthorizeDBSecurityGroupIngress CreateDBSecurityGroup
-	// RevokeDBSecurityGroupIngress  This data type is used as a response element
+	//   DescribeDBSecurityGroups   AuthorizeDBSecurityGroupIngress   CreateDBSecurityGroup
+	//   RevokeDBSecurityGroupIngress   This data type is used as a response element
 	// in the DescribeDBSecurityGroups action.
 	DBSecurityGroup *DBSecurityGroup `type:"structure"`
 
-	metadataRevokeDBSecurityGroupIngressOutput `json:"-", xml:"-"`
+	metadataRevokeDBSecurityGroupIngressOutput `json:"-" xml:"-"`
 }
 
 type metadataRevokeDBSecurityGroupIngressOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RevokeDBSecurityGroupIngressOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RevokeDBSecurityGroupIngressOutput) GoString() string {
+	return s.String()
 }
 
 // This data type is used as a response element in the DescribeDBSubnetGroups
@@ -6657,7 +8337,7 @@ type metadataRevokeDBSecurityGroupIngressOutput struct {
 type Subnet struct {
 	// Contains Availability Zone information.
 	//
-	//  This data type is used as an element in the following data type:  OrderableDBInstanceOption
+	//  This data type is used as an element in the following data type: OrderableDBInstanceOption
 	SubnetAvailabilityZone *AvailabilityZone `type:"structure"`
 
 	// Specifies the identifier of the subnet.
@@ -6666,11 +8346,21 @@ type Subnet struct {
 	// Specifies the status of the subnet.
 	SubnetStatus *string `type:"string"`
 
-	metadataSubnet `json:"-", xml:"-"`
+	metadataSubnet `json:"-" xml:"-"`
 }
 
 type metadataSubnet struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Subnet) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Subnet) GoString() string {
+	return s.String()
 }
 
 // Metadata assigned to an Amazon RDS resource consisting of a key-value pair.
@@ -6687,11 +8377,21 @@ type Tag struct {
 	// white-space, '_', '.', '/', '=', '+', '-' (Java regex: "^([\\p{L}\\p{Z}\\p{N}_.:/=+\\-]*)$").
 	Value *string `type:"string"`
 
-	metadataTag `json:"-", xml:"-"`
+	metadataTag `json:"-" xml:"-"`
 }
 
 type metadataTag struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Tag) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Tag) GoString() string {
+	return s.String()
 }
 
 // This data type is used as a response element for queries on VPC security
@@ -6703,9 +8403,19 @@ type VPCSecurityGroupMembership struct {
 	// The name of the VPC security group.
 	VPCSecurityGroupID *string `locationName:"VpcSecurityGroupId" type:"string"`
 
-	metadataVPCSecurityGroupMembership `json:"-", xml:"-"`
+	metadataVPCSecurityGroupMembership `json:"-" xml:"-"`
 }
 
 type metadataVPCSecurityGroupMembership struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VPCSecurityGroupMembership) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VPCSecurityGroupMembership) GoString() string {
+	return s.String()
 }

@@ -4,32 +4,27 @@
 package ec2
 
 import (
-	"sync"
 	"time"
 
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
-var oprw sync.Mutex
+const opAcceptVPCPeeringConnection = "AcceptVpcPeeringConnection"
 
 // AcceptVPCPeeringConnectionRequest generates a request for the AcceptVPCPeeringConnection operation.
 func (c *EC2) AcceptVPCPeeringConnectionRequest(input *AcceptVPCPeeringConnectionInput) (req *aws.Request, output *AcceptVPCPeeringConnectionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAcceptVPCPeeringConnection == nil {
-		opAcceptVPCPeeringConnection = &aws.Operation{
-			Name:       "AcceptVpcPeeringConnection",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAcceptVPCPeeringConnection,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AcceptVPCPeeringConnectionInput{}
 	}
 
-	req = c.newRequest(opAcceptVPCPeeringConnection, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AcceptVPCPeeringConnectionOutput{}
 	req.Data = output
 	return
@@ -39,33 +34,27 @@ func (c *EC2) AcceptVPCPeeringConnectionRequest(input *AcceptVPCPeeringConnectio
 // connection must be in the pending-acceptance state, and you must be the owner
 // of the peer VPC. Use the DescribeVpcPeeringConnections request to view your
 // outstanding VPC peering connection requests.
-func (c *EC2) AcceptVPCPeeringConnection(input *AcceptVPCPeeringConnectionInput) (output *AcceptVPCPeeringConnectionOutput, err error) {
+func (c *EC2) AcceptVPCPeeringConnection(input *AcceptVPCPeeringConnectionInput) (*AcceptVPCPeeringConnectionOutput, error) {
 	req, out := c.AcceptVPCPeeringConnectionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAcceptVPCPeeringConnection *aws.Operation
+const opAllocateAddress = "AllocateAddress"
 
 // AllocateAddressRequest generates a request for the AllocateAddress operation.
 func (c *EC2) AllocateAddressRequest(input *AllocateAddressInput) (req *aws.Request, output *AllocateAddressOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAllocateAddress == nil {
-		opAllocateAddress = &aws.Operation{
-			Name:       "AllocateAddress",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAllocateAddress,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AllocateAddressInput{}
 	}
 
-	req = c.newRequest(opAllocateAddress, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AllocateAddressOutput{}
 	req.Data = output
 	return
@@ -76,33 +65,27 @@ func (c *EC2) AllocateAddressRequest(input *AllocateAddressInput) (req *aws.Requ
 // An Elastic IP address is for use either in the EC2-Classic platform or in
 // a VPC. For more information, see Elastic IP Addresses (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) AllocateAddress(input *AllocateAddressInput) (output *AllocateAddressOutput, err error) {
+func (c *EC2) AllocateAddress(input *AllocateAddressInput) (*AllocateAddressOutput, error) {
 	req, out := c.AllocateAddressRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAllocateAddress *aws.Operation
+const opAssignPrivateIPAddresses = "AssignPrivateIpAddresses"
 
 // AssignPrivateIPAddressesRequest generates a request for the AssignPrivateIPAddresses operation.
 func (c *EC2) AssignPrivateIPAddressesRequest(input *AssignPrivateIPAddressesInput) (req *aws.Request, output *AssignPrivateIPAddressesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAssignPrivateIPAddresses == nil {
-		opAssignPrivateIPAddresses = &aws.Operation{
-			Name:       "AssignPrivateIpAddresses",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAssignPrivateIPAddresses,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AssignPrivateIPAddressesInput{}
 	}
 
-	req = c.newRequest(opAssignPrivateIPAddresses, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AssignPrivateIPAddressesOutput{}
 	req.Data = output
 	return
@@ -119,33 +102,27 @@ func (c *EC2) AssignPrivateIPAddressesRequest(input *AssignPrivateIPAddressesInp
 // in the Amazon Elastic Compute Cloud User Guide.
 //
 // AssignPrivateIpAddresses is available only in EC2-VPC.
-func (c *EC2) AssignPrivateIPAddresses(input *AssignPrivateIPAddressesInput) (output *AssignPrivateIPAddressesOutput, err error) {
+func (c *EC2) AssignPrivateIPAddresses(input *AssignPrivateIPAddressesInput) (*AssignPrivateIPAddressesOutput, error) {
 	req, out := c.AssignPrivateIPAddressesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAssignPrivateIPAddresses *aws.Operation
+const opAssociateAddress = "AssociateAddress"
 
 // AssociateAddressRequest generates a request for the AssociateAddress operation.
 func (c *EC2) AssociateAddressRequest(input *AssociateAddressInput) (req *aws.Request, output *AssociateAddressOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAssociateAddress == nil {
-		opAssociateAddress = &aws.Operation{
-			Name:       "AssociateAddress",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAssociateAddress,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AssociateAddressInput{}
 	}
 
-	req = c.newRequest(opAssociateAddress, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AssociateAddressOutput{}
 	req.Data = output
 	return
@@ -168,33 +145,27 @@ func (c *EC2) AssociateAddressRequest(input *AssociateAddressInput) (req *aws.Re
 //
 // This is an idempotent operation. If you perform the operation more than
 // once, Amazon EC2 doesn't return an error.
-func (c *EC2) AssociateAddress(input *AssociateAddressInput) (output *AssociateAddressOutput, err error) {
+func (c *EC2) AssociateAddress(input *AssociateAddressInput) (*AssociateAddressOutput, error) {
 	req, out := c.AssociateAddressRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAssociateAddress *aws.Operation
+const opAssociateDHCPOptions = "AssociateDhcpOptions"
 
 // AssociateDHCPOptionsRequest generates a request for the AssociateDHCPOptions operation.
 func (c *EC2) AssociateDHCPOptionsRequest(input *AssociateDHCPOptionsInput) (req *aws.Request, output *AssociateDHCPOptionsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAssociateDHCPOptions == nil {
-		opAssociateDHCPOptions = &aws.Operation{
-			Name:       "AssociateDhcpOptions",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAssociateDHCPOptions,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AssociateDHCPOptionsInput{}
 	}
 
-	req = c.newRequest(opAssociateDHCPOptions, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AssociateDHCPOptionsOutput{}
 	req.Data = output
 	return
@@ -212,33 +183,27 @@ func (c *EC2) AssociateDHCPOptionsRequest(input *AssociateDHCPOptionsInput) (req
 //
 // For more information, see DHCP Options Sets (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) AssociateDHCPOptions(input *AssociateDHCPOptionsInput) (output *AssociateDHCPOptionsOutput, err error) {
+func (c *EC2) AssociateDHCPOptions(input *AssociateDHCPOptionsInput) (*AssociateDHCPOptionsOutput, error) {
 	req, out := c.AssociateDHCPOptionsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAssociateDHCPOptions *aws.Operation
+const opAssociateRouteTable = "AssociateRouteTable"
 
 // AssociateRouteTableRequest generates a request for the AssociateRouteTable operation.
 func (c *EC2) AssociateRouteTableRequest(input *AssociateRouteTableInput) (req *aws.Request, output *AssociateRouteTableOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAssociateRouteTable == nil {
-		opAssociateRouteTable = &aws.Operation{
-			Name:       "AssociateRouteTable",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAssociateRouteTable,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AssociateRouteTableInput{}
 	}
 
-	req = c.newRequest(opAssociateRouteTable, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AssociateRouteTableOutput{}
 	req.Data = output
 	return
@@ -252,33 +217,27 @@ func (c *EC2) AssociateRouteTableRequest(input *AssociateRouteTableInput) (req *
 //
 // For more information about route tables, see Route Tables (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) AssociateRouteTable(input *AssociateRouteTableInput) (output *AssociateRouteTableOutput, err error) {
+func (c *EC2) AssociateRouteTable(input *AssociateRouteTableInput) (*AssociateRouteTableOutput, error) {
 	req, out := c.AssociateRouteTableRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAssociateRouteTable *aws.Operation
+const opAttachClassicLinkVPC = "AttachClassicLinkVpc"
 
 // AttachClassicLinkVPCRequest generates a request for the AttachClassicLinkVPC operation.
 func (c *EC2) AttachClassicLinkVPCRequest(input *AttachClassicLinkVPCInput) (req *aws.Request, output *AttachClassicLinkVPCOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAttachClassicLinkVPC == nil {
-		opAttachClassicLinkVPC = &aws.Operation{
-			Name:       "AttachClassicLinkVpc",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAttachClassicLinkVPC,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AttachClassicLinkVPCInput{}
 	}
 
-	req = c.newRequest(opAttachClassicLinkVPC, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AttachClassicLinkVPCOutput{}
 	req.Data = output
 	return
@@ -296,33 +255,27 @@ func (c *EC2) AttachClassicLinkVPCRequest(input *AttachClassicLinkVPCInput) (req
 //
 // Linking your instance to a VPC is sometimes referred to as attaching your
 // instance.
-func (c *EC2) AttachClassicLinkVPC(input *AttachClassicLinkVPCInput) (output *AttachClassicLinkVPCOutput, err error) {
+func (c *EC2) AttachClassicLinkVPC(input *AttachClassicLinkVPCInput) (*AttachClassicLinkVPCOutput, error) {
 	req, out := c.AttachClassicLinkVPCRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAttachClassicLinkVPC *aws.Operation
+const opAttachInternetGateway = "AttachInternetGateway"
 
 // AttachInternetGatewayRequest generates a request for the AttachInternetGateway operation.
 func (c *EC2) AttachInternetGatewayRequest(input *AttachInternetGatewayInput) (req *aws.Request, output *AttachInternetGatewayOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAttachInternetGateway == nil {
-		opAttachInternetGateway = &aws.Operation{
-			Name:       "AttachInternetGateway",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAttachInternetGateway,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AttachInternetGatewayInput{}
 	}
 
-	req = c.newRequest(opAttachInternetGateway, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AttachInternetGatewayOutput{}
 	req.Data = output
 	return
@@ -331,66 +284,54 @@ func (c *EC2) AttachInternetGatewayRequest(input *AttachInternetGatewayInput) (r
 // Attaches an Internet gateway to a VPC, enabling connectivity between the
 // Internet and the VPC. For more information about your VPC and Internet gateway,
 // see the Amazon Virtual Private Cloud User Guide (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/).
-func (c *EC2) AttachInternetGateway(input *AttachInternetGatewayInput) (output *AttachInternetGatewayOutput, err error) {
+func (c *EC2) AttachInternetGateway(input *AttachInternetGatewayInput) (*AttachInternetGatewayOutput, error) {
 	req, out := c.AttachInternetGatewayRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAttachInternetGateway *aws.Operation
+const opAttachNetworkInterface = "AttachNetworkInterface"
 
 // AttachNetworkInterfaceRequest generates a request for the AttachNetworkInterface operation.
 func (c *EC2) AttachNetworkInterfaceRequest(input *AttachNetworkInterfaceInput) (req *aws.Request, output *AttachNetworkInterfaceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAttachNetworkInterface == nil {
-		opAttachNetworkInterface = &aws.Operation{
-			Name:       "AttachNetworkInterface",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAttachNetworkInterface,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AttachNetworkInterfaceInput{}
 	}
 
-	req = c.newRequest(opAttachNetworkInterface, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AttachNetworkInterfaceOutput{}
 	req.Data = output
 	return
 }
 
 // Attaches a network interface to an instance.
-func (c *EC2) AttachNetworkInterface(input *AttachNetworkInterfaceInput) (output *AttachNetworkInterfaceOutput, err error) {
+func (c *EC2) AttachNetworkInterface(input *AttachNetworkInterfaceInput) (*AttachNetworkInterfaceOutput, error) {
 	req, out := c.AttachNetworkInterfaceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAttachNetworkInterface *aws.Operation
+const opAttachVPNGateway = "AttachVpnGateway"
 
 // AttachVPNGatewayRequest generates a request for the AttachVPNGateway operation.
 func (c *EC2) AttachVPNGatewayRequest(input *AttachVPNGatewayInput) (req *aws.Request, output *AttachVPNGatewayOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAttachVPNGateway == nil {
-		opAttachVPNGateway = &aws.Operation{
-			Name:       "AttachVpnGateway",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAttachVPNGateway,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AttachVPNGatewayInput{}
 	}
 
-	req = c.newRequest(opAttachVPNGateway, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AttachVPNGatewayOutput{}
 	req.Data = output
 	return
@@ -399,50 +340,43 @@ func (c *EC2) AttachVPNGatewayRequest(input *AttachVPNGatewayInput) (req *aws.Re
 // Attaches a virtual private gateway to a VPC. For more information, see Adding
 // a Hardware Virtual Private Gateway to Your VPC (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) AttachVPNGateway(input *AttachVPNGatewayInput) (output *AttachVPNGatewayOutput, err error) {
+func (c *EC2) AttachVPNGateway(input *AttachVPNGatewayInput) (*AttachVPNGatewayOutput, error) {
 	req, out := c.AttachVPNGatewayRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAttachVPNGateway *aws.Operation
+const opAttachVolume = "AttachVolume"
 
 // AttachVolumeRequest generates a request for the AttachVolume operation.
 func (c *EC2) AttachVolumeRequest(input *AttachVolumeInput) (req *aws.Request, output *VolumeAttachment) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAttachVolume == nil {
-		opAttachVolume = &aws.Operation{
-			Name:       "AttachVolume",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAttachVolume,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AttachVolumeInput{}
 	}
 
-	req = c.newRequest(opAttachVolume, input, output)
+	req = c.newRequest(op, input, output)
 	output = &VolumeAttachment{}
 	req.Data = output
 	return
 }
 
-// Attaches an Amazon EBS volume to a running or stopped instance and exposes
-// it to the instance with the specified device name.
+// Attaches an EBS volume to a running or stopped instance and exposes it to
+// the instance with the specified device name.
 //
-// Encrypted Amazon EBS volumes may only be attached to instances that support
-// Amazon EBS encryption. For more information, see Amazon EBS Encryption (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html)
+// Encrypted EBS volumes may only be attached to instances that support Amazon
+// EBS encryption. For more information, see Amazon EBS Encryption (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html)
 // in the Amazon Elastic Compute Cloud User Guide.
 //
-// For a list of supported device names, see Attaching an Amazon EBS Volume
-// to an Instance (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html).
+// For a list of supported device names, see Attaching an EBS Volume to an
+// Instance (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html).
 // Any device names that aren't reserved for instance store volumes can be used
-// for Amazon EBS volumes. For more information, see Amazon EC2 Instance Store
-// (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html)
+// for EBS volumes. For more information, see Amazon EC2 Instance Store (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/InstanceStorage.html)
 // in the Amazon Elastic Compute Cloud User Guide.
 //
 // If a volume has an AWS Marketplace product code:
@@ -454,36 +388,30 @@ func (c *EC2) AttachVolumeRequest(input *AttachVolumeInput) (req *aws.Request, o
 // instance and attach it to a Linux instance.  For an overview of the AWS Marketplace,
 // see Introducing AWS Marketplace (https://aws.amazon.com/marketplace/help/200900000).
 //
-// For more information about Amazon EBS volumes, see Attaching Amazon EBS
-// Volumes (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html)
+// For more information about EBS volumes, see Attaching Amazon EBS Volumes
+// (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-attaching-volume.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) AttachVolume(input *AttachVolumeInput) (output *VolumeAttachment, err error) {
+func (c *EC2) AttachVolume(input *AttachVolumeInput) (*VolumeAttachment, error) {
 	req, out := c.AttachVolumeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAttachVolume *aws.Operation
+const opAuthorizeSecurityGroupEgress = "AuthorizeSecurityGroupEgress"
 
 // AuthorizeSecurityGroupEgressRequest generates a request for the AuthorizeSecurityGroupEgress operation.
 func (c *EC2) AuthorizeSecurityGroupEgressRequest(input *AuthorizeSecurityGroupEgressInput) (req *aws.Request, output *AuthorizeSecurityGroupEgressOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAuthorizeSecurityGroupEgress == nil {
-		opAuthorizeSecurityGroupEgress = &aws.Operation{
-			Name:       "AuthorizeSecurityGroupEgress",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAuthorizeSecurityGroupEgress,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AuthorizeSecurityGroupEgressInput{}
 	}
 
-	req = c.newRequest(opAuthorizeSecurityGroupEgress, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AuthorizeSecurityGroupEgressOutput{}
 	req.Data = output
 	return
@@ -510,33 +438,27 @@ func (c *EC2) AuthorizeSecurityGroupEgressRequest(input *AuthorizeSecurityGroupE
 //
 // Rule changes are propagated to affected instances as quickly as possible.
 // However, a small delay might occur.
-func (c *EC2) AuthorizeSecurityGroupEgress(input *AuthorizeSecurityGroupEgressInput) (output *AuthorizeSecurityGroupEgressOutput, err error) {
+func (c *EC2) AuthorizeSecurityGroupEgress(input *AuthorizeSecurityGroupEgressInput) (*AuthorizeSecurityGroupEgressOutput, error) {
 	req, out := c.AuthorizeSecurityGroupEgressRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAuthorizeSecurityGroupEgress *aws.Operation
+const opAuthorizeSecurityGroupIngress = "AuthorizeSecurityGroupIngress"
 
 // AuthorizeSecurityGroupIngressRequest generates a request for the AuthorizeSecurityGroupIngress operation.
 func (c *EC2) AuthorizeSecurityGroupIngressRequest(input *AuthorizeSecurityGroupIngressInput) (req *aws.Request, output *AuthorizeSecurityGroupIngressOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAuthorizeSecurityGroupIngress == nil {
-		opAuthorizeSecurityGroupIngress = &aws.Operation{
-			Name:       "AuthorizeSecurityGroupIngress",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAuthorizeSecurityGroupIngress,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AuthorizeSecurityGroupIngressInput{}
 	}
 
-	req = c.newRequest(opAuthorizeSecurityGroupIngress, input, output)
+	req = c.newRequest(op, input, output)
 	output = &AuthorizeSecurityGroupIngressOutput{}
 	req.Data = output
 	return
@@ -561,33 +483,27 @@ func (c *EC2) AuthorizeSecurityGroupIngressRequest(input *AuthorizeSecurityGroup
 // to access a security group in your VPC, or gives one or more other security
 // groups (called the source groups) permission to access a security group for
 // your VPC. The security groups must all be for the same VPC.
-func (c *EC2) AuthorizeSecurityGroupIngress(input *AuthorizeSecurityGroupIngressInput) (output *AuthorizeSecurityGroupIngressOutput, err error) {
+func (c *EC2) AuthorizeSecurityGroupIngress(input *AuthorizeSecurityGroupIngressInput) (*AuthorizeSecurityGroupIngressOutput, error) {
 	req, out := c.AuthorizeSecurityGroupIngressRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAuthorizeSecurityGroupIngress *aws.Operation
+const opBundleInstance = "BundleInstance"
 
 // BundleInstanceRequest generates a request for the BundleInstance operation.
 func (c *EC2) BundleInstanceRequest(input *BundleInstanceInput) (req *aws.Request, output *BundleInstanceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opBundleInstance == nil {
-		opBundleInstance = &aws.Operation{
-			Name:       "BundleInstance",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opBundleInstance,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &BundleInstanceInput{}
 	}
 
-	req = c.newRequest(opBundleInstance, input, output)
+	req = c.newRequest(op, input, output)
 	output = &BundleInstanceOutput{}
 	req.Data = output
 	return
@@ -603,66 +519,54 @@ func (c *EC2) BundleInstanceRequest(input *BundleInstanceInput) (req *aws.Reques
 //
 //  For more information, see Creating an Instance Store-Backed Windows AMI
 // (http://docs.aws.amazon.com/AWSEC2/latest/WindowsGuide/Creating_InstanceStoreBacked_WinAMI.html).
-func (c *EC2) BundleInstance(input *BundleInstanceInput) (output *BundleInstanceOutput, err error) {
+func (c *EC2) BundleInstance(input *BundleInstanceInput) (*BundleInstanceOutput, error) {
 	req, out := c.BundleInstanceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opBundleInstance *aws.Operation
+const opCancelBundleTask = "CancelBundleTask"
 
 // CancelBundleTaskRequest generates a request for the CancelBundleTask operation.
 func (c *EC2) CancelBundleTaskRequest(input *CancelBundleTaskInput) (req *aws.Request, output *CancelBundleTaskOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCancelBundleTask == nil {
-		opCancelBundleTask = &aws.Operation{
-			Name:       "CancelBundleTask",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCancelBundleTask,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CancelBundleTaskInput{}
 	}
 
-	req = c.newRequest(opCancelBundleTask, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CancelBundleTaskOutput{}
 	req.Data = output
 	return
 }
 
 // Cancels a bundling operation for an instance store-backed Windows instance.
-func (c *EC2) CancelBundleTask(input *CancelBundleTaskInput) (output *CancelBundleTaskOutput, err error) {
+func (c *EC2) CancelBundleTask(input *CancelBundleTaskInput) (*CancelBundleTaskOutput, error) {
 	req, out := c.CancelBundleTaskRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCancelBundleTask *aws.Operation
+const opCancelConversionTask = "CancelConversionTask"
 
 // CancelConversionTaskRequest generates a request for the CancelConversionTask operation.
 func (c *EC2) CancelConversionTaskRequest(input *CancelConversionTaskInput) (req *aws.Request, output *CancelConversionTaskOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCancelConversionTask == nil {
-		opCancelConversionTask = &aws.Operation{
-			Name:       "CancelConversionTask",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCancelConversionTask,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CancelConversionTaskInput{}
 	}
 
-	req = c.newRequest(opCancelConversionTask, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CancelConversionTaskOutput{}
 	req.Data = output
 	return
@@ -677,33 +581,27 @@ func (c *EC2) CancelConversionTaskRequest(input *CancelConversionTaskInput) (req
 // For more information, see Using the Command Line Tools to Import Your Virtual
 // Machine to Amazon EC2 (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UploadingYourInstancesandVolumes.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) CancelConversionTask(input *CancelConversionTaskInput) (output *CancelConversionTaskOutput, err error) {
+func (c *EC2) CancelConversionTask(input *CancelConversionTaskInput) (*CancelConversionTaskOutput, error) {
 	req, out := c.CancelConversionTaskRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCancelConversionTask *aws.Operation
+const opCancelExportTask = "CancelExportTask"
 
 // CancelExportTaskRequest generates a request for the CancelExportTask operation.
 func (c *EC2) CancelExportTaskRequest(input *CancelExportTaskInput) (req *aws.Request, output *CancelExportTaskOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCancelExportTask == nil {
-		opCancelExportTask = &aws.Operation{
-			Name:       "CancelExportTask",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCancelExportTask,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CancelExportTaskInput{}
 	}
 
-	req = c.newRequest(opCancelExportTask, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CancelExportTaskOutput{}
 	req.Data = output
 	return
@@ -713,66 +611,54 @@ func (c *EC2) CancelExportTaskRequest(input *CancelExportTaskInput) (req *aws.Re
 // including any partially-created Amazon S3 objects. If the export task is
 // complete or is in the process of transferring the final disk image, the command
 // fails and returns an error.
-func (c *EC2) CancelExportTask(input *CancelExportTaskInput) (output *CancelExportTaskOutput, err error) {
+func (c *EC2) CancelExportTask(input *CancelExportTaskInput) (*CancelExportTaskOutput, error) {
 	req, out := c.CancelExportTaskRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCancelExportTask *aws.Operation
+const opCancelImportTask = "CancelImportTask"
 
 // CancelImportTaskRequest generates a request for the CancelImportTask operation.
 func (c *EC2) CancelImportTaskRequest(input *CancelImportTaskInput) (req *aws.Request, output *CancelImportTaskOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCancelImportTask == nil {
-		opCancelImportTask = &aws.Operation{
-			Name:       "CancelImportTask",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCancelImportTask,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CancelImportTaskInput{}
 	}
 
-	req = c.newRequest(opCancelImportTask, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CancelImportTaskOutput{}
 	req.Data = output
 	return
 }
 
 // Cancels an in-process import virtual machine or import snapshot task.
-func (c *EC2) CancelImportTask(input *CancelImportTaskInput) (output *CancelImportTaskOutput, err error) {
+func (c *EC2) CancelImportTask(input *CancelImportTaskInput) (*CancelImportTaskOutput, error) {
 	req, out := c.CancelImportTaskRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCancelImportTask *aws.Operation
+const opCancelReservedInstancesListing = "CancelReservedInstancesListing"
 
 // CancelReservedInstancesListingRequest generates a request for the CancelReservedInstancesListing operation.
 func (c *EC2) CancelReservedInstancesListingRequest(input *CancelReservedInstancesListingInput) (req *aws.Request, output *CancelReservedInstancesListingOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCancelReservedInstancesListing == nil {
-		opCancelReservedInstancesListing = &aws.Operation{
-			Name:       "CancelReservedInstancesListing",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCancelReservedInstancesListing,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CancelReservedInstancesListingInput{}
 	}
 
-	req = c.newRequest(opCancelReservedInstancesListing, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CancelReservedInstancesListingOutput{}
 	req.Data = output
 	return
@@ -783,33 +669,54 @@ func (c *EC2) CancelReservedInstancesListingRequest(input *CancelReservedInstanc
 //
 // For more information, see Reserved Instance Marketplace (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) CancelReservedInstancesListing(input *CancelReservedInstancesListingInput) (output *CancelReservedInstancesListingOutput, err error) {
+func (c *EC2) CancelReservedInstancesListing(input *CancelReservedInstancesListingInput) (*CancelReservedInstancesListingOutput, error) {
 	req, out := c.CancelReservedInstancesListingRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opCancelSpotFleetRequests = "CancelSpotFleetRequests"
+
+// CancelSpotFleetRequestsRequest generates a request for the CancelSpotFleetRequests operation.
+func (c *EC2) CancelSpotFleetRequestsRequest(input *CancelSpotFleetRequestsInput) (req *aws.Request, output *CancelSpotFleetRequestsOutput) {
+	op := &aws.Operation{
+		Name:       opCancelSpotFleetRequests,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &CancelSpotFleetRequestsInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &CancelSpotFleetRequestsOutput{}
+	req.Data = output
 	return
 }
 
-var opCancelReservedInstancesListing *aws.Operation
+// Cancels the specified Spot fleet requests.
+func (c *EC2) CancelSpotFleetRequests(input *CancelSpotFleetRequestsInput) (*CancelSpotFleetRequestsOutput, error) {
+	req, out := c.CancelSpotFleetRequestsRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opCancelSpotInstanceRequests = "CancelSpotInstanceRequests"
 
 // CancelSpotInstanceRequestsRequest generates a request for the CancelSpotInstanceRequests operation.
 func (c *EC2) CancelSpotInstanceRequestsRequest(input *CancelSpotInstanceRequestsInput) (req *aws.Request, output *CancelSpotInstanceRequestsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCancelSpotInstanceRequests == nil {
-		opCancelSpotInstanceRequests = &aws.Operation{
-			Name:       "CancelSpotInstanceRequests",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCancelSpotInstanceRequests,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CancelSpotInstanceRequestsInput{}
 	}
 
-	req = c.newRequest(opCancelSpotInstanceRequests, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CancelSpotInstanceRequestsOutput{}
 	req.Data = output
 	return
@@ -824,33 +731,27 @@ func (c *EC2) CancelSpotInstanceRequestsRequest(input *CancelSpotInstanceRequest
 //
 //  Canceling a Spot Instance request does not terminate running Spot Instances
 // associated with the request.
-func (c *EC2) CancelSpotInstanceRequests(input *CancelSpotInstanceRequestsInput) (output *CancelSpotInstanceRequestsOutput, err error) {
+func (c *EC2) CancelSpotInstanceRequests(input *CancelSpotInstanceRequestsInput) (*CancelSpotInstanceRequestsOutput, error) {
 	req, out := c.CancelSpotInstanceRequestsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCancelSpotInstanceRequests *aws.Operation
+const opConfirmProductInstance = "ConfirmProductInstance"
 
 // ConfirmProductInstanceRequest generates a request for the ConfirmProductInstance operation.
 func (c *EC2) ConfirmProductInstanceRequest(input *ConfirmProductInstanceInput) (req *aws.Request, output *ConfirmProductInstanceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opConfirmProductInstance == nil {
-		opConfirmProductInstance = &aws.Operation{
-			Name:       "ConfirmProductInstance",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opConfirmProductInstance,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ConfirmProductInstanceInput{}
 	}
 
-	req = c.newRequest(opConfirmProductInstance, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ConfirmProductInstanceOutput{}
 	req.Data = output
 	return
@@ -860,33 +761,27 @@ func (c *EC2) ConfirmProductInstanceRequest(input *ConfirmProductInstanceInput) 
 // can only be used by the owner of the product code. It is useful when a product
 // code owner needs to verify whether another user's instance is eligible for
 // support.
-func (c *EC2) ConfirmProductInstance(input *ConfirmProductInstanceInput) (output *ConfirmProductInstanceOutput, err error) {
+func (c *EC2) ConfirmProductInstance(input *ConfirmProductInstanceInput) (*ConfirmProductInstanceOutput, error) {
 	req, out := c.ConfirmProductInstanceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opConfirmProductInstance *aws.Operation
+const opCopyImage = "CopyImage"
 
 // CopyImageRequest generates a request for the CopyImage operation.
 func (c *EC2) CopyImageRequest(input *CopyImageInput) (req *aws.Request, output *CopyImageOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCopyImage == nil {
-		opCopyImage = &aws.Operation{
-			Name:       "CopyImage",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCopyImage,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CopyImageInput{}
 	}
 
-	req = c.newRequest(opCopyImage, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CopyImageOutput{}
 	req.Data = output
 	return
@@ -894,84 +789,72 @@ func (c *EC2) CopyImageRequest(input *CopyImageInput) (req *aws.Request, output 
 
 // Initiates the copy of an AMI from the specified source region to the current
 // region. You specify the destination region by using its endpoint when making
-// the request. AMIs that use encrypted Amazon EBS snapshots cannot be copied
-// with this method.
+// the request. AMIs that use encrypted EBS snapshots cannot be copied with
+// this method.
 //
 // For more information, see Copying AMIs (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/CopyingAMIs.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) CopyImage(input *CopyImageInput) (output *CopyImageOutput, err error) {
+func (c *EC2) CopyImage(input *CopyImageInput) (*CopyImageOutput, error) {
 	req, out := c.CopyImageRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCopyImage *aws.Operation
+const opCopySnapshot = "CopySnapshot"
 
 // CopySnapshotRequest generates a request for the CopySnapshot operation.
 func (c *EC2) CopySnapshotRequest(input *CopySnapshotInput) (req *aws.Request, output *CopySnapshotOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCopySnapshot == nil {
-		opCopySnapshot = &aws.Operation{
-			Name:       "CopySnapshot",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCopySnapshot,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CopySnapshotInput{}
 	}
 
-	req = c.newRequest(opCopySnapshot, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CopySnapshotOutput{}
 	req.Data = output
 	return
 }
 
-// Copies a point-in-time snapshot of an Amazon EBS volume and stores it in
-// Amazon S3. You can copy the snapshot within the same region or from one region
-// to another. You can use the snapshot to create Amazon EBS volumes or Amazon
-// Machine Images (AMIs). The snapshot is copied to the regional endpoint that
-// you send the HTTP request to.
+// Copies a point-in-time snapshot of an EBS volume and stores it in Amazon
+// S3. You can copy the snapshot within the same region or from one region to
+// another. You can use the snapshot to create EBS volumes or Amazon Machine
+// Images (AMIs). The snapshot is copied to the regional endpoint that you send
+// the HTTP request to.
 //
-// Copies of encrypted Amazon EBS snapshots remain encrypted. Copies of unencrypted
-// snapshots remain unencrypted.
+// Copies of encrypted EBS snapshots remain encrypted. Copies of unencrypted
+// snapshots remain unencrypted, unless the Encrypted flag is specified during
+// the snapshot copy operation. By default, encrypted snapshot copies use the
+// default AWS Key Management Service (KMS) Customer Master Key (CMK); however,
+// you can specify a non-default CMK with the KmsKeyId parameter.
 //
-//  Copying snapshots that were encrypted with non-default AWS Key Management
-// Service (KMS) master keys is not supported at this time.
-//
-//  For more information, see Copying an Amazon EBS Snapshot (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-copy-snapshot.html)
+// For more information, see Copying an Amazon EBS Snapshot (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-copy-snapshot.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) CopySnapshot(input *CopySnapshotInput) (output *CopySnapshotOutput, err error) {
+func (c *EC2) CopySnapshot(input *CopySnapshotInput) (*CopySnapshotOutput, error) {
 	req, out := c.CopySnapshotRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCopySnapshot *aws.Operation
+const opCreateCustomerGateway = "CreateCustomerGateway"
 
 // CreateCustomerGatewayRequest generates a request for the CreateCustomerGateway operation.
 func (c *EC2) CreateCustomerGatewayRequest(input *CreateCustomerGatewayInput) (req *aws.Request, output *CreateCustomerGatewayOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateCustomerGateway == nil {
-		opCreateCustomerGateway = &aws.Operation{
-			Name:       "CreateCustomerGateway",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateCustomerGateway,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateCustomerGatewayInput{}
 	}
 
-	req = c.newRequest(opCreateCustomerGateway, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateCustomerGatewayOutput{}
 	req.Data = output
 	return
@@ -1002,33 +885,27 @@ func (c *EC2) CreateCustomerGatewayRequest(input *CreateCustomerGatewayInput) (r
 // more than one time, the first request creates the customer gateway, and subsequent
 // requests return information about the existing customer gateway. The subsequent
 // requests do not create new customer gateway resources.
-func (c *EC2) CreateCustomerGateway(input *CreateCustomerGatewayInput) (output *CreateCustomerGatewayOutput, err error) {
+func (c *EC2) CreateCustomerGateway(input *CreateCustomerGatewayInput) (*CreateCustomerGatewayOutput, error) {
 	req, out := c.CreateCustomerGatewayRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateCustomerGateway *aws.Operation
+const opCreateDHCPOptions = "CreateDhcpOptions"
 
 // CreateDHCPOptionsRequest generates a request for the CreateDHCPOptions operation.
 func (c *EC2) CreateDHCPOptionsRequest(input *CreateDHCPOptionsInput) (req *aws.Request, output *CreateDHCPOptionsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateDHCPOptions == nil {
-		opCreateDHCPOptions = &aws.Operation{
-			Name:       "CreateDhcpOptions",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateDHCPOptions,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateDHCPOptionsInput{}
 	}
 
-	req = c.newRequest(opCreateDHCPOptions, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateDHCPOptionsOutput{}
 	req.Data = output
 	return
@@ -1063,33 +940,63 @@ func (c *EC2) CreateDHCPOptionsRequest(input *CreateDHCPOptionsInput) (req *aws.
 // either to AmazonProvidedDNS or to a domain name server of your choice. For
 // more information about DHCP options, see DHCP Options Sets (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) CreateDHCPOptions(input *CreateDHCPOptionsInput) (output *CreateDHCPOptionsOutput, err error) {
+func (c *EC2) CreateDHCPOptions(input *CreateDHCPOptionsInput) (*CreateDHCPOptionsOutput, error) {
 	req, out := c.CreateDHCPOptionsRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opCreateFlowLogs = "CreateFlowLogs"
+
+// CreateFlowLogsRequest generates a request for the CreateFlowLogs operation.
+func (c *EC2) CreateFlowLogsRequest(input *CreateFlowLogsInput) (req *aws.Request, output *CreateFlowLogsOutput) {
+	op := &aws.Operation{
+		Name:       opCreateFlowLogs,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &CreateFlowLogsInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &CreateFlowLogsOutput{}
+	req.Data = output
 	return
 }
 
-var opCreateDHCPOptions *aws.Operation
+// Creates one or more flow logs to capture IP traffic for a specific network
+// interface, subnet, or VPC. Flow logs are delivered to a specified log group
+// in Amazon CloudWatch Logs. If you specify a VPC or subnet in the request,
+// a log stream is created in CloudWatch Logs for each network interface in
+// the subnet or VPC. Log streams can include information about accepted and
+// rejected traffic to a network interface. You can view the data in your log
+// streams using Amazon CloudWatch Logs.
+//
+// In your request, you must also specify an IAM role that has permission to
+// publish logs to CloudWatch Logs.
+func (c *EC2) CreateFlowLogs(input *CreateFlowLogsInput) (*CreateFlowLogsOutput, error) {
+	req, out := c.CreateFlowLogsRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opCreateImage = "CreateImage"
 
 // CreateImageRequest generates a request for the CreateImage operation.
 func (c *EC2) CreateImageRequest(input *CreateImageInput) (req *aws.Request, output *CreateImageOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateImage == nil {
-		opCreateImage = &aws.Operation{
-			Name:       "CreateImage",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateImage,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateImageInput{}
 	}
 
-	req = c.newRequest(opCreateImage, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateImageOutput{}
 	req.Data = output
 	return
@@ -1105,71 +1012,59 @@ func (c *EC2) CreateImageRequest(input *CreateImageInput) (req *aws.Request, out
 //
 // For more information, see Creating Amazon EBS-Backed Linux AMIs (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/creating-an-ami-ebs.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) CreateImage(input *CreateImageInput) (output *CreateImageOutput, err error) {
+func (c *EC2) CreateImage(input *CreateImageInput) (*CreateImageOutput, error) {
 	req, out := c.CreateImageRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateImage *aws.Operation
+const opCreateInstanceExportTask = "CreateInstanceExportTask"
 
 // CreateInstanceExportTaskRequest generates a request for the CreateInstanceExportTask operation.
 func (c *EC2) CreateInstanceExportTaskRequest(input *CreateInstanceExportTaskInput) (req *aws.Request, output *CreateInstanceExportTaskOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateInstanceExportTask == nil {
-		opCreateInstanceExportTask = &aws.Operation{
-			Name:       "CreateInstanceExportTask",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateInstanceExportTask,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateInstanceExportTaskInput{}
 	}
 
-	req = c.newRequest(opCreateInstanceExportTask, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateInstanceExportTaskOutput{}
 	req.Data = output
 	return
 }
 
-// Exports a running or stopped instance to an Amazon S3 bucket.
+// Exports a running or stopped instance to an S3 bucket.
 //
 // For information about the supported operating systems, image formats, and
 // known limitations for the types of instances you can export, see Exporting
 // EC2 Instances (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ExportingEC2Instances.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) CreateInstanceExportTask(input *CreateInstanceExportTaskInput) (output *CreateInstanceExportTaskOutput, err error) {
+func (c *EC2) CreateInstanceExportTask(input *CreateInstanceExportTaskInput) (*CreateInstanceExportTaskOutput, error) {
 	req, out := c.CreateInstanceExportTaskRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateInstanceExportTask *aws.Operation
+const opCreateInternetGateway = "CreateInternetGateway"
 
 // CreateInternetGatewayRequest generates a request for the CreateInternetGateway operation.
 func (c *EC2) CreateInternetGatewayRequest(input *CreateInternetGatewayInput) (req *aws.Request, output *CreateInternetGatewayOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateInternetGateway == nil {
-		opCreateInternetGateway = &aws.Operation{
-			Name:       "CreateInternetGateway",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateInternetGateway,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateInternetGatewayInput{}
 	}
 
-	req = c.newRequest(opCreateInternetGateway, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateInternetGatewayOutput{}
 	req.Data = output
 	return
@@ -1180,33 +1075,27 @@ func (c *EC2) CreateInternetGatewayRequest(input *CreateInternetGatewayInput) (r
 //
 // For more information about your VPC and Internet gateway, see the Amazon
 // Virtual Private Cloud User Guide (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/).
-func (c *EC2) CreateInternetGateway(input *CreateInternetGatewayInput) (output *CreateInternetGatewayOutput, err error) {
+func (c *EC2) CreateInternetGateway(input *CreateInternetGatewayInput) (*CreateInternetGatewayOutput, error) {
 	req, out := c.CreateInternetGatewayRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateInternetGateway *aws.Operation
+const opCreateKeyPair = "CreateKeyPair"
 
 // CreateKeyPairRequest generates a request for the CreateKeyPair operation.
 func (c *EC2) CreateKeyPairRequest(input *CreateKeyPairInput) (req *aws.Request, output *CreateKeyPairOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateKeyPair == nil {
-		opCreateKeyPair = &aws.Operation{
-			Name:       "CreateKeyPair",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateKeyPair,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateKeyPairInput{}
 	}
 
-	req = c.newRequest(opCreateKeyPair, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateKeyPairOutput{}
 	req.Data = output
 	return
@@ -1224,33 +1113,27 @@ func (c *EC2) CreateKeyPairRequest(input *CreateKeyPairInput) (req *aws.Request,
 //
 // For more information about key pairs, see Key Pairs (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) CreateKeyPair(input *CreateKeyPairInput) (output *CreateKeyPairOutput, err error) {
+func (c *EC2) CreateKeyPair(input *CreateKeyPairInput) (*CreateKeyPairOutput, error) {
 	req, out := c.CreateKeyPairRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateKeyPair *aws.Operation
+const opCreateNetworkACL = "CreateNetworkAcl"
 
 // CreateNetworkACLRequest generates a request for the CreateNetworkACL operation.
 func (c *EC2) CreateNetworkACLRequest(input *CreateNetworkACLInput) (req *aws.Request, output *CreateNetworkACLOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateNetworkACL == nil {
-		opCreateNetworkACL = &aws.Operation{
-			Name:       "CreateNetworkAcl",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateNetworkACL,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateNetworkACLInput{}
 	}
 
-	req = c.newRequest(opCreateNetworkACL, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateNetworkACLOutput{}
 	req.Data = output
 	return
@@ -1261,33 +1144,27 @@ func (c *EC2) CreateNetworkACLRequest(input *CreateNetworkACLInput) (req *aws.Re
 //
 // For more information about network ACLs, see Network ACLs (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) CreateNetworkACL(input *CreateNetworkACLInput) (output *CreateNetworkACLOutput, err error) {
+func (c *EC2) CreateNetworkACL(input *CreateNetworkACLInput) (*CreateNetworkACLOutput, error) {
 	req, out := c.CreateNetworkACLRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateNetworkACL *aws.Operation
+const opCreateNetworkACLEntry = "CreateNetworkAclEntry"
 
 // CreateNetworkACLEntryRequest generates a request for the CreateNetworkACLEntry operation.
 func (c *EC2) CreateNetworkACLEntryRequest(input *CreateNetworkACLEntryInput) (req *aws.Request, output *CreateNetworkACLEntryOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateNetworkACLEntry == nil {
-		opCreateNetworkACLEntry = &aws.Operation{
-			Name:       "CreateNetworkAclEntry",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateNetworkACLEntry,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateNetworkACLEntryInput{}
 	}
 
-	req = c.newRequest(opCreateNetworkACLEntry, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateNetworkACLEntryOutput{}
 	req.Data = output
 	return
@@ -1310,33 +1187,27 @@ func (c *EC2) CreateNetworkACLEntryRequest(input *CreateNetworkACLEntryInput) (r
 //
 // For more information about network ACLs, see Network ACLs (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) CreateNetworkACLEntry(input *CreateNetworkACLEntryInput) (output *CreateNetworkACLEntryOutput, err error) {
+func (c *EC2) CreateNetworkACLEntry(input *CreateNetworkACLEntryInput) (*CreateNetworkACLEntryOutput, error) {
 	req, out := c.CreateNetworkACLEntryRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateNetworkACLEntry *aws.Operation
+const opCreateNetworkInterface = "CreateNetworkInterface"
 
 // CreateNetworkInterfaceRequest generates a request for the CreateNetworkInterface operation.
 func (c *EC2) CreateNetworkInterfaceRequest(input *CreateNetworkInterfaceInput) (req *aws.Request, output *CreateNetworkInterfaceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateNetworkInterface == nil {
-		opCreateNetworkInterface = &aws.Operation{
-			Name:       "CreateNetworkInterface",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateNetworkInterface,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateNetworkInterfaceInput{}
 	}
 
-	req = c.newRequest(opCreateNetworkInterface, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateNetworkInterfaceOutput{}
 	req.Data = output
 	return
@@ -1347,33 +1218,27 @@ func (c *EC2) CreateNetworkInterfaceRequest(input *CreateNetworkInterfaceInput) 
 // For more information about network interfaces, see Elastic Network Interfaces
 // (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-eni.html) in the
 // Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) CreateNetworkInterface(input *CreateNetworkInterfaceInput) (output *CreateNetworkInterfaceOutput, err error) {
+func (c *EC2) CreateNetworkInterface(input *CreateNetworkInterfaceInput) (*CreateNetworkInterfaceOutput, error) {
 	req, out := c.CreateNetworkInterfaceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateNetworkInterface *aws.Operation
+const opCreatePlacementGroup = "CreatePlacementGroup"
 
 // CreatePlacementGroupRequest generates a request for the CreatePlacementGroup operation.
 func (c *EC2) CreatePlacementGroupRequest(input *CreatePlacementGroupInput) (req *aws.Request, output *CreatePlacementGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreatePlacementGroup == nil {
-		opCreatePlacementGroup = &aws.Operation{
-			Name:       "CreatePlacementGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreatePlacementGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreatePlacementGroupInput{}
 	}
 
-	req = c.newRequest(opCreatePlacementGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreatePlacementGroupOutput{}
 	req.Data = output
 	return
@@ -1385,33 +1250,27 @@ func (c *EC2) CreatePlacementGroupRequest(input *CreatePlacementGroupInput) (req
 // For more information about placement groups and cluster instances, see Cluster
 // Instances (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using_cluster_computing.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) CreatePlacementGroup(input *CreatePlacementGroupInput) (output *CreatePlacementGroupOutput, err error) {
+func (c *EC2) CreatePlacementGroup(input *CreatePlacementGroupInput) (*CreatePlacementGroupOutput, error) {
 	req, out := c.CreatePlacementGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreatePlacementGroup *aws.Operation
+const opCreateReservedInstancesListing = "CreateReservedInstancesListing"
 
 // CreateReservedInstancesListingRequest generates a request for the CreateReservedInstancesListing operation.
 func (c *EC2) CreateReservedInstancesListingRequest(input *CreateReservedInstancesListingInput) (req *aws.Request, output *CreateReservedInstancesListingOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateReservedInstancesListing == nil {
-		opCreateReservedInstancesListing = &aws.Operation{
-			Name:       "CreateReservedInstancesListing",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateReservedInstancesListing,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateReservedInstancesListingInput{}
 	}
 
-	req = c.newRequest(opCreateReservedInstancesListing, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateReservedInstancesListingOutput{}
 	req.Data = output
 	return
@@ -1427,7 +1286,7 @@ func (c *EC2) CreateReservedInstancesListingRequest(input *CreateReservedInstanc
 // additional capacity. Reserved Instances bought and sold through the Reserved
 // Instance Marketplace work like any other Reserved Instances.
 //
-// To sell your Reserved Instances, you must first register as a Seller in
+// To sell your Reserved Instances, you must first register as a seller in
 // the Reserved Instance Marketplace. After completing the registration process,
 // you can create a Reserved Instance Marketplace listing of some or all of
 // your Reserved Instances, and specify the upfront price to receive for them.
@@ -1437,33 +1296,27 @@ func (c *EC2) CreateReservedInstancesListingRequest(input *CreateReservedInstanc
 //
 // For more information, see Reserved Instance Marketplace (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) CreateReservedInstancesListing(input *CreateReservedInstancesListingInput) (output *CreateReservedInstancesListingOutput, err error) {
+func (c *EC2) CreateReservedInstancesListing(input *CreateReservedInstancesListingInput) (*CreateReservedInstancesListingOutput, error) {
 	req, out := c.CreateReservedInstancesListingRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateReservedInstancesListing *aws.Operation
+const opCreateRoute = "CreateRoute"
 
 // CreateRouteRequest generates a request for the CreateRoute operation.
 func (c *EC2) CreateRouteRequest(input *CreateRouteInput) (req *aws.Request, output *CreateRouteOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateRoute == nil {
-		opCreateRoute = &aws.Operation{
-			Name:       "CreateRoute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateRoute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateRouteInput{}
 	}
 
-	req = c.newRequest(opCreateRoute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateRouteOutput{}
 	req.Data = output
 	return
@@ -1488,33 +1341,27 @@ func (c *EC2) CreateRouteRequest(input *CreateRouteInput) (req *aws.Request, out
 //
 // For more information about route tables, see Route Tables (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) CreateRoute(input *CreateRouteInput) (output *CreateRouteOutput, err error) {
+func (c *EC2) CreateRoute(input *CreateRouteInput) (*CreateRouteOutput, error) {
 	req, out := c.CreateRouteRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateRoute *aws.Operation
+const opCreateRouteTable = "CreateRouteTable"
 
 // CreateRouteTableRequest generates a request for the CreateRouteTable operation.
 func (c *EC2) CreateRouteTableRequest(input *CreateRouteTableInput) (req *aws.Request, output *CreateRouteTableOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateRouteTable == nil {
-		opCreateRouteTable = &aws.Operation{
-			Name:       "CreateRouteTable",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateRouteTable,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateRouteTableInput{}
 	}
 
-	req = c.newRequest(opCreateRouteTable, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateRouteTableOutput{}
 	req.Data = output
 	return
@@ -1525,33 +1372,27 @@ func (c *EC2) CreateRouteTableRequest(input *CreateRouteTableInput) (req *aws.Re
 //
 // For more information about route tables, see Route Tables (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) CreateRouteTable(input *CreateRouteTableInput) (output *CreateRouteTableOutput, err error) {
+func (c *EC2) CreateRouteTable(input *CreateRouteTableInput) (*CreateRouteTableOutput, error) {
 	req, out := c.CreateRouteTableRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateRouteTable *aws.Operation
+const opCreateSecurityGroup = "CreateSecurityGroup"
 
 // CreateSecurityGroupRequest generates a request for the CreateSecurityGroup operation.
 func (c *EC2) CreateSecurityGroupRequest(input *CreateSecurityGroupInput) (req *aws.Request, output *CreateSecurityGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateSecurityGroup == nil {
-		opCreateSecurityGroup = &aws.Operation{
-			Name:       "CreateSecurityGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateSecurityGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateSecurityGroupInput{}
 	}
 
-	req = c.newRequest(opCreateSecurityGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateSecurityGroupOutput{}
 	req.Data = output
 	return
@@ -1584,58 +1425,51 @@ func (c *EC2) CreateSecurityGroupRequest(input *CreateSecurityGroupInput) (req *
 //
 // You can add or remove rules from your security groups using AuthorizeSecurityGroupIngress,
 // AuthorizeSecurityGroupEgress, RevokeSecurityGroupIngress, and RevokeSecurityGroupEgress.
-func (c *EC2) CreateSecurityGroup(input *CreateSecurityGroupInput) (output *CreateSecurityGroupOutput, err error) {
+func (c *EC2) CreateSecurityGroup(input *CreateSecurityGroupInput) (*CreateSecurityGroupOutput, error) {
 	req, out := c.CreateSecurityGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateSecurityGroup *aws.Operation
+const opCreateSnapshot = "CreateSnapshot"
 
 // CreateSnapshotRequest generates a request for the CreateSnapshot operation.
 func (c *EC2) CreateSnapshotRequest(input *CreateSnapshotInput) (req *aws.Request, output *Snapshot) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateSnapshot == nil {
-		opCreateSnapshot = &aws.Operation{
-			Name:       "CreateSnapshot",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateSnapshot,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateSnapshotInput{}
 	}
 
-	req = c.newRequest(opCreateSnapshot, input, output)
+	req = c.newRequest(op, input, output)
 	output = &Snapshot{}
 	req.Data = output
 	return
 }
 
-// Creates a snapshot of an Amazon EBS volume and stores it in Amazon S3. You
-// can use snapshots for backups, to make copies of Amazon EBS volumes, and
-// to save data before shutting down an instance.
+// Creates a snapshot of an EBS volume and stores it in Amazon S3. You can use
+// snapshots for backups, to make copies of EBS volumes, and to save data before
+// shutting down an instance.
 //
 // When a snapshot is created, any AWS Marketplace product codes that are associated
 // with the source volume are propagated to the snapshot.
 //
 // You can take a snapshot of an attached volume that is in use. However, snapshots
-// only capture data that has been written to your Amazon EBS volume at the
-// time the snapshot command is issued; this may exclude any data that has been
-// cached by any applications or the operating system. If you can pause any
-// file systems on the volume long enough to take a snapshot, your snapshot
-// should be complete. However, if you cannot pause all file writes to the volume,
-// you should unmount the volume from within the instance, issue the snapshot
-// command, and then remount the volume to ensure a consistent and complete
-// snapshot. You may remount and use your volume while the snapshot status is
-// pending.
+// only capture data that has been written to your EBS volume at the time the
+// snapshot command is issued; this may exclude any data that has been cached
+// by any applications or the operating system. If you can pause any file systems
+// on the volume long enough to take a snapshot, your snapshot should be complete.
+// However, if you cannot pause all file writes to the volume, you should unmount
+// the volume from within the instance, issue the snapshot command, and then
+// remount the volume to ensure a consistent and complete snapshot. You may
+// remount and use your volume while the snapshot status is pending.
 //
-// To create a snapshot for Amazon EBS volumes that serve as root devices,
-// you should stop the instance before taking the snapshot.
+// To create a snapshot for EBS volumes that serve as root devices, you should
+// stop the instance before taking the snapshot.
 //
 // Snapshots that are taken from encrypted volumes are automatically encrypted.
 // Volumes that are created from encrypted snapshots are also automatically
@@ -1645,33 +1479,27 @@ func (c *EC2) CreateSnapshotRequest(input *CreateSnapshotInput) (req *aws.Reques
 // For more information, see Amazon Elastic Block Store (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AmazonEBS.html)
 // and Amazon EBS Encryption (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) CreateSnapshot(input *CreateSnapshotInput) (output *Snapshot, err error) {
+func (c *EC2) CreateSnapshot(input *CreateSnapshotInput) (*Snapshot, error) {
 	req, out := c.CreateSnapshotRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateSnapshot *aws.Operation
+const opCreateSpotDatafeedSubscription = "CreateSpotDatafeedSubscription"
 
 // CreateSpotDatafeedSubscriptionRequest generates a request for the CreateSpotDatafeedSubscription operation.
 func (c *EC2) CreateSpotDatafeedSubscriptionRequest(input *CreateSpotDatafeedSubscriptionInput) (req *aws.Request, output *CreateSpotDatafeedSubscriptionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateSpotDatafeedSubscription == nil {
-		opCreateSpotDatafeedSubscription = &aws.Operation{
-			Name:       "CreateSpotDatafeedSubscription",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateSpotDatafeedSubscription,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateSpotDatafeedSubscriptionInput{}
 	}
 
-	req = c.newRequest(opCreateSpotDatafeedSubscription, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateSpotDatafeedSubscriptionOutput{}
 	req.Data = output
 	return
@@ -1681,33 +1509,27 @@ func (c *EC2) CreateSpotDatafeedSubscriptionRequest(input *CreateSpotDatafeedSub
 // usage logs. You can create one data feed per AWS account. For more information,
 // see Spot Instance Data Feed (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-data-feeds.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) CreateSpotDatafeedSubscription(input *CreateSpotDatafeedSubscriptionInput) (output *CreateSpotDatafeedSubscriptionOutput, err error) {
+func (c *EC2) CreateSpotDatafeedSubscription(input *CreateSpotDatafeedSubscriptionInput) (*CreateSpotDatafeedSubscriptionOutput, error) {
 	req, out := c.CreateSpotDatafeedSubscriptionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateSpotDatafeedSubscription *aws.Operation
+const opCreateSubnet = "CreateSubnet"
 
 // CreateSubnetRequest generates a request for the CreateSubnet operation.
 func (c *EC2) CreateSubnetRequest(input *CreateSubnetInput) (req *aws.Request, output *CreateSubnetOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateSubnet == nil {
-		opCreateSubnet = &aws.Operation{
-			Name:       "CreateSubnet",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateSubnet,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateSubnetInput{}
 	}
 
-	req = c.newRequest(opCreateSubnet, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateSubnetOutput{}
 	req.Data = output
 	return
@@ -1738,33 +1560,27 @@ func (c *EC2) CreateSubnetRequest(input *CreateSubnetInput) (req *aws.Request, o
 //
 // For more information about subnets, see Your VPC and Subnets (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) CreateSubnet(input *CreateSubnetInput) (output *CreateSubnetOutput, err error) {
+func (c *EC2) CreateSubnet(input *CreateSubnetInput) (*CreateSubnetOutput, error) {
 	req, out := c.CreateSubnetRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateSubnet *aws.Operation
+const opCreateTags = "CreateTags"
 
 // CreateTagsRequest generates a request for the CreateTags operation.
 func (c *EC2) CreateTagsRequest(input *CreateTagsInput) (req *aws.Request, output *CreateTagsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateTags == nil {
-		opCreateTags = &aws.Operation{
-			Name:       "CreateTags",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateTags,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateTagsInput{}
 	}
 
-	req = c.newRequest(opCreateTags, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateTagsOutput{}
 	req.Data = output
 	return
@@ -1776,33 +1592,27 @@ func (c *EC2) CreateTagsRequest(input *CreateTagsInput) (req *aws.Request, outpu
 //
 // For more information about tags, see Tagging Your Resources (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) CreateTags(input *CreateTagsInput) (output *CreateTagsOutput, err error) {
+func (c *EC2) CreateTags(input *CreateTagsInput) (*CreateTagsOutput, error) {
 	req, out := c.CreateTagsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateTags *aws.Operation
+const opCreateVPC = "CreateVpc"
 
 // CreateVPCRequest generates a request for the CreateVPC operation.
 func (c *EC2) CreateVPCRequest(input *CreateVPCInput) (req *aws.Request, output *CreateVPCOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateVPC == nil {
-		opCreateVPC = &aws.Operation{
-			Name:       "CreateVpc",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateVPC,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateVPCInput{}
 	}
 
-	req = c.newRequest(opCreateVPC, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateVPCOutput{}
 	req.Data = output
 	return
@@ -1819,33 +1629,60 @@ func (c *EC2) CreateVPCRequest(input *CreateVPCInput) (req *aws.Request, output 
 // which includes only a default DNS server that we provide (AmazonProvidedDNS).
 // For more information about DHCP options, see DHCP Options Sets (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) CreateVPC(input *CreateVPCInput) (output *CreateVPCOutput, err error) {
+func (c *EC2) CreateVPC(input *CreateVPCInput) (*CreateVPCOutput, error) {
 	req, out := c.CreateVPCRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opCreateVPCEndpoint = "CreateVpcEndpoint"
+
+// CreateVPCEndpointRequest generates a request for the CreateVPCEndpoint operation.
+func (c *EC2) CreateVPCEndpointRequest(input *CreateVPCEndpointInput) (req *aws.Request, output *CreateVPCEndpointOutput) {
+	op := &aws.Operation{
+		Name:       opCreateVPCEndpoint,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &CreateVPCEndpointInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &CreateVPCEndpointOutput{}
+	req.Data = output
 	return
 }
 
-var opCreateVPC *aws.Operation
+// Creates a VPC endpoint for a specified AWS service. An endpoint enables you
+// to create a private connection between your VPC and another AWS service in
+// your account. You can specify an endpoint policy to attach to the endpoint
+// that will control access to the service from your VPC. You can also specify
+// the VPC route tables that use the endpoint.
+//
+// Currently, only endpoints to Amazon S3 are supported.
+func (c *EC2) CreateVPCEndpoint(input *CreateVPCEndpointInput) (*CreateVPCEndpointOutput, error) {
+	req, out := c.CreateVPCEndpointRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opCreateVPCPeeringConnection = "CreateVpcPeeringConnection"
 
 // CreateVPCPeeringConnectionRequest generates a request for the CreateVPCPeeringConnection operation.
 func (c *EC2) CreateVPCPeeringConnectionRequest(input *CreateVPCPeeringConnectionInput) (req *aws.Request, output *CreateVPCPeeringConnectionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateVPCPeeringConnection == nil {
-		opCreateVPCPeeringConnection = &aws.Operation{
-			Name:       "CreateVpcPeeringConnection",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateVPCPeeringConnection,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateVPCPeeringConnectionInput{}
 	}
 
-	req = c.newRequest(opCreateVPCPeeringConnection, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateVPCPeeringConnectionOutput{}
 	req.Data = output
 	return
@@ -1862,33 +1699,27 @@ func (c *EC2) CreateVPCPeeringConnectionRequest(input *CreateVPCPeeringConnectio
 //
 // A CreateVpcPeeringConnection request between VPCs with overlapping CIDR
 // blocks results in the VPC peering connection having a status of failed.
-func (c *EC2) CreateVPCPeeringConnection(input *CreateVPCPeeringConnectionInput) (output *CreateVPCPeeringConnectionOutput, err error) {
+func (c *EC2) CreateVPCPeeringConnection(input *CreateVPCPeeringConnectionInput) (*CreateVPCPeeringConnectionOutput, error) {
 	req, out := c.CreateVPCPeeringConnectionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateVPCPeeringConnection *aws.Operation
+const opCreateVPNConnection = "CreateVpnConnection"
 
 // CreateVPNConnectionRequest generates a request for the CreateVPNConnection operation.
 func (c *EC2) CreateVPNConnectionRequest(input *CreateVPNConnectionInput) (req *aws.Request, output *CreateVPNConnectionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateVPNConnection == nil {
-		opCreateVPNConnection = &aws.Operation{
-			Name:       "CreateVpnConnection",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateVPNConnection,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateVPNConnectionInput{}
 	}
 
-	req = c.newRequest(opCreateVPNConnection, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateVPNConnectionOutput{}
 	req.Data = output
 	return
@@ -1911,33 +1742,27 @@ func (c *EC2) CreateVPNConnectionRequest(input *CreateVPNConnectionInput) (req *
 // For more information about VPN connections, see Adding a Hardware Virtual
 // Private Gateway to Your VPC (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) CreateVPNConnection(input *CreateVPNConnectionInput) (output *CreateVPNConnectionOutput, err error) {
+func (c *EC2) CreateVPNConnection(input *CreateVPNConnectionInput) (*CreateVPNConnectionOutput, error) {
 	req, out := c.CreateVPNConnectionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateVPNConnection *aws.Operation
+const opCreateVPNConnectionRoute = "CreateVpnConnectionRoute"
 
 // CreateVPNConnectionRouteRequest generates a request for the CreateVPNConnectionRoute operation.
 func (c *EC2) CreateVPNConnectionRouteRequest(input *CreateVPNConnectionRouteInput) (req *aws.Request, output *CreateVPNConnectionRouteOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateVPNConnectionRoute == nil {
-		opCreateVPNConnectionRoute = &aws.Operation{
-			Name:       "CreateVpnConnectionRoute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateVPNConnectionRoute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateVPNConnectionRouteInput{}
 	}
 
-	req = c.newRequest(opCreateVPNConnectionRoute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateVPNConnectionRouteOutput{}
 	req.Data = output
 	return
@@ -1951,33 +1776,27 @@ func (c *EC2) CreateVPNConnectionRouteRequest(input *CreateVPNConnectionRouteInp
 // For more information about VPN connections, see Adding a Hardware Virtual
 // Private Gateway to Your VPC (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) CreateVPNConnectionRoute(input *CreateVPNConnectionRouteInput) (output *CreateVPNConnectionRouteOutput, err error) {
+func (c *EC2) CreateVPNConnectionRoute(input *CreateVPNConnectionRouteInput) (*CreateVPNConnectionRouteOutput, error) {
 	req, out := c.CreateVPNConnectionRouteRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateVPNConnectionRoute *aws.Operation
+const opCreateVPNGateway = "CreateVpnGateway"
 
 // CreateVPNGatewayRequest generates a request for the CreateVPNGateway operation.
 func (c *EC2) CreateVPNGatewayRequest(input *CreateVPNGatewayInput) (req *aws.Request, output *CreateVPNGatewayOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateVPNGateway == nil {
-		opCreateVPNGateway = &aws.Operation{
-			Name:       "CreateVpnGateway",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateVPNGateway,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateVPNGatewayInput{}
 	}
 
-	req = c.newRequest(opCreateVPNGateway, input, output)
+	req = c.newRequest(op, input, output)
 	output = &CreateVPNGatewayOutput{}
 	req.Data = output
 	return
@@ -1990,46 +1809,39 @@ func (c *EC2) CreateVPNGatewayRequest(input *CreateVPNGatewayInput) (req *aws.Re
 // For more information about virtual private gateways, see Adding a Hardware
 // Virtual Private Gateway to Your VPC (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) CreateVPNGateway(input *CreateVPNGatewayInput) (output *CreateVPNGatewayOutput, err error) {
+func (c *EC2) CreateVPNGateway(input *CreateVPNGatewayInput) (*CreateVPNGatewayOutput, error) {
 	req, out := c.CreateVPNGatewayRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateVPNGateway *aws.Operation
+const opCreateVolume = "CreateVolume"
 
 // CreateVolumeRequest generates a request for the CreateVolume operation.
 func (c *EC2) CreateVolumeRequest(input *CreateVolumeInput) (req *aws.Request, output *Volume) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateVolume == nil {
-		opCreateVolume = &aws.Operation{
-			Name:       "CreateVolume",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateVolume,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateVolumeInput{}
 	}
 
-	req = c.newRequest(opCreateVolume, input, output)
+	req = c.newRequest(op, input, output)
 	output = &Volume{}
 	req.Data = output
 	return
 }
 
-// Creates an Amazon EBS volume that can be attached to an instance in the same
-// Availability Zone. The volume is created in the regional endpoint that you
-// send the HTTP request to. For more information see Regions and Endpoints
-// (http://docs.aws.amazon.com/general/latest/gr/rande.html).
+// Creates an EBS volume that can be attached to an instance in the same Availability
+// Zone. The volume is created in the regional endpoint that you send the HTTP
+// request to. For more information see Regions and Endpoints (http://docs.aws.amazon.com/general/latest/gr/rande.html).
 //
-// You can create a new empty volume or restore a volume from an Amazon EBS
-// snapshot. Any AWS Marketplace product codes from the snapshot are propagated
-// to the volume.
+// You can create a new empty volume or restore a volume from an EBS snapshot.
+// Any AWS Marketplace product codes from the snapshot are propagated to the
+// volume.
 //
 // You can create encrypted volumes with the Encrypted parameter. Encrypted
 // volumes may only be attached to instances that support Amazon EBS encryption.
@@ -2039,33 +1851,27 @@ func (c *EC2) CreateVolumeRequest(input *CreateVolumeInput) (req *aws.Request, o
 //
 // For more information, see Creating or Restoring an Amazon EBS Volume (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-creating-volume.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) CreateVolume(input *CreateVolumeInput) (output *Volume, err error) {
+func (c *EC2) CreateVolume(input *CreateVolumeInput) (*Volume, error) {
 	req, out := c.CreateVolumeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateVolume *aws.Operation
+const opDeleteCustomerGateway = "DeleteCustomerGateway"
 
 // DeleteCustomerGatewayRequest generates a request for the DeleteCustomerGateway operation.
 func (c *EC2) DeleteCustomerGatewayRequest(input *DeleteCustomerGatewayInput) (req *aws.Request, output *DeleteCustomerGatewayOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteCustomerGateway == nil {
-		opDeleteCustomerGateway = &aws.Operation{
-			Name:       "DeleteCustomerGateway",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteCustomerGateway,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteCustomerGatewayInput{}
 	}
 
-	req = c.newRequest(opDeleteCustomerGateway, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteCustomerGatewayOutput{}
 	req.Data = output
 	return
@@ -2073,33 +1879,27 @@ func (c *EC2) DeleteCustomerGatewayRequest(input *DeleteCustomerGatewayInput) (r
 
 // Deletes the specified customer gateway. You must delete the VPN connection
 // before you can delete the customer gateway.
-func (c *EC2) DeleteCustomerGateway(input *DeleteCustomerGatewayInput) (output *DeleteCustomerGatewayOutput, err error) {
+func (c *EC2) DeleteCustomerGateway(input *DeleteCustomerGatewayInput) (*DeleteCustomerGatewayOutput, error) {
 	req, out := c.DeleteCustomerGatewayRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteCustomerGateway *aws.Operation
+const opDeleteDHCPOptions = "DeleteDhcpOptions"
 
 // DeleteDHCPOptionsRequest generates a request for the DeleteDHCPOptions operation.
 func (c *EC2) DeleteDHCPOptionsRequest(input *DeleteDHCPOptionsInput) (req *aws.Request, output *DeleteDHCPOptionsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteDHCPOptions == nil {
-		opDeleteDHCPOptions = &aws.Operation{
-			Name:       "DeleteDhcpOptions",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteDHCPOptions,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteDHCPOptionsInput{}
 	}
 
-	req = c.newRequest(opDeleteDHCPOptions, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteDHCPOptionsOutput{}
 	req.Data = output
 	return
@@ -2109,33 +1909,54 @@ func (c *EC2) DeleteDHCPOptionsRequest(input *DeleteDHCPOptionsInput) (req *aws.
 // of DHCP options before you can delete it. You can disassociate the set of
 // DHCP options by associating either a new set of options or the default set
 // of options with the VPC.
-func (c *EC2) DeleteDHCPOptions(input *DeleteDHCPOptionsInput) (output *DeleteDHCPOptionsOutput, err error) {
+func (c *EC2) DeleteDHCPOptions(input *DeleteDHCPOptionsInput) (*DeleteDHCPOptionsOutput, error) {
 	req, out := c.DeleteDHCPOptionsRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opDeleteFlowLogs = "DeleteFlowLogs"
+
+// DeleteFlowLogsRequest generates a request for the DeleteFlowLogs operation.
+func (c *EC2) DeleteFlowLogsRequest(input *DeleteFlowLogsInput) (req *aws.Request, output *DeleteFlowLogsOutput) {
+	op := &aws.Operation{
+		Name:       opDeleteFlowLogs,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DeleteFlowLogsInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &DeleteFlowLogsOutput{}
+	req.Data = output
 	return
 }
 
-var opDeleteDHCPOptions *aws.Operation
+// Deletes one or more flow logs.
+func (c *EC2) DeleteFlowLogs(input *DeleteFlowLogsInput) (*DeleteFlowLogsOutput, error) {
+	req, out := c.DeleteFlowLogsRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opDeleteInternetGateway = "DeleteInternetGateway"
 
 // DeleteInternetGatewayRequest generates a request for the DeleteInternetGateway operation.
 func (c *EC2) DeleteInternetGatewayRequest(input *DeleteInternetGatewayInput) (req *aws.Request, output *DeleteInternetGatewayOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteInternetGateway == nil {
-		opDeleteInternetGateway = &aws.Operation{
-			Name:       "DeleteInternetGateway",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteInternetGateway,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteInternetGatewayInput{}
 	}
 
-	req = c.newRequest(opDeleteInternetGateway, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteInternetGatewayOutput{}
 	req.Data = output
 	return
@@ -2143,66 +1964,54 @@ func (c *EC2) DeleteInternetGatewayRequest(input *DeleteInternetGatewayInput) (r
 
 // Deletes the specified Internet gateway. You must detach the Internet gateway
 // from the VPC before you can delete it.
-func (c *EC2) DeleteInternetGateway(input *DeleteInternetGatewayInput) (output *DeleteInternetGatewayOutput, err error) {
+func (c *EC2) DeleteInternetGateway(input *DeleteInternetGatewayInput) (*DeleteInternetGatewayOutput, error) {
 	req, out := c.DeleteInternetGatewayRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteInternetGateway *aws.Operation
+const opDeleteKeyPair = "DeleteKeyPair"
 
 // DeleteKeyPairRequest generates a request for the DeleteKeyPair operation.
 func (c *EC2) DeleteKeyPairRequest(input *DeleteKeyPairInput) (req *aws.Request, output *DeleteKeyPairOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteKeyPair == nil {
-		opDeleteKeyPair = &aws.Operation{
-			Name:       "DeleteKeyPair",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteKeyPair,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteKeyPairInput{}
 	}
 
-	req = c.newRequest(opDeleteKeyPair, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteKeyPairOutput{}
 	req.Data = output
 	return
 }
 
 // Deletes the specified key pair, by removing the public key from Amazon EC2.
-func (c *EC2) DeleteKeyPair(input *DeleteKeyPairInput) (output *DeleteKeyPairOutput, err error) {
+func (c *EC2) DeleteKeyPair(input *DeleteKeyPairInput) (*DeleteKeyPairOutput, error) {
 	req, out := c.DeleteKeyPairRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteKeyPair *aws.Operation
+const opDeleteNetworkACL = "DeleteNetworkAcl"
 
 // DeleteNetworkACLRequest generates a request for the DeleteNetworkACL operation.
 func (c *EC2) DeleteNetworkACLRequest(input *DeleteNetworkACLInput) (req *aws.Request, output *DeleteNetworkACLOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteNetworkACL == nil {
-		opDeleteNetworkACL = &aws.Operation{
-			Name:       "DeleteNetworkAcl",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteNetworkACL,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteNetworkACLInput{}
 	}
 
-	req = c.newRequest(opDeleteNetworkACL, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteNetworkACLOutput{}
 	req.Data = output
 	return
@@ -2210,33 +2019,27 @@ func (c *EC2) DeleteNetworkACLRequest(input *DeleteNetworkACLInput) (req *aws.Re
 
 // Deletes the specified network ACL. You can't delete the ACL if it's associated
 // with any subnets. You can't delete the default network ACL.
-func (c *EC2) DeleteNetworkACL(input *DeleteNetworkACLInput) (output *DeleteNetworkACLOutput, err error) {
+func (c *EC2) DeleteNetworkACL(input *DeleteNetworkACLInput) (*DeleteNetworkACLOutput, error) {
 	req, out := c.DeleteNetworkACLRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteNetworkACL *aws.Operation
+const opDeleteNetworkACLEntry = "DeleteNetworkAclEntry"
 
 // DeleteNetworkACLEntryRequest generates a request for the DeleteNetworkACLEntry operation.
 func (c *EC2) DeleteNetworkACLEntryRequest(input *DeleteNetworkACLEntryInput) (req *aws.Request, output *DeleteNetworkACLEntryOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteNetworkACLEntry == nil {
-		opDeleteNetworkACLEntry = &aws.Operation{
-			Name:       "DeleteNetworkAclEntry",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteNetworkACLEntry,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteNetworkACLEntryInput{}
 	}
 
-	req = c.newRequest(opDeleteNetworkACLEntry, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteNetworkACLEntryOutput{}
 	req.Data = output
 	return
@@ -2244,33 +2047,27 @@ func (c *EC2) DeleteNetworkACLEntryRequest(input *DeleteNetworkACLEntryInput) (r
 
 // Deletes the specified ingress or egress entry (rule) from the specified network
 // ACL.
-func (c *EC2) DeleteNetworkACLEntry(input *DeleteNetworkACLEntryInput) (output *DeleteNetworkACLEntryOutput, err error) {
+func (c *EC2) DeleteNetworkACLEntry(input *DeleteNetworkACLEntryInput) (*DeleteNetworkACLEntryOutput, error) {
 	req, out := c.DeleteNetworkACLEntryRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteNetworkACLEntry *aws.Operation
+const opDeleteNetworkInterface = "DeleteNetworkInterface"
 
 // DeleteNetworkInterfaceRequest generates a request for the DeleteNetworkInterface operation.
 func (c *EC2) DeleteNetworkInterfaceRequest(input *DeleteNetworkInterfaceInput) (req *aws.Request, output *DeleteNetworkInterfaceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteNetworkInterface == nil {
-		opDeleteNetworkInterface = &aws.Operation{
-			Name:       "DeleteNetworkInterface",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteNetworkInterface,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteNetworkInterfaceInput{}
 	}
 
-	req = c.newRequest(opDeleteNetworkInterface, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteNetworkInterfaceOutput{}
 	req.Data = output
 	return
@@ -2278,33 +2075,27 @@ func (c *EC2) DeleteNetworkInterfaceRequest(input *DeleteNetworkInterfaceInput) 
 
 // Deletes the specified network interface. You must detach the network interface
 // before you can delete it.
-func (c *EC2) DeleteNetworkInterface(input *DeleteNetworkInterfaceInput) (output *DeleteNetworkInterfaceOutput, err error) {
+func (c *EC2) DeleteNetworkInterface(input *DeleteNetworkInterfaceInput) (*DeleteNetworkInterfaceOutput, error) {
 	req, out := c.DeleteNetworkInterfaceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteNetworkInterface *aws.Operation
+const opDeletePlacementGroup = "DeletePlacementGroup"
 
 // DeletePlacementGroupRequest generates a request for the DeletePlacementGroup operation.
 func (c *EC2) DeletePlacementGroupRequest(input *DeletePlacementGroupInput) (req *aws.Request, output *DeletePlacementGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeletePlacementGroup == nil {
-		opDeletePlacementGroup = &aws.Operation{
-			Name:       "DeletePlacementGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeletePlacementGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeletePlacementGroupInput{}
 	}
 
-	req = c.newRequest(opDeletePlacementGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeletePlacementGroupOutput{}
 	req.Data = output
 	return
@@ -2314,66 +2105,54 @@ func (c *EC2) DeletePlacementGroupRequest(input *DeletePlacementGroupInput) (req
 // the placement group before you can delete the placement group. For more information
 // about placement groups and cluster instances, see Cluster Instances (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using_cluster_computing.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DeletePlacementGroup(input *DeletePlacementGroupInput) (output *DeletePlacementGroupOutput, err error) {
+func (c *EC2) DeletePlacementGroup(input *DeletePlacementGroupInput) (*DeletePlacementGroupOutput, error) {
 	req, out := c.DeletePlacementGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeletePlacementGroup *aws.Operation
+const opDeleteRoute = "DeleteRoute"
 
 // DeleteRouteRequest generates a request for the DeleteRoute operation.
 func (c *EC2) DeleteRouteRequest(input *DeleteRouteInput) (req *aws.Request, output *DeleteRouteOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteRoute == nil {
-		opDeleteRoute = &aws.Operation{
-			Name:       "DeleteRoute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteRoute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteRouteInput{}
 	}
 
-	req = c.newRequest(opDeleteRoute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteRouteOutput{}
 	req.Data = output
 	return
 }
 
 // Deletes the specified route from the specified route table.
-func (c *EC2) DeleteRoute(input *DeleteRouteInput) (output *DeleteRouteOutput, err error) {
+func (c *EC2) DeleteRoute(input *DeleteRouteInput) (*DeleteRouteOutput, error) {
 	req, out := c.DeleteRouteRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteRoute *aws.Operation
+const opDeleteRouteTable = "DeleteRouteTable"
 
 // DeleteRouteTableRequest generates a request for the DeleteRouteTable operation.
 func (c *EC2) DeleteRouteTableRequest(input *DeleteRouteTableInput) (req *aws.Request, output *DeleteRouteTableOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteRouteTable == nil {
-		opDeleteRouteTable = &aws.Operation{
-			Name:       "DeleteRouteTable",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteRouteTable,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteRouteTableInput{}
 	}
 
-	req = c.newRequest(opDeleteRouteTable, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteRouteTableOutput{}
 	req.Data = output
 	return
@@ -2382,33 +2161,27 @@ func (c *EC2) DeleteRouteTableRequest(input *DeleteRouteTableInput) (req *aws.Re
 // Deletes the specified route table. You must disassociate the route table
 // from any subnets before you can delete it. You can't delete the main route
 // table.
-func (c *EC2) DeleteRouteTable(input *DeleteRouteTableInput) (output *DeleteRouteTableOutput, err error) {
+func (c *EC2) DeleteRouteTable(input *DeleteRouteTableInput) (*DeleteRouteTableOutput, error) {
 	req, out := c.DeleteRouteTableRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteRouteTable *aws.Operation
+const opDeleteSecurityGroup = "DeleteSecurityGroup"
 
 // DeleteSecurityGroupRequest generates a request for the DeleteSecurityGroup operation.
 func (c *EC2) DeleteSecurityGroupRequest(input *DeleteSecurityGroupInput) (req *aws.Request, output *DeleteSecurityGroupOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteSecurityGroup == nil {
-		opDeleteSecurityGroup = &aws.Operation{
-			Name:       "DeleteSecurityGroup",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteSecurityGroup,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteSecurityGroupInput{}
 	}
 
-	req = c.newRequest(opDeleteSecurityGroup, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteSecurityGroupOutput{}
 	req.Data = output
 	return
@@ -2419,33 +2192,27 @@ func (c *EC2) DeleteSecurityGroupRequest(input *DeleteSecurityGroupInput) (req *
 // If you attempt to delete a security group that is associated with an instance,
 // or is referenced by another security group, the operation fails with InvalidGroup.InUse
 // in EC2-Classic or DependencyViolation in EC2-VPC.
-func (c *EC2) DeleteSecurityGroup(input *DeleteSecurityGroupInput) (output *DeleteSecurityGroupOutput, err error) {
+func (c *EC2) DeleteSecurityGroup(input *DeleteSecurityGroupInput) (*DeleteSecurityGroupOutput, error) {
 	req, out := c.DeleteSecurityGroupRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteSecurityGroup *aws.Operation
+const opDeleteSnapshot = "DeleteSnapshot"
 
 // DeleteSnapshotRequest generates a request for the DeleteSnapshot operation.
 func (c *EC2) DeleteSnapshotRequest(input *DeleteSnapshotInput) (req *aws.Request, output *DeleteSnapshotOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteSnapshot == nil {
-		opDeleteSnapshot = &aws.Operation{
-			Name:       "DeleteSnapshot",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteSnapshot,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteSnapshotInput{}
 	}
 
-	req = c.newRequest(opDeleteSnapshot, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteSnapshotOutput{}
 	req.Data = output
 	return
@@ -2460,39 +2227,33 @@ func (c *EC2) DeleteSnapshotRequest(input *DeleteSnapshotInput) (req *aws.Reques
 // snapshots have been deleted, all active snapshots will have access to all
 // the information needed to restore the volume.
 //
-// You cannot delete a snapshot of the root device of an Amazon EBS volume
-// used by a registered AMI. You must first de-register the AMI before you can
-// delete the snapshot.
+// You cannot delete a snapshot of the root device of an EBS volume used by
+// a registered AMI. You must first de-register the AMI before you can delete
+// the snapshot.
 //
 // For more information, see Deleting an Amazon EBS Snapshot (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-deleting-snapshot.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DeleteSnapshot(input *DeleteSnapshotInput) (output *DeleteSnapshotOutput, err error) {
+func (c *EC2) DeleteSnapshot(input *DeleteSnapshotInput) (*DeleteSnapshotOutput, error) {
 	req, out := c.DeleteSnapshotRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteSnapshot *aws.Operation
+const opDeleteSpotDatafeedSubscription = "DeleteSpotDatafeedSubscription"
 
 // DeleteSpotDatafeedSubscriptionRequest generates a request for the DeleteSpotDatafeedSubscription operation.
 func (c *EC2) DeleteSpotDatafeedSubscriptionRequest(input *DeleteSpotDatafeedSubscriptionInput) (req *aws.Request, output *DeleteSpotDatafeedSubscriptionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteSpotDatafeedSubscription == nil {
-		opDeleteSpotDatafeedSubscription = &aws.Operation{
-			Name:       "DeleteSpotDatafeedSubscription",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteSpotDatafeedSubscription,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteSpotDatafeedSubscriptionInput{}
 	}
 
-	req = c.newRequest(opDeleteSpotDatafeedSubscription, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteSpotDatafeedSubscriptionOutput{}
 	req.Data = output
 	return
@@ -2501,33 +2262,27 @@ func (c *EC2) DeleteSpotDatafeedSubscriptionRequest(input *DeleteSpotDatafeedSub
 // Deletes the data feed for Spot Instances. For more information, see Spot
 // Instance Data Feed (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-data-feeds.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DeleteSpotDatafeedSubscription(input *DeleteSpotDatafeedSubscriptionInput) (output *DeleteSpotDatafeedSubscriptionOutput, err error) {
+func (c *EC2) DeleteSpotDatafeedSubscription(input *DeleteSpotDatafeedSubscriptionInput) (*DeleteSpotDatafeedSubscriptionOutput, error) {
 	req, out := c.DeleteSpotDatafeedSubscriptionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteSpotDatafeedSubscription *aws.Operation
+const opDeleteSubnet = "DeleteSubnet"
 
 // DeleteSubnetRequest generates a request for the DeleteSubnet operation.
 func (c *EC2) DeleteSubnetRequest(input *DeleteSubnetInput) (req *aws.Request, output *DeleteSubnetOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteSubnet == nil {
-		opDeleteSubnet = &aws.Operation{
-			Name:       "DeleteSubnet",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteSubnet,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteSubnetInput{}
 	}
 
-	req = c.newRequest(opDeleteSubnet, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteSubnetOutput{}
 	req.Data = output
 	return
@@ -2535,33 +2290,27 @@ func (c *EC2) DeleteSubnetRequest(input *DeleteSubnetInput) (req *aws.Request, o
 
 // Deletes the specified subnet. You must terminate all running instances in
 // the subnet before you can delete the subnet.
-func (c *EC2) DeleteSubnet(input *DeleteSubnetInput) (output *DeleteSubnetOutput, err error) {
+func (c *EC2) DeleteSubnet(input *DeleteSubnetInput) (*DeleteSubnetOutput, error) {
 	req, out := c.DeleteSubnetRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteSubnet *aws.Operation
+const opDeleteTags = "DeleteTags"
 
 // DeleteTagsRequest generates a request for the DeleteTags operation.
 func (c *EC2) DeleteTagsRequest(input *DeleteTagsInput) (req *aws.Request, output *DeleteTagsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteTags == nil {
-		opDeleteTags = &aws.Operation{
-			Name:       "DeleteTags",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteTags,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteTagsInput{}
 	}
 
-	req = c.newRequest(opDeleteTags, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteTagsOutput{}
 	req.Data = output
 	return
@@ -2572,33 +2321,27 @@ func (c *EC2) DeleteTagsRequest(input *DeleteTagsInput) (req *aws.Request, outpu
 //
 // For more information about tags, see Tagging Your Resources (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DeleteTags(input *DeleteTagsInput) (output *DeleteTagsOutput, err error) {
+func (c *EC2) DeleteTags(input *DeleteTagsInput) (*DeleteTagsOutput, error) {
 	req, out := c.DeleteTagsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteTags *aws.Operation
+const opDeleteVPC = "DeleteVpc"
 
 // DeleteVPCRequest generates a request for the DeleteVPC operation.
 func (c *EC2) DeleteVPCRequest(input *DeleteVPCInput) (req *aws.Request, output *DeleteVPCOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteVPC == nil {
-		opDeleteVPC = &aws.Operation{
-			Name:       "DeleteVpc",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteVPC,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteVPCInput{}
 	}
 
-	req = c.newRequest(opDeleteVPC, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteVPCOutput{}
 	req.Data = output
 	return
@@ -2609,33 +2352,55 @@ func (c *EC2) DeleteVPCRequest(input *DeleteVPCInput) (req *aws.Request, output 
 // must terminate all instances running in the VPC, delete all security groups
 // associated with the VPC (except the default one), delete all route tables
 // associated with the VPC (except the default one), and so on.
-func (c *EC2) DeleteVPC(input *DeleteVPCInput) (output *DeleteVPCOutput, err error) {
+func (c *EC2) DeleteVPC(input *DeleteVPCInput) (*DeleteVPCOutput, error) {
 	req, out := c.DeleteVPCRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opDeleteVPCEndpoints = "DeleteVpcEndpoints"
+
+// DeleteVPCEndpointsRequest generates a request for the DeleteVPCEndpoints operation.
+func (c *EC2) DeleteVPCEndpointsRequest(input *DeleteVPCEndpointsInput) (req *aws.Request, output *DeleteVPCEndpointsOutput) {
+	op := &aws.Operation{
+		Name:       opDeleteVPCEndpoints,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DeleteVPCEndpointsInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &DeleteVPCEndpointsOutput{}
+	req.Data = output
 	return
 }
 
-var opDeleteVPC *aws.Operation
+// Deletes one or more specified VPC endpoints. Deleting the endpoint also deletes
+// the endpoint routes in the route tables that were associated with the endpoint.
+func (c *EC2) DeleteVPCEndpoints(input *DeleteVPCEndpointsInput) (*DeleteVPCEndpointsOutput, error) {
+	req, out := c.DeleteVPCEndpointsRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opDeleteVPCPeeringConnection = "DeleteVpcPeeringConnection"
 
 // DeleteVPCPeeringConnectionRequest generates a request for the DeleteVPCPeeringConnection operation.
 func (c *EC2) DeleteVPCPeeringConnectionRequest(input *DeleteVPCPeeringConnectionInput) (req *aws.Request, output *DeleteVPCPeeringConnectionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteVPCPeeringConnection == nil {
-		opDeleteVPCPeeringConnection = &aws.Operation{
-			Name:       "DeleteVpcPeeringConnection",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteVPCPeeringConnection,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteVPCPeeringConnectionInput{}
 	}
 
-	req = c.newRequest(opDeleteVPCPeeringConnection, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteVPCPeeringConnectionOutput{}
 	req.Data = output
 	return
@@ -2645,33 +2410,27 @@ func (c *EC2) DeleteVPCPeeringConnectionRequest(input *DeleteVPCPeeringConnectio
 // the owner of the peer VPC can delete the VPC peering connection if it's in
 // the active state. The owner of the requester VPC can delete a VPC peering
 // connection in the pending-acceptance state.
-func (c *EC2) DeleteVPCPeeringConnection(input *DeleteVPCPeeringConnectionInput) (output *DeleteVPCPeeringConnectionOutput, err error) {
+func (c *EC2) DeleteVPCPeeringConnection(input *DeleteVPCPeeringConnectionInput) (*DeleteVPCPeeringConnectionOutput, error) {
 	req, out := c.DeleteVPCPeeringConnectionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteVPCPeeringConnection *aws.Operation
+const opDeleteVPNConnection = "DeleteVpnConnection"
 
 // DeleteVPNConnectionRequest generates a request for the DeleteVPNConnection operation.
 func (c *EC2) DeleteVPNConnectionRequest(input *DeleteVPNConnectionInput) (req *aws.Request, output *DeleteVPNConnectionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteVPNConnection == nil {
-		opDeleteVPNConnection = &aws.Operation{
-			Name:       "DeleteVpnConnection",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteVPNConnection,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteVPNConnectionInput{}
 	}
 
-	req = c.newRequest(opDeleteVPNConnection, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteVPNConnectionOutput{}
 	req.Data = output
 	return
@@ -2687,33 +2446,27 @@ func (c *EC2) DeleteVPNConnectionRequest(input *DeleteVPNConnectionInput) (req *
 // or virtual private gateway. If you create a new VPN connection, you must
 // reconfigure the customer gateway using the new configuration information
 // returned with the new VPN connection ID.
-func (c *EC2) DeleteVPNConnection(input *DeleteVPNConnectionInput) (output *DeleteVPNConnectionOutput, err error) {
+func (c *EC2) DeleteVPNConnection(input *DeleteVPNConnectionInput) (*DeleteVPNConnectionOutput, error) {
 	req, out := c.DeleteVPNConnectionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteVPNConnection *aws.Operation
+const opDeleteVPNConnectionRoute = "DeleteVpnConnectionRoute"
 
 // DeleteVPNConnectionRouteRequest generates a request for the DeleteVPNConnectionRoute operation.
 func (c *EC2) DeleteVPNConnectionRouteRequest(input *DeleteVPNConnectionRouteInput) (req *aws.Request, output *DeleteVPNConnectionRouteOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteVPNConnectionRoute == nil {
-		opDeleteVPNConnectionRoute = &aws.Operation{
-			Name:       "DeleteVpnConnectionRoute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteVPNConnectionRoute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteVPNConnectionRouteInput{}
 	}
 
-	req = c.newRequest(opDeleteVPNConnectionRoute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteVPNConnectionRouteOutput{}
 	req.Data = output
 	return
@@ -2723,33 +2476,27 @@ func (c *EC2) DeleteVPNConnectionRouteRequest(input *DeleteVPNConnectionRouteInp
 // an existing virtual private gateway and a VPN customer gateway. The static
 // route allows traffic to be routed from the virtual private gateway to the
 // VPN customer gateway.
-func (c *EC2) DeleteVPNConnectionRoute(input *DeleteVPNConnectionRouteInput) (output *DeleteVPNConnectionRouteOutput, err error) {
+func (c *EC2) DeleteVPNConnectionRoute(input *DeleteVPNConnectionRouteInput) (*DeleteVPNConnectionRouteOutput, error) {
 	req, out := c.DeleteVPNConnectionRouteRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteVPNConnectionRoute *aws.Operation
+const opDeleteVPNGateway = "DeleteVpnGateway"
 
 // DeleteVPNGatewayRequest generates a request for the DeleteVPNGateway operation.
 func (c *EC2) DeleteVPNGatewayRequest(input *DeleteVPNGatewayInput) (req *aws.Request, output *DeleteVPNGatewayOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteVPNGateway == nil {
-		opDeleteVPNGateway = &aws.Operation{
-			Name:       "DeleteVpnGateway",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteVPNGateway,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteVPNGatewayInput{}
 	}
 
-	req = c.newRequest(opDeleteVPNGateway, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteVPNGatewayOutput{}
 	req.Data = output
 	return
@@ -2760,72 +2507,60 @@ func (c *EC2) DeleteVPNGatewayRequest(input *DeleteVPNGatewayInput) (req *aws.Re
 // VPN connection. Note that you don't need to delete the virtual private gateway
 // if you plan to delete and recreate the VPN connection between your VPC and
 // your network.
-func (c *EC2) DeleteVPNGateway(input *DeleteVPNGatewayInput) (output *DeleteVPNGatewayOutput, err error) {
+func (c *EC2) DeleteVPNGateway(input *DeleteVPNGatewayInput) (*DeleteVPNGatewayOutput, error) {
 	req, out := c.DeleteVPNGatewayRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteVPNGateway *aws.Operation
+const opDeleteVolume = "DeleteVolume"
 
 // DeleteVolumeRequest generates a request for the DeleteVolume operation.
 func (c *EC2) DeleteVolumeRequest(input *DeleteVolumeInput) (req *aws.Request, output *DeleteVolumeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteVolume == nil {
-		opDeleteVolume = &aws.Operation{
-			Name:       "DeleteVolume",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteVolume,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteVolumeInput{}
 	}
 
-	req = c.newRequest(opDeleteVolume, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteVolumeOutput{}
 	req.Data = output
 	return
 }
 
-// Deletes the specified Amazon EBS volume. The volume must be in the available
-// state (not attached to an instance).
+// Deletes the specified EBS volume. The volume must be in the available state
+// (not attached to an instance).
 //
 //  The volume may remain in the deleting state for several minutes.
 //
 //  For more information, see Deleting an Amazon EBS Volume (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-deleting-volume.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DeleteVolume(input *DeleteVolumeInput) (output *DeleteVolumeOutput, err error) {
+func (c *EC2) DeleteVolume(input *DeleteVolumeInput) (*DeleteVolumeOutput, error) {
 	req, out := c.DeleteVolumeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteVolume *aws.Operation
+const opDeregisterImage = "DeregisterImage"
 
 // DeregisterImageRequest generates a request for the DeregisterImage operation.
 func (c *EC2) DeregisterImageRequest(input *DeregisterImageInput) (req *aws.Request, output *DeregisterImageOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeregisterImage == nil {
-		opDeregisterImage = &aws.Operation{
-			Name:       "DeregisterImage",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeregisterImage,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeregisterImageInput{}
 	}
 
-	req = c.newRequest(opDeregisterImage, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeregisterImageOutput{}
 	req.Data = output
 	return
@@ -2835,33 +2570,27 @@ func (c *EC2) DeregisterImageRequest(input *DeregisterImageInput) (req *aws.Requ
 // to launch new instances.
 //
 // This command does not delete the AMI.
-func (c *EC2) DeregisterImage(input *DeregisterImageInput) (output *DeregisterImageOutput, err error) {
+func (c *EC2) DeregisterImage(input *DeregisterImageInput) (*DeregisterImageOutput, error) {
 	req, out := c.DeregisterImageRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeregisterImage *aws.Operation
+const opDescribeAccountAttributes = "DescribeAccountAttributes"
 
 // DescribeAccountAttributesRequest generates a request for the DescribeAccountAttributes operation.
 func (c *EC2) DescribeAccountAttributesRequest(input *DescribeAccountAttributesInput) (req *aws.Request, output *DescribeAccountAttributesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeAccountAttributes == nil {
-		opDescribeAccountAttributes = &aws.Operation{
-			Name:       "DescribeAccountAttributes",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeAccountAttributes,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeAccountAttributesInput{}
 	}
 
-	req = c.newRequest(opDescribeAccountAttributes, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeAccountAttributesOutput{}
 	req.Data = output
 	return
@@ -2886,33 +2615,27 @@ func (c *EC2) DescribeAccountAttributesRequest(input *DescribeAccountAttributesI
 //
 //   vpc-max-elastic-ips: The maximum number of Elastic IP addresses that you
 // can allocate for use with EC2-VPC.
-func (c *EC2) DescribeAccountAttributes(input *DescribeAccountAttributesInput) (output *DescribeAccountAttributesOutput, err error) {
+func (c *EC2) DescribeAccountAttributes(input *DescribeAccountAttributesInput) (*DescribeAccountAttributesOutput, error) {
 	req, out := c.DescribeAccountAttributesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeAccountAttributes *aws.Operation
+const opDescribeAddresses = "DescribeAddresses"
 
 // DescribeAddressesRequest generates a request for the DescribeAddresses operation.
 func (c *EC2) DescribeAddressesRequest(input *DescribeAddressesInput) (req *aws.Request, output *DescribeAddressesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeAddresses == nil {
-		opDescribeAddresses = &aws.Operation{
-			Name:       "DescribeAddresses",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeAddresses,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeAddressesInput{}
 	}
 
-	req = c.newRequest(opDescribeAddresses, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeAddressesOutput{}
 	req.Data = output
 	return
@@ -2923,33 +2646,27 @@ func (c *EC2) DescribeAddressesRequest(input *DescribeAddressesInput) (req *aws.
 // An Elastic IP address is for use in either the EC2-Classic platform or in
 // a VPC. For more information, see Elastic IP Addresses (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/elastic-ip-addresses-eip.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DescribeAddresses(input *DescribeAddressesInput) (output *DescribeAddressesOutput, err error) {
+func (c *EC2) DescribeAddresses(input *DescribeAddressesInput) (*DescribeAddressesOutput, error) {
 	req, out := c.DescribeAddressesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeAddresses *aws.Operation
+const opDescribeAvailabilityZones = "DescribeAvailabilityZones"
 
 // DescribeAvailabilityZonesRequest generates a request for the DescribeAvailabilityZones operation.
 func (c *EC2) DescribeAvailabilityZonesRequest(input *DescribeAvailabilityZonesInput) (req *aws.Request, output *DescribeAvailabilityZonesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeAvailabilityZones == nil {
-		opDescribeAvailabilityZones = &aws.Operation{
-			Name:       "DescribeAvailabilityZones",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeAvailabilityZones,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeAvailabilityZonesInput{}
 	}
 
-	req = c.newRequest(opDescribeAvailabilityZones, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeAvailabilityZonesOutput{}
 	req.Data = output
 	return
@@ -2962,33 +2679,27 @@ func (c *EC2) DescribeAvailabilityZonesRequest(input *DescribeAvailabilityZonesI
 //
 // For more information, see Regions and Availability Zones (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DescribeAvailabilityZones(input *DescribeAvailabilityZonesInput) (output *DescribeAvailabilityZonesOutput, err error) {
+func (c *EC2) DescribeAvailabilityZones(input *DescribeAvailabilityZonesInput) (*DescribeAvailabilityZonesOutput, error) {
 	req, out := c.DescribeAvailabilityZonesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeAvailabilityZones *aws.Operation
+const opDescribeBundleTasks = "DescribeBundleTasks"
 
 // DescribeBundleTasksRequest generates a request for the DescribeBundleTasks operation.
 func (c *EC2) DescribeBundleTasksRequest(input *DescribeBundleTasksInput) (req *aws.Request, output *DescribeBundleTasksOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeBundleTasks == nil {
-		opDescribeBundleTasks = &aws.Operation{
-			Name:       "DescribeBundleTasks",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeBundleTasks,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeBundleTasksInput{}
 	}
 
-	req = c.newRequest(opDescribeBundleTasks, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeBundleTasksOutput{}
 	req.Data = output
 	return
@@ -3000,33 +2711,27 @@ func (c *EC2) DescribeBundleTasksRequest(input *DescribeBundleTasksInput) (req *
 // task is no longer in the list, you can still register an AMI from it. Just
 // use RegisterImage with the Amazon S3 bucket name and image manifest name
 // you provided to the bundle task.
-func (c *EC2) DescribeBundleTasks(input *DescribeBundleTasksInput) (output *DescribeBundleTasksOutput, err error) {
+func (c *EC2) DescribeBundleTasks(input *DescribeBundleTasksInput) (*DescribeBundleTasksOutput, error) {
 	req, out := c.DescribeBundleTasksRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeBundleTasks *aws.Operation
+const opDescribeClassicLinkInstances = "DescribeClassicLinkInstances"
 
 // DescribeClassicLinkInstancesRequest generates a request for the DescribeClassicLinkInstances operation.
 func (c *EC2) DescribeClassicLinkInstancesRequest(input *DescribeClassicLinkInstancesInput) (req *aws.Request, output *DescribeClassicLinkInstancesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeClassicLinkInstances == nil {
-		opDescribeClassicLinkInstances = &aws.Operation{
-			Name:       "DescribeClassicLinkInstances",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeClassicLinkInstances,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeClassicLinkInstancesInput{}
 	}
 
-	req = c.newRequest(opDescribeClassicLinkInstances, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeClassicLinkInstancesOutput{}
 	req.Data = output
 	return
@@ -3036,33 +2741,27 @@ func (c *EC2) DescribeClassicLinkInstancesRequest(input *DescribeClassicLinkInst
 // only returns information about EC2-Classic instances linked to a VPC through
 // ClassicLink; you cannot use this request to return information about other
 // instances.
-func (c *EC2) DescribeClassicLinkInstances(input *DescribeClassicLinkInstancesInput) (output *DescribeClassicLinkInstancesOutput, err error) {
+func (c *EC2) DescribeClassicLinkInstances(input *DescribeClassicLinkInstancesInput) (*DescribeClassicLinkInstancesOutput, error) {
 	req, out := c.DescribeClassicLinkInstancesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeClassicLinkInstances *aws.Operation
+const opDescribeConversionTasks = "DescribeConversionTasks"
 
 // DescribeConversionTasksRequest generates a request for the DescribeConversionTasks operation.
 func (c *EC2) DescribeConversionTasksRequest(input *DescribeConversionTasksInput) (req *aws.Request, output *DescribeConversionTasksOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeConversionTasks == nil {
-		opDescribeConversionTasks = &aws.Operation{
-			Name:       "DescribeConversionTasks",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeConversionTasks,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeConversionTasksInput{}
 	}
 
-	req = c.newRequest(opDescribeConversionTasks, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeConversionTasksOutput{}
 	req.Data = output
 	return
@@ -3072,33 +2771,27 @@ func (c *EC2) DescribeConversionTasksRequest(input *DescribeConversionTasksInput
 // Using the Command Line Tools to Import Your Virtual Machine to Amazon EC2
 // (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UploadingYourInstancesandVolumes.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DescribeConversionTasks(input *DescribeConversionTasksInput) (output *DescribeConversionTasksOutput, err error) {
+func (c *EC2) DescribeConversionTasks(input *DescribeConversionTasksInput) (*DescribeConversionTasksOutput, error) {
 	req, out := c.DescribeConversionTasksRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeConversionTasks *aws.Operation
+const opDescribeCustomerGateways = "DescribeCustomerGateways"
 
 // DescribeCustomerGatewaysRequest generates a request for the DescribeCustomerGateways operation.
 func (c *EC2) DescribeCustomerGatewaysRequest(input *DescribeCustomerGatewaysInput) (req *aws.Request, output *DescribeCustomerGatewaysOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeCustomerGateways == nil {
-		opDescribeCustomerGateways = &aws.Operation{
-			Name:       "DescribeCustomerGateways",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeCustomerGateways,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeCustomerGatewaysInput{}
 	}
 
-	req = c.newRequest(opDescribeCustomerGateways, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeCustomerGatewaysOutput{}
 	req.Data = output
 	return
@@ -3109,33 +2802,27 @@ func (c *EC2) DescribeCustomerGatewaysRequest(input *DescribeCustomerGatewaysInp
 // For more information about VPN customer gateways, see Adding a Hardware
 // Virtual Private Gateway to Your VPC (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) DescribeCustomerGateways(input *DescribeCustomerGatewaysInput) (output *DescribeCustomerGatewaysOutput, err error) {
+func (c *EC2) DescribeCustomerGateways(input *DescribeCustomerGatewaysInput) (*DescribeCustomerGatewaysOutput, error) {
 	req, out := c.DescribeCustomerGatewaysRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeCustomerGateways *aws.Operation
+const opDescribeDHCPOptions = "DescribeDhcpOptions"
 
 // DescribeDHCPOptionsRequest generates a request for the DescribeDHCPOptions operation.
 func (c *EC2) DescribeDHCPOptionsRequest(input *DescribeDHCPOptionsInput) (req *aws.Request, output *DescribeDHCPOptionsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeDHCPOptions == nil {
-		opDescribeDHCPOptions = &aws.Operation{
-			Name:       "DescribeDhcpOptions",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeDHCPOptions,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeDHCPOptionsInput{}
 	}
 
-	req = c.newRequest(opDescribeDHCPOptions, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeDHCPOptionsOutput{}
 	req.Data = output
 	return
@@ -3145,66 +2832,83 @@ func (c *EC2) DescribeDHCPOptionsRequest(input *DescribeDHCPOptionsInput) (req *
 //
 // For more information about DHCP options sets, see DHCP Options Sets (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_DHCP_Options.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) DescribeDHCPOptions(input *DescribeDHCPOptionsInput) (output *DescribeDHCPOptionsOutput, err error) {
+func (c *EC2) DescribeDHCPOptions(input *DescribeDHCPOptionsInput) (*DescribeDHCPOptionsOutput, error) {
 	req, out := c.DescribeDHCPOptionsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeDHCPOptions *aws.Operation
+const opDescribeExportTasks = "DescribeExportTasks"
 
 // DescribeExportTasksRequest generates a request for the DescribeExportTasks operation.
 func (c *EC2) DescribeExportTasksRequest(input *DescribeExportTasksInput) (req *aws.Request, output *DescribeExportTasksOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeExportTasks == nil {
-		opDescribeExportTasks = &aws.Operation{
-			Name:       "DescribeExportTasks",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeExportTasks,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeExportTasksInput{}
 	}
 
-	req = c.newRequest(opDescribeExportTasks, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeExportTasksOutput{}
 	req.Data = output
 	return
 }
 
 // Describes one or more of your export tasks.
-func (c *EC2) DescribeExportTasks(input *DescribeExportTasksInput) (output *DescribeExportTasksOutput, err error) {
+func (c *EC2) DescribeExportTasks(input *DescribeExportTasksInput) (*DescribeExportTasksOutput, error) {
 	req, out := c.DescribeExportTasksRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opDescribeFlowLogs = "DescribeFlowLogs"
+
+// DescribeFlowLogsRequest generates a request for the DescribeFlowLogs operation.
+func (c *EC2) DescribeFlowLogsRequest(input *DescribeFlowLogsInput) (req *aws.Request, output *DescribeFlowLogsOutput) {
+	op := &aws.Operation{
+		Name:       opDescribeFlowLogs,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DescribeFlowLogsInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &DescribeFlowLogsOutput{}
+	req.Data = output
 	return
 }
 
-var opDescribeExportTasks *aws.Operation
+// Describes one or more flow logs. To view the information in your flow logs
+// (the log streams for the network interfaces), you must use the CloudWatch
+// Logs console or the CloudWatch Logs API.
+func (c *EC2) DescribeFlowLogs(input *DescribeFlowLogsInput) (*DescribeFlowLogsOutput, error) {
+	req, out := c.DescribeFlowLogsRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opDescribeImageAttribute = "DescribeImageAttribute"
 
 // DescribeImageAttributeRequest generates a request for the DescribeImageAttribute operation.
 func (c *EC2) DescribeImageAttributeRequest(input *DescribeImageAttributeInput) (req *aws.Request, output *DescribeImageAttributeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeImageAttribute == nil {
-		opDescribeImageAttribute = &aws.Operation{
-			Name:       "DescribeImageAttribute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeImageAttribute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeImageAttributeInput{}
 	}
 
-	req = c.newRequest(opDescribeImageAttribute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeImageAttributeOutput{}
 	req.Data = output
 	return
@@ -3212,33 +2916,27 @@ func (c *EC2) DescribeImageAttributeRequest(input *DescribeImageAttributeInput) 
 
 // Describes the specified attribute of the specified AMI. You can specify only
 // one attribute at a time.
-func (c *EC2) DescribeImageAttribute(input *DescribeImageAttributeInput) (output *DescribeImageAttributeOutput, err error) {
+func (c *EC2) DescribeImageAttribute(input *DescribeImageAttributeInput) (*DescribeImageAttributeOutput, error) {
 	req, out := c.DescribeImageAttributeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeImageAttribute *aws.Operation
+const opDescribeImages = "DescribeImages"
 
 // DescribeImagesRequest generates a request for the DescribeImages operation.
 func (c *EC2) DescribeImagesRequest(input *DescribeImagesInput) (req *aws.Request, output *DescribeImagesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeImages == nil {
-		opDescribeImages = &aws.Operation{
-			Name:       "DescribeImages",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeImages,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeImagesInput{}
 	}
 
-	req = c.newRequest(opDescribeImages, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeImagesOutput{}
 	req.Data = output
 	return
@@ -3251,33 +2949,27 @@ func (c *EC2) DescribeImagesRequest(input *DescribeImagesInput) (req *aws.Reques
 //
 // Deregistered images are included in the returned results for an unspecified
 // interval after deregistration.
-func (c *EC2) DescribeImages(input *DescribeImagesInput) (output *DescribeImagesOutput, err error) {
+func (c *EC2) DescribeImages(input *DescribeImagesInput) (*DescribeImagesOutput, error) {
 	req, out := c.DescribeImagesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeImages *aws.Operation
+const opDescribeImportImageTasks = "DescribeImportImageTasks"
 
 // DescribeImportImageTasksRequest generates a request for the DescribeImportImageTasks operation.
 func (c *EC2) DescribeImportImageTasksRequest(input *DescribeImportImageTasksInput) (req *aws.Request, output *DescribeImportImageTasksOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeImportImageTasks == nil {
-		opDescribeImportImageTasks = &aws.Operation{
-			Name:       "DescribeImportImageTasks",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeImportImageTasks,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeImportImageTasksInput{}
 	}
 
-	req = c.newRequest(opDescribeImportImageTasks, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeImportImageTasksOutput{}
 	req.Data = output
 	return
@@ -3285,66 +2977,54 @@ func (c *EC2) DescribeImportImageTasksRequest(input *DescribeImportImageTasksInp
 
 // Displays details about an import virtual machine or import snapshot tasks
 // that are already created.
-func (c *EC2) DescribeImportImageTasks(input *DescribeImportImageTasksInput) (output *DescribeImportImageTasksOutput, err error) {
+func (c *EC2) DescribeImportImageTasks(input *DescribeImportImageTasksInput) (*DescribeImportImageTasksOutput, error) {
 	req, out := c.DescribeImportImageTasksRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeImportImageTasks *aws.Operation
+const opDescribeImportSnapshotTasks = "DescribeImportSnapshotTasks"
 
 // DescribeImportSnapshotTasksRequest generates a request for the DescribeImportSnapshotTasks operation.
 func (c *EC2) DescribeImportSnapshotTasksRequest(input *DescribeImportSnapshotTasksInput) (req *aws.Request, output *DescribeImportSnapshotTasksOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeImportSnapshotTasks == nil {
-		opDescribeImportSnapshotTasks = &aws.Operation{
-			Name:       "DescribeImportSnapshotTasks",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeImportSnapshotTasks,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeImportSnapshotTasksInput{}
 	}
 
-	req = c.newRequest(opDescribeImportSnapshotTasks, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeImportSnapshotTasksOutput{}
 	req.Data = output
 	return
 }
 
-// Displays details about an import snapshot tasks that is already created.
-func (c *EC2) DescribeImportSnapshotTasks(input *DescribeImportSnapshotTasksInput) (output *DescribeImportSnapshotTasksOutput, err error) {
+// Describes your import snapshot tasks.
+func (c *EC2) DescribeImportSnapshotTasks(input *DescribeImportSnapshotTasksInput) (*DescribeImportSnapshotTasksOutput, error) {
 	req, out := c.DescribeImportSnapshotTasksRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeImportSnapshotTasks *aws.Operation
+const opDescribeInstanceAttribute = "DescribeInstanceAttribute"
 
 // DescribeInstanceAttributeRequest generates a request for the DescribeInstanceAttribute operation.
 func (c *EC2) DescribeInstanceAttributeRequest(input *DescribeInstanceAttributeInput) (req *aws.Request, output *DescribeInstanceAttributeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeInstanceAttribute == nil {
-		opDescribeInstanceAttribute = &aws.Operation{
-			Name:       "DescribeInstanceAttribute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeInstanceAttribute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeInstanceAttributeInput{}
 	}
 
-	req = c.newRequest(opDescribeInstanceAttribute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeInstanceAttributeOutput{}
 	req.Data = output
 	return
@@ -3355,124 +3035,92 @@ func (c *EC2) DescribeInstanceAttributeRequest(input *DescribeInstanceAttributeI
 // kernel | ramdisk | userData | disableApiTermination | instanceInitiatedShutdownBehavior
 // | rootDeviceName | blockDeviceMapping | productCodes | sourceDestCheck |
 // groupSet | ebsOptimized | sriovNetSupport
-func (c *EC2) DescribeInstanceAttribute(input *DescribeInstanceAttributeInput) (output *DescribeInstanceAttributeOutput, err error) {
+func (c *EC2) DescribeInstanceAttribute(input *DescribeInstanceAttributeInput) (*DescribeInstanceAttributeOutput, error) {
 	req, out := c.DescribeInstanceAttributeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeInstanceAttribute *aws.Operation
+const opDescribeInstanceStatus = "DescribeInstanceStatus"
 
 // DescribeInstanceStatusRequest generates a request for the DescribeInstanceStatus operation.
 func (c *EC2) DescribeInstanceStatusRequest(input *DescribeInstanceStatusInput) (req *aws.Request, output *DescribeInstanceStatusOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeInstanceStatus == nil {
-		opDescribeInstanceStatus = &aws.Operation{
-			Name:       "DescribeInstanceStatus",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeInstanceStatus,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeInstanceStatusInput{}
 	}
 
-	req = c.newRequest(opDescribeInstanceStatus, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeInstanceStatusOutput{}
 	req.Data = output
 	return
 }
 
-// Describes the status of one or more instances, including any scheduled events.
+// Describes the status of one or more instances.
 //
-// Instance status has two main components:
+// Instance status includes the following components:
 //
-//   System Status reports impaired functionality that stems from issues related
-// to the systems that support an instance, such as such as hardware failures
-// and network connectivity problems. This call reports such problems as impaired
-// reachability.
-//
-//   Instance Status reports impaired functionality that arises from problems
-// internal to the instance. This call reports such problems as impaired reachability.
-//
-//   Instance status provides information about four types of scheduled events
-// for an instance that may require your attention:
-//
-//   Scheduled Reboot: When Amazon EC2 determines that an instance must be
-// rebooted, the instances status returns one of two event codes: system-reboot
-// or instance-reboot. System reboot commonly occurs if certain maintenance
-// or upgrade operations require a reboot of the underlying host that supports
-// an instance. Instance reboot commonly occurs if the instance must be rebooted,
-// rather than the underlying host. Rebooting events include a scheduled start
-// and end time.
-//
-//   System Maintenance: When Amazon EC2 determines that an instance requires
-// maintenance that requires power or network impact, the instance status is
-// the event code system-maintenance. System maintenance is either power maintenance
-// or network maintenance. For power maintenance, your instance will be unavailable
-// for a brief period of time and then rebooted. For network maintenance, your
-// instance will experience a brief loss of network connectivity. System maintenance
-// events include a scheduled start and end time. You will also be notified
-// by email if one of your instances is set for system maintenance. The email
-// message indicates when your instance is scheduled for maintenance.
-//
-//   Scheduled Retirement: When Amazon EC2 determines that an instance must
-// be shut down, the instance status is the event code instance-retirement.
-// Retirement commonly occurs when the underlying host is degraded and must
-// be replaced. Retirement events include a scheduled start and end time. You
-// will also be notified by email if one of your instances is set to retiring.
-// The email message indicates when your instance will be permanently retired.
-//
-//   Scheduled Stop: When Amazon EC2 determines that an instance must be shut
-// down, the instances status returns an event code called instance-stop. Stop
-// events include a scheduled start and end time. You will also be notified
-// by email if one of your instances is set to stop. The email message indicates
-// when your instance will be stopped.
-//
-//   When your instance is retired, it will either be terminated (if its root
-// device type is the instance-store) or stopped (if its root device type is
-// an EBS volume). Instances stopped due to retirement will not be restarted,
-// but you can do so manually. You can also avoid retirement of EBS-backed instances
-// by manually restarting your instance when its event code is instance-retirement.
-// This ensures that your instance is started on a different underlying host.
-//
-// For more information about failed status checks, see Troubleshooting Instances
-// with Failed Status Checks (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstances.html)
-// in the Amazon Elastic Compute Cloud User Guide. For more information about
-// working with scheduled events, see Working with an Instance That Has a Scheduled
-// Event (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-instances-status-check_sched.html#schedevents_actions)
+//   Status checks - Amazon EC2 performs status checks on running EC2 instances
+// to identify hardware and software issues. For more information, see Status
+// Checks for Your Instances (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-system-instance-status-check.html)
+// and Troubleshooting Instances with Failed Status Checks (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstances.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DescribeInstanceStatus(input *DescribeInstanceStatusInput) (output *DescribeInstanceStatusOutput, err error) {
+//
+//   Scheduled events - Amazon EC2 can schedule events (such as reboot, stop,
+// or terminate) for your instances related to hardware issues, software updates,
+// or system maintenance. For more information, see Scheduled Events for Your
+// Instances (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/monitoring-instances-status-check_sched.html)
+// in the Amazon Elastic Compute Cloud User Guide.
+//
+//   Instance state - You can manage your instances from the moment you launch
+// them through their termination. For more information, see Instance Lifecycle
+// (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-instance-lifecycle.html)
+// in the Amazon Elastic Compute Cloud User Guide.
+func (c *EC2) DescribeInstanceStatus(input *DescribeInstanceStatusInput) (*DescribeInstanceStatusOutput, error) {
 	req, out := c.DescribeInstanceStatusRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeInstanceStatus *aws.Operation
+func (c *EC2) DescribeInstanceStatusPages(input *DescribeInstanceStatusInput, fn func(p *DescribeInstanceStatusOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeInstanceStatusRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeInstanceStatusOutput), lastPage)
+	})
+}
+
+const opDescribeInstances = "DescribeInstances"
 
 // DescribeInstancesRequest generates a request for the DescribeInstances operation.
 func (c *EC2) DescribeInstancesRequest(input *DescribeInstancesInput) (req *aws.Request, output *DescribeInstancesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeInstances == nil {
-		opDescribeInstances = &aws.Operation{
-			Name:       "DescribeInstances",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeInstances,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeInstancesInput{}
 	}
 
-	req = c.newRequest(opDescribeInstances, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeInstancesOutput{}
 	req.Data = output
 	return
@@ -3488,66 +3136,61 @@ func (c *EC2) DescribeInstancesRequest(input *DescribeInstancesInput) (req *aws.
 //
 // Recently terminated instances might appear in the returned results. This
 // interval is usually less than one hour.
-func (c *EC2) DescribeInstances(input *DescribeInstancesInput) (output *DescribeInstancesOutput, err error) {
+func (c *EC2) DescribeInstances(input *DescribeInstancesInput) (*DescribeInstancesOutput, error) {
 	req, out := c.DescribeInstancesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeInstances *aws.Operation
+func (c *EC2) DescribeInstancesPages(input *DescribeInstancesInput, fn func(p *DescribeInstancesOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeInstancesRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeInstancesOutput), lastPage)
+	})
+}
+
+const opDescribeInternetGateways = "DescribeInternetGateways"
 
 // DescribeInternetGatewaysRequest generates a request for the DescribeInternetGateways operation.
 func (c *EC2) DescribeInternetGatewaysRequest(input *DescribeInternetGatewaysInput) (req *aws.Request, output *DescribeInternetGatewaysOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeInternetGateways == nil {
-		opDescribeInternetGateways = &aws.Operation{
-			Name:       "DescribeInternetGateways",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeInternetGateways,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeInternetGatewaysInput{}
 	}
 
-	req = c.newRequest(opDescribeInternetGateways, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeInternetGatewaysOutput{}
 	req.Data = output
 	return
 }
 
 // Describes one or more of your Internet gateways.
-func (c *EC2) DescribeInternetGateways(input *DescribeInternetGatewaysInput) (output *DescribeInternetGatewaysOutput, err error) {
+func (c *EC2) DescribeInternetGateways(input *DescribeInternetGatewaysInput) (*DescribeInternetGatewaysOutput, error) {
 	req, out := c.DescribeInternetGatewaysRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeInternetGateways *aws.Operation
+const opDescribeKeyPairs = "DescribeKeyPairs"
 
 // DescribeKeyPairsRequest generates a request for the DescribeKeyPairs operation.
 func (c *EC2) DescribeKeyPairsRequest(input *DescribeKeyPairsInput) (req *aws.Request, output *DescribeKeyPairsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeKeyPairs == nil {
-		opDescribeKeyPairs = &aws.Operation{
-			Name:       "DescribeKeyPairs",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeKeyPairs,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeKeyPairsInput{}
 	}
 
-	req = c.newRequest(opDescribeKeyPairs, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeKeyPairsOutput{}
 	req.Data = output
 	return
@@ -3557,33 +3200,56 @@ func (c *EC2) DescribeKeyPairsRequest(input *DescribeKeyPairsInput) (req *aws.Re
 //
 // For more information about key pairs, see Key Pairs (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DescribeKeyPairs(input *DescribeKeyPairsInput) (output *DescribeKeyPairsOutput, err error) {
+func (c *EC2) DescribeKeyPairs(input *DescribeKeyPairsInput) (*DescribeKeyPairsOutput, error) {
 	req, out := c.DescribeKeyPairsRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opDescribeMovingAddresses = "DescribeMovingAddresses"
+
+// DescribeMovingAddressesRequest generates a request for the DescribeMovingAddresses operation.
+func (c *EC2) DescribeMovingAddressesRequest(input *DescribeMovingAddressesInput) (req *aws.Request, output *DescribeMovingAddressesOutput) {
+	op := &aws.Operation{
+		Name:       opDescribeMovingAddresses,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DescribeMovingAddressesInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &DescribeMovingAddressesOutput{}
+	req.Data = output
 	return
 }
 
-var opDescribeKeyPairs *aws.Operation
+// Describes your Elastic IP addresses that are being moved to the EC2-VPC platform,
+// or that are being restored to the EC2-Classic platform. This request does
+// not return information about any other Elastic IP addresses in your account.
+func (c *EC2) DescribeMovingAddresses(input *DescribeMovingAddressesInput) (*DescribeMovingAddressesOutput, error) {
+	req, out := c.DescribeMovingAddressesRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opDescribeNetworkACLs = "DescribeNetworkAcls"
 
 // DescribeNetworkACLsRequest generates a request for the DescribeNetworkACLs operation.
 func (c *EC2) DescribeNetworkACLsRequest(input *DescribeNetworkACLsInput) (req *aws.Request, output *DescribeNetworkACLsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeNetworkACLs == nil {
-		opDescribeNetworkACLs = &aws.Operation{
-			Name:       "DescribeNetworkAcls",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeNetworkACLs,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeNetworkACLsInput{}
 	}
 
-	req = c.newRequest(opDescribeNetworkACLs, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeNetworkACLsOutput{}
 	req.Data = output
 	return
@@ -3593,33 +3259,27 @@ func (c *EC2) DescribeNetworkACLsRequest(input *DescribeNetworkACLsInput) (req *
 //
 // For more information about network ACLs, see Network ACLs (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) DescribeNetworkACLs(input *DescribeNetworkACLsInput) (output *DescribeNetworkACLsOutput, err error) {
+func (c *EC2) DescribeNetworkACLs(input *DescribeNetworkACLsInput) (*DescribeNetworkACLsOutput, error) {
 	req, out := c.DescribeNetworkACLsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeNetworkACLs *aws.Operation
+const opDescribeNetworkInterfaceAttribute = "DescribeNetworkInterfaceAttribute"
 
 // DescribeNetworkInterfaceAttributeRequest generates a request for the DescribeNetworkInterfaceAttribute operation.
 func (c *EC2) DescribeNetworkInterfaceAttributeRequest(input *DescribeNetworkInterfaceAttributeInput) (req *aws.Request, output *DescribeNetworkInterfaceAttributeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeNetworkInterfaceAttribute == nil {
-		opDescribeNetworkInterfaceAttribute = &aws.Operation{
-			Name:       "DescribeNetworkInterfaceAttribute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeNetworkInterfaceAttribute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeNetworkInterfaceAttributeInput{}
 	}
 
-	req = c.newRequest(opDescribeNetworkInterfaceAttribute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeNetworkInterfaceAttributeOutput{}
 	req.Data = output
 	return
@@ -3627,66 +3287,54 @@ func (c *EC2) DescribeNetworkInterfaceAttributeRequest(input *DescribeNetworkInt
 
 // Describes a network interface attribute. You can specify only one attribute
 // at a time.
-func (c *EC2) DescribeNetworkInterfaceAttribute(input *DescribeNetworkInterfaceAttributeInput) (output *DescribeNetworkInterfaceAttributeOutput, err error) {
+func (c *EC2) DescribeNetworkInterfaceAttribute(input *DescribeNetworkInterfaceAttributeInput) (*DescribeNetworkInterfaceAttributeOutput, error) {
 	req, out := c.DescribeNetworkInterfaceAttributeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeNetworkInterfaceAttribute *aws.Operation
+const opDescribeNetworkInterfaces = "DescribeNetworkInterfaces"
 
 // DescribeNetworkInterfacesRequest generates a request for the DescribeNetworkInterfaces operation.
 func (c *EC2) DescribeNetworkInterfacesRequest(input *DescribeNetworkInterfacesInput) (req *aws.Request, output *DescribeNetworkInterfacesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeNetworkInterfaces == nil {
-		opDescribeNetworkInterfaces = &aws.Operation{
-			Name:       "DescribeNetworkInterfaces",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeNetworkInterfaces,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeNetworkInterfacesInput{}
 	}
 
-	req = c.newRequest(opDescribeNetworkInterfaces, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeNetworkInterfacesOutput{}
 	req.Data = output
 	return
 }
 
 // Describes one or more of your network interfaces.
-func (c *EC2) DescribeNetworkInterfaces(input *DescribeNetworkInterfacesInput) (output *DescribeNetworkInterfacesOutput, err error) {
+func (c *EC2) DescribeNetworkInterfaces(input *DescribeNetworkInterfacesInput) (*DescribeNetworkInterfacesOutput, error) {
 	req, out := c.DescribeNetworkInterfacesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeNetworkInterfaces *aws.Operation
+const opDescribePlacementGroups = "DescribePlacementGroups"
 
 // DescribePlacementGroupsRequest generates a request for the DescribePlacementGroups operation.
 func (c *EC2) DescribePlacementGroupsRequest(input *DescribePlacementGroupsInput) (req *aws.Request, output *DescribePlacementGroupsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribePlacementGroups == nil {
-		opDescribePlacementGroups = &aws.Operation{
-			Name:       "DescribePlacementGroups",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribePlacementGroups,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribePlacementGroupsInput{}
 	}
 
-	req = c.newRequest(opDescribePlacementGroups, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribePlacementGroupsOutput{}
 	req.Data = output
 	return
@@ -3695,33 +3343,58 @@ func (c *EC2) DescribePlacementGroupsRequest(input *DescribePlacementGroupsInput
 // Describes one or more of your placement groups. For more information about
 // placement groups and cluster instances, see Cluster Instances (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using_cluster_computing.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DescribePlacementGroups(input *DescribePlacementGroupsInput) (output *DescribePlacementGroupsOutput, err error) {
+func (c *EC2) DescribePlacementGroups(input *DescribePlacementGroupsInput) (*DescribePlacementGroupsOutput, error) {
 	req, out := c.DescribePlacementGroupsRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opDescribePrefixLists = "DescribePrefixLists"
+
+// DescribePrefixListsRequest generates a request for the DescribePrefixLists operation.
+func (c *EC2) DescribePrefixListsRequest(input *DescribePrefixListsInput) (req *aws.Request, output *DescribePrefixListsOutput) {
+	op := &aws.Operation{
+		Name:       opDescribePrefixLists,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DescribePrefixListsInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &DescribePrefixListsOutput{}
+	req.Data = output
 	return
 }
 
-var opDescribePlacementGroups *aws.Operation
+// Describes available AWS services in a prefix list format, which includes
+// the prefix list name and prefix list ID of the service and the IP address
+// range for the service. A prefix list ID is required for creating an outbound
+// security group rule that allows traffic from a VPC to access an AWS service
+// through a VPC endpoint.
+func (c *EC2) DescribePrefixLists(input *DescribePrefixListsInput) (*DescribePrefixListsOutput, error) {
+	req, out := c.DescribePrefixListsRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opDescribeRegions = "DescribeRegions"
 
 // DescribeRegionsRequest generates a request for the DescribeRegions operation.
 func (c *EC2) DescribeRegionsRequest(input *DescribeRegionsInput) (req *aws.Request, output *DescribeRegionsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeRegions == nil {
-		opDescribeRegions = &aws.Operation{
-			Name:       "DescribeRegions",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeRegions,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeRegionsInput{}
 	}
 
-	req = c.newRequest(opDescribeRegions, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeRegionsOutput{}
 	req.Data = output
 	return
@@ -3731,33 +3404,27 @@ func (c *EC2) DescribeRegionsRequest(input *DescribeRegionsInput) (req *aws.Requ
 //
 // For a list of the regions supported by Amazon EC2, see Regions and Endpoints
 // (http://docs.aws.amazon.com/general/latest/gr/rande.html#ec2_region).
-func (c *EC2) DescribeRegions(input *DescribeRegionsInput) (output *DescribeRegionsOutput, err error) {
+func (c *EC2) DescribeRegions(input *DescribeRegionsInput) (*DescribeRegionsOutput, error) {
 	req, out := c.DescribeRegionsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeRegions *aws.Operation
+const opDescribeReservedInstances = "DescribeReservedInstances"
 
 // DescribeReservedInstancesRequest generates a request for the DescribeReservedInstances operation.
 func (c *EC2) DescribeReservedInstancesRequest(input *DescribeReservedInstancesInput) (req *aws.Request, output *DescribeReservedInstancesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeReservedInstances == nil {
-		opDescribeReservedInstances = &aws.Operation{
-			Name:       "DescribeReservedInstances",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeReservedInstances,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeReservedInstancesInput{}
 	}
 
-	req = c.newRequest(opDescribeReservedInstances, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeReservedInstancesOutput{}
 	req.Data = output
 	return
@@ -3767,33 +3434,27 @@ func (c *EC2) DescribeReservedInstancesRequest(input *DescribeReservedInstancesI
 //
 // For more information about Reserved Instances, see Reserved Instances (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts-on-demand-reserved-instances.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DescribeReservedInstances(input *DescribeReservedInstancesInput) (output *DescribeReservedInstancesOutput, err error) {
+func (c *EC2) DescribeReservedInstances(input *DescribeReservedInstancesInput) (*DescribeReservedInstancesOutput, error) {
 	req, out := c.DescribeReservedInstancesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeReservedInstances *aws.Operation
+const opDescribeReservedInstancesListings = "DescribeReservedInstancesListings"
 
 // DescribeReservedInstancesListingsRequest generates a request for the DescribeReservedInstancesListings operation.
 func (c *EC2) DescribeReservedInstancesListingsRequest(input *DescribeReservedInstancesListingsInput) (req *aws.Request, output *DescribeReservedInstancesListingsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeReservedInstancesListings == nil {
-		opDescribeReservedInstancesListings = &aws.Operation{
-			Name:       "DescribeReservedInstancesListings",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeReservedInstancesListings,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeReservedInstancesListingsInput{}
 	}
 
-	req = c.newRequest(opDescribeReservedInstancesListings, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeReservedInstancesListingsOutput{}
 	req.Data = output
 	return
@@ -3821,33 +3482,33 @@ func (c *EC2) DescribeReservedInstancesListingsRequest(input *DescribeReservedIn
 //
 // For more information, see Reserved Instance Marketplace (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DescribeReservedInstancesListings(input *DescribeReservedInstancesListingsInput) (output *DescribeReservedInstancesListingsOutput, err error) {
+func (c *EC2) DescribeReservedInstancesListings(input *DescribeReservedInstancesListingsInput) (*DescribeReservedInstancesListingsOutput, error) {
 	req, out := c.DescribeReservedInstancesListingsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeReservedInstancesListings *aws.Operation
+const opDescribeReservedInstancesModifications = "DescribeReservedInstancesModifications"
 
 // DescribeReservedInstancesModificationsRequest generates a request for the DescribeReservedInstancesModifications operation.
 func (c *EC2) DescribeReservedInstancesModificationsRequest(input *DescribeReservedInstancesModificationsInput) (req *aws.Request, output *DescribeReservedInstancesModificationsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeReservedInstancesModifications == nil {
-		opDescribeReservedInstancesModifications = &aws.Operation{
-			Name:       "DescribeReservedInstancesModifications",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeReservedInstancesModifications,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeReservedInstancesModificationsInput{}
 	}
 
-	req = c.newRequest(opDescribeReservedInstancesModifications, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeReservedInstancesModificationsOutput{}
 	req.Data = output
 	return
@@ -3860,33 +3521,40 @@ func (c *EC2) DescribeReservedInstancesModificationsRequest(input *DescribeReser
 //
 // For more information, see Modifying Reserved Instances (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-modifying.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DescribeReservedInstancesModifications(input *DescribeReservedInstancesModificationsInput) (output *DescribeReservedInstancesModificationsOutput, err error) {
+func (c *EC2) DescribeReservedInstancesModifications(input *DescribeReservedInstancesModificationsInput) (*DescribeReservedInstancesModificationsOutput, error) {
 	req, out := c.DescribeReservedInstancesModificationsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeReservedInstancesModifications *aws.Operation
+func (c *EC2) DescribeReservedInstancesModificationsPages(input *DescribeReservedInstancesModificationsInput, fn func(p *DescribeReservedInstancesModificationsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeReservedInstancesModificationsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeReservedInstancesModificationsOutput), lastPage)
+	})
+}
+
+const opDescribeReservedInstancesOfferings = "DescribeReservedInstancesOfferings"
 
 // DescribeReservedInstancesOfferingsRequest generates a request for the DescribeReservedInstancesOfferings operation.
 func (c *EC2) DescribeReservedInstancesOfferingsRequest(input *DescribeReservedInstancesOfferingsInput) (req *aws.Request, output *DescribeReservedInstancesOfferingsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeReservedInstancesOfferings == nil {
-		opDescribeReservedInstancesOfferings = &aws.Operation{
-			Name:       "DescribeReservedInstancesOfferings",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeReservedInstancesOfferings,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeReservedInstancesOfferingsInput{}
 	}
 
-	req = c.newRequest(opDescribeReservedInstancesOfferings, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeReservedInstancesOfferingsOutput{}
 	req.Data = output
 	return
@@ -3900,33 +3568,34 @@ func (c *EC2) DescribeReservedInstancesOfferingsRequest(input *DescribeReservedI
 //
 // For more information, see Reserved Instance Marketplace (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DescribeReservedInstancesOfferings(input *DescribeReservedInstancesOfferingsInput) (output *DescribeReservedInstancesOfferingsOutput, err error) {
+func (c *EC2) DescribeReservedInstancesOfferings(input *DescribeReservedInstancesOfferingsInput) (*DescribeReservedInstancesOfferingsOutput, error) {
 	req, out := c.DescribeReservedInstancesOfferingsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeReservedInstancesOfferings *aws.Operation
+func (c *EC2) DescribeReservedInstancesOfferingsPages(input *DescribeReservedInstancesOfferingsInput, fn func(p *DescribeReservedInstancesOfferingsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeReservedInstancesOfferingsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeReservedInstancesOfferingsOutput), lastPage)
+	})
+}
+
+const opDescribeRouteTables = "DescribeRouteTables"
 
 // DescribeRouteTablesRequest generates a request for the DescribeRouteTables operation.
 func (c *EC2) DescribeRouteTablesRequest(input *DescribeRouteTablesInput) (req *aws.Request, output *DescribeRouteTablesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeRouteTables == nil {
-		opDescribeRouteTables = &aws.Operation{
-			Name:       "DescribeRouteTables",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeRouteTables,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeRouteTablesInput{}
 	}
 
-	req = c.newRequest(opDescribeRouteTables, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeRouteTablesOutput{}
 	req.Data = output
 	return
@@ -3934,35 +3603,34 @@ func (c *EC2) DescribeRouteTablesRequest(input *DescribeRouteTablesInput) (req *
 
 // Describes one or more of your route tables.
 //
+// Each subnet in your VPC must be associated with a route table. If a subnet
+// is not explicitly associated with any route table, it is implicitly associated
+// with the main route table. This command does not return the subnet ID for
+// implicit associations.
+//
 // For more information about route tables, see Route Tables (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) DescribeRouteTables(input *DescribeRouteTablesInput) (output *DescribeRouteTablesOutput, err error) {
+func (c *EC2) DescribeRouteTables(input *DescribeRouteTablesInput) (*DescribeRouteTablesOutput, error) {
 	req, out := c.DescribeRouteTablesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeRouteTables *aws.Operation
+const opDescribeSecurityGroups = "DescribeSecurityGroups"
 
 // DescribeSecurityGroupsRequest generates a request for the DescribeSecurityGroups operation.
 func (c *EC2) DescribeSecurityGroupsRequest(input *DescribeSecurityGroupsInput) (req *aws.Request, output *DescribeSecurityGroupsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeSecurityGroups == nil {
-		opDescribeSecurityGroups = &aws.Operation{
-			Name:       "DescribeSecurityGroups",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeSecurityGroups,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeSecurityGroupsInput{}
 	}
 
-	req = c.newRequest(opDescribeSecurityGroups, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeSecurityGroupsOutput{}
 	req.Data = output
 	return
@@ -3976,33 +3644,27 @@ func (c *EC2) DescribeSecurityGroupsRequest(input *DescribeSecurityGroupsInput) 
 // in the Amazon Elastic Compute Cloud User Guide and Security Groups for Your
 // VPC (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_SecurityGroups.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) DescribeSecurityGroups(input *DescribeSecurityGroupsInput) (output *DescribeSecurityGroupsOutput, err error) {
+func (c *EC2) DescribeSecurityGroups(input *DescribeSecurityGroupsInput) (*DescribeSecurityGroupsOutput, error) {
 	req, out := c.DescribeSecurityGroupsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeSecurityGroups *aws.Operation
+const opDescribeSnapshotAttribute = "DescribeSnapshotAttribute"
 
 // DescribeSnapshotAttributeRequest generates a request for the DescribeSnapshotAttribute operation.
 func (c *EC2) DescribeSnapshotAttributeRequest(input *DescribeSnapshotAttributeInput) (req *aws.Request, output *DescribeSnapshotAttributeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeSnapshotAttribute == nil {
-		opDescribeSnapshotAttribute = &aws.Operation{
-			Name:       "DescribeSnapshotAttribute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeSnapshotAttribute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeSnapshotAttributeInput{}
 	}
 
-	req = c.newRequest(opDescribeSnapshotAttribute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeSnapshotAttributeOutput{}
 	req.Data = output
 	return
@@ -4011,44 +3673,44 @@ func (c *EC2) DescribeSnapshotAttributeRequest(input *DescribeSnapshotAttributeI
 // Describes the specified attribute of the specified snapshot. You can specify
 // only one attribute at a time.
 //
-// For more information about Amazon EBS snapshots, see Amazon EBS Snapshots
-// in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DescribeSnapshotAttribute(input *DescribeSnapshotAttributeInput) (output *DescribeSnapshotAttributeOutput, err error) {
+// For more information about EBS snapshots, see Amazon EBS Snapshots in the
+// Amazon Elastic Compute Cloud User Guide.
+func (c *EC2) DescribeSnapshotAttribute(input *DescribeSnapshotAttributeInput) (*DescribeSnapshotAttributeOutput, error) {
 	req, out := c.DescribeSnapshotAttributeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeSnapshotAttribute *aws.Operation
+const opDescribeSnapshots = "DescribeSnapshots"
 
 // DescribeSnapshotsRequest generates a request for the DescribeSnapshots operation.
 func (c *EC2) DescribeSnapshotsRequest(input *DescribeSnapshotsInput) (req *aws.Request, output *DescribeSnapshotsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeSnapshots == nil {
-		opDescribeSnapshots = &aws.Operation{
-			Name:       "DescribeSnapshots",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeSnapshots,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeSnapshotsInput{}
 	}
 
-	req = c.newRequest(opDescribeSnapshots, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeSnapshotsOutput{}
 	req.Data = output
 	return
 }
 
-// Describes one or more of the Amazon EBS snapshots available to you. Available
-// snapshots include public snapshots available for any AWS account to launch,
-// private snapshots that you own, and private snapshots owned by another AWS
-// account but for which you've been given explicit create volume permissions.
+// Describes one or more of the EBS snapshots available to you. Available snapshots
+// include public snapshots available for any AWS account to launch, private
+// snapshots that you own, and private snapshots owned by another AWS account
+// but for which you've been given explicit create volume permissions.
 //
 // The create volume permissions fall into the following categories:
 //
@@ -4083,35 +3745,36 @@ func (c *EC2) DescribeSnapshotsRequest(input *DescribeSnapshotsInput) (req *aws.
 // a NextToken value that can be passed to a subsequent DescribeSnapshots request
 // to retrieve the remaining results.
 //
-// For more information about Amazon EBS snapshots, see Amazon EBS Snapshots
-// in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DescribeSnapshots(input *DescribeSnapshotsInput) (output *DescribeSnapshotsOutput, err error) {
+// For more information about EBS snapshots, see Amazon EBS Snapshots in the
+// Amazon Elastic Compute Cloud User Guide.
+func (c *EC2) DescribeSnapshots(input *DescribeSnapshotsInput) (*DescribeSnapshotsOutput, error) {
 	req, out := c.DescribeSnapshotsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeSnapshots *aws.Operation
+func (c *EC2) DescribeSnapshotsPages(input *DescribeSnapshotsInput, fn func(p *DescribeSnapshotsOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeSnapshotsRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeSnapshotsOutput), lastPage)
+	})
+}
+
+const opDescribeSpotDatafeedSubscription = "DescribeSpotDatafeedSubscription"
 
 // DescribeSpotDatafeedSubscriptionRequest generates a request for the DescribeSpotDatafeedSubscription operation.
 func (c *EC2) DescribeSpotDatafeedSubscriptionRequest(input *DescribeSpotDatafeedSubscriptionInput) (req *aws.Request, output *DescribeSpotDatafeedSubscriptionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeSpotDatafeedSubscription == nil {
-		opDescribeSpotDatafeedSubscription = &aws.Operation{
-			Name:       "DescribeSpotDatafeedSubscription",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeSpotDatafeedSubscription,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeSpotDatafeedSubscriptionInput{}
 	}
 
-	req = c.newRequest(opDescribeSpotDatafeedSubscription, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeSpotDatafeedSubscriptionOutput{}
 	req.Data = output
 	return
@@ -4120,33 +3783,113 @@ func (c *EC2) DescribeSpotDatafeedSubscriptionRequest(input *DescribeSpotDatafee
 // Describes the data feed for Spot Instances. For more information, see Spot
 // Instance Data Feed (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-data-feeds.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DescribeSpotDatafeedSubscription(input *DescribeSpotDatafeedSubscriptionInput) (output *DescribeSpotDatafeedSubscriptionOutput, err error) {
+func (c *EC2) DescribeSpotDatafeedSubscription(input *DescribeSpotDatafeedSubscriptionInput) (*DescribeSpotDatafeedSubscriptionOutput, error) {
 	req, out := c.DescribeSpotDatafeedSubscriptionRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opDescribeSpotFleetInstances = "DescribeSpotFleetInstances"
+
+// DescribeSpotFleetInstancesRequest generates a request for the DescribeSpotFleetInstances operation.
+func (c *EC2) DescribeSpotFleetInstancesRequest(input *DescribeSpotFleetInstancesInput) (req *aws.Request, output *DescribeSpotFleetInstancesOutput) {
+	op := &aws.Operation{
+		Name:       opDescribeSpotFleetInstances,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DescribeSpotFleetInstancesInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &DescribeSpotFleetInstancesOutput{}
+	req.Data = output
 	return
 }
 
-var opDescribeSpotDatafeedSubscription *aws.Operation
+// Describes the running instances for the specified Spot fleet.
+func (c *EC2) DescribeSpotFleetInstances(input *DescribeSpotFleetInstancesInput) (*DescribeSpotFleetInstancesOutput, error) {
+	req, out := c.DescribeSpotFleetInstancesRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opDescribeSpotFleetRequestHistory = "DescribeSpotFleetRequestHistory"
+
+// DescribeSpotFleetRequestHistoryRequest generates a request for the DescribeSpotFleetRequestHistory operation.
+func (c *EC2) DescribeSpotFleetRequestHistoryRequest(input *DescribeSpotFleetRequestHistoryInput) (req *aws.Request, output *DescribeSpotFleetRequestHistoryOutput) {
+	op := &aws.Operation{
+		Name:       opDescribeSpotFleetRequestHistory,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DescribeSpotFleetRequestHistoryInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &DescribeSpotFleetRequestHistoryOutput{}
+	req.Data = output
+	return
+}
+
+// Describes the events for the specified Spot fleet request during the specified
+// time.
+//
+// Spot fleet events are delayed by up to 30 seconds before they can be described.
+// This ensures that you can query by the last evaluated time and not miss a
+// recorded event.
+func (c *EC2) DescribeSpotFleetRequestHistory(input *DescribeSpotFleetRequestHistoryInput) (*DescribeSpotFleetRequestHistoryOutput, error) {
+	req, out := c.DescribeSpotFleetRequestHistoryRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opDescribeSpotFleetRequests = "DescribeSpotFleetRequests"
+
+// DescribeSpotFleetRequestsRequest generates a request for the DescribeSpotFleetRequests operation.
+func (c *EC2) DescribeSpotFleetRequestsRequest(input *DescribeSpotFleetRequestsInput) (req *aws.Request, output *DescribeSpotFleetRequestsOutput) {
+	op := &aws.Operation{
+		Name:       opDescribeSpotFleetRequests,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DescribeSpotFleetRequestsInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &DescribeSpotFleetRequestsOutput{}
+	req.Data = output
+	return
+}
+
+// Describes your Spot fleet requests.
+func (c *EC2) DescribeSpotFleetRequests(input *DescribeSpotFleetRequestsInput) (*DescribeSpotFleetRequestsOutput, error) {
+	req, out := c.DescribeSpotFleetRequestsRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opDescribeSpotInstanceRequests = "DescribeSpotInstanceRequests"
 
 // DescribeSpotInstanceRequestsRequest generates a request for the DescribeSpotInstanceRequests operation.
 func (c *EC2) DescribeSpotInstanceRequestsRequest(input *DescribeSpotInstanceRequestsInput) (req *aws.Request, output *DescribeSpotInstanceRequestsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeSpotInstanceRequests == nil {
-		opDescribeSpotInstanceRequests = &aws.Operation{
-			Name:       "DescribeSpotInstanceRequests",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeSpotInstanceRequests,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeSpotInstanceRequestsInput{}
 	}
 
-	req = c.newRequest(opDescribeSpotInstanceRequests, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeSpotInstanceRequestsOutput{}
 	req.Data = output
 	return
@@ -4164,33 +3907,33 @@ func (c *EC2) DescribeSpotInstanceRequestsRequest(input *DescribeSpotInstanceReq
 // the instance ID appears in the response and contains the identifier of the
 // instance. Alternatively, you can use DescribeInstances with a filter to look
 // for instances where the instance lifecycle is spot.
-func (c *EC2) DescribeSpotInstanceRequests(input *DescribeSpotInstanceRequestsInput) (output *DescribeSpotInstanceRequestsOutput, err error) {
+func (c *EC2) DescribeSpotInstanceRequests(input *DescribeSpotInstanceRequestsInput) (*DescribeSpotInstanceRequestsOutput, error) {
 	req, out := c.DescribeSpotInstanceRequestsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeSpotInstanceRequests *aws.Operation
+const opDescribeSpotPriceHistory = "DescribeSpotPriceHistory"
 
 // DescribeSpotPriceHistoryRequest generates a request for the DescribeSpotPriceHistory operation.
 func (c *EC2) DescribeSpotPriceHistoryRequest(input *DescribeSpotPriceHistoryInput) (req *aws.Request, output *DescribeSpotPriceHistoryOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeSpotPriceHistory == nil {
-		opDescribeSpotPriceHistory = &aws.Operation{
-			Name:       "DescribeSpotPriceHistory",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeSpotPriceHistory,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeSpotPriceHistoryInput{}
 	}
 
-	req = c.newRequest(opDescribeSpotPriceHistory, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeSpotPriceHistoryOutput{}
 	req.Data = output
 	return
@@ -4205,33 +3948,34 @@ func (c *EC2) DescribeSpotPriceHistoryRequest(input *DescribeSpotPriceHistoryInp
 // of the instance types within the time range that you specified and the time
 // when the price changed. The price is valid within the time period that you
 // specified; the response merely indicates the last time that the price changed.
-func (c *EC2) DescribeSpotPriceHistory(input *DescribeSpotPriceHistoryInput) (output *DescribeSpotPriceHistoryOutput, err error) {
+func (c *EC2) DescribeSpotPriceHistory(input *DescribeSpotPriceHistoryInput) (*DescribeSpotPriceHistoryOutput, error) {
 	req, out := c.DescribeSpotPriceHistoryRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeSpotPriceHistory *aws.Operation
+func (c *EC2) DescribeSpotPriceHistoryPages(input *DescribeSpotPriceHistoryInput, fn func(p *DescribeSpotPriceHistoryOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeSpotPriceHistoryRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeSpotPriceHistoryOutput), lastPage)
+	})
+}
+
+const opDescribeSubnets = "DescribeSubnets"
 
 // DescribeSubnetsRequest generates a request for the DescribeSubnets operation.
 func (c *EC2) DescribeSubnetsRequest(input *DescribeSubnetsInput) (req *aws.Request, output *DescribeSubnetsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeSubnets == nil {
-		opDescribeSubnets = &aws.Operation{
-			Name:       "DescribeSubnets",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeSubnets,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeSubnetsInput{}
 	}
 
-	req = c.newRequest(opDescribeSubnets, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeSubnetsOutput{}
 	req.Data = output
 	return
@@ -4241,33 +3985,27 @@ func (c *EC2) DescribeSubnetsRequest(input *DescribeSubnetsInput) (req *aws.Requ
 //
 // For more information about subnets, see Your VPC and Subnets (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Subnets.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) DescribeSubnets(input *DescribeSubnetsInput) (output *DescribeSubnetsOutput, err error) {
+func (c *EC2) DescribeSubnets(input *DescribeSubnetsInput) (*DescribeSubnetsOutput, error) {
 	req, out := c.DescribeSubnetsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeSubnets *aws.Operation
+const opDescribeTags = "DescribeTags"
 
 // DescribeTagsRequest generates a request for the DescribeTags operation.
 func (c *EC2) DescribeTagsRequest(input *DescribeTagsInput) (req *aws.Request, output *DescribeTagsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeTags == nil {
-		opDescribeTags = &aws.Operation{
-			Name:       "DescribeTags",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeTags,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeTagsInput{}
 	}
 
-	req = c.newRequest(opDescribeTags, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeTagsOutput{}
 	req.Data = output
 	return
@@ -4277,33 +4015,27 @@ func (c *EC2) DescribeTagsRequest(input *DescribeTagsInput) (req *aws.Request, o
 //
 // For more information about tags, see Tagging Your Resources (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_Tags.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DescribeTags(input *DescribeTagsInput) (output *DescribeTagsOutput, err error) {
+func (c *EC2) DescribeTags(input *DescribeTagsInput) (*DescribeTagsOutput, error) {
 	req, out := c.DescribeTagsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeTags *aws.Operation
+const opDescribeVPCAttribute = "DescribeVpcAttribute"
 
 // DescribeVPCAttributeRequest generates a request for the DescribeVPCAttribute operation.
 func (c *EC2) DescribeVPCAttributeRequest(input *DescribeVPCAttributeInput) (req *aws.Request, output *DescribeVPCAttributeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeVPCAttribute == nil {
-		opDescribeVPCAttribute = &aws.Operation{
-			Name:       "DescribeVpcAttribute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeVPCAttribute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeVPCAttributeInput{}
 	}
 
-	req = c.newRequest(opDescribeVPCAttribute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeVPCAttributeOutput{}
 	req.Data = output
 	return
@@ -4311,132 +4043,163 @@ func (c *EC2) DescribeVPCAttributeRequest(input *DescribeVPCAttributeInput) (req
 
 // Describes the specified attribute of the specified VPC. You can specify only
 // one attribute at a time.
-func (c *EC2) DescribeVPCAttribute(input *DescribeVPCAttributeInput) (output *DescribeVPCAttributeOutput, err error) {
+func (c *EC2) DescribeVPCAttribute(input *DescribeVPCAttributeInput) (*DescribeVPCAttributeOutput, error) {
 	req, out := c.DescribeVPCAttributeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeVPCAttribute *aws.Operation
+const opDescribeVPCClassicLink = "DescribeVpcClassicLink"
 
 // DescribeVPCClassicLinkRequest generates a request for the DescribeVPCClassicLink operation.
 func (c *EC2) DescribeVPCClassicLinkRequest(input *DescribeVPCClassicLinkInput) (req *aws.Request, output *DescribeVPCClassicLinkOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeVPCClassicLink == nil {
-		opDescribeVPCClassicLink = &aws.Operation{
-			Name:       "DescribeVpcClassicLink",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeVPCClassicLink,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeVPCClassicLinkInput{}
 	}
 
-	req = c.newRequest(opDescribeVPCClassicLink, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeVPCClassicLinkOutput{}
 	req.Data = output
 	return
 }
 
 // Describes the ClassicLink status of one or more VPCs.
-func (c *EC2) DescribeVPCClassicLink(input *DescribeVPCClassicLinkInput) (output *DescribeVPCClassicLinkOutput, err error) {
+func (c *EC2) DescribeVPCClassicLink(input *DescribeVPCClassicLinkInput) (*DescribeVPCClassicLinkOutput, error) {
 	req, out := c.DescribeVPCClassicLinkRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opDescribeVPCEndpointServices = "DescribeVpcEndpointServices"
+
+// DescribeVPCEndpointServicesRequest generates a request for the DescribeVPCEndpointServices operation.
+func (c *EC2) DescribeVPCEndpointServicesRequest(input *DescribeVPCEndpointServicesInput) (req *aws.Request, output *DescribeVPCEndpointServicesOutput) {
+	op := &aws.Operation{
+		Name:       opDescribeVPCEndpointServices,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DescribeVPCEndpointServicesInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &DescribeVPCEndpointServicesOutput{}
+	req.Data = output
 	return
 }
 
-var opDescribeVPCClassicLink *aws.Operation
+// Describes all supported AWS services that can be specified when creating
+// a VPC endpoint.
+func (c *EC2) DescribeVPCEndpointServices(input *DescribeVPCEndpointServicesInput) (*DescribeVPCEndpointServicesOutput, error) {
+	req, out := c.DescribeVPCEndpointServicesRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opDescribeVPCEndpoints = "DescribeVpcEndpoints"
+
+// DescribeVPCEndpointsRequest generates a request for the DescribeVPCEndpoints operation.
+func (c *EC2) DescribeVPCEndpointsRequest(input *DescribeVPCEndpointsInput) (req *aws.Request, output *DescribeVPCEndpointsOutput) {
+	op := &aws.Operation{
+		Name:       opDescribeVPCEndpoints,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &DescribeVPCEndpointsInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &DescribeVPCEndpointsOutput{}
+	req.Data = output
+	return
+}
+
+// Describes one or more of your VPC endpoints.
+func (c *EC2) DescribeVPCEndpoints(input *DescribeVPCEndpointsInput) (*DescribeVPCEndpointsOutput, error) {
+	req, out := c.DescribeVPCEndpointsRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opDescribeVPCPeeringConnections = "DescribeVpcPeeringConnections"
 
 // DescribeVPCPeeringConnectionsRequest generates a request for the DescribeVPCPeeringConnections operation.
 func (c *EC2) DescribeVPCPeeringConnectionsRequest(input *DescribeVPCPeeringConnectionsInput) (req *aws.Request, output *DescribeVPCPeeringConnectionsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeVPCPeeringConnections == nil {
-		opDescribeVPCPeeringConnections = &aws.Operation{
-			Name:       "DescribeVpcPeeringConnections",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeVPCPeeringConnections,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeVPCPeeringConnectionsInput{}
 	}
 
-	req = c.newRequest(opDescribeVPCPeeringConnections, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeVPCPeeringConnectionsOutput{}
 	req.Data = output
 	return
 }
 
 // Describes one or more of your VPC peering connections.
-func (c *EC2) DescribeVPCPeeringConnections(input *DescribeVPCPeeringConnectionsInput) (output *DescribeVPCPeeringConnectionsOutput, err error) {
+func (c *EC2) DescribeVPCPeeringConnections(input *DescribeVPCPeeringConnectionsInput) (*DescribeVPCPeeringConnectionsOutput, error) {
 	req, out := c.DescribeVPCPeeringConnectionsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeVPCPeeringConnections *aws.Operation
+const opDescribeVPCs = "DescribeVpcs"
 
 // DescribeVPCsRequest generates a request for the DescribeVPCs operation.
 func (c *EC2) DescribeVPCsRequest(input *DescribeVPCsInput) (req *aws.Request, output *DescribeVPCsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeVPCs == nil {
-		opDescribeVPCs = &aws.Operation{
-			Name:       "DescribeVpcs",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeVPCs,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeVPCsInput{}
 	}
 
-	req = c.newRequest(opDescribeVPCs, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeVPCsOutput{}
 	req.Data = output
 	return
 }
 
 // Describes one or more of your VPCs.
-func (c *EC2) DescribeVPCs(input *DescribeVPCsInput) (output *DescribeVPCsOutput, err error) {
+func (c *EC2) DescribeVPCs(input *DescribeVPCsInput) (*DescribeVPCsOutput, error) {
 	req, out := c.DescribeVPCsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeVPCs *aws.Operation
+const opDescribeVPNConnections = "DescribeVpnConnections"
 
 // DescribeVPNConnectionsRequest generates a request for the DescribeVPNConnections operation.
 func (c *EC2) DescribeVPNConnectionsRequest(input *DescribeVPNConnectionsInput) (req *aws.Request, output *DescribeVPNConnectionsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeVPNConnections == nil {
-		opDescribeVPNConnections = &aws.Operation{
-			Name:       "DescribeVpnConnections",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeVPNConnections,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeVPNConnectionsInput{}
 	}
 
-	req = c.newRequest(opDescribeVPNConnections, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeVPNConnectionsOutput{}
 	req.Data = output
 	return
@@ -4447,33 +4210,27 @@ func (c *EC2) DescribeVPNConnectionsRequest(input *DescribeVPNConnectionsInput) 
 // For more information about VPN connections, see Adding a Hardware Virtual
 // Private Gateway to Your VPC (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) DescribeVPNConnections(input *DescribeVPNConnectionsInput) (output *DescribeVPNConnectionsOutput, err error) {
+func (c *EC2) DescribeVPNConnections(input *DescribeVPNConnectionsInput) (*DescribeVPNConnectionsOutput, error) {
 	req, out := c.DescribeVPNConnectionsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeVPNConnections *aws.Operation
+const opDescribeVPNGateways = "DescribeVpnGateways"
 
 // DescribeVPNGatewaysRequest generates a request for the DescribeVPNGateways operation.
 func (c *EC2) DescribeVPNGatewaysRequest(input *DescribeVPNGatewaysInput) (req *aws.Request, output *DescribeVPNGatewaysOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeVPNGateways == nil {
-		opDescribeVPNGateways = &aws.Operation{
-			Name:       "DescribeVpnGateways",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeVPNGateways,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeVPNGatewaysInput{}
 	}
 
-	req = c.newRequest(opDescribeVPNGateways, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeVPNGatewaysOutput{}
 	req.Data = output
 	return
@@ -4484,33 +4241,27 @@ func (c *EC2) DescribeVPNGatewaysRequest(input *DescribeVPNGatewaysInput) (req *
 // For more information about virtual private gateways, see Adding an IPsec
 // Hardware VPN to Your VPC (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_VPN.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) DescribeVPNGateways(input *DescribeVPNGatewaysInput) (output *DescribeVPNGatewaysOutput, err error) {
+func (c *EC2) DescribeVPNGateways(input *DescribeVPNGatewaysInput) (*DescribeVPNGatewaysOutput, error) {
 	req, out := c.DescribeVPNGatewaysRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeVPNGateways *aws.Operation
+const opDescribeVolumeAttribute = "DescribeVolumeAttribute"
 
 // DescribeVolumeAttributeRequest generates a request for the DescribeVolumeAttribute operation.
 func (c *EC2) DescribeVolumeAttributeRequest(input *DescribeVolumeAttributeInput) (req *aws.Request, output *DescribeVolumeAttributeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeVolumeAttribute == nil {
-		opDescribeVolumeAttribute = &aws.Operation{
-			Name:       "DescribeVolumeAttribute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeVolumeAttribute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeVolumeAttributeInput{}
 	}
 
-	req = c.newRequest(opDescribeVolumeAttribute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeVolumeAttributeOutput{}
 	req.Data = output
 	return
@@ -4519,35 +4270,35 @@ func (c *EC2) DescribeVolumeAttributeRequest(input *DescribeVolumeAttributeInput
 // Describes the specified attribute of the specified volume. You can specify
 // only one attribute at a time.
 //
-// For more information about Amazon EBS volumes, see Amazon EBS Volumes in
-// the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DescribeVolumeAttribute(input *DescribeVolumeAttributeInput) (output *DescribeVolumeAttributeOutput, err error) {
+// For more information about EBS volumes, see Amazon EBS Volumes in the Amazon
+// Elastic Compute Cloud User Guide.
+func (c *EC2) DescribeVolumeAttribute(input *DescribeVolumeAttributeInput) (*DescribeVolumeAttributeOutput, error) {
 	req, out := c.DescribeVolumeAttributeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeVolumeAttribute *aws.Operation
+const opDescribeVolumeStatus = "DescribeVolumeStatus"
 
 // DescribeVolumeStatusRequest generates a request for the DescribeVolumeStatus operation.
 func (c *EC2) DescribeVolumeStatusRequest(input *DescribeVolumeStatusInput) (req *aws.Request, output *DescribeVolumeStatusOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeVolumeStatus == nil {
-		opDescribeVolumeStatus = &aws.Operation{
-			Name:       "DescribeVolumeStatus",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeVolumeStatus,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeVolumeStatusInput{}
 	}
 
-	req = c.newRequest(opDescribeVolumeStatus, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeVolumeStatusOutput{}
 	req.Data = output
 	return
@@ -4588,39 +4339,46 @@ func (c *EC2) DescribeVolumeStatusRequest(input *DescribeVolumeStatusInput) (req
 //  Volume status is based on the volume status checks, and does not reflect
 // the volume state. Therefore, volume status does not indicate volumes in the
 // error state (for example, when a volume is incapable of accepting I/O.)
-func (c *EC2) DescribeVolumeStatus(input *DescribeVolumeStatusInput) (output *DescribeVolumeStatusOutput, err error) {
+func (c *EC2) DescribeVolumeStatus(input *DescribeVolumeStatusInput) (*DescribeVolumeStatusOutput, error) {
 	req, out := c.DescribeVolumeStatusRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeVolumeStatus *aws.Operation
+func (c *EC2) DescribeVolumeStatusPages(input *DescribeVolumeStatusInput, fn func(p *DescribeVolumeStatusOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeVolumeStatusRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeVolumeStatusOutput), lastPage)
+	})
+}
+
+const opDescribeVolumes = "DescribeVolumes"
 
 // DescribeVolumesRequest generates a request for the DescribeVolumes operation.
 func (c *EC2) DescribeVolumesRequest(input *DescribeVolumesInput) (req *aws.Request, output *DescribeVolumesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeVolumes == nil {
-		opDescribeVolumes = &aws.Operation{
-			Name:       "DescribeVolumes",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeVolumes,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+		Paginator: &aws.Paginator{
+			InputTokens:     []string{"NextToken"},
+			OutputTokens:    []string{"NextToken"},
+			LimitToken:      "MaxResults",
+			TruncationToken: "",
+		},
 	}
 
 	if input == nil {
 		input = &DescribeVolumesInput{}
 	}
 
-	req = c.newRequest(opDescribeVolumes, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeVolumesOutput{}
 	req.Data = output
 	return
 }
 
-// Describes the specified Amazon EBS volumes.
+// Describes the specified EBS volumes.
 //
 // If you are describing a long list of volumes, you can paginate the output
 // to make the list more manageable. The MaxResults parameter sets the maximum
@@ -4629,35 +4387,36 @@ func (c *EC2) DescribeVolumesRequest(input *DescribeVolumesInput) (req *aws.Requ
 // a NextToken value that can be passed to a subsequent DescribeVolumes request
 // to retrieve the remaining results.
 //
-// For more information about Amazon EBS volumes, see Amazon EBS Volumes in
-// the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DescribeVolumes(input *DescribeVolumesInput) (output *DescribeVolumesOutput, err error) {
+// For more information about EBS volumes, see Amazon EBS Volumes in the Amazon
+// Elastic Compute Cloud User Guide.
+func (c *EC2) DescribeVolumes(input *DescribeVolumesInput) (*DescribeVolumesOutput, error) {
 	req, out := c.DescribeVolumesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeVolumes *aws.Operation
+func (c *EC2) DescribeVolumesPages(input *DescribeVolumesInput, fn func(p *DescribeVolumesOutput, lastPage bool) (shouldContinue bool)) error {
+	page, _ := c.DescribeVolumesRequest(input)
+	return page.EachPage(func(p interface{}, lastPage bool) bool {
+		return fn(p.(*DescribeVolumesOutput), lastPage)
+	})
+}
+
+const opDetachClassicLinkVPC = "DetachClassicLinkVpc"
 
 // DetachClassicLinkVPCRequest generates a request for the DetachClassicLinkVPC operation.
 func (c *EC2) DetachClassicLinkVPCRequest(input *DetachClassicLinkVPCInput) (req *aws.Request, output *DetachClassicLinkVPCOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDetachClassicLinkVPC == nil {
-		opDetachClassicLinkVPC = &aws.Operation{
-			Name:       "DetachClassicLinkVpc",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDetachClassicLinkVPC,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DetachClassicLinkVPCInput{}
 	}
 
-	req = c.newRequest(opDetachClassicLinkVPC, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DetachClassicLinkVPCOutput{}
 	req.Data = output
 	return
@@ -4666,33 +4425,27 @@ func (c *EC2) DetachClassicLinkVPCRequest(input *DetachClassicLinkVPCInput) (req
 // Unlinks (detaches) a linked EC2-Classic instance from a VPC. After the instance
 // has been unlinked, the VPC security groups are no longer associated with
 // it. An instance is automatically unlinked from a VPC when it's stopped.
-func (c *EC2) DetachClassicLinkVPC(input *DetachClassicLinkVPCInput) (output *DetachClassicLinkVPCOutput, err error) {
+func (c *EC2) DetachClassicLinkVPC(input *DetachClassicLinkVPCInput) (*DetachClassicLinkVPCOutput, error) {
 	req, out := c.DetachClassicLinkVPCRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDetachClassicLinkVPC *aws.Operation
+const opDetachInternetGateway = "DetachInternetGateway"
 
 // DetachInternetGatewayRequest generates a request for the DetachInternetGateway operation.
 func (c *EC2) DetachInternetGatewayRequest(input *DetachInternetGatewayInput) (req *aws.Request, output *DetachInternetGatewayOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDetachInternetGateway == nil {
-		opDetachInternetGateway = &aws.Operation{
-			Name:       "DetachInternetGateway",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDetachInternetGateway,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DetachInternetGatewayInput{}
 	}
 
-	req = c.newRequest(opDetachInternetGateway, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DetachInternetGatewayOutput{}
 	req.Data = output
 	return
@@ -4701,66 +4454,54 @@ func (c *EC2) DetachInternetGatewayRequest(input *DetachInternetGatewayInput) (r
 // Detaches an Internet gateway from a VPC, disabling connectivity between the
 // Internet and the VPC. The VPC must not contain any running instances with
 // Elastic IP addresses.
-func (c *EC2) DetachInternetGateway(input *DetachInternetGatewayInput) (output *DetachInternetGatewayOutput, err error) {
+func (c *EC2) DetachInternetGateway(input *DetachInternetGatewayInput) (*DetachInternetGatewayOutput, error) {
 	req, out := c.DetachInternetGatewayRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDetachInternetGateway *aws.Operation
+const opDetachNetworkInterface = "DetachNetworkInterface"
 
 // DetachNetworkInterfaceRequest generates a request for the DetachNetworkInterface operation.
 func (c *EC2) DetachNetworkInterfaceRequest(input *DetachNetworkInterfaceInput) (req *aws.Request, output *DetachNetworkInterfaceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDetachNetworkInterface == nil {
-		opDetachNetworkInterface = &aws.Operation{
-			Name:       "DetachNetworkInterface",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDetachNetworkInterface,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DetachNetworkInterfaceInput{}
 	}
 
-	req = c.newRequest(opDetachNetworkInterface, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DetachNetworkInterfaceOutput{}
 	req.Data = output
 	return
 }
 
 // Detaches a network interface from an instance.
-func (c *EC2) DetachNetworkInterface(input *DetachNetworkInterfaceInput) (output *DetachNetworkInterfaceOutput, err error) {
+func (c *EC2) DetachNetworkInterface(input *DetachNetworkInterfaceInput) (*DetachNetworkInterfaceOutput, error) {
 	req, out := c.DetachNetworkInterfaceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDetachNetworkInterface *aws.Operation
+const opDetachVPNGateway = "DetachVpnGateway"
 
 // DetachVPNGatewayRequest generates a request for the DetachVPNGateway operation.
 func (c *EC2) DetachVPNGatewayRequest(input *DetachVPNGatewayInput) (req *aws.Request, output *DetachVPNGatewayOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDetachVPNGateway == nil {
-		opDetachVPNGateway = &aws.Operation{
-			Name:       "DetachVpnGateway",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDetachVPNGateway,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DetachVPNGatewayInput{}
 	}
 
-	req = c.newRequest(opDetachVPNGateway, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DetachVPNGatewayOutput{}
 	req.Data = output
 	return
@@ -4774,42 +4515,35 @@ func (c *EC2) DetachVPNGatewayRequest(input *DetachVPNGatewayInput) (req *aws.Re
 //
 // You must wait for the attachment's state to switch to detached before you
 // can delete the VPC or attach a different VPC to the virtual private gateway.
-func (c *EC2) DetachVPNGateway(input *DetachVPNGatewayInput) (output *DetachVPNGatewayOutput, err error) {
+func (c *EC2) DetachVPNGateway(input *DetachVPNGatewayInput) (*DetachVPNGatewayOutput, error) {
 	req, out := c.DetachVPNGatewayRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDetachVPNGateway *aws.Operation
+const opDetachVolume = "DetachVolume"
 
 // DetachVolumeRequest generates a request for the DetachVolume operation.
 func (c *EC2) DetachVolumeRequest(input *DetachVolumeInput) (req *aws.Request, output *VolumeAttachment) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDetachVolume == nil {
-		opDetachVolume = &aws.Operation{
-			Name:       "DetachVolume",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDetachVolume,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DetachVolumeInput{}
 	}
 
-	req = c.newRequest(opDetachVolume, input, output)
+	req = c.newRequest(op, input, output)
 	output = &VolumeAttachment{}
 	req.Data = output
 	return
 }
 
-// Detaches an Amazon EBS volume from an instance. Make sure to unmount any
-// file systems on the device within your operating system before detaching
-// the volume. Failure to do so results in the volume being stuck in a busy
-// state while detaching.
+// Detaches an EBS volume from an instance. Make sure to unmount any file systems
+// on the device within your operating system before detaching the volume. Failure
+// to do so results in the volume being stuck in a busy state while detaching.
 //
 // If an Amazon EBS volume is the root device of an instance, it can't be detached
 // while the instance is running. To detach the root volume, stop the instance
@@ -4820,33 +4554,27 @@ func (c *EC2) DetachVolumeRequest(input *DetachVolumeInput) (req *aws.Request, o
 //
 // For more information, see Detaching an Amazon EBS Volume (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-detaching-volume.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) DetachVolume(input *DetachVolumeInput) (output *VolumeAttachment, err error) {
+func (c *EC2) DetachVolume(input *DetachVolumeInput) (*VolumeAttachment, error) {
 	req, out := c.DetachVolumeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDetachVolume *aws.Operation
+const opDisableVGWRoutePropagation = "DisableVgwRoutePropagation"
 
 // DisableVGWRoutePropagationRequest generates a request for the DisableVGWRoutePropagation operation.
 func (c *EC2) DisableVGWRoutePropagationRequest(input *DisableVGWRoutePropagationInput) (req *aws.Request, output *DisableVGWRoutePropagationOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDisableVGWRoutePropagation == nil {
-		opDisableVGWRoutePropagation = &aws.Operation{
-			Name:       "DisableVgwRoutePropagation",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDisableVGWRoutePropagation,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DisableVGWRoutePropagationInput{}
 	}
 
-	req = c.newRequest(opDisableVGWRoutePropagation, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DisableVGWRoutePropagationOutput{}
 	req.Data = output
 	return
@@ -4854,33 +4582,27 @@ func (c *EC2) DisableVGWRoutePropagationRequest(input *DisableVGWRoutePropagatio
 
 // Disables a virtual private gateway (VGW) from propagating routes to a specified
 // route table of a VPC.
-func (c *EC2) DisableVGWRoutePropagation(input *DisableVGWRoutePropagationInput) (output *DisableVGWRoutePropagationOutput, err error) {
+func (c *EC2) DisableVGWRoutePropagation(input *DisableVGWRoutePropagationInput) (*DisableVGWRoutePropagationOutput, error) {
 	req, out := c.DisableVGWRoutePropagationRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDisableVGWRoutePropagation *aws.Operation
+const opDisableVPCClassicLink = "DisableVpcClassicLink"
 
 // DisableVPCClassicLinkRequest generates a request for the DisableVPCClassicLink operation.
 func (c *EC2) DisableVPCClassicLinkRequest(input *DisableVPCClassicLinkInput) (req *aws.Request, output *DisableVPCClassicLinkOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDisableVPCClassicLink == nil {
-		opDisableVPCClassicLink = &aws.Operation{
-			Name:       "DisableVpcClassicLink",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDisableVPCClassicLink,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DisableVPCClassicLinkInput{}
 	}
 
-	req = c.newRequest(opDisableVPCClassicLink, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DisableVPCClassicLinkOutput{}
 	req.Data = output
 	return
@@ -4888,33 +4610,27 @@ func (c *EC2) DisableVPCClassicLinkRequest(input *DisableVPCClassicLinkInput) (r
 
 // Disables ClassicLink for a VPC. You cannot disable ClassicLink for a VPC
 // that has EC2-Classic instances linked to it.
-func (c *EC2) DisableVPCClassicLink(input *DisableVPCClassicLinkInput) (output *DisableVPCClassicLinkOutput, err error) {
+func (c *EC2) DisableVPCClassicLink(input *DisableVPCClassicLinkInput) (*DisableVPCClassicLinkOutput, error) {
 	req, out := c.DisableVPCClassicLinkRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDisableVPCClassicLink *aws.Operation
+const opDisassociateAddress = "DisassociateAddress"
 
 // DisassociateAddressRequest generates a request for the DisassociateAddress operation.
 func (c *EC2) DisassociateAddressRequest(input *DisassociateAddressInput) (req *aws.Request, output *DisassociateAddressOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDisassociateAddress == nil {
-		opDisassociateAddress = &aws.Operation{
-			Name:       "DisassociateAddress",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDisassociateAddress,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DisassociateAddressInput{}
 	}
 
-	req = c.newRequest(opDisassociateAddress, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DisassociateAddressOutput{}
 	req.Data = output
 	return
@@ -4929,33 +4645,27 @@ func (c *EC2) DisassociateAddressRequest(input *DisassociateAddressInput) (req *
 //
 // This is an idempotent operation. If you perform the operation more than
 // once, Amazon EC2 doesn't return an error.
-func (c *EC2) DisassociateAddress(input *DisassociateAddressInput) (output *DisassociateAddressOutput, err error) {
+func (c *EC2) DisassociateAddress(input *DisassociateAddressInput) (*DisassociateAddressOutput, error) {
 	req, out := c.DisassociateAddressRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDisassociateAddress *aws.Operation
+const opDisassociateRouteTable = "DisassociateRouteTable"
 
 // DisassociateRouteTableRequest generates a request for the DisassociateRouteTable operation.
 func (c *EC2) DisassociateRouteTableRequest(input *DisassociateRouteTableInput) (req *aws.Request, output *DisassociateRouteTableOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDisassociateRouteTable == nil {
-		opDisassociateRouteTable = &aws.Operation{
-			Name:       "DisassociateRouteTable",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDisassociateRouteTable,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DisassociateRouteTableInput{}
 	}
 
-	req = c.newRequest(opDisassociateRouteTable, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DisassociateRouteTableOutput{}
 	req.Data = output
 	return
@@ -4967,33 +4677,27 @@ func (c *EC2) DisassociateRouteTableRequest(input *DisassociateRouteTableInput) 
 // route table. Instead, it uses the routes in the VPC's main route table. For
 // more information about route tables, see Route Tables (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) DisassociateRouteTable(input *DisassociateRouteTableInput) (output *DisassociateRouteTableOutput, err error) {
+func (c *EC2) DisassociateRouteTable(input *DisassociateRouteTableInput) (*DisassociateRouteTableOutput, error) {
 	req, out := c.DisassociateRouteTableRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDisassociateRouteTable *aws.Operation
+const opEnableVGWRoutePropagation = "EnableVgwRoutePropagation"
 
 // EnableVGWRoutePropagationRequest generates a request for the EnableVGWRoutePropagation operation.
 func (c *EC2) EnableVGWRoutePropagationRequest(input *EnableVGWRoutePropagationInput) (req *aws.Request, output *EnableVGWRoutePropagationOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opEnableVGWRoutePropagation == nil {
-		opEnableVGWRoutePropagation = &aws.Operation{
-			Name:       "EnableVgwRoutePropagation",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opEnableVGWRoutePropagation,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &EnableVGWRoutePropagationInput{}
 	}
 
-	req = c.newRequest(opEnableVGWRoutePropagation, input, output)
+	req = c.newRequest(op, input, output)
 	output = &EnableVGWRoutePropagationOutput{}
 	req.Data = output
 	return
@@ -5001,33 +4705,27 @@ func (c *EC2) EnableVGWRoutePropagationRequest(input *EnableVGWRoutePropagationI
 
 // Enables a virtual private gateway (VGW) to propagate routes to the specified
 // route table of a VPC.
-func (c *EC2) EnableVGWRoutePropagation(input *EnableVGWRoutePropagationInput) (output *EnableVGWRoutePropagationOutput, err error) {
+func (c *EC2) EnableVGWRoutePropagation(input *EnableVGWRoutePropagationInput) (*EnableVGWRoutePropagationOutput, error) {
 	req, out := c.EnableVGWRoutePropagationRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opEnableVGWRoutePropagation *aws.Operation
+const opEnableVPCClassicLink = "EnableVpcClassicLink"
 
 // EnableVPCClassicLinkRequest generates a request for the EnableVPCClassicLink operation.
 func (c *EC2) EnableVPCClassicLinkRequest(input *EnableVPCClassicLinkInput) (req *aws.Request, output *EnableVPCClassicLinkOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opEnableVPCClassicLink == nil {
-		opEnableVPCClassicLink = &aws.Operation{
-			Name:       "EnableVpcClassicLink",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opEnableVPCClassicLink,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &EnableVPCClassicLinkInput{}
 	}
 
-	req = c.newRequest(opEnableVPCClassicLink, input, output)
+	req = c.newRequest(op, input, output)
 	output = &EnableVPCClassicLinkOutput{}
 	req.Data = output
 	return
@@ -5040,33 +4738,27 @@ func (c *EC2) EnableVPCClassicLinkRequest(input *EnableVPCClassicLinkInput) (req
 // range, excluding local routes for VPCs in the 10.0.0.0/16 and 10.1.0.0/16
 // IP address ranges. For more information, see ClassicLink (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/vpc-classiclink.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) EnableVPCClassicLink(input *EnableVPCClassicLinkInput) (output *EnableVPCClassicLinkOutput, err error) {
+func (c *EC2) EnableVPCClassicLink(input *EnableVPCClassicLinkInput) (*EnableVPCClassicLinkOutput, error) {
 	req, out := c.EnableVPCClassicLinkRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opEnableVPCClassicLink *aws.Operation
+const opEnableVolumeIO = "EnableVolumeIO"
 
 // EnableVolumeIORequest generates a request for the EnableVolumeIO operation.
 func (c *EC2) EnableVolumeIORequest(input *EnableVolumeIOInput) (req *aws.Request, output *EnableVolumeIOOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opEnableVolumeIO == nil {
-		opEnableVolumeIO = &aws.Operation{
-			Name:       "EnableVolumeIO",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opEnableVolumeIO,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &EnableVolumeIOInput{}
 	}
 
-	req = c.newRequest(opEnableVolumeIO, input, output)
+	req = c.newRequest(op, input, output)
 	output = &EnableVolumeIOOutput{}
 	req.Data = output
 	return
@@ -5074,33 +4766,27 @@ func (c *EC2) EnableVolumeIORequest(input *EnableVolumeIOInput) (req *aws.Reques
 
 // Enables I/O operations for a volume that had I/O operations disabled because
 // the data on the volume was potentially inconsistent.
-func (c *EC2) EnableVolumeIO(input *EnableVolumeIOInput) (output *EnableVolumeIOOutput, err error) {
+func (c *EC2) EnableVolumeIO(input *EnableVolumeIOInput) (*EnableVolumeIOOutput, error) {
 	req, out := c.EnableVolumeIORequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opEnableVolumeIO *aws.Operation
+const opGetConsoleOutput = "GetConsoleOutput"
 
 // GetConsoleOutputRequest generates a request for the GetConsoleOutput operation.
 func (c *EC2) GetConsoleOutputRequest(input *GetConsoleOutputInput) (req *aws.Request, output *GetConsoleOutputOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetConsoleOutput == nil {
-		opGetConsoleOutput = &aws.Operation{
-			Name:       "GetConsoleOutput",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opGetConsoleOutput,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &GetConsoleOutputInput{}
 	}
 
-	req = c.newRequest(opGetConsoleOutput, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetConsoleOutputOutput{}
 	req.Data = output
 	return
@@ -5124,33 +4810,27 @@ func (c *EC2) GetConsoleOutputRequest(input *GetConsoleOutputInput) (req *aws.Re
 //
 // For Windows instances, the instance console output includes output from
 // the EC2Config service.
-func (c *EC2) GetConsoleOutput(input *GetConsoleOutputInput) (output *GetConsoleOutputOutput, err error) {
+func (c *EC2) GetConsoleOutput(input *GetConsoleOutputInput) (*GetConsoleOutputOutput, error) {
 	req, out := c.GetConsoleOutputRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetConsoleOutput *aws.Operation
+const opGetPasswordData = "GetPasswordData"
 
 // GetPasswordDataRequest generates a request for the GetPasswordData operation.
 func (c *EC2) GetPasswordDataRequest(input *GetPasswordDataInput) (req *aws.Request, output *GetPasswordDataOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opGetPasswordData == nil {
-		opGetPasswordData = &aws.Operation{
-			Name:       "GetPasswordData",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opGetPasswordData,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &GetPasswordDataInput{}
 	}
 
-	req = c.newRequest(opGetPasswordData, input, output)
+	req = c.newRequest(op, input, output)
 	output = &GetPasswordDataOutput{}
 	req.Data = output
 	return
@@ -5170,67 +4850,55 @@ func (c *EC2) GetPasswordDataRequest(input *GetPasswordDataInput) (req *aws.Requ
 // Password generation and encryption takes a few moments. We recommend that
 // you wait up to 15 minutes after launching an instance before trying to retrieve
 // the generated password.
-func (c *EC2) GetPasswordData(input *GetPasswordDataInput) (output *GetPasswordDataOutput, err error) {
+func (c *EC2) GetPasswordData(input *GetPasswordDataInput) (*GetPasswordDataOutput, error) {
 	req, out := c.GetPasswordDataRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opGetPasswordData *aws.Operation
+const opImportImage = "ImportImage"
 
 // ImportImageRequest generates a request for the ImportImage operation.
 func (c *EC2) ImportImageRequest(input *ImportImageInput) (req *aws.Request, output *ImportImageOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opImportImage == nil {
-		opImportImage = &aws.Operation{
-			Name:       "ImportImage",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opImportImage,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ImportImageInput{}
 	}
 
-	req = c.newRequest(opImportImage, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ImportImageOutput{}
 	req.Data = output
 	return
 }
 
-// Import single or multi-volume disk images or Amazon EBS snapshots into an
-// Amazon Machine Image (AMI).
-func (c *EC2) ImportImage(input *ImportImageInput) (output *ImportImageOutput, err error) {
+// Import single or multi-volume disk images or EBS snapshots into an Amazon
+// Machine Image (AMI).
+func (c *EC2) ImportImage(input *ImportImageInput) (*ImportImageOutput, error) {
 	req, out := c.ImportImageRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opImportImage *aws.Operation
+const opImportInstance = "ImportInstance"
 
 // ImportInstanceRequest generates a request for the ImportInstance operation.
 func (c *EC2) ImportInstanceRequest(input *ImportInstanceInput) (req *aws.Request, output *ImportInstanceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opImportInstance == nil {
-		opImportInstance = &aws.Operation{
-			Name:       "ImportInstance",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opImportInstance,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ImportInstanceInput{}
 	}
 
-	req = c.newRequest(opImportInstance, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ImportInstanceOutput{}
 	req.Data = output
 	return
@@ -5243,33 +4911,27 @@ func (c *EC2) ImportInstanceRequest(input *ImportInstanceInput) (req *aws.Reques
 // see Using the Command Line Tools to Import Your Virtual Machine to Amazon
 // EC2 (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UploadingYourInstancesandVolumes.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) ImportInstance(input *ImportInstanceInput) (output *ImportInstanceOutput, err error) {
+func (c *EC2) ImportInstance(input *ImportInstanceInput) (*ImportInstanceOutput, error) {
 	req, out := c.ImportInstanceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opImportInstance *aws.Operation
+const opImportKeyPair = "ImportKeyPair"
 
 // ImportKeyPairRequest generates a request for the ImportKeyPair operation.
 func (c *EC2) ImportKeyPairRequest(input *ImportKeyPairInput) (req *aws.Request, output *ImportKeyPairOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opImportKeyPair == nil {
-		opImportKeyPair = &aws.Operation{
-			Name:       "ImportKeyPair",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opImportKeyPair,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ImportKeyPairInput{}
 	}
 
-	req = c.newRequest(opImportKeyPair, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ImportKeyPairOutput{}
 	req.Data = output
 	return
@@ -5283,66 +4945,54 @@ func (c *EC2) ImportKeyPairRequest(input *ImportKeyPairInput) (req *aws.Request,
 //
 // For more information about key pairs, see Key Pairs (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-key-pairs.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) ImportKeyPair(input *ImportKeyPairInput) (output *ImportKeyPairOutput, err error) {
+func (c *EC2) ImportKeyPair(input *ImportKeyPairInput) (*ImportKeyPairOutput, error) {
 	req, out := c.ImportKeyPairRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opImportKeyPair *aws.Operation
+const opImportSnapshot = "ImportSnapshot"
 
 // ImportSnapshotRequest generates a request for the ImportSnapshot operation.
 func (c *EC2) ImportSnapshotRequest(input *ImportSnapshotInput) (req *aws.Request, output *ImportSnapshotOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opImportSnapshot == nil {
-		opImportSnapshot = &aws.Operation{
-			Name:       "ImportSnapshot",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opImportSnapshot,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ImportSnapshotInput{}
 	}
 
-	req = c.newRequest(opImportSnapshot, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ImportSnapshotOutput{}
 	req.Data = output
 	return
 }
 
-// Import a disk into an Amazon Elastic Block Store (Amazon EBS) snapshot.
-func (c *EC2) ImportSnapshot(input *ImportSnapshotInput) (output *ImportSnapshotOutput, err error) {
+// Imports a disk into an EBS snapshot.
+func (c *EC2) ImportSnapshot(input *ImportSnapshotInput) (*ImportSnapshotOutput, error) {
 	req, out := c.ImportSnapshotRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opImportSnapshot *aws.Operation
+const opImportVolume = "ImportVolume"
 
 // ImportVolumeRequest generates a request for the ImportVolume operation.
 func (c *EC2) ImportVolumeRequest(input *ImportVolumeInput) (req *aws.Request, output *ImportVolumeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opImportVolume == nil {
-		opImportVolume = &aws.Operation{
-			Name:       "ImportVolume",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opImportVolume,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ImportVolumeInput{}
 	}
 
-	req = c.newRequest(opImportVolume, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ImportVolumeOutput{}
 	req.Data = output
 	return
@@ -5354,33 +5004,27 @@ func (c *EC2) ImportVolumeRequest(input *ImportVolumeInput) (req *aws.Request, o
 // see Using the Command Line Tools to Import Your Virtual Machine to Amazon
 // EC2 (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/UploadingYourInstancesandVolumes.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) ImportVolume(input *ImportVolumeInput) (output *ImportVolumeOutput, err error) {
+func (c *EC2) ImportVolume(input *ImportVolumeInput) (*ImportVolumeOutput, error) {
 	req, out := c.ImportVolumeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opImportVolume *aws.Operation
+const opModifyImageAttribute = "ModifyImageAttribute"
 
 // ModifyImageAttributeRequest generates a request for the ModifyImageAttribute operation.
 func (c *EC2) ModifyImageAttributeRequest(input *ModifyImageAttributeInput) (req *aws.Request, output *ModifyImageAttributeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifyImageAttribute == nil {
-		opModifyImageAttribute = &aws.Operation{
-			Name:       "ModifyImageAttribute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifyImageAttribute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifyImageAttributeInput{}
 	}
 
-	req = c.newRequest(opModifyImageAttribute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ModifyImageAttributeOutput{}
 	req.Data = output
 	return
@@ -5391,33 +5035,27 @@ func (c *EC2) ModifyImageAttributeRequest(input *ModifyImageAttributeInput) (req
 //
 // AWS Marketplace product codes cannot be modified. Images with an AWS Marketplace
 // product code cannot be made public.
-func (c *EC2) ModifyImageAttribute(input *ModifyImageAttributeInput) (output *ModifyImageAttributeOutput, err error) {
+func (c *EC2) ModifyImageAttribute(input *ModifyImageAttributeInput) (*ModifyImageAttributeOutput, error) {
 	req, out := c.ModifyImageAttributeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opModifyImageAttribute *aws.Operation
+const opModifyInstanceAttribute = "ModifyInstanceAttribute"
 
 // ModifyInstanceAttributeRequest generates a request for the ModifyInstanceAttribute operation.
 func (c *EC2) ModifyInstanceAttributeRequest(input *ModifyInstanceAttributeInput) (req *aws.Request, output *ModifyInstanceAttributeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifyInstanceAttribute == nil {
-		opModifyInstanceAttribute = &aws.Operation{
-			Name:       "ModifyInstanceAttribute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifyInstanceAttribute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifyInstanceAttributeInput{}
 	}
 
-	req = c.newRequest(opModifyInstanceAttribute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ModifyInstanceAttributeOutput{}
 	req.Data = output
 	return
@@ -5429,33 +5067,27 @@ func (c *EC2) ModifyInstanceAttributeRequest(input *ModifyInstanceAttributeInput
 // To modify some attributes, the instance must be stopped. For more information,
 // see Modifying Attributes of a Stopped Instance (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_ChangingAttributesWhileInstanceStopped.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) ModifyInstanceAttribute(input *ModifyInstanceAttributeInput) (output *ModifyInstanceAttributeOutput, err error) {
+func (c *EC2) ModifyInstanceAttribute(input *ModifyInstanceAttributeInput) (*ModifyInstanceAttributeOutput, error) {
 	req, out := c.ModifyInstanceAttributeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opModifyInstanceAttribute *aws.Operation
+const opModifyNetworkInterfaceAttribute = "ModifyNetworkInterfaceAttribute"
 
 // ModifyNetworkInterfaceAttributeRequest generates a request for the ModifyNetworkInterfaceAttribute operation.
 func (c *EC2) ModifyNetworkInterfaceAttributeRequest(input *ModifyNetworkInterfaceAttributeInput) (req *aws.Request, output *ModifyNetworkInterfaceAttributeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifyNetworkInterfaceAttribute == nil {
-		opModifyNetworkInterfaceAttribute = &aws.Operation{
-			Name:       "ModifyNetworkInterfaceAttribute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifyNetworkInterfaceAttribute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifyNetworkInterfaceAttributeInput{}
 	}
 
-	req = c.newRequest(opModifyNetworkInterfaceAttribute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ModifyNetworkInterfaceAttributeOutput{}
 	req.Data = output
 	return
@@ -5463,33 +5095,27 @@ func (c *EC2) ModifyNetworkInterfaceAttributeRequest(input *ModifyNetworkInterfa
 
 // Modifies the specified network interface attribute. You can specify only
 // one attribute at a time.
-func (c *EC2) ModifyNetworkInterfaceAttribute(input *ModifyNetworkInterfaceAttributeInput) (output *ModifyNetworkInterfaceAttributeOutput, err error) {
+func (c *EC2) ModifyNetworkInterfaceAttribute(input *ModifyNetworkInterfaceAttributeInput) (*ModifyNetworkInterfaceAttributeOutput, error) {
 	req, out := c.ModifyNetworkInterfaceAttributeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opModifyNetworkInterfaceAttribute *aws.Operation
+const opModifyReservedInstances = "ModifyReservedInstances"
 
 // ModifyReservedInstancesRequest generates a request for the ModifyReservedInstances operation.
 func (c *EC2) ModifyReservedInstancesRequest(input *ModifyReservedInstancesInput) (req *aws.Request, output *ModifyReservedInstancesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifyReservedInstances == nil {
-		opModifyReservedInstances = &aws.Operation{
-			Name:       "ModifyReservedInstances",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifyReservedInstances,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifyReservedInstancesInput{}
 	}
 
-	req = c.newRequest(opModifyReservedInstances, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ModifyReservedInstancesOutput{}
 	req.Data = output
 	return
@@ -5502,33 +5128,27 @@ func (c *EC2) ModifyReservedInstancesRequest(input *ModifyReservedInstancesInput
 //
 // For more information, see Modifying Reserved Instances (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-modifying.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) ModifyReservedInstances(input *ModifyReservedInstancesInput) (output *ModifyReservedInstancesOutput, err error) {
+func (c *EC2) ModifyReservedInstances(input *ModifyReservedInstancesInput) (*ModifyReservedInstancesOutput, error) {
 	req, out := c.ModifyReservedInstancesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opModifyReservedInstances *aws.Operation
+const opModifySnapshotAttribute = "ModifySnapshotAttribute"
 
 // ModifySnapshotAttributeRequest generates a request for the ModifySnapshotAttribute operation.
 func (c *EC2) ModifySnapshotAttributeRequest(input *ModifySnapshotAttributeInput) (req *aws.Request, output *ModifySnapshotAttributeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifySnapshotAttribute == nil {
-		opModifySnapshotAttribute = &aws.Operation{
-			Name:       "ModifySnapshotAttribute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifySnapshotAttribute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifySnapshotAttributeInput{}
 	}
 
-	req = c.newRequest(opModifySnapshotAttribute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ModifySnapshotAttributeOutput{}
 	req.Data = output
 	return
@@ -5545,99 +5165,110 @@ func (c *EC2) ModifySnapshotAttributeRequest(input *ModifySnapshotAttributeInput
 // in the Amazon Elastic Compute Cloud User Guide.
 //
 //  Snapshots with AWS Marketplace product codes cannot be made public.
-func (c *EC2) ModifySnapshotAttribute(input *ModifySnapshotAttributeInput) (output *ModifySnapshotAttributeOutput, err error) {
+func (c *EC2) ModifySnapshotAttribute(input *ModifySnapshotAttributeInput) (*ModifySnapshotAttributeOutput, error) {
 	req, out := c.ModifySnapshotAttributeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opModifySnapshotAttribute *aws.Operation
+const opModifySubnetAttribute = "ModifySubnetAttribute"
 
 // ModifySubnetAttributeRequest generates a request for the ModifySubnetAttribute operation.
 func (c *EC2) ModifySubnetAttributeRequest(input *ModifySubnetAttributeInput) (req *aws.Request, output *ModifySubnetAttributeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifySubnetAttribute == nil {
-		opModifySubnetAttribute = &aws.Operation{
-			Name:       "ModifySubnetAttribute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifySubnetAttribute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifySubnetAttributeInput{}
 	}
 
-	req = c.newRequest(opModifySubnetAttribute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ModifySubnetAttributeOutput{}
 	req.Data = output
 	return
 }
 
 // Modifies a subnet attribute.
-func (c *EC2) ModifySubnetAttribute(input *ModifySubnetAttributeInput) (output *ModifySubnetAttributeOutput, err error) {
+func (c *EC2) ModifySubnetAttribute(input *ModifySubnetAttributeInput) (*ModifySubnetAttributeOutput, error) {
 	req, out := c.ModifySubnetAttributeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opModifySubnetAttribute *aws.Operation
+const opModifyVPCAttribute = "ModifyVpcAttribute"
 
 // ModifyVPCAttributeRequest generates a request for the ModifyVPCAttribute operation.
 func (c *EC2) ModifyVPCAttributeRequest(input *ModifyVPCAttributeInput) (req *aws.Request, output *ModifyVPCAttributeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifyVPCAttribute == nil {
-		opModifyVPCAttribute = &aws.Operation{
-			Name:       "ModifyVpcAttribute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifyVPCAttribute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifyVPCAttributeInput{}
 	}
 
-	req = c.newRequest(opModifyVPCAttribute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ModifyVPCAttributeOutput{}
 	req.Data = output
 	return
 }
 
 // Modifies the specified attribute of the specified VPC.
-func (c *EC2) ModifyVPCAttribute(input *ModifyVPCAttributeInput) (output *ModifyVPCAttributeOutput, err error) {
+func (c *EC2) ModifyVPCAttribute(input *ModifyVPCAttributeInput) (*ModifyVPCAttributeOutput, error) {
 	req, out := c.ModifyVPCAttributeRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opModifyVPCEndpoint = "ModifyVpcEndpoint"
+
+// ModifyVPCEndpointRequest generates a request for the ModifyVPCEndpoint operation.
+func (c *EC2) ModifyVPCEndpointRequest(input *ModifyVPCEndpointInput) (req *aws.Request, output *ModifyVPCEndpointOutput) {
+	op := &aws.Operation{
+		Name:       opModifyVPCEndpoint,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &ModifyVPCEndpointInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &ModifyVPCEndpointOutput{}
+	req.Data = output
 	return
 }
 
-var opModifyVPCAttribute *aws.Operation
+// Modifies attributes of a specified VPC endpoint. You can modify the policy
+// associated with the endpoint, and you can add and remove route tables associated
+// with the endpoint.
+func (c *EC2) ModifyVPCEndpoint(input *ModifyVPCEndpointInput) (*ModifyVPCEndpointOutput, error) {
+	req, out := c.ModifyVPCEndpointRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opModifyVolumeAttribute = "ModifyVolumeAttribute"
 
 // ModifyVolumeAttributeRequest generates a request for the ModifyVolumeAttribute operation.
 func (c *EC2) ModifyVolumeAttributeRequest(input *ModifyVolumeAttributeInput) (req *aws.Request, output *ModifyVolumeAttributeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opModifyVolumeAttribute == nil {
-		opModifyVolumeAttribute = &aws.Operation{
-			Name:       "ModifyVolumeAttribute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opModifyVolumeAttribute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ModifyVolumeAttributeInput{}
 	}
 
-	req = c.newRequest(opModifyVolumeAttribute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ModifyVolumeAttributeOutput{}
 	req.Data = output
 	return
@@ -5653,33 +5284,27 @@ func (c *EC2) ModifyVolumeAttributeRequest(input *ModifyVolumeAttributeInput) (r
 // You can change the default behavior to resume I/O operations. We recommend
 // that you change this only for boot volumes or for volumes that are stateless
 // or disposable.
-func (c *EC2) ModifyVolumeAttribute(input *ModifyVolumeAttributeInput) (output *ModifyVolumeAttributeOutput, err error) {
+func (c *EC2) ModifyVolumeAttribute(input *ModifyVolumeAttributeInput) (*ModifyVolumeAttributeOutput, error) {
 	req, out := c.ModifyVolumeAttributeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opModifyVolumeAttribute *aws.Operation
+const opMonitorInstances = "MonitorInstances"
 
 // MonitorInstancesRequest generates a request for the MonitorInstances operation.
 func (c *EC2) MonitorInstancesRequest(input *MonitorInstancesInput) (req *aws.Request, output *MonitorInstancesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opMonitorInstances == nil {
-		opMonitorInstances = &aws.Operation{
-			Name:       "MonitorInstances",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opMonitorInstances,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &MonitorInstancesInput{}
 	}
 
-	req = c.newRequest(opMonitorInstances, input, output)
+	req = c.newRequest(op, input, output)
 	output = &MonitorInstancesOutput{}
 	req.Data = output
 	return
@@ -5688,33 +5313,60 @@ func (c *EC2) MonitorInstancesRequest(input *MonitorInstancesInput) (req *aws.Re
 // Enables monitoring for a running instance. For more information about monitoring
 // instances, see Monitoring Your Instances and Volumes (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) MonitorInstances(input *MonitorInstancesInput) (output *MonitorInstancesOutput, err error) {
+func (c *EC2) MonitorInstances(input *MonitorInstancesInput) (*MonitorInstancesOutput, error) {
 	req, out := c.MonitorInstancesRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opMoveAddressToVPC = "MoveAddressToVpc"
+
+// MoveAddressToVPCRequest generates a request for the MoveAddressToVPC operation.
+func (c *EC2) MoveAddressToVPCRequest(input *MoveAddressToVPCInput) (req *aws.Request, output *MoveAddressToVPCOutput) {
+	op := &aws.Operation{
+		Name:       opMoveAddressToVPC,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &MoveAddressToVPCInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &MoveAddressToVPCOutput{}
+	req.Data = output
 	return
 }
 
-var opMonitorInstances *aws.Operation
+// Moves an Elastic IP address from the EC2-Classic platform to the EC2-VPC
+// platform. The Elastic IP address must be allocated to your account, and it
+// must not be associated with an instance. After the Elastic IP address is
+// moved, it is no longer available for use in the EC2-Classic platform, unless
+// you move it back using the RestoreAddressToClassic request. You cannot move
+// an Elastic IP address that's allocated for use in the EC2-VPC platform to
+// the EC2-Classic platform.
+func (c *EC2) MoveAddressToVPC(input *MoveAddressToVPCInput) (*MoveAddressToVPCOutput, error) {
+	req, out := c.MoveAddressToVPCRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opPurchaseReservedInstancesOffering = "PurchaseReservedInstancesOffering"
 
 // PurchaseReservedInstancesOfferingRequest generates a request for the PurchaseReservedInstancesOffering operation.
 func (c *EC2) PurchaseReservedInstancesOfferingRequest(input *PurchaseReservedInstancesOfferingInput) (req *aws.Request, output *PurchaseReservedInstancesOfferingOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opPurchaseReservedInstancesOffering == nil {
-		opPurchaseReservedInstancesOffering = &aws.Operation{
-			Name:       "PurchaseReservedInstancesOffering",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opPurchaseReservedInstancesOffering,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &PurchaseReservedInstancesOfferingInput{}
 	}
 
-	req = c.newRequest(opPurchaseReservedInstancesOffering, input, output)
+	req = c.newRequest(op, input, output)
 	output = &PurchaseReservedInstancesOfferingOutput{}
 	req.Data = output
 	return
@@ -5722,9 +5374,8 @@ func (c *EC2) PurchaseReservedInstancesOfferingRequest(input *PurchaseReservedIn
 
 // Purchases a Reserved Instance for use with your account. With Amazon EC2
 // Reserved Instances, you obtain a capacity reservation for a certain instance
-// configuration over a specified period of time. You pay a lower usage rate
-// than with On-Demand instances for the time that you actually use the capacity
-// reservation.
+// configuration over a specified period of time and pay a lower hourly rate
+// compared to on-Demand Instance pricing.
 //
 // Use DescribeReservedInstancesOfferings to get a list of Reserved Instance
 // offerings that match your specifications. After you've purchased a Reserved
@@ -5733,33 +5384,27 @@ func (c *EC2) PurchaseReservedInstancesOfferingRequest(input *PurchaseReservedIn
 // For more information, see Reserved Instances (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts-on-demand-reserved-instances.html)
 // and Reserved Instance Marketplace (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ri-market-general.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) PurchaseReservedInstancesOffering(input *PurchaseReservedInstancesOfferingInput) (output *PurchaseReservedInstancesOfferingOutput, err error) {
+func (c *EC2) PurchaseReservedInstancesOffering(input *PurchaseReservedInstancesOfferingInput) (*PurchaseReservedInstancesOfferingOutput, error) {
 	req, out := c.PurchaseReservedInstancesOfferingRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opPurchaseReservedInstancesOffering *aws.Operation
+const opRebootInstances = "RebootInstances"
 
 // RebootInstancesRequest generates a request for the RebootInstances operation.
 func (c *EC2) RebootInstancesRequest(input *RebootInstancesInput) (req *aws.Request, output *RebootInstancesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRebootInstances == nil {
-		opRebootInstances = &aws.Operation{
-			Name:       "RebootInstances",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRebootInstances,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RebootInstancesInput{}
 	}
 
-	req = c.newRequest(opRebootInstances, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RebootInstancesOutput{}
 	req.Data = output
 	return
@@ -5776,33 +5421,27 @@ func (c *EC2) RebootInstancesRequest(input *RebootInstancesInput) (req *aws.Requ
 // For more information about troubleshooting, see Getting Console Output and
 // Rebooting Instances (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-console.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) RebootInstances(input *RebootInstancesInput) (output *RebootInstancesOutput, err error) {
+func (c *EC2) RebootInstances(input *RebootInstancesInput) (*RebootInstancesOutput, error) {
 	req, out := c.RebootInstancesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRebootInstances *aws.Operation
+const opRegisterImage = "RegisterImage"
 
 // RegisterImageRequest generates a request for the RegisterImage operation.
 func (c *EC2) RegisterImageRequest(input *RegisterImageInput) (req *aws.Request, output *RegisterImageOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRegisterImage == nil {
-		opRegisterImage = &aws.Operation{
-			Name:       "RegisterImage",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRegisterImage,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RegisterImageInput{}
 	}
 
-	req = c.newRequest(opRegisterImage, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RegisterImageOutput{}
 	req.Data = output
 	return
@@ -5828,33 +5467,27 @@ func (c *EC2) RegisterImageRequest(input *RegisterImageInput) (req *aws.Request,
 //
 // You can't register an image where a secondary (non-root) snapshot has AWS
 // Marketplace product codes.
-func (c *EC2) RegisterImage(input *RegisterImageInput) (output *RegisterImageOutput, err error) {
+func (c *EC2) RegisterImage(input *RegisterImageInput) (*RegisterImageOutput, error) {
 	req, out := c.RegisterImageRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRegisterImage *aws.Operation
+const opRejectVPCPeeringConnection = "RejectVpcPeeringConnection"
 
 // RejectVPCPeeringConnectionRequest generates a request for the RejectVPCPeeringConnection operation.
 func (c *EC2) RejectVPCPeeringConnectionRequest(input *RejectVPCPeeringConnectionInput) (req *aws.Request, output *RejectVPCPeeringConnectionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRejectVPCPeeringConnection == nil {
-		opRejectVPCPeeringConnection = &aws.Operation{
-			Name:       "RejectVpcPeeringConnection",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRejectVPCPeeringConnection,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RejectVPCPeeringConnectionInput{}
 	}
 
-	req = c.newRequest(opRejectVPCPeeringConnection, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RejectVPCPeeringConnectionOutput{}
 	req.Data = output
 	return
@@ -5865,33 +5498,27 @@ func (c *EC2) RejectVPCPeeringConnectionRequest(input *RejectVPCPeeringConnectio
 // request to view your outstanding VPC peering connection requests. To delete
 // an active VPC peering connection, or to delete a VPC peering connection request
 // that you initiated, use DeleteVpcPeeringConnection.
-func (c *EC2) RejectVPCPeeringConnection(input *RejectVPCPeeringConnectionInput) (output *RejectVPCPeeringConnectionOutput, err error) {
+func (c *EC2) RejectVPCPeeringConnection(input *RejectVPCPeeringConnectionInput) (*RejectVPCPeeringConnectionOutput, error) {
 	req, out := c.RejectVPCPeeringConnectionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRejectVPCPeeringConnection *aws.Operation
+const opReleaseAddress = "ReleaseAddress"
 
 // ReleaseAddressRequest generates a request for the ReleaseAddress operation.
 func (c *EC2) ReleaseAddressRequest(input *ReleaseAddressInput) (req *aws.Request, output *ReleaseAddressOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opReleaseAddress == nil {
-		opReleaseAddress = &aws.Operation{
-			Name:       "ReleaseAddress",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opReleaseAddress,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ReleaseAddressInput{}
 	}
 
-	req = c.newRequest(opReleaseAddress, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ReleaseAddressOutput{}
 	req.Data = output
 	return
@@ -5912,33 +5539,27 @@ func (c *EC2) ReleaseAddressRequest(input *ReleaseAddressInput) (req *aws.Reques
 // [Nondefault VPC] You must use DisassociateAddress to disassociate the Elastic
 // IP address before you try to release it. Otherwise, Amazon EC2 returns an
 // error (InvalidIPAddress.InUse).
-func (c *EC2) ReleaseAddress(input *ReleaseAddressInput) (output *ReleaseAddressOutput, err error) {
+func (c *EC2) ReleaseAddress(input *ReleaseAddressInput) (*ReleaseAddressOutput, error) {
 	req, out := c.ReleaseAddressRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opReleaseAddress *aws.Operation
+const opReplaceNetworkACLAssociation = "ReplaceNetworkAclAssociation"
 
 // ReplaceNetworkACLAssociationRequest generates a request for the ReplaceNetworkACLAssociation operation.
 func (c *EC2) ReplaceNetworkACLAssociationRequest(input *ReplaceNetworkACLAssociationInput) (req *aws.Request, output *ReplaceNetworkACLAssociationOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opReplaceNetworkACLAssociation == nil {
-		opReplaceNetworkACLAssociation = &aws.Operation{
-			Name:       "ReplaceNetworkAclAssociation",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opReplaceNetworkACLAssociation,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ReplaceNetworkACLAssociationInput{}
 	}
 
-	req = c.newRequest(opReplaceNetworkACLAssociation, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ReplaceNetworkACLAssociationOutput{}
 	req.Data = output
 	return
@@ -5948,33 +5569,27 @@ func (c *EC2) ReplaceNetworkACLAssociationRequest(input *ReplaceNetworkACLAssoci
 // create a subnet, it's automatically associated with the default network ACL.
 // For more information about network ACLs, see Network ACLs (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) ReplaceNetworkACLAssociation(input *ReplaceNetworkACLAssociationInput) (output *ReplaceNetworkACLAssociationOutput, err error) {
+func (c *EC2) ReplaceNetworkACLAssociation(input *ReplaceNetworkACLAssociationInput) (*ReplaceNetworkACLAssociationOutput, error) {
 	req, out := c.ReplaceNetworkACLAssociationRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opReplaceNetworkACLAssociation *aws.Operation
+const opReplaceNetworkACLEntry = "ReplaceNetworkAclEntry"
 
 // ReplaceNetworkACLEntryRequest generates a request for the ReplaceNetworkACLEntry operation.
 func (c *EC2) ReplaceNetworkACLEntryRequest(input *ReplaceNetworkACLEntryInput) (req *aws.Request, output *ReplaceNetworkACLEntryOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opReplaceNetworkACLEntry == nil {
-		opReplaceNetworkACLEntry = &aws.Operation{
-			Name:       "ReplaceNetworkAclEntry",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opReplaceNetworkACLEntry,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ReplaceNetworkACLEntryInput{}
 	}
 
-	req = c.newRequest(opReplaceNetworkACLEntry, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ReplaceNetworkACLEntryOutput{}
 	req.Data = output
 	return
@@ -5983,33 +5598,27 @@ func (c *EC2) ReplaceNetworkACLEntryRequest(input *ReplaceNetworkACLEntryInput) 
 // Replaces an entry (rule) in a network ACL. For more information about network
 // ACLs, see Network ACLs (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_ACLs.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) ReplaceNetworkACLEntry(input *ReplaceNetworkACLEntryInput) (output *ReplaceNetworkACLEntryOutput, err error) {
+func (c *EC2) ReplaceNetworkACLEntry(input *ReplaceNetworkACLEntryInput) (*ReplaceNetworkACLEntryOutput, error) {
 	req, out := c.ReplaceNetworkACLEntryRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opReplaceNetworkACLEntry *aws.Operation
+const opReplaceRoute = "ReplaceRoute"
 
 // ReplaceRouteRequest generates a request for the ReplaceRoute operation.
 func (c *EC2) ReplaceRouteRequest(input *ReplaceRouteInput) (req *aws.Request, output *ReplaceRouteOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opReplaceRoute == nil {
-		opReplaceRoute = &aws.Operation{
-			Name:       "ReplaceRoute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opReplaceRoute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ReplaceRouteInput{}
 	}
 
-	req = c.newRequest(opReplaceRoute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ReplaceRouteOutput{}
 	req.Data = output
 	return
@@ -6021,33 +5630,27 @@ func (c *EC2) ReplaceRouteRequest(input *ReplaceRouteInput) (req *aws.Request, o
 //
 // For more information about route tables, see Route Tables (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_Route_Tables.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) ReplaceRoute(input *ReplaceRouteInput) (output *ReplaceRouteOutput, err error) {
+func (c *EC2) ReplaceRoute(input *ReplaceRouteInput) (*ReplaceRouteOutput, error) {
 	req, out := c.ReplaceRouteRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opReplaceRoute *aws.Operation
+const opReplaceRouteTableAssociation = "ReplaceRouteTableAssociation"
 
 // ReplaceRouteTableAssociationRequest generates a request for the ReplaceRouteTableAssociation operation.
 func (c *EC2) ReplaceRouteTableAssociationRequest(input *ReplaceRouteTableAssociationInput) (req *aws.Request, output *ReplaceRouteTableAssociationOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opReplaceRouteTableAssociation == nil {
-		opReplaceRouteTableAssociation = &aws.Operation{
-			Name:       "ReplaceRouteTableAssociation",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opReplaceRouteTableAssociation,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ReplaceRouteTableAssociationInput{}
 	}
 
-	req = c.newRequest(opReplaceRouteTableAssociation, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ReplaceRouteTableAssociationOutput{}
 	req.Data = output
 	return
@@ -6062,33 +5665,27 @@ func (c *EC2) ReplaceRouteTableAssociationRequest(input *ReplaceRouteTableAssoci
 // You can also use ReplaceRouteTableAssociation to change which table is the
 // main route table in the VPC. You just specify the main route table's association
 // ID and the route table to be the new main route table.
-func (c *EC2) ReplaceRouteTableAssociation(input *ReplaceRouteTableAssociationInput) (output *ReplaceRouteTableAssociationOutput, err error) {
+func (c *EC2) ReplaceRouteTableAssociation(input *ReplaceRouteTableAssociationInput) (*ReplaceRouteTableAssociationOutput, error) {
 	req, out := c.ReplaceRouteTableAssociationRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opReplaceRouteTableAssociation *aws.Operation
+const opReportInstanceStatus = "ReportInstanceStatus"
 
 // ReportInstanceStatusRequest generates a request for the ReportInstanceStatus operation.
 func (c *EC2) ReportInstanceStatusRequest(input *ReportInstanceStatusInput) (req *aws.Request, output *ReportInstanceStatusOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opReportInstanceStatus == nil {
-		opReportInstanceStatus = &aws.Operation{
-			Name:       "ReportInstanceStatus",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opReportInstanceStatus,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ReportInstanceStatusInput{}
 	}
 
-	req = c.newRequest(opReportInstanceStatus, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ReportInstanceStatusOutput{}
 	req.Data = output
 	return
@@ -6101,33 +5698,57 @@ func (c *EC2) ReportInstanceStatusRequest(input *ReportInstanceStatusInput) (req
 // to improve the accuracy of status checks.
 //
 // Use of this action does not change the value returned by DescribeInstanceStatus.
-func (c *EC2) ReportInstanceStatus(input *ReportInstanceStatusInput) (output *ReportInstanceStatusOutput, err error) {
+func (c *EC2) ReportInstanceStatus(input *ReportInstanceStatusInput) (*ReportInstanceStatusOutput, error) {
 	req, out := c.ReportInstanceStatusRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opRequestSpotFleet = "RequestSpotFleet"
+
+// RequestSpotFleetRequest generates a request for the RequestSpotFleet operation.
+func (c *EC2) RequestSpotFleetRequest(input *RequestSpotFleetInput) (req *aws.Request, output *RequestSpotFleetOutput) {
+	op := &aws.Operation{
+		Name:       opRequestSpotFleet,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &RequestSpotFleetInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &RequestSpotFleetOutput{}
+	req.Data = output
 	return
 }
 
-var opReportInstanceStatus *aws.Operation
+// Creates a Spot fleet request.
+//
+// For more information, see Spot Fleets (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet.html)
+// in the Amazon Elastic Compute Cloud User Guide.
+func (c *EC2) RequestSpotFleet(input *RequestSpotFleetInput) (*RequestSpotFleetOutput, error) {
+	req, out := c.RequestSpotFleetRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opRequestSpotInstances = "RequestSpotInstances"
 
 // RequestSpotInstancesRequest generates a request for the RequestSpotInstances operation.
 func (c *EC2) RequestSpotInstancesRequest(input *RequestSpotInstancesInput) (req *aws.Request, output *RequestSpotInstancesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRequestSpotInstances == nil {
-		opRequestSpotInstances = &aws.Operation{
-			Name:       "RequestSpotInstances",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRequestSpotInstances,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RequestSpotInstancesInput{}
 	}
 
-	req = c.newRequest(opRequestSpotInstances, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RequestSpotInstancesOutput{}
 	req.Data = output
 	return
@@ -6139,33 +5760,27 @@ func (c *EC2) RequestSpotInstancesRequest(input *RequestSpotInstancesInput) (req
 // Instance capacity and current Spot Instance requests. For more information,
 // see Spot Instance Requests (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-requests.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) RequestSpotInstances(input *RequestSpotInstancesInput) (output *RequestSpotInstancesOutput, err error) {
+func (c *EC2) RequestSpotInstances(input *RequestSpotInstancesInput) (*RequestSpotInstancesOutput, error) {
 	req, out := c.RequestSpotInstancesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRequestSpotInstances *aws.Operation
+const opResetImageAttribute = "ResetImageAttribute"
 
 // ResetImageAttributeRequest generates a request for the ResetImageAttribute operation.
 func (c *EC2) ResetImageAttributeRequest(input *ResetImageAttributeInput) (req *aws.Request, output *ResetImageAttributeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opResetImageAttribute == nil {
-		opResetImageAttribute = &aws.Operation{
-			Name:       "ResetImageAttribute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opResetImageAttribute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ResetImageAttributeInput{}
 	}
 
-	req = c.newRequest(opResetImageAttribute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ResetImageAttributeOutput{}
 	req.Data = output
 	return
@@ -6174,33 +5789,27 @@ func (c *EC2) ResetImageAttributeRequest(input *ResetImageAttributeInput) (req *
 // Resets an attribute of an AMI to its default value.
 //
 //  The productCodes attribute can't be reset.
-func (c *EC2) ResetImageAttribute(input *ResetImageAttributeInput) (output *ResetImageAttributeOutput, err error) {
+func (c *EC2) ResetImageAttribute(input *ResetImageAttributeInput) (*ResetImageAttributeOutput, error) {
 	req, out := c.ResetImageAttributeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opResetImageAttribute *aws.Operation
+const opResetInstanceAttribute = "ResetInstanceAttribute"
 
 // ResetInstanceAttributeRequest generates a request for the ResetInstanceAttribute operation.
 func (c *EC2) ResetInstanceAttributeRequest(input *ResetInstanceAttributeInput) (req *aws.Request, output *ResetInstanceAttributeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opResetInstanceAttribute == nil {
-		opResetInstanceAttribute = &aws.Operation{
-			Name:       "ResetInstanceAttribute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opResetInstanceAttribute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ResetInstanceAttributeInput{}
 	}
 
-	req = c.newRequest(opResetInstanceAttribute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ResetInstanceAttributeOutput{}
 	req.Data = output
 	return
@@ -6215,33 +5824,27 @@ func (c *EC2) ResetInstanceAttributeRequest(input *ResetInstanceAttributeInput) 
 // value must be false for a NAT instance to perform NAT. For more information,
 // see NAT Instances (http://docs.aws.amazon.com/AmazonVPC/latest/UserGuide/VPC_NAT_Instance.html)
 // in the Amazon Virtual Private Cloud User Guide.
-func (c *EC2) ResetInstanceAttribute(input *ResetInstanceAttributeInput) (output *ResetInstanceAttributeOutput, err error) {
+func (c *EC2) ResetInstanceAttribute(input *ResetInstanceAttributeInput) (*ResetInstanceAttributeOutput, error) {
 	req, out := c.ResetInstanceAttributeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opResetInstanceAttribute *aws.Operation
+const opResetNetworkInterfaceAttribute = "ResetNetworkInterfaceAttribute"
 
 // ResetNetworkInterfaceAttributeRequest generates a request for the ResetNetworkInterfaceAttribute operation.
 func (c *EC2) ResetNetworkInterfaceAttributeRequest(input *ResetNetworkInterfaceAttributeInput) (req *aws.Request, output *ResetNetworkInterfaceAttributeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opResetNetworkInterfaceAttribute == nil {
-		opResetNetworkInterfaceAttribute = &aws.Operation{
-			Name:       "ResetNetworkInterfaceAttribute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opResetNetworkInterfaceAttribute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ResetNetworkInterfaceAttributeInput{}
 	}
 
-	req = c.newRequest(opResetNetworkInterfaceAttribute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ResetNetworkInterfaceAttributeOutput{}
 	req.Data = output
 	return
@@ -6249,33 +5852,27 @@ func (c *EC2) ResetNetworkInterfaceAttributeRequest(input *ResetNetworkInterface
 
 // Resets a network interface attribute. You can specify only one attribute
 // at a time.
-func (c *EC2) ResetNetworkInterfaceAttribute(input *ResetNetworkInterfaceAttributeInput) (output *ResetNetworkInterfaceAttributeOutput, err error) {
+func (c *EC2) ResetNetworkInterfaceAttribute(input *ResetNetworkInterfaceAttributeInput) (*ResetNetworkInterfaceAttributeOutput, error) {
 	req, out := c.ResetNetworkInterfaceAttributeRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opResetNetworkInterfaceAttribute *aws.Operation
+const opResetSnapshotAttribute = "ResetSnapshotAttribute"
 
 // ResetSnapshotAttributeRequest generates a request for the ResetSnapshotAttribute operation.
 func (c *EC2) ResetSnapshotAttributeRequest(input *ResetSnapshotAttributeInput) (req *aws.Request, output *ResetSnapshotAttributeOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opResetSnapshotAttribute == nil {
-		opResetSnapshotAttribute = &aws.Operation{
-			Name:       "ResetSnapshotAttribute",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opResetSnapshotAttribute,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ResetSnapshotAttributeInput{}
 	}
 
-	req = c.newRequest(opResetSnapshotAttribute, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ResetSnapshotAttributeOutput{}
 	req.Data = output
 	return
@@ -6286,33 +5883,57 @@ func (c *EC2) ResetSnapshotAttributeRequest(input *ResetSnapshotAttributeInput) 
 // For more information on modifying snapshot permissions, see Sharing Snapshots
 // (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ebs-modifying-snapshot-permissions.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) ResetSnapshotAttribute(input *ResetSnapshotAttributeInput) (output *ResetSnapshotAttributeOutput, err error) {
+func (c *EC2) ResetSnapshotAttribute(input *ResetSnapshotAttributeInput) (*ResetSnapshotAttributeOutput, error) {
 	req, out := c.ResetSnapshotAttributeRequest(input)
-	output = out
-	err = req.Send()
+	err := req.Send()
+	return out, err
+}
+
+const opRestoreAddressToClassic = "RestoreAddressToClassic"
+
+// RestoreAddressToClassicRequest generates a request for the RestoreAddressToClassic operation.
+func (c *EC2) RestoreAddressToClassicRequest(input *RestoreAddressToClassicInput) (req *aws.Request, output *RestoreAddressToClassicOutput) {
+	op := &aws.Operation{
+		Name:       opRestoreAddressToClassic,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
+	}
+
+	if input == nil {
+		input = &RestoreAddressToClassicInput{}
+	}
+
+	req = c.newRequest(op, input, output)
+	output = &RestoreAddressToClassicOutput{}
+	req.Data = output
 	return
 }
 
-var opResetSnapshotAttribute *aws.Operation
+// Restores an Elastic IP address that was previously moved to the EC2-VPC platform
+// back to the EC2-Classic platform. You cannot move an Elastic IP address that
+// was originally allocated for use in EC2-VPC. The Elastic IP address must
+// not be associated with an instance or network interface.
+func (c *EC2) RestoreAddressToClassic(input *RestoreAddressToClassicInput) (*RestoreAddressToClassicOutput, error) {
+	req, out := c.RestoreAddressToClassicRequest(input)
+	err := req.Send()
+	return out, err
+}
+
+const opRevokeSecurityGroupEgress = "RevokeSecurityGroupEgress"
 
 // RevokeSecurityGroupEgressRequest generates a request for the RevokeSecurityGroupEgress operation.
 func (c *EC2) RevokeSecurityGroupEgressRequest(input *RevokeSecurityGroupEgressInput) (req *aws.Request, output *RevokeSecurityGroupEgressOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRevokeSecurityGroupEgress == nil {
-		opRevokeSecurityGroupEgress = &aws.Operation{
-			Name:       "RevokeSecurityGroupEgress",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRevokeSecurityGroupEgress,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RevokeSecurityGroupEgressInput{}
 	}
 
-	req = c.newRequest(opRevokeSecurityGroupEgress, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RevokeSecurityGroupEgressOutput{}
 	req.Data = output
 	return
@@ -6329,33 +5950,27 @@ func (c *EC2) RevokeSecurityGroupEgressRequest(input *RevokeSecurityGroupEgressI
 //
 // Rule changes are propagated to instances within the security group as quickly
 // as possible. However, a small delay might occur.
-func (c *EC2) RevokeSecurityGroupEgress(input *RevokeSecurityGroupEgressInput) (output *RevokeSecurityGroupEgressOutput, err error) {
+func (c *EC2) RevokeSecurityGroupEgress(input *RevokeSecurityGroupEgressInput) (*RevokeSecurityGroupEgressOutput, error) {
 	req, out := c.RevokeSecurityGroupEgressRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRevokeSecurityGroupEgress *aws.Operation
+const opRevokeSecurityGroupIngress = "RevokeSecurityGroupIngress"
 
 // RevokeSecurityGroupIngressRequest generates a request for the RevokeSecurityGroupIngress operation.
 func (c *EC2) RevokeSecurityGroupIngressRequest(input *RevokeSecurityGroupIngressInput) (req *aws.Request, output *RevokeSecurityGroupIngressOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRevokeSecurityGroupIngress == nil {
-		opRevokeSecurityGroupIngress = &aws.Operation{
-			Name:       "RevokeSecurityGroupIngress",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRevokeSecurityGroupIngress,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RevokeSecurityGroupIngressInput{}
 	}
 
-	req = c.newRequest(opRevokeSecurityGroupIngress, input, output)
+	req = c.newRequest(op, input, output)
 	output = &RevokeSecurityGroupIngressOutput{}
 	req.Data = output
 	return
@@ -6372,33 +5987,27 @@ func (c *EC2) RevokeSecurityGroupIngressRequest(input *RevokeSecurityGroupIngres
 //
 // Rule changes are propagated to instances within the security group as quickly
 // as possible. However, a small delay might occur.
-func (c *EC2) RevokeSecurityGroupIngress(input *RevokeSecurityGroupIngressInput) (output *RevokeSecurityGroupIngressOutput, err error) {
+func (c *EC2) RevokeSecurityGroupIngress(input *RevokeSecurityGroupIngressInput) (*RevokeSecurityGroupIngressOutput, error) {
 	req, out := c.RevokeSecurityGroupIngressRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRevokeSecurityGroupIngress *aws.Operation
+const opRunInstances = "RunInstances"
 
 // RunInstancesRequest generates a request for the RunInstances operation.
 func (c *EC2) RunInstancesRequest(input *RunInstancesInput) (req *aws.Request, output *Reservation) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opRunInstances == nil {
-		opRunInstances = &aws.Operation{
-			Name:       "RunInstances",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opRunInstances,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &RunInstancesInput{}
 	}
 
-	req = c.newRequest(opRunInstances, input, output)
+	req = c.newRequest(op, input, output)
 	output = &Reservation{}
 	req.Data = output
 	return
@@ -6437,33 +6046,27 @@ func (c *EC2) RunInstancesRequest(input *RunInstancesInput) (req *aws.Request, o
 // Immediately Terminates (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Using_InstanceStraightToTerminated.html),
 // and Troubleshooting Connecting to Your Instance (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesConnecting.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) RunInstances(input *RunInstancesInput) (output *Reservation, err error) {
+func (c *EC2) RunInstances(input *RunInstancesInput) (*Reservation, error) {
 	req, out := c.RunInstancesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opRunInstances *aws.Operation
+const opStartInstances = "StartInstances"
 
 // StartInstancesRequest generates a request for the StartInstances operation.
 func (c *EC2) StartInstancesRequest(input *StartInstancesInput) (req *aws.Request, output *StartInstancesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opStartInstances == nil {
-		opStartInstances = &aws.Operation{
-			Name:       "StartInstances",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opStartInstances,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &StartInstancesInput{}
 	}
 
-	req = c.newRequest(opStartInstances, input, output)
+	req = c.newRequest(op, input, output)
 	output = &StartInstancesOutput{}
 	req.Data = output
 	return
@@ -6488,33 +6091,27 @@ func (c *EC2) StartInstancesRequest(input *StartInstancesInput) (req *aws.Reques
 //
 // For more information, see Stopping Instances (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) StartInstances(input *StartInstancesInput) (output *StartInstancesOutput, err error) {
+func (c *EC2) StartInstances(input *StartInstancesInput) (*StartInstancesOutput, error) {
 	req, out := c.StartInstancesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opStartInstances *aws.Operation
+const opStopInstances = "StopInstances"
 
 // StopInstancesRequest generates a request for the StopInstances operation.
 func (c *EC2) StopInstancesRequest(input *StopInstancesInput) (req *aws.Request, output *StopInstancesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opStopInstances == nil {
-		opStopInstances = &aws.Operation{
-			Name:       "StopInstances",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opStopInstances,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &StopInstancesInput{}
 	}
 
-	req = c.newRequest(opStopInstances, input, output)
+	req = c.newRequest(op, input, output)
 	output = &StopInstancesOutput{}
 	req.Data = output
 	return
@@ -6551,33 +6148,27 @@ func (c *EC2) StopInstancesRequest(input *StopInstancesInput) (req *aws.Request,
 // For more information about troubleshooting, see Troubleshooting Stopping
 // Your Instance (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesStopping.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) StopInstances(input *StopInstancesInput) (output *StopInstancesOutput, err error) {
+func (c *EC2) StopInstances(input *StopInstancesInput) (*StopInstancesOutput, error) {
 	req, out := c.StopInstancesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opStopInstances *aws.Operation
+const opTerminateInstances = "TerminateInstances"
 
 // TerminateInstancesRequest generates a request for the TerminateInstances operation.
 func (c *EC2) TerminateInstancesRequest(input *TerminateInstancesInput) (req *aws.Request, output *TerminateInstancesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opTerminateInstances == nil {
-		opTerminateInstances = &aws.Operation{
-			Name:       "TerminateInstances",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opTerminateInstances,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &TerminateInstancesInput{}
 	}
 
-	req = c.newRequest(opTerminateInstances, input, output)
+	req = c.newRequest(op, input, output)
 	output = &TerminateInstancesOutput{}
 	req.Data = output
 	return
@@ -6589,9 +6180,8 @@ func (c *EC2) TerminateInstancesRequest(input *TerminateInstancesInput) (req *aw
 // Terminated instances remain visible after termination (for approximately
 // one hour).
 //
-// By default, Amazon EC2 deletes all Amazon EBS volumes that were attached
-// when the instance launched. Volumes attached after instance launch continue
-// running.
+// By default, Amazon EC2 deletes all EBS volumes that were attached when the
+// instance launched. Volumes attached after instance launch continue running.
 //
 // You can stop, start, and terminate EBS-backed instances. You can only terminate
 // instance store-backed instances. What happens to an instance differs if you
@@ -6605,66 +6195,54 @@ func (c *EC2) TerminateInstancesRequest(input *TerminateInstancesInput) (req *aw
 // For more information about troubleshooting, see Troubleshooting Terminating
 // Your Instance (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/TroubleshootingInstancesShuttingDown.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) TerminateInstances(input *TerminateInstancesInput) (output *TerminateInstancesOutput, err error) {
+func (c *EC2) TerminateInstances(input *TerminateInstancesInput) (*TerminateInstancesOutput, error) {
 	req, out := c.TerminateInstancesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opTerminateInstances *aws.Operation
+const opUnassignPrivateIPAddresses = "UnassignPrivateIpAddresses"
 
 // UnassignPrivateIPAddressesRequest generates a request for the UnassignPrivateIPAddresses operation.
 func (c *EC2) UnassignPrivateIPAddressesRequest(input *UnassignPrivateIPAddressesInput) (req *aws.Request, output *UnassignPrivateIPAddressesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUnassignPrivateIPAddresses == nil {
-		opUnassignPrivateIPAddresses = &aws.Operation{
-			Name:       "UnassignPrivateIpAddresses",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opUnassignPrivateIPAddresses,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &UnassignPrivateIPAddressesInput{}
 	}
 
-	req = c.newRequest(opUnassignPrivateIPAddresses, input, output)
+	req = c.newRequest(op, input, output)
 	output = &UnassignPrivateIPAddressesOutput{}
 	req.Data = output
 	return
 }
 
 // Unassigns one or more secondary private IP addresses from a network interface.
-func (c *EC2) UnassignPrivateIPAddresses(input *UnassignPrivateIPAddressesInput) (output *UnassignPrivateIPAddressesOutput, err error) {
+func (c *EC2) UnassignPrivateIPAddresses(input *UnassignPrivateIPAddressesInput) (*UnassignPrivateIPAddressesOutput, error) {
 	req, out := c.UnassignPrivateIPAddressesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opUnassignPrivateIPAddresses *aws.Operation
+const opUnmonitorInstances = "UnmonitorInstances"
 
 // UnmonitorInstancesRequest generates a request for the UnmonitorInstances operation.
 func (c *EC2) UnmonitorInstancesRequest(input *UnmonitorInstancesInput) (req *aws.Request, output *UnmonitorInstancesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opUnmonitorInstances == nil {
-		opUnmonitorInstances = &aws.Operation{
-			Name:       "UnmonitorInstances",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opUnmonitorInstances,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &UnmonitorInstancesInput{}
 	}
 
-	req = c.newRequest(opUnmonitorInstances, input, output)
+	req = c.newRequest(op, input, output)
 	output = &UnmonitorInstancesOutput{}
 	req.Data = output
 	return
@@ -6673,37 +6251,58 @@ func (c *EC2) UnmonitorInstancesRequest(input *UnmonitorInstancesInput) (req *aw
 // Disables monitoring for a running instance. For more information about monitoring
 // instances, see Monitoring Your Instances and Volumes (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-cloudwatch.html)
 // in the Amazon Elastic Compute Cloud User Guide.
-func (c *EC2) UnmonitorInstances(input *UnmonitorInstancesInput) (output *UnmonitorInstancesOutput, err error) {
+func (c *EC2) UnmonitorInstances(input *UnmonitorInstancesInput) (*UnmonitorInstancesOutput, error) {
 	req, out := c.UnmonitorInstancesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opUnmonitorInstances *aws.Operation
-
 type AcceptVPCPeeringConnectionInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the VPC peering connection.
 	VPCPeeringConnectionID *string `locationName:"vpcPeeringConnectionId" type:"string"`
 
-	metadataAcceptVPCPeeringConnectionInput `json:"-", xml:"-"`
+	metadataAcceptVPCPeeringConnectionInput `json:"-" xml:"-"`
 }
 
 type metadataAcceptVPCPeeringConnectionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AcceptVPCPeeringConnectionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AcceptVPCPeeringConnectionInput) GoString() string {
+	return s.String()
+}
+
 type AcceptVPCPeeringConnectionOutput struct {
 	// Information about the VPC peering connection.
 	VPCPeeringConnection *VPCPeeringConnection `locationName:"vpcPeeringConnection" type:"structure"`
 
-	metadataAcceptVPCPeeringConnectionOutput `json:"-", xml:"-"`
+	metadataAcceptVPCPeeringConnectionOutput `json:"-" xml:"-"`
 }
 
 type metadataAcceptVPCPeeringConnectionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AcceptVPCPeeringConnectionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AcceptVPCPeeringConnectionOutput) GoString() string {
+	return s.String()
 }
 
 // Describes an account attribute.
@@ -6714,11 +6313,21 @@ type AccountAttribute struct {
 	// One or more values for the account attribute.
 	AttributeValues []*AccountAttributeValue `locationName:"attributeValueSet" locationNameList:"item" type:"list"`
 
-	metadataAccountAttribute `json:"-", xml:"-"`
+	metadataAccountAttribute `json:"-" xml:"-"`
 }
 
 type metadataAccountAttribute struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AccountAttribute) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AccountAttribute) GoString() string {
+	return s.String()
 }
 
 // Describes a value of an account attribute.
@@ -6726,11 +6335,49 @@ type AccountAttributeValue struct {
 	// The value of the attribute.
 	AttributeValue *string `locationName:"attributeValue" type:"string"`
 
-	metadataAccountAttributeValue `json:"-", xml:"-"`
+	metadataAccountAttributeValue `json:"-" xml:"-"`
 }
 
 type metadataAccountAttributeValue struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AccountAttributeValue) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AccountAttributeValue) GoString() string {
+	return s.String()
+}
+
+// Describes a running instance in a Spot fleet.
+type ActiveInstance struct {
+	// The ID of the instance.
+	InstanceID *string `locationName:"instanceId" type:"string"`
+
+	// The instance type.
+	InstanceType *string `locationName:"instanceType" type:"string"`
+
+	// The ID of the Spot Instance request.
+	SpotInstanceRequestID *string `locationName:"spotInstanceRequestId" type:"string"`
+
+	metadataActiveInstance `json:"-" xml:"-"`
+}
+
+type metadataActiveInstance struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ActiveInstance) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ActiveInstance) GoString() string {
+	return s.String()
 }
 
 // Describes an Elastic IP address.
@@ -6746,7 +6393,7 @@ type Address struct {
 	// (standard) or instances in a VPC (vpc).
 	Domain *string `locationName:"domain" type:"string"`
 
-	// The ID of the instance the address is associated with (if any).
+	// The ID of the instance that the address is associated with (if any).
 	InstanceID *string `locationName:"instanceId" type:"string"`
 
 	// The ID of the network interface.
@@ -6761,11 +6408,21 @@ type Address struct {
 	// The Elastic IP address.
 	PublicIP *string `locationName:"publicIp" type:"string"`
 
-	metadataAddress `json:"-", xml:"-"`
+	metadataAddress `json:"-" xml:"-"`
 }
 
 type metadataAddress struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Address) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Address) GoString() string {
+	return s.String()
 }
 
 type AllocateAddressInput struct {
@@ -6774,13 +6431,27 @@ type AllocateAddressInput struct {
 	// Default: The address is for use with instances in EC2-Classic.
 	Domain *string `type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	metadataAllocateAddressInput `json:"-", xml:"-"`
+	metadataAllocateAddressInput `json:"-" xml:"-"`
 }
 
 type metadataAllocateAddressInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AllocateAddressInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AllocateAddressInput) GoString() string {
+	return s.String()
 }
 
 type AllocateAddressOutput struct {
@@ -6795,11 +6466,21 @@ type AllocateAddressOutput struct {
 	// The Elastic IP address.
 	PublicIP *string `locationName:"publicIp" type:"string"`
 
-	metadataAllocateAddressOutput `json:"-", xml:"-"`
+	metadataAllocateAddressOutput `json:"-" xml:"-"`
 }
 
 type metadataAllocateAddressOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AllocateAddressOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AllocateAddressOutput) GoString() string {
+	return s.String()
 }
 
 type AssignPrivateIPAddressesInput struct {
@@ -6822,19 +6503,39 @@ type AssignPrivateIPAddressesInput struct {
 	// You can't specify this parameter when also specifying private IP addresses.
 	SecondaryPrivateIPAddressCount *int64 `locationName:"secondaryPrivateIpAddressCount" type:"integer"`
 
-	metadataAssignPrivateIPAddressesInput `json:"-", xml:"-"`
+	metadataAssignPrivateIPAddressesInput `json:"-" xml:"-"`
 }
 
 type metadataAssignPrivateIPAddressesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AssignPrivateIPAddressesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AssignPrivateIPAddressesInput) GoString() string {
+	return s.String()
+}
+
 type AssignPrivateIPAddressesOutput struct {
-	metadataAssignPrivateIPAddressesOutput `json:"-", xml:"-"`
+	metadataAssignPrivateIPAddressesOutput `json:"-" xml:"-"`
 }
 
 type metadataAssignPrivateIPAddressesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AssignPrivateIPAddressesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AssignPrivateIPAddressesOutput) GoString() string {
+	return s.String()
 }
 
 type AssociateAddressInput struct {
@@ -6848,6 +6549,10 @@ type AssociateAddressInput struct {
 	// Default: false
 	AllowReassociation *bool `locationName:"allowReassociation" type:"boolean"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the instance. This is required for EC2-Classic. For EC2-VPC, you
@@ -6868,11 +6573,21 @@ type AssociateAddressInput struct {
 	// The Elastic IP address. This is required for EC2-Classic.
 	PublicIP *string `locationName:"PublicIp" type:"string"`
 
-	metadataAssociateAddressInput `json:"-", xml:"-"`
+	metadataAssociateAddressInput `json:"-" xml:"-"`
 }
 
 type metadataAssociateAddressInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AssociateAddressInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AssociateAddressInput) GoString() string {
+	return s.String()
 }
 
 type AssociateAddressOutput struct {
@@ -6880,11 +6595,21 @@ type AssociateAddressOutput struct {
 	// with an instance.
 	AssociationID *string `locationName:"associationId" type:"string"`
 
-	metadataAssociateAddressOutput `json:"-", xml:"-"`
+	metadataAssociateAddressOutput `json:"-" xml:"-"`
 }
 
 type metadataAssociateAddressOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AssociateAddressOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AssociateAddressOutput) GoString() string {
+	return s.String()
 }
 
 type AssociateDHCPOptionsInput struct {
@@ -6892,27 +6617,55 @@ type AssociateDHCPOptionsInput struct {
 	// the VPC.
 	DHCPOptionsID *string `locationName:"DhcpOptionsId" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the VPC.
 	VPCID *string `locationName:"VpcId" type:"string" required:"true"`
 
-	metadataAssociateDHCPOptionsInput `json:"-", xml:"-"`
+	metadataAssociateDHCPOptionsInput `json:"-" xml:"-"`
 }
 
 type metadataAssociateDHCPOptionsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AssociateDHCPOptionsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AssociateDHCPOptionsInput) GoString() string {
+	return s.String()
+}
+
 type AssociateDHCPOptionsOutput struct {
-	metadataAssociateDHCPOptionsOutput `json:"-", xml:"-"`
+	metadataAssociateDHCPOptionsOutput `json:"-" xml:"-"`
 }
 
 type metadataAssociateDHCPOptionsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AssociateDHCPOptionsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AssociateDHCPOptionsOutput) GoString() string {
+	return s.String()
+}
+
 type AssociateRouteTableInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the route table.
@@ -6921,25 +6674,49 @@ type AssociateRouteTableInput struct {
 	// The ID of the subnet.
 	SubnetID *string `locationName:"subnetId" type:"string" required:"true"`
 
-	metadataAssociateRouteTableInput `json:"-", xml:"-"`
+	metadataAssociateRouteTableInput `json:"-" xml:"-"`
 }
 
 type metadataAssociateRouteTableInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AssociateRouteTableInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AssociateRouteTableInput) GoString() string {
+	return s.String()
+}
+
 type AssociateRouteTableOutput struct {
 	// The route table association ID (needed to disassociate the route table).
 	AssociationID *string `locationName:"associationId" type:"string"`
 
-	metadataAssociateRouteTableOutput `json:"-", xml:"-"`
+	metadataAssociateRouteTableOutput `json:"-" xml:"-"`
 }
 
 type metadataAssociateRouteTableOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AssociateRouteTableOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AssociateRouteTableOutput) GoString() string {
+	return s.String()
+}
+
 type AttachClassicLinkVPCInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of one or more of the VPC's security groups. You cannot specify security
@@ -6952,25 +6729,49 @@ type AttachClassicLinkVPCInput struct {
 	// The ID of a ClassicLink-enabled VPC.
 	VPCID *string `locationName:"vpcId" type:"string" required:"true"`
 
-	metadataAttachClassicLinkVPCInput `json:"-", xml:"-"`
+	metadataAttachClassicLinkVPCInput `json:"-" xml:"-"`
 }
 
 type metadataAttachClassicLinkVPCInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AttachClassicLinkVPCInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AttachClassicLinkVPCInput) GoString() string {
+	return s.String()
+}
+
 type AttachClassicLinkVPCOutput struct {
 	// Returns true if the request succeeds; otherwise, it returns an error.
 	Return *bool `locationName:"return" type:"boolean"`
 
-	metadataAttachClassicLinkVPCOutput `json:"-", xml:"-"`
+	metadataAttachClassicLinkVPCOutput `json:"-" xml:"-"`
 }
 
 type metadataAttachClassicLinkVPCOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AttachClassicLinkVPCOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AttachClassicLinkVPCOutput) GoString() string {
+	return s.String()
+}
+
 type AttachInternetGatewayInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the Internet gateway.
@@ -6979,25 +6780,49 @@ type AttachInternetGatewayInput struct {
 	// The ID of the VPC.
 	VPCID *string `locationName:"vpcId" type:"string" required:"true"`
 
-	metadataAttachInternetGatewayInput `json:"-", xml:"-"`
+	metadataAttachInternetGatewayInput `json:"-" xml:"-"`
 }
 
 type metadataAttachInternetGatewayInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AttachInternetGatewayInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AttachInternetGatewayInput) GoString() string {
+	return s.String()
+}
+
 type AttachInternetGatewayOutput struct {
-	metadataAttachInternetGatewayOutput `json:"-", xml:"-"`
+	metadataAttachInternetGatewayOutput `json:"-" xml:"-"`
 }
 
 type metadataAttachInternetGatewayOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AttachInternetGatewayOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AttachInternetGatewayOutput) GoString() string {
+	return s.String()
+}
+
 type AttachNetworkInterfaceInput struct {
 	// The index of the device for the network interface attachment.
 	DeviceIndex *int64 `locationName:"deviceIndex" type:"integer" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the instance.
@@ -7006,25 +6831,49 @@ type AttachNetworkInterfaceInput struct {
 	// The ID of the network interface.
 	NetworkInterfaceID *string `locationName:"networkInterfaceId" type:"string" required:"true"`
 
-	metadataAttachNetworkInterfaceInput `json:"-", xml:"-"`
+	metadataAttachNetworkInterfaceInput `json:"-" xml:"-"`
 }
 
 type metadataAttachNetworkInterfaceInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AttachNetworkInterfaceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AttachNetworkInterfaceInput) GoString() string {
+	return s.String()
+}
+
 type AttachNetworkInterfaceOutput struct {
 	// The ID of the network interface attachment.
 	AttachmentID *string `locationName:"attachmentId" type:"string"`
 
-	metadataAttachNetworkInterfaceOutput `json:"-", xml:"-"`
+	metadataAttachNetworkInterfaceOutput `json:"-" xml:"-"`
 }
 
 type metadataAttachNetworkInterfaceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AttachNetworkInterfaceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AttachNetworkInterfaceOutput) GoString() string {
+	return s.String()
+}
+
 type AttachVPNGatewayInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the VPC.
@@ -7033,42 +6882,76 @@ type AttachVPNGatewayInput struct {
 	// The ID of the virtual private gateway.
 	VPNGatewayID *string `locationName:"VpnGatewayId" type:"string" required:"true"`
 
-	metadataAttachVPNGatewayInput `json:"-", xml:"-"`
+	metadataAttachVPNGatewayInput `json:"-" xml:"-"`
 }
 
 type metadataAttachVPNGatewayInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AttachVPNGatewayInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AttachVPNGatewayInput) GoString() string {
+	return s.String()
+}
+
 type AttachVPNGatewayOutput struct {
 	// Information about the attachment.
 	VPCAttachment *VPCAttachment `locationName:"attachment" type:"structure"`
 
-	metadataAttachVPNGatewayOutput `json:"-", xml:"-"`
+	metadataAttachVPNGatewayOutput `json:"-" xml:"-"`
 }
 
 type metadataAttachVPNGatewayOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AttachVPNGatewayOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AttachVPNGatewayOutput) GoString() string {
+	return s.String()
+}
+
 type AttachVolumeInput struct {
 	// The device name to expose to the instance (for example, /dev/sdh or xvdh).
 	Device *string `type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the instance.
 	InstanceID *string `locationName:"InstanceId" type:"string" required:"true"`
 
-	// The ID of the Amazon EBS volume. The volume and instance must be within the
-	// same Availability Zone.
+	// The ID of the EBS volume. The volume and instance must be within the same
+	// Availability Zone.
 	VolumeID *string `locationName:"VolumeId" type:"string" required:"true"`
 
-	metadataAttachVolumeInput `json:"-", xml:"-"`
+	metadataAttachVolumeInput `json:"-" xml:"-"`
 }
 
 type metadataAttachVolumeInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AttachVolumeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AttachVolumeInput) GoString() string {
+	return s.String()
 }
 
 // The value to use when a resource attribute accepts a Boolean value.
@@ -7076,11 +6959,21 @@ type AttributeBooleanValue struct {
 	// Valid values are true or false.
 	Value *bool `locationName:"value" type:"boolean"`
 
-	metadataAttributeBooleanValue `json:"-", xml:"-"`
+	metadataAttributeBooleanValue `json:"-" xml:"-"`
 }
 
 type metadataAttributeBooleanValue struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AttributeBooleanValue) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AttributeBooleanValue) GoString() string {
+	return s.String()
 }
 
 // The value to use for a resource attribute.
@@ -7088,11 +6981,21 @@ type AttributeValue struct {
 	// Valid values are case-sensitive and vary by action.
 	Value *string `locationName:"value" type:"string"`
 
-	metadataAttributeValue `json:"-", xml:"-"`
+	metadataAttributeValue `json:"-" xml:"-"`
 }
 
 type metadataAttributeValue struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AttributeValue) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AttributeValue) GoString() string {
+	return s.String()
 }
 
 type AuthorizeSecurityGroupEgressInput struct {
@@ -7100,6 +7003,10 @@ type AuthorizeSecurityGroupEgressInput struct {
 	// a source security group.
 	CIDRIP *string `locationName:"cidrIp" type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The start of port range for the TCP and UDP protocols, or an ICMP type number.
@@ -7129,19 +7036,39 @@ type AuthorizeSecurityGroupEgressInput struct {
 	// For the ICMP code number, use -1 to specify all ICMP codes for the ICMP type.
 	ToPort *int64 `locationName:"toPort" type:"integer"`
 
-	metadataAuthorizeSecurityGroupEgressInput `json:"-", xml:"-"`
+	metadataAuthorizeSecurityGroupEgressInput `json:"-" xml:"-"`
 }
 
 type metadataAuthorizeSecurityGroupEgressInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AuthorizeSecurityGroupEgressInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AuthorizeSecurityGroupEgressInput) GoString() string {
+	return s.String()
+}
+
 type AuthorizeSecurityGroupEgressOutput struct {
-	metadataAuthorizeSecurityGroupEgressOutput `json:"-", xml:"-"`
+	metadataAuthorizeSecurityGroupEgressOutput `json:"-" xml:"-"`
 }
 
 type metadataAuthorizeSecurityGroupEgressOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AuthorizeSecurityGroupEgressOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AuthorizeSecurityGroupEgressOutput) GoString() string {
+	return s.String()
 }
 
 type AuthorizeSecurityGroupIngressInput struct {
@@ -7149,6 +7076,10 @@ type AuthorizeSecurityGroupIngressInput struct {
 	// a source security group.
 	CIDRIP *string `locationName:"CidrIp" type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The start of port range for the TCP and UDP protocols, or an ICMP type number.
@@ -7170,30 +7101,53 @@ type AuthorizeSecurityGroupIngressInput struct {
 	IPProtocol *string `locationName:"IpProtocol" type:"string"`
 
 	// [EC2-Classic, default VPC] The name of the source security group. You can't
-	// specify a source security group and a CIDR IP address range.
+	// specify this parameter in combination with the following parameters: the
+	// CIDR IP address range, the start of the port range, and the end of the port
+	// range.
 	SourceSecurityGroupName *string `type:"string"`
 
-	// The ID of the source security group. You can't specify a source security
-	// group and a CIDR IP address range.
+	// The ID of the source security group. You can't specify this parameter in
+	// combination with the following parameters: the CIDR IP address range, the
+	// start of the port range, and the end of the port range.
 	SourceSecurityGroupOwnerID *string `locationName:"SourceSecurityGroupOwnerId" type:"string"`
 
 	// The end of port range for the TCP and UDP protocols, or an ICMP code number.
 	// For the ICMP code number, use -1 to specify all ICMP codes for the ICMP type.
 	ToPort *int64 `type:"integer"`
 
-	metadataAuthorizeSecurityGroupIngressInput `json:"-", xml:"-"`
+	metadataAuthorizeSecurityGroupIngressInput `json:"-" xml:"-"`
 }
 
 type metadataAuthorizeSecurityGroupIngressInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AuthorizeSecurityGroupIngressInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AuthorizeSecurityGroupIngressInput) GoString() string {
+	return s.String()
+}
+
 type AuthorizeSecurityGroupIngressOutput struct {
-	metadataAuthorizeSecurityGroupIngressOutput `json:"-", xml:"-"`
+	metadataAuthorizeSecurityGroupIngressOutput `json:"-" xml:"-"`
 }
 
 type metadataAuthorizeSecurityGroupIngressOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AuthorizeSecurityGroupIngressOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AuthorizeSecurityGroupIngressOutput) GoString() string {
+	return s.String()
 }
 
 // Describes an Availability Zone.
@@ -7210,11 +7164,21 @@ type AvailabilityZone struct {
 	// The name of the Availability Zone.
 	ZoneName *string `locationName:"zoneName" type:"string"`
 
-	metadataAvailabilityZone `json:"-", xml:"-"`
+	metadataAvailabilityZone `json:"-" xml:"-"`
 }
 
 type metadataAvailabilityZone struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AvailabilityZone) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AvailabilityZone) GoString() string {
+	return s.String()
 }
 
 // Describes a message about an Availability Zone.
@@ -7222,21 +7186,41 @@ type AvailabilityZoneMessage struct {
 	// The message about the Availability Zone.
 	Message *string `locationName:"message" type:"string"`
 
-	metadataAvailabilityZoneMessage `json:"-", xml:"-"`
+	metadataAvailabilityZoneMessage `json:"-" xml:"-"`
 }
 
 type metadataAvailabilityZoneMessage struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s AvailabilityZoneMessage) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AvailabilityZoneMessage) GoString() string {
+	return s.String()
+}
+
 type BlobAttributeValue struct {
 	Value []byte `locationName:"value" type:"blob"`
 
-	metadataBlobAttributeValue `json:"-", xml:"-"`
+	metadataBlobAttributeValue `json:"-" xml:"-"`
 }
 
 type metadataBlobAttributeValue struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s BlobAttributeValue) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s BlobAttributeValue) GoString() string {
+	return s.String()
 }
 
 // Describes a block device mapping.
@@ -7244,8 +7228,8 @@ type BlockDeviceMapping struct {
 	// The device name exposed to the instance (for example, /dev/sdh or xvdh).
 	DeviceName *string `locationName:"deviceName" type:"string"`
 
-	// Parameters used to automatically set up Amazon EBS volumes when the instance
-	// is launched.
+	// Parameters used to automatically set up EBS volumes when the instance is
+	// launched.
 	EBS *EBSBlockDevice `locationName:"ebs" type:"structure"`
 
 	// Suppresses the specified device included in the block device mapping of the
@@ -7264,14 +7248,28 @@ type BlockDeviceMapping struct {
 	// for the AMI.
 	VirtualName *string `locationName:"virtualName" type:"string"`
 
-	metadataBlockDeviceMapping `json:"-", xml:"-"`
+	metadataBlockDeviceMapping `json:"-" xml:"-"`
 }
 
 type metadataBlockDeviceMapping struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s BlockDeviceMapping) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s BlockDeviceMapping) GoString() string {
+	return s.String()
+}
+
 type BundleInstanceInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the instance to bundle.
@@ -7288,22 +7286,42 @@ type BundleInstanceInput struct {
 	// a bucket that belongs to someone else, Amazon EC2 returns an error.
 	Storage *Storage `type:"structure" required:"true"`
 
-	metadataBundleInstanceInput `json:"-", xml:"-"`
+	metadataBundleInstanceInput `json:"-" xml:"-"`
 }
 
 type metadataBundleInstanceInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s BundleInstanceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s BundleInstanceInput) GoString() string {
+	return s.String()
+}
+
 type BundleInstanceOutput struct {
 	// Information about the bundle task.
 	BundleTask *BundleTask `locationName:"bundleInstanceTask" type:"structure"`
 
-	metadataBundleInstanceOutput `json:"-", xml:"-"`
+	metadataBundleInstanceOutput `json:"-" xml:"-"`
 }
 
 type metadataBundleInstanceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s BundleInstanceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s BundleInstanceOutput) GoString() string {
+	return s.String()
 }
 
 // Describes a bundle task.
@@ -7332,11 +7350,21 @@ type BundleTask struct {
 	// The time of the most recent update for the task.
 	UpdateTime *time.Time `locationName:"updateTime" type:"timestamp" timestampFormat:"iso8601"`
 
-	metadataBundleTask `json:"-", xml:"-"`
+	metadataBundleTask `json:"-" xml:"-"`
 }
 
 type metadataBundleTask struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s BundleTask) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s BundleTask) GoString() string {
+	return s.String()
 }
 
 // Describes an error for BundleInstance.
@@ -7347,156 +7375,440 @@ type BundleTaskError struct {
 	// The error message.
 	Message *string `locationName:"message" type:"string"`
 
-	metadataBundleTaskError `json:"-", xml:"-"`
+	metadataBundleTaskError `json:"-" xml:"-"`
 }
 
 type metadataBundleTaskError struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s BundleTaskError) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s BundleTaskError) GoString() string {
+	return s.String()
+}
+
 type CancelBundleTaskInput struct {
 	// The ID of the bundle task.
 	BundleID *string `locationName:"BundleId" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	metadataCancelBundleTaskInput `json:"-", xml:"-"`
+	metadataCancelBundleTaskInput `json:"-" xml:"-"`
 }
 
 type metadataCancelBundleTaskInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CancelBundleTaskInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelBundleTaskInput) GoString() string {
+	return s.String()
+}
+
 type CancelBundleTaskOutput struct {
-	// The bundle task.
+	// Information about the bundle task.
 	BundleTask *BundleTask `locationName:"bundleInstanceTask" type:"structure"`
 
-	metadataCancelBundleTaskOutput `json:"-", xml:"-"`
+	metadataCancelBundleTaskOutput `json:"-" xml:"-"`
 }
 
 type metadataCancelBundleTaskOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CancelBundleTaskOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelBundleTaskOutput) GoString() string {
+	return s.String()
+}
+
 type CancelConversionTaskInput struct {
 	// The ID of the conversion task.
 	ConversionTaskID *string `locationName:"conversionTaskId" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
+	// The reason for canceling the conversion task.
 	ReasonMessage *string `locationName:"reasonMessage" type:"string"`
 
-	metadataCancelConversionTaskInput `json:"-", xml:"-"`
+	metadataCancelConversionTaskInput `json:"-" xml:"-"`
 }
 
 type metadataCancelConversionTaskInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CancelConversionTaskInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelConversionTaskInput) GoString() string {
+	return s.String()
+}
+
 type CancelConversionTaskOutput struct {
-	metadataCancelConversionTaskOutput `json:"-", xml:"-"`
+	metadataCancelConversionTaskOutput `json:"-" xml:"-"`
 }
 
 type metadataCancelConversionTaskOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CancelConversionTaskOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelConversionTaskOutput) GoString() string {
+	return s.String()
+}
+
 type CancelExportTaskInput struct {
 	// The ID of the export task. This is the ID returned by CreateInstanceExportTask.
 	ExportTaskID *string `locationName:"exportTaskId" type:"string" required:"true"`
 
-	metadataCancelExportTaskInput `json:"-", xml:"-"`
+	metadataCancelExportTaskInput `json:"-" xml:"-"`
 }
 
 type metadataCancelExportTaskInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CancelExportTaskInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelExportTaskInput) GoString() string {
+	return s.String()
+}
+
 type CancelExportTaskOutput struct {
-	metadataCancelExportTaskOutput `json:"-", xml:"-"`
+	metadataCancelExportTaskOutput `json:"-" xml:"-"`
 }
 
 type metadataCancelExportTaskOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CancelExportTaskOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelExportTaskOutput) GoString() string {
+	return s.String()
+}
+
 type CancelImportTaskInput struct {
 	// The reason for canceling the task.
 	CancelReason *string `type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `type:"boolean"`
 
-	// The ID of the ImportImage or ImportSnapshot task to be cancelled.
+	// The ID of the import image or import snapshot task to be canceled.
 	ImportTaskID *string `locationName:"ImportTaskId" type:"string"`
 
-	metadataCancelImportTaskInput `json:"-", xml:"-"`
+	metadataCancelImportTaskInput `json:"-" xml:"-"`
 }
 
 type metadataCancelImportTaskInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CancelImportTaskInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelImportTaskInput) GoString() string {
+	return s.String()
+}
+
 type CancelImportTaskOutput struct {
-	// The task ID of the ImportImage or ImportSnapshot task being canceled.
+	// The ID of the task being canceled.
 	ImportTaskID *string `locationName:"importTaskId" type:"string"`
 
-	// The current state of the ImportImage or ImportSnapshot task being canceled.
+	// The current state of the task being canceled.
 	PreviousState *string `locationName:"previousState" type:"string"`
 
-	// The current state of the ImportImage or ImportSnapshot task being canceled.
+	// The current state of the task being canceled.
 	State *string `locationName:"state" type:"string"`
 
-	metadataCancelImportTaskOutput `json:"-", xml:"-"`
+	metadataCancelImportTaskOutput `json:"-" xml:"-"`
 }
 
 type metadataCancelImportTaskOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CancelImportTaskOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelImportTaskOutput) GoString() string {
+	return s.String()
+}
+
 type CancelReservedInstancesListingInput struct {
 	// The ID of the Reserved Instance listing.
 	ReservedInstancesListingID *string `locationName:"reservedInstancesListingId" type:"string" required:"true"`
 
-	metadataCancelReservedInstancesListingInput `json:"-", xml:"-"`
+	metadataCancelReservedInstancesListingInput `json:"-" xml:"-"`
 }
 
 type metadataCancelReservedInstancesListingInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CancelReservedInstancesListingInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelReservedInstancesListingInput) GoString() string {
+	return s.String()
+}
+
 type CancelReservedInstancesListingOutput struct {
 	// The Reserved Instance listing.
 	ReservedInstancesListings []*ReservedInstancesListing `locationName:"reservedInstancesListingsSet" locationNameList:"item" type:"list"`
 
-	metadataCancelReservedInstancesListingOutput `json:"-", xml:"-"`
+	metadataCancelReservedInstancesListingOutput `json:"-" xml:"-"`
 }
 
 type metadataCancelReservedInstancesListingOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CancelReservedInstancesListingOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelReservedInstancesListingOutput) GoString() string {
+	return s.String()
+}
+
+// Describes a Spot fleet error.
+type CancelSpotFleetRequestsError struct {
+	// The error code.
+	Code *string `locationName:"code" type:"string" required:"true"`
+
+	// The description for the error code.
+	Message *string `locationName:"message" type:"string" required:"true"`
+
+	metadataCancelSpotFleetRequestsError `json:"-" xml:"-"`
+}
+
+type metadataCancelSpotFleetRequestsError struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CancelSpotFleetRequestsError) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelSpotFleetRequestsError) GoString() string {
+	return s.String()
+}
+
+// Describes a Spot fleet request that was not successfully canceled.
+type CancelSpotFleetRequestsErrorItem struct {
+	// The error.
+	Error *CancelSpotFleetRequestsError `locationName:"error" type:"structure" required:"true"`
+
+	// The ID of the Spot fleet request.
+	SpotFleetRequestID *string `locationName:"spotFleetRequestId" type:"string" required:"true"`
+
+	metadataCancelSpotFleetRequestsErrorItem `json:"-" xml:"-"`
+}
+
+type metadataCancelSpotFleetRequestsErrorItem struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CancelSpotFleetRequestsErrorItem) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelSpotFleetRequestsErrorItem) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for CancelSpotFleetRequests.
+type CancelSpotFleetRequestsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
+	DryRun *bool `locationName:"dryRun" type:"boolean"`
+
+	// The IDs of the Spot fleet requests.
+	SpotFleetRequestIDs []*string `locationName:"spotFleetRequestId" locationNameList:"item" type:"list" required:"true"`
+
+	// Indicates whether to terminate instances for a Spot fleet request if it is
+	// canceled successfully.
+	TerminateInstances *bool `locationName:"terminateInstances" type:"boolean" required:"true"`
+
+	metadataCancelSpotFleetRequestsInput `json:"-" xml:"-"`
+}
+
+type metadataCancelSpotFleetRequestsInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CancelSpotFleetRequestsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelSpotFleetRequestsInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of CancelSpotFleetRequests.
+type CancelSpotFleetRequestsOutput struct {
+	// Information about the Spot fleet requests that are successfully canceled.
+	SuccessfulFleetRequests []*CancelSpotFleetRequestsSuccessItem `locationName:"successfulFleetRequestSet" locationNameList:"item" type:"list"`
+
+	// Information about the Spot fleet requests that are not successfully canceled.
+	UnsuccessfulFleetRequests []*CancelSpotFleetRequestsErrorItem `locationName:"unsuccessfulFleetRequestSet" locationNameList:"item" type:"list"`
+
+	metadataCancelSpotFleetRequestsOutput `json:"-" xml:"-"`
+}
+
+type metadataCancelSpotFleetRequestsOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CancelSpotFleetRequestsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelSpotFleetRequestsOutput) GoString() string {
+	return s.String()
+}
+
+// Describes a Spot fleet request that was successfully canceled.
+type CancelSpotFleetRequestsSuccessItem struct {
+	// The current state of the Spot fleet request.
+	CurrentSpotFleetRequestState *string `locationName:"currentSpotFleetRequestState" type:"string" required:"true"`
+
+	// The previous state of the Spot fleet request.
+	PreviousSpotFleetRequestState *string `locationName:"previousSpotFleetRequestState" type:"string" required:"true"`
+
+	// The ID of the Spot fleet request.
+	SpotFleetRequestID *string `locationName:"spotFleetRequestId" type:"string" required:"true"`
+
+	metadataCancelSpotFleetRequestsSuccessItem `json:"-" xml:"-"`
+}
+
+type metadataCancelSpotFleetRequestsSuccessItem struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CancelSpotFleetRequestsSuccessItem) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelSpotFleetRequestsSuccessItem) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for CancelSpotInstanceRequests.
 type CancelSpotInstanceRequestsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more Spot Instance request IDs.
 	SpotInstanceRequestIDs []*string `locationName:"SpotInstanceRequestId" locationNameList:"SpotInstanceRequestId" type:"list" required:"true"`
 
-	metadataCancelSpotInstanceRequestsInput `json:"-", xml:"-"`
+	metadataCancelSpotInstanceRequestsInput `json:"-" xml:"-"`
 }
 
 type metadataCancelSpotInstanceRequestsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CancelSpotInstanceRequestsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelSpotInstanceRequestsInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of CancelSpotInstanceRequests.
 type CancelSpotInstanceRequestsOutput struct {
 	// One or more Spot Instance requests.
 	CancelledSpotInstanceRequests []*CancelledSpotInstanceRequest `locationName:"spotInstanceRequestSet" locationNameList:"item" type:"list"`
 
-	metadataCancelSpotInstanceRequestsOutput `json:"-", xml:"-"`
+	metadataCancelSpotInstanceRequestsOutput `json:"-" xml:"-"`
 }
 
 type metadataCancelSpotInstanceRequestsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CancelSpotInstanceRequestsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelSpotInstanceRequestsOutput) GoString() string {
+	return s.String()
 }
 
 // Describes a request to cancel a Spot Instance.
@@ -7507,11 +7819,21 @@ type CancelledSpotInstanceRequest struct {
 	// The state of the Spot Instance request.
 	State *string `locationName:"state" type:"string"`
 
-	metadataCancelledSpotInstanceRequest `json:"-", xml:"-"`
+	metadataCancelledSpotInstanceRequest `json:"-" xml:"-"`
 }
 
 type metadataCancelledSpotInstanceRequest struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CancelledSpotInstanceRequest) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CancelledSpotInstanceRequest) GoString() string {
+	return s.String()
 }
 
 // Describes a linked EC2-Classic instance.
@@ -7528,35 +7850,59 @@ type ClassicLinkInstance struct {
 	// The ID of the VPC.
 	VPCID *string `locationName:"vpcId" type:"string"`
 
-	metadataClassicLinkInstance `json:"-", xml:"-"`
+	metadataClassicLinkInstance `json:"-" xml:"-"`
 }
 
 type metadataClassicLinkInstance struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Client-specific data.
+// String returns the string representation
+func (s ClassicLinkInstance) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ClassicLinkInstance) GoString() string {
+	return s.String()
+}
+
+// Describes the client-specific data.
 type ClientData struct {
-	// User-defined comment about the upload.
+	// A user-defined comment about the disk upload.
 	Comment *string `type:"string"`
 
 	// The time that the disk upload ends.
 	UploadEnd *time.Time `type:"timestamp" timestampFormat:"iso8601"`
 
-	// The size of the uploaded disk image.
+	// The size of the uploaded disk image, in GiB.
 	UploadSize *float64 `type:"double"`
 
 	// The time that the disk upload starts.
 	UploadStart *time.Time `type:"timestamp" timestampFormat:"iso8601"`
 
-	metadataClientData `json:"-", xml:"-"`
+	metadataClientData `json:"-" xml:"-"`
 }
 
 type metadataClientData struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ClientData) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ClientData) GoString() string {
+	return s.String()
+}
+
 type ConfirmProductInstanceInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the instance.
@@ -7565,11 +7911,21 @@ type ConfirmProductInstanceInput struct {
 	// The product code. This must be a product code that you own.
 	ProductCode *string `type:"string" required:"true"`
 
-	metadataConfirmProductInstanceInput `json:"-", xml:"-"`
+	metadataConfirmProductInstanceInput `json:"-" xml:"-"`
 }
 
 type metadataConfirmProductInstanceInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ConfirmProductInstanceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ConfirmProductInstanceInput) GoString() string {
+	return s.String()
 }
 
 type ConfirmProductInstanceOutput struct {
@@ -7577,11 +7933,25 @@ type ConfirmProductInstanceOutput struct {
 	// code is attached to the instance.
 	OwnerID *string `locationName:"ownerId" type:"string"`
 
-	metadataConfirmProductInstanceOutput `json:"-", xml:"-"`
+	// The return value of the request. Returns true if the specified product code
+	// is owned by the requester and associated with the specified instance.
+	Return *bool `locationName:"return" type:"boolean"`
+
+	metadataConfirmProductInstanceOutput `json:"-" xml:"-"`
 }
 
 type metadataConfirmProductInstanceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ConfirmProductInstanceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ConfirmProductInstanceOutput) GoString() string {
+	return s.String()
 }
 
 // Describes a conversion task.
@@ -7607,13 +7977,24 @@ type ConversionTask struct {
 	// The status message related to the conversion task.
 	StatusMessage *string `locationName:"statusMessage" type:"string"`
 
+	// Any tags assigned to the task.
 	Tags []*Tag `locationName:"tagSet" locationNameList:"item" type:"list"`
 
-	metadataConversionTask `json:"-", xml:"-"`
+	metadataConversionTask `json:"-" xml:"-"`
 }
 
 type metadataConversionTask struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ConversionTask) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ConversionTask) GoString() string {
+	return s.String()
 }
 
 type CopyImageInput struct {
@@ -7625,6 +8006,10 @@ type CopyImageInput struct {
 	// A description for the new AMI in the destination region.
 	Description *string `type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The name of the new AMI in the destination region.
@@ -7636,26 +8021,46 @@ type CopyImageInput struct {
 	// The name of the region that contains the AMI to copy.
 	SourceRegion *string `type:"string" required:"true"`
 
-	metadataCopyImageInput `json:"-", xml:"-"`
+	metadataCopyImageInput `json:"-" xml:"-"`
 }
 
 type metadataCopyImageInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CopyImageInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CopyImageInput) GoString() string {
+	return s.String()
+}
+
 type CopyImageOutput struct {
 	// The ID of the new AMI.
 	ImageID *string `locationName:"imageId" type:"string"`
 
-	metadataCopyImageOutput `json:"-", xml:"-"`
+	metadataCopyImageOutput `json:"-" xml:"-"`
 }
 
 type metadataCopyImageOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CopyImageOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CopyImageOutput) GoString() string {
+	return s.String()
+}
+
 type CopySnapshotInput struct {
-	// A description for the new Amazon EBS snapshot.
+	// A description for the EBS snapshot.
 	Description *string `type:"string"`
 
 	// The destination region to use in the PresignedUrl parameter of a snapshot
@@ -7668,17 +8073,40 @@ type CopySnapshotInput struct {
 	// in your AWS configuration file).
 	DestinationRegion *string `locationName:"destinationRegion" type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
+
+	// Specifies whether the destination snapshot should be encrypted. There is
+	// no way to create an unencrypted snapshot copy from an encrypted snapshot;
+	// however, you can encrypt a copy of an unencrypted snapshot with this flag.
+	// The default CMK for EBS is used unless a non-default AWS Key Management Service
+	// (KMS) CMK is specified with KmsKeyId. For more information, see Amazon EBS
+	// Encryption (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/EBSEncryption.html)
+	// in the Amazon Elastic Compute Cloud User Guide.
+	Encrypted *bool `locationName:"encrypted" type:"boolean"`
+
+	// The full ARN of the AWS Key Management Service (KMS) CMK to use when creating
+	// the snapshot copy. This parameter is only required if you want to use a non-default
+	// CMK; if this parameter is not specified, the default CMK for EBS is used.
+	// The ARN contains the arn:aws:kms namespace, followed by the region of the
+	// CMK, the AWS account ID of the CMK owner, the key namespace, and then the
+	// CMK ID. For example, arn:aws:kms:us-east-1:012345678910:key/abcd1234-a123-456a-a12b-a123b4cd56ef.
+	// The specified CMK must exist in the region that the snapshot is being copied
+	// to. If a KmsKeyId is specified, the Encrypted flag must also be set.
+	KMSKeyID *string `locationName:"kmsKeyId" type:"string"`
 
 	// The pre-signed URL that facilitates copying an encrypted snapshot. This parameter
 	// is only required when copying an encrypted snapshot with the Amazon EC2 Query
 	// API; it is available as an optional parameter in all other cases. The PresignedUrl
 	// should use the snapshot source endpoint, the CopySnapshot action, and include
 	// the SourceRegion, SourceSnapshotId, and DestinationRegion parameters. The
-	// PresignedUrl must be signed using AWS Signature Version 4. Because Amazon
-	// EBS snapshots are stored in Amazon S3, the signing algorithm for this parameter
-	// uses the same logic that is described in Authenticating Requests by Using
-	// Query Parameters (AWS Signature Version 4) (http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html)
+	// PresignedUrl must be signed using AWS Signature Version 4. Because EBS snapshots
+	// are stored in Amazon S3, the signing algorithm for this parameter uses the
+	// same logic that is described in Authenticating Requests by Using Query Parameters
+	// (AWS Signature Version 4) (http://docs.aws.amazon.com/AmazonS3/latest/API/sigv4-query-string-auth.html)
 	// in the Amazon Simple Storage Service API Reference. An invalid or improperly
 	// signed PresignedUrl will cause the copy operation to fail asynchronously,
 	// and the snapshot will move to an error state.
@@ -7687,25 +8115,45 @@ type CopySnapshotInput struct {
 	// The ID of the region that contains the snapshot to be copied.
 	SourceRegion *string `type:"string" required:"true"`
 
-	// The ID of the Amazon EBS snapshot to copy.
+	// The ID of the EBS snapshot to copy.
 	SourceSnapshotID *string `locationName:"SourceSnapshotId" type:"string" required:"true"`
 
-	metadataCopySnapshotInput `json:"-", xml:"-"`
+	metadataCopySnapshotInput `json:"-" xml:"-"`
 }
 
 type metadataCopySnapshotInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CopySnapshotInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CopySnapshotInput) GoString() string {
+	return s.String()
+}
+
 type CopySnapshotOutput struct {
 	// The ID of the new snapshot.
 	SnapshotID *string `locationName:"snapshotId" type:"string"`
 
-	metadataCopySnapshotOutput `json:"-", xml:"-"`
+	metadataCopySnapshotOutput `json:"-" xml:"-"`
 }
 
 type metadataCopySnapshotOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CopySnapshotOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CopySnapshotOutput) GoString() string {
+	return s.String()
 }
 
 type CreateCustomerGatewayInput struct {
@@ -7714,6 +8162,10 @@ type CreateCustomerGatewayInput struct {
 	// Default: 65000
 	BGPASN *int64 `locationName:"BgpAsn" type:"integer" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The Internet-routable IP address for the customer gateway's outside interface.
@@ -7723,46 +8175,156 @@ type CreateCustomerGatewayInput struct {
 	// The type of VPN connection that this customer gateway supports (ipsec.1).
 	Type *string `type:"string" required:"true"`
 
-	metadataCreateCustomerGatewayInput `json:"-", xml:"-"`
+	metadataCreateCustomerGatewayInput `json:"-" xml:"-"`
 }
 
 type metadataCreateCustomerGatewayInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateCustomerGatewayInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateCustomerGatewayInput) GoString() string {
+	return s.String()
+}
+
 type CreateCustomerGatewayOutput struct {
 	// Information about the customer gateway.
 	CustomerGateway *CustomerGateway `locationName:"customerGateway" type:"structure"`
 
-	metadataCreateCustomerGatewayOutput `json:"-", xml:"-"`
+	metadataCreateCustomerGatewayOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateCustomerGatewayOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateCustomerGatewayOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateCustomerGatewayOutput) GoString() string {
+	return s.String()
+}
+
 type CreateDHCPOptionsInput struct {
 	// A DHCP configuration option.
 	DHCPConfigurations []*NewDHCPConfiguration `locationName:"dhcpConfiguration" locationNameList:"item" type:"list" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	metadataCreateDHCPOptionsInput `json:"-", xml:"-"`
+	metadataCreateDHCPOptionsInput `json:"-" xml:"-"`
 }
 
 type metadataCreateDHCPOptionsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateDHCPOptionsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateDHCPOptionsInput) GoString() string {
+	return s.String()
+}
+
 type CreateDHCPOptionsOutput struct {
 	// A set of DHCP options.
 	DHCPOptions *DHCPOptions `locationName:"dhcpOptions" type:"structure"`
 
-	metadataCreateDHCPOptionsOutput `json:"-", xml:"-"`
+	metadataCreateDHCPOptionsOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateDHCPOptionsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateDHCPOptionsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateDHCPOptionsOutput) GoString() string {
+	return s.String()
+}
+
+type CreateFlowLogsInput struct {
+	// Unique, case-sensitive identifier you provide to ensure the idempotency of
+	// the request. For more information, see How to Ensure Idempotency (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html).
+	ClientToken *string `type:"string"`
+
+	// The ARN for the IAM role that's used to post flow logs to a CloudWatch Logs
+	// log group.
+	DeliverLogsPermissionARN *string `locationName:"DeliverLogsPermissionArn" type:"string" required:"true"`
+
+	// The name of the CloudWatch log group.
+	LogGroupName *string `type:"string" required:"true"`
+
+	// One or more subnet, network interface, or VPC IDs.
+	ResourceIDs []*string `locationName:"ResourceId" locationNameList:"item" type:"list" required:"true"`
+
+	// The type of resource on which to create the flow log.
+	ResourceType *string `type:"string" required:"true"`
+
+	// The type of traffic to log.
+	TrafficType *string `type:"string" required:"true"`
+
+	metadataCreateFlowLogsInput `json:"-" xml:"-"`
+}
+
+type metadataCreateFlowLogsInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateFlowLogsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateFlowLogsInput) GoString() string {
+	return s.String()
+}
+
+type CreateFlowLogsOutput struct {
+	// Unique, case-sensitive identifier you provide to ensure the idempotency of
+	// the request.
+	ClientToken *string `locationName:"clientToken" type:"string"`
+
+	// The IDs of the flow logs.
+	FlowLogIDs []*string `locationName:"flowLogIdSet" locationNameList:"item" type:"list"`
+
+	// Information about the flow logs that could not be created successfully.
+	Unsuccessful []*UnsuccessfulItem `locationName:"unsuccessful" locationNameList:"item" type:"list"`
+
+	metadataCreateFlowLogsOutput `json:"-" xml:"-"`
+}
+
+type metadataCreateFlowLogsOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateFlowLogsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateFlowLogsOutput) GoString() string {
+	return s.String()
 }
 
 type CreateImageInput struct {
@@ -7772,6 +8334,10 @@ type CreateImageInput struct {
 	// A description for the new image.
 	Description *string `locationName:"description" type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the instance.
@@ -7791,22 +8357,42 @@ type CreateImageInput struct {
 	// system integrity on the created image can't be guaranteed.
 	NoReboot *bool `locationName:"noReboot" type:"boolean"`
 
-	metadataCreateImageInput `json:"-", xml:"-"`
+	metadataCreateImageInput `json:"-" xml:"-"`
 }
 
 type metadataCreateImageInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateImageInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateImageInput) GoString() string {
+	return s.String()
+}
+
 type CreateImageOutput struct {
 	// The ID of the new AMI.
 	ImageID *string `locationName:"imageId" type:"string"`
 
-	metadataCreateImageOutput `json:"-", xml:"-"`
+	metadataCreateImageOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateImageOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateImageOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateImageOutput) GoString() string {
+	return s.String()
 }
 
 type CreateInstanceExportTaskInput struct {
@@ -7814,6 +8400,7 @@ type CreateInstanceExportTaskInput struct {
 	// maximum length is 255 bytes.
 	Description *string `locationName:"description" type:"string"`
 
+	// The format and location for an instance export task.
 	ExportToS3Task *ExportToS3TaskSpecification `locationName:"exportToS3" type:"structure"`
 
 	// The ID of the instance.
@@ -7822,46 +8409,94 @@ type CreateInstanceExportTaskInput struct {
 	// The target virtualization environment.
 	TargetEnvironment *string `locationName:"targetEnvironment" type:"string"`
 
-	metadataCreateInstanceExportTaskInput `json:"-", xml:"-"`
+	metadataCreateInstanceExportTaskInput `json:"-" xml:"-"`
 }
 
 type metadataCreateInstanceExportTaskInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateInstanceExportTaskInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateInstanceExportTaskInput) GoString() string {
+	return s.String()
+}
+
 type CreateInstanceExportTaskOutput struct {
-	// Describes an export task.
+	// Information about the instance export task.
 	ExportTask *ExportTask `locationName:"exportTask" type:"structure"`
 
-	metadataCreateInstanceExportTaskOutput `json:"-", xml:"-"`
+	metadataCreateInstanceExportTaskOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateInstanceExportTaskOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateInstanceExportTaskOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateInstanceExportTaskOutput) GoString() string {
+	return s.String()
+}
+
 type CreateInternetGatewayInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	metadataCreateInternetGatewayInput `json:"-", xml:"-"`
+	metadataCreateInternetGatewayInput `json:"-" xml:"-"`
 }
 
 type metadataCreateInternetGatewayInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateInternetGatewayInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateInternetGatewayInput) GoString() string {
+	return s.String()
+}
+
 type CreateInternetGatewayOutput struct {
 	// Information about the Internet gateway.
 	InternetGateway *InternetGateway `locationName:"internetGateway" type:"structure"`
 
-	metadataCreateInternetGatewayOutput `json:"-", xml:"-"`
+	metadataCreateInternetGatewayOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateInternetGatewayOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateInternetGatewayOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateInternetGatewayOutput) GoString() string {
+	return s.String()
+}
+
 type CreateKeyPairInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// A unique name for the key pair.
@@ -7869,11 +8504,21 @@ type CreateKeyPairInput struct {
 	// Constraints: Up to 255 ASCII characters
 	KeyName *string `type:"string" required:"true"`
 
-	metadataCreateKeyPairInput `json:"-", xml:"-"`
+	metadataCreateKeyPairInput `json:"-" xml:"-"`
 }
 
 type metadataCreateKeyPairInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateKeyPairInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateKeyPairInput) GoString() string {
+	return s.String()
 }
 
 // Describes a key pair.
@@ -7887,17 +8532,31 @@ type CreateKeyPairOutput struct {
 	// The name of the key pair.
 	KeyName *string `locationName:"keyName" type:"string"`
 
-	metadataCreateKeyPairOutput `json:"-", xml:"-"`
+	metadataCreateKeyPairOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateKeyPairOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateKeyPairOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateKeyPairOutput) GoString() string {
+	return s.String()
+}
+
 type CreateNetworkACLEntryInput struct {
 	// The network range to allow or deny, in CIDR notation (for example 172.16.0.0/24).
 	CIDRBlock *string `locationName:"cidrBlock" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// Indicates whether this is an egress rule (rule is applied to traffic leaving
@@ -7926,49 +8585,97 @@ type CreateNetworkACLEntryInput struct {
 	// Constraints: Positive integer from 1 to 32766
 	RuleNumber *int64 `locationName:"ruleNumber" type:"integer" required:"true"`
 
-	metadataCreateNetworkACLEntryInput `json:"-", xml:"-"`
+	metadataCreateNetworkACLEntryInput `json:"-" xml:"-"`
 }
 
 type metadataCreateNetworkACLEntryInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateNetworkACLEntryInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateNetworkACLEntryInput) GoString() string {
+	return s.String()
+}
+
 type CreateNetworkACLEntryOutput struct {
-	metadataCreateNetworkACLEntryOutput `json:"-", xml:"-"`
+	metadataCreateNetworkACLEntryOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateNetworkACLEntryOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateNetworkACLEntryOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateNetworkACLEntryOutput) GoString() string {
+	return s.String()
+}
+
 type CreateNetworkACLInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the VPC.
 	VPCID *string `locationName:"vpcId" type:"string" required:"true"`
 
-	metadataCreateNetworkACLInput `json:"-", xml:"-"`
+	metadataCreateNetworkACLInput `json:"-" xml:"-"`
 }
 
 type metadataCreateNetworkACLInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateNetworkACLInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateNetworkACLInput) GoString() string {
+	return s.String()
+}
+
 type CreateNetworkACLOutput struct {
 	// Information about the network ACL.
 	NetworkACL *NetworkACL `locationName:"networkAcl" type:"structure"`
 
-	metadataCreateNetworkACLOutput `json:"-", xml:"-"`
+	metadataCreateNetworkACLOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateNetworkACLOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateNetworkACLOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateNetworkACLOutput) GoString() string {
+	return s.String()
+}
+
 type CreateNetworkInterfaceInput struct {
 	// A description for the network interface.
 	Description *string `locationName:"description" type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The IDs of one or more security groups.
@@ -7997,25 +8704,49 @@ type CreateNetworkInterfaceInput struct {
 	// The ID of the subnet to associate with the network interface.
 	SubnetID *string `locationName:"subnetId" type:"string" required:"true"`
 
-	metadataCreateNetworkInterfaceInput `json:"-", xml:"-"`
+	metadataCreateNetworkInterfaceInput `json:"-" xml:"-"`
 }
 
 type metadataCreateNetworkInterfaceInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateNetworkInterfaceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateNetworkInterfaceInput) GoString() string {
+	return s.String()
+}
+
 type CreateNetworkInterfaceOutput struct {
 	// Information about the network interface.
 	NetworkInterface *NetworkInterface `locationName:"networkInterface" type:"structure"`
 
-	metadataCreateNetworkInterfaceOutput `json:"-", xml:"-"`
+	metadataCreateNetworkInterfaceOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateNetworkInterfaceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateNetworkInterfaceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateNetworkInterfaceOutput) GoString() string {
+	return s.String()
+}
+
 type CreatePlacementGroupInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// A name for the placement group.
@@ -8026,19 +8757,39 @@ type CreatePlacementGroupInput struct {
 	// The placement strategy.
 	Strategy *string `locationName:"strategy" type:"string" required:"true"`
 
-	metadataCreatePlacementGroupInput `json:"-", xml:"-"`
+	metadataCreatePlacementGroupInput `json:"-" xml:"-"`
 }
 
 type metadataCreatePlacementGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreatePlacementGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreatePlacementGroupInput) GoString() string {
+	return s.String()
+}
+
 type CreatePlacementGroupOutput struct {
-	metadataCreatePlacementGroupOutput `json:"-", xml:"-"`
+	metadataCreatePlacementGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataCreatePlacementGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreatePlacementGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreatePlacementGroupOutput) GoString() string {
+	return s.String()
 }
 
 type CreateReservedInstancesListingInput struct {
@@ -8060,29 +8811,57 @@ type CreateReservedInstancesListingInput struct {
 	// The ID of the active Reserved Instance.
 	ReservedInstancesID *string `locationName:"reservedInstancesId" type:"string" required:"true"`
 
-	metadataCreateReservedInstancesListingInput `json:"-", xml:"-"`
+	metadataCreateReservedInstancesListingInput `json:"-" xml:"-"`
 }
 
 type metadataCreateReservedInstancesListingInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateReservedInstancesListingInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateReservedInstancesListingInput) GoString() string {
+	return s.String()
+}
+
 type CreateReservedInstancesListingOutput struct {
 	// Information about the Reserved Instances listing.
 	ReservedInstancesListings []*ReservedInstancesListing `locationName:"reservedInstancesListingsSet" locationNameList:"item" type:"list"`
 
-	metadataCreateReservedInstancesListingOutput `json:"-", xml:"-"`
+	metadataCreateReservedInstancesListingOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateReservedInstancesListingOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateReservedInstancesListingOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateReservedInstancesListingOutput) GoString() string {
+	return s.String()
+}
+
 type CreateRouteInput struct {
+	// Unique, case-sensitive identifier you provide to ensure the idempotency of
+	// the request. For more information, see How to Ensure Idempotency (http://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html).
+	ClientToken *string `locationName:"clientToken" type:"string"`
+
 	// The CIDR address block used for the destination match. Routing decisions
 	// are based on the most specific match.
 	DestinationCIDRBlock *string `locationName:"destinationCidrBlock" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of an Internet gateway or virtual private gateway attached to your
@@ -8102,43 +8881,94 @@ type CreateRouteInput struct {
 	// The ID of a VPC peering connection.
 	VPCPeeringConnectionID *string `locationName:"vpcPeeringConnectionId" type:"string"`
 
-	metadataCreateRouteInput `json:"-", xml:"-"`
+	metadataCreateRouteInput `json:"-" xml:"-"`
 }
 
 type metadataCreateRouteInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateRouteInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateRouteInput) GoString() string {
+	return s.String()
+}
+
 type CreateRouteOutput struct {
-	metadataCreateRouteOutput `json:"-", xml:"-"`
+	// Unique, case-sensitive identifier you provide to ensure the idempotency of
+	// the request.
+	ClientToken *string `locationName:"clientToken" type:"string"`
+
+	// Returns true if the request succeeds; otherwise, it returns an error.
+	Return *bool `locationName:"return" type:"boolean"`
+
+	metadataCreateRouteOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateRouteOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateRouteOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateRouteOutput) GoString() string {
+	return s.String()
+}
+
 type CreateRouteTableInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the VPC.
 	VPCID *string `locationName:"vpcId" type:"string" required:"true"`
 
-	metadataCreateRouteTableInput `json:"-", xml:"-"`
+	metadataCreateRouteTableInput `json:"-" xml:"-"`
 }
 
 type metadataCreateRouteTableInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateRouteTableInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateRouteTableInput) GoString() string {
+	return s.String()
+}
+
 type CreateRouteTableOutput struct {
 	// Information about the route table.
 	RouteTable *RouteTable `locationName:"routeTable" type:"structure"`
 
-	metadataCreateRouteTableOutput `json:"-", xml:"-"`
+	metadataCreateRouteTableOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateRouteTableOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateRouteTableOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateRouteTableOutput) GoString() string {
+	return s.String()
 }
 
 type CreateSecurityGroupInput struct {
@@ -8151,6 +8981,10 @@ type CreateSecurityGroupInput struct {
 	// Constraints for EC2-VPC: a-z, A-Z, 0-9, spaces, and ._-:/()#,@[]+=&;{}!$*
 	Description *string `locationName:"GroupDescription" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The name of the security group.
@@ -8165,65 +8999,125 @@ type CreateSecurityGroupInput struct {
 	// [EC2-VPC] The ID of the VPC. Required for EC2-VPC.
 	VPCID *string `locationName:"VpcId" type:"string"`
 
-	metadataCreateSecurityGroupInput `json:"-", xml:"-"`
+	metadataCreateSecurityGroupInput `json:"-" xml:"-"`
 }
 
 type metadataCreateSecurityGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateSecurityGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateSecurityGroupInput) GoString() string {
+	return s.String()
+}
+
 type CreateSecurityGroupOutput struct {
 	// The ID of the security group.
 	GroupID *string `locationName:"groupId" type:"string"`
 
-	metadataCreateSecurityGroupOutput `json:"-", xml:"-"`
+	metadataCreateSecurityGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateSecurityGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateSecurityGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateSecurityGroupOutput) GoString() string {
+	return s.String()
+}
+
 type CreateSnapshotInput struct {
 	// A description for the snapshot.
 	Description *string `type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// The ID of the Amazon EBS volume.
+	// The ID of the EBS volume.
 	VolumeID *string `locationName:"VolumeId" type:"string" required:"true"`
 
-	metadataCreateSnapshotInput `json:"-", xml:"-"`
+	metadataCreateSnapshotInput `json:"-" xml:"-"`
 }
 
 type metadataCreateSnapshotInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateSnapshotInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateSnapshotInput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for CreateSpotDatafeedSubscription.
 type CreateSpotDatafeedSubscriptionInput struct {
 	// The Amazon S3 bucket in which to store the Spot Instance data feed.
 	Bucket *string `locationName:"bucket" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// A prefix for the data feed file names.
 	Prefix *string `locationName:"prefix" type:"string"`
 
-	metadataCreateSpotDatafeedSubscriptionInput `json:"-", xml:"-"`
+	metadataCreateSpotDatafeedSubscriptionInput `json:"-" xml:"-"`
 }
 
 type metadataCreateSpotDatafeedSubscriptionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateSpotDatafeedSubscriptionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateSpotDatafeedSubscriptionInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of CreateSpotDatafeedSubscription.
 type CreateSpotDatafeedSubscriptionOutput struct {
 	// The Spot Instance data feed subscription.
 	SpotDatafeedSubscription *SpotDatafeedSubscription `locationName:"spotDatafeedSubscription" type:"structure"`
 
-	metadataCreateSpotDatafeedSubscriptionOutput `json:"-", xml:"-"`
+	metadataCreateSpotDatafeedSubscriptionOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateSpotDatafeedSubscriptionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateSpotDatafeedSubscriptionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateSpotDatafeedSubscriptionOutput) GoString() string {
+	return s.String()
 }
 
 type CreateSubnetInput struct {
@@ -8235,30 +9129,58 @@ type CreateSubnetInput struct {
 	// The network range for the subnet, in CIDR notation. For example, 10.0.0.0/24.
 	CIDRBlock *string `locationName:"CidrBlock" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the VPC.
 	VPCID *string `locationName:"VpcId" type:"string" required:"true"`
 
-	metadataCreateSubnetInput `json:"-", xml:"-"`
+	metadataCreateSubnetInput `json:"-" xml:"-"`
 }
 
 type metadataCreateSubnetInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateSubnetInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateSubnetInput) GoString() string {
+	return s.String()
+}
+
 type CreateSubnetOutput struct {
 	// Information about the subnet.
 	Subnet *Subnet `locationName:"subnet" type:"structure"`
 
-	metadataCreateSubnetOutput `json:"-", xml:"-"`
+	metadataCreateSubnetOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateSubnetOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateSubnetOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateSubnetOutput) GoString() string {
+	return s.String()
+}
+
 type CreateTagsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The IDs of one or more resources to tag. For example, ami-1a2b3c4d.
@@ -8269,25 +9191,117 @@ type CreateTagsInput struct {
 	// the value to an empty string.
 	Tags []*Tag `locationName:"Tag" locationNameList:"item" type:"list" required:"true"`
 
-	metadataCreateTagsInput `json:"-", xml:"-"`
+	metadataCreateTagsInput `json:"-" xml:"-"`
 }
 
 type metadataCreateTagsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateTagsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateTagsInput) GoString() string {
+	return s.String()
+}
+
 type CreateTagsOutput struct {
-	metadataCreateTagsOutput `json:"-", xml:"-"`
+	metadataCreateTagsOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateTagsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateTagsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateTagsOutput) GoString() string {
+	return s.String()
+}
+
+type CreateVPCEndpointInput struct {
+	// Unique, case-sensitive identifier you provide to ensure the idempotency of
+	// the request. For more information, see How to Ensure Idempotency (http://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html).
+	ClientToken *string `type:"string"`
+
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
+	DryRun *bool `type:"boolean"`
+
+	// A policy to attach to the endpoint that controls access to the service. The
+	// policy must be in valid JSON format. If this parameter is not specified,
+	// we attach a default policy that allows full access to the service.
+	PolicyDocument *string `type:"string"`
+
+	// One or more route table IDs.
+	RouteTableIDs []*string `locationName:"RouteTableId" locationNameList:"item" type:"list"`
+
+	// The AWS service name, in the form com.amazonaws.<region>.<service>. To get
+	// a list of available services, use the DescribeVpcEndpointServices request.
+	ServiceName *string `type:"string" required:"true"`
+
+	// The ID of the VPC in which the endpoint will be used.
+	VPCID *string `locationName:"VpcId" type:"string" required:"true"`
+
+	metadataCreateVPCEndpointInput `json:"-" xml:"-"`
+}
+
+type metadataCreateVPCEndpointInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateVPCEndpointInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateVPCEndpointInput) GoString() string {
+	return s.String()
+}
+
+type CreateVPCEndpointOutput struct {
+	// Unique, case-sensitive identifier you provide to ensure the idempotency of
+	// the request.
+	ClientToken *string `locationName:"clientToken" type:"string"`
+
+	// Information about the endpoint.
+	VPCEndpoint *VPCEndpoint `locationName:"vpcEndpoint" type:"structure"`
+
+	metadataCreateVPCEndpointOutput `json:"-" xml:"-"`
+}
+
+type metadataCreateVPCEndpointOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateVPCEndpointOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateVPCEndpointOutput) GoString() string {
+	return s.String()
+}
+
 type CreateVPCInput struct {
 	// The network range for the VPC, in CIDR notation. For example, 10.0.0.0/16.
 	CIDRBlock *string `locationName:"CidrBlock" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The supported tenancy options for instances launched into the VPC. A value
@@ -8299,25 +9313,49 @@ type CreateVPCInput struct {
 	// Default: default
 	InstanceTenancy *string `locationName:"instanceTenancy" type:"string"`
 
-	metadataCreateVPCInput `json:"-", xml:"-"`
+	metadataCreateVPCInput `json:"-" xml:"-"`
 }
 
 type metadataCreateVPCInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateVPCInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateVPCInput) GoString() string {
+	return s.String()
+}
+
 type CreateVPCOutput struct {
 	// Information about the VPC.
 	VPC *VPC `locationName:"vpc" type:"structure"`
 
-	metadataCreateVPCOutput `json:"-", xml:"-"`
+	metadataCreateVPCOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateVPCOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateVPCOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateVPCOutput) GoString() string {
+	return s.String()
+}
+
 type CreateVPCPeeringConnectionInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The AWS account ID of the owner of the peer VPC.
@@ -8331,28 +9369,52 @@ type CreateVPCPeeringConnectionInput struct {
 	// The ID of the requester VPC.
 	VPCID *string `locationName:"vpcId" type:"string"`
 
-	metadataCreateVPCPeeringConnectionInput `json:"-", xml:"-"`
+	metadataCreateVPCPeeringConnectionInput `json:"-" xml:"-"`
 }
 
 type metadataCreateVPCPeeringConnectionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateVPCPeeringConnectionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateVPCPeeringConnectionInput) GoString() string {
+	return s.String()
+}
+
 type CreateVPCPeeringConnectionOutput struct {
 	// Information about the VPC peering connection.
 	VPCPeeringConnection *VPCPeeringConnection `locationName:"vpcPeeringConnection" type:"structure"`
 
-	metadataCreateVPCPeeringConnectionOutput `json:"-", xml:"-"`
+	metadataCreateVPCPeeringConnectionOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateVPCPeeringConnectionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateVPCPeeringConnectionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateVPCPeeringConnectionOutput) GoString() string {
+	return s.String()
+}
+
 type CreateVPNConnectionInput struct {
 	// The ID of the customer gateway.
 	CustomerGatewayID *string `locationName:"CustomerGatewayId" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// Indicates whether the VPN connection requires static routes. If you are creating
@@ -8368,22 +9430,42 @@ type CreateVPNConnectionInput struct {
 	// The ID of the virtual private gateway.
 	VPNGatewayID *string `locationName:"VpnGatewayId" type:"string" required:"true"`
 
-	metadataCreateVPNConnectionInput `json:"-", xml:"-"`
+	metadataCreateVPNConnectionInput `json:"-" xml:"-"`
 }
 
 type metadataCreateVPNConnectionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateVPNConnectionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateVPNConnectionInput) GoString() string {
+	return s.String()
+}
+
 type CreateVPNConnectionOutput struct {
 	// Information about the VPN connection.
 	VPNConnection *VPNConnection `locationName:"vpnConnection" type:"structure"`
 
-	metadataCreateVPNConnectionOutput `json:"-", xml:"-"`
+	metadataCreateVPNConnectionOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateVPNConnectionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateVPNConnectionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateVPNConnectionOutput) GoString() string {
+	return s.String()
 }
 
 type CreateVPNConnectionRouteInput struct {
@@ -8393,46 +9475,90 @@ type CreateVPNConnectionRouteInput struct {
 	// The ID of the VPN connection.
 	VPNConnectionID *string `locationName:"VpnConnectionId" type:"string" required:"true"`
 
-	metadataCreateVPNConnectionRouteInput `json:"-", xml:"-"`
+	metadataCreateVPNConnectionRouteInput `json:"-" xml:"-"`
 }
 
 type metadataCreateVPNConnectionRouteInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateVPNConnectionRouteInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateVPNConnectionRouteInput) GoString() string {
+	return s.String()
+}
+
 type CreateVPNConnectionRouteOutput struct {
-	metadataCreateVPNConnectionRouteOutput `json:"-", xml:"-"`
+	metadataCreateVPNConnectionRouteOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateVPNConnectionRouteOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateVPNConnectionRouteOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateVPNConnectionRouteOutput) GoString() string {
+	return s.String()
+}
+
 type CreateVPNGatewayInput struct {
 	// The Availability Zone for the virtual private gateway.
 	AvailabilityZone *string `type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The type of VPN connection this virtual private gateway supports.
 	Type *string `type:"string" required:"true"`
 
-	metadataCreateVPNGatewayInput `json:"-", xml:"-"`
+	metadataCreateVPNGatewayInput `json:"-" xml:"-"`
 }
 
 type metadataCreateVPNGatewayInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateVPNGatewayInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateVPNGatewayInput) GoString() string {
+	return s.String()
+}
+
 type CreateVPNGatewayOutput struct {
 	// Information about the virtual private gateway.
 	VPNGateway *VPNGateway `locationName:"vpnGateway" type:"structure"`
 
-	metadataCreateVPNGatewayOutput `json:"-", xml:"-"`
+	metadataCreateVPNGatewayOutput `json:"-" xml:"-"`
 }
 
 type metadataCreateVPNGatewayOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateVPNGatewayOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateVPNGatewayOutput) GoString() string {
+	return s.String()
 }
 
 type CreateVolumeInput struct {
@@ -8440,6 +9566,10 @@ type CreateVolumeInput struct {
 	// to list the Availability Zones that are currently available to you.
 	AvailabilityZone *string `type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// Specifies whether the volume should be encrypted. Encrypted Amazon EBS volumes
@@ -8458,12 +9588,13 @@ type CreateVolumeInput struct {
 	// Constraint: Range is 100 to 20000 for Provisioned IOPS (SSD) volumes
 	IOPS *int64 `locationName:"Iops" type:"integer"`
 
-	// The full ARN of the AWS Key Management Service (KMS) master key to use when
-	// creating the encrypted volume. This parameter is only required if you want
-	// to use a non-default master key; if this parameter is not specified, the
-	// default master key is used. The ARN contains the arn:aws:kms namespace, followed
-	// by the region of the master key, the AWS account ID of the master key owner,
-	// the key namespace, and then the master key ID. For example, arn:aws:kms:us-east-1:012345678910:key/abcd1234-a123-456a-a12b-a123b4cd56ef.
+	// The full ARN of the AWS Key Management Service (KMS) Customer Master Key
+	// (CMK) to use when creating the encrypted volume. This parameter is only required
+	// if you want to use a non-default CMK; if this parameter is not specified,
+	// the default CMK for EBS is used. The ARN contains the arn:aws:kms namespace,
+	// followed by the region of the CMK, the AWS account ID of the CMK owner, the
+	// key namespace, and then the CMK ID. For example, arn:aws:kms:us-east-1:012345678910:key/abcd1234-a123-456a-a12b-a123b4cd56ef.
+	// If a KmsKeyId is specified, the Encrypted flag must also be set.
 	KMSKeyID *string `locationName:"KmsKeyId" type:"string"`
 
 	// The size of the volume, in GiBs.
@@ -8485,13 +9616,25 @@ type CreateVolumeInput struct {
 	// Default: standard
 	VolumeType *string `type:"string"`
 
-	metadataCreateVolumeInput `json:"-", xml:"-"`
+	metadataCreateVolumeInput `json:"-" xml:"-"`
 }
 
 type metadataCreateVolumeInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateVolumeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateVolumeInput) GoString() string {
+	return s.String()
+}
+
+// Describes the user or group to be added or removed from the permissions for
+// a volume.
 type CreateVolumePermission struct {
 	// The specific group that is to be added or removed from a volume's list of
 	// create volume permissions.
@@ -8501,13 +9644,24 @@ type CreateVolumePermission struct {
 	// list of create volume permissions.
 	UserID *string `locationName:"userId" type:"string"`
 
-	metadataCreateVolumePermission `json:"-", xml:"-"`
+	metadataCreateVolumePermission `json:"-" xml:"-"`
 }
 
 type metadataCreateVolumePermission struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s CreateVolumePermission) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateVolumePermission) GoString() string {
+	return s.String()
+}
+
+// Describes modifications to the permissions for a volume.
 type CreateVolumePermissionModifications struct {
 	// Adds a specific AWS account ID or group to a volume's list of create volume
 	// permissions.
@@ -8517,11 +9671,21 @@ type CreateVolumePermissionModifications struct {
 	// volume permissions.
 	Remove []*CreateVolumePermission `locationNameList:"item" type:"list"`
 
-	metadataCreateVolumePermissionModifications `json:"-", xml:"-"`
+	metadataCreateVolumePermissionModifications `json:"-" xml:"-"`
 }
 
 type metadataCreateVolumePermissionModifications struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateVolumePermissionModifications) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateVolumePermissionModifications) GoString() string {
+	return s.String()
 }
 
 // Describes a customer gateway.
@@ -8546,11 +9710,21 @@ type CustomerGateway struct {
 	// The type of VPN connection the customer gateway supports (ipsec.1).
 	Type *string `locationName:"type" type:"string"`
 
-	metadataCustomerGateway `json:"-", xml:"-"`
+	metadataCustomerGateway `json:"-" xml:"-"`
 }
 
 type metadataCustomerGateway struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CustomerGateway) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CustomerGateway) GoString() string {
+	return s.String()
 }
 
 // Describes a DHCP configuration option.
@@ -8561,11 +9735,21 @@ type DHCPConfiguration struct {
 	// One or more values for the DHCP option.
 	Values []*AttributeValue `locationName:"valueSet" locationNameList:"item" type:"list"`
 
-	metadataDHCPConfiguration `json:"-", xml:"-"`
+	metadataDHCPConfiguration `json:"-" xml:"-"`
 }
 
 type metadataDHCPConfiguration struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DHCPConfiguration) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DHCPConfiguration) GoString() string {
+	return s.String()
 }
 
 // Describes a set of DHCP options.
@@ -8579,98 +9763,250 @@ type DHCPOptions struct {
 	// Any tags assigned to the DHCP options set.
 	Tags []*Tag `locationName:"tagSet" locationNameList:"item" type:"list"`
 
-	metadataDHCPOptions `json:"-", xml:"-"`
+	metadataDHCPOptions `json:"-" xml:"-"`
 }
 
 type metadataDHCPOptions struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DHCPOptions) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DHCPOptions) GoString() string {
+	return s.String()
+}
+
 type DeleteCustomerGatewayInput struct {
 	// The ID of the customer gateway.
 	CustomerGatewayID *string `locationName:"CustomerGatewayId" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	metadataDeleteCustomerGatewayInput `json:"-", xml:"-"`
+	metadataDeleteCustomerGatewayInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteCustomerGatewayInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteCustomerGatewayInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteCustomerGatewayInput) GoString() string {
+	return s.String()
+}
+
 type DeleteCustomerGatewayOutput struct {
-	metadataDeleteCustomerGatewayOutput `json:"-", xml:"-"`
+	metadataDeleteCustomerGatewayOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteCustomerGatewayOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteCustomerGatewayOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteCustomerGatewayOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteDHCPOptionsInput struct {
 	// The ID of the DHCP options set.
 	DHCPOptionsID *string `locationName:"DhcpOptionsId" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	metadataDeleteDHCPOptionsInput `json:"-", xml:"-"`
+	metadataDeleteDHCPOptionsInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteDHCPOptionsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteDHCPOptionsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteDHCPOptionsInput) GoString() string {
+	return s.String()
+}
+
 type DeleteDHCPOptionsOutput struct {
-	metadataDeleteDHCPOptionsOutput `json:"-", xml:"-"`
+	metadataDeleteDHCPOptionsOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteDHCPOptionsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteDHCPOptionsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteDHCPOptionsOutput) GoString() string {
+	return s.String()
+}
+
+type DeleteFlowLogsInput struct {
+	// One or more flow log IDs.
+	FlowLogIDs []*string `locationName:"FlowLogId" locationNameList:"item" type:"list" required:"true"`
+
+	metadataDeleteFlowLogsInput `json:"-" xml:"-"`
+}
+
+type metadataDeleteFlowLogsInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteFlowLogsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteFlowLogsInput) GoString() string {
+	return s.String()
+}
+
+type DeleteFlowLogsOutput struct {
+	// Information about the flow logs that could not be deleted successfully.
+	Unsuccessful []*UnsuccessfulItem `locationName:"unsuccessful" locationNameList:"item" type:"list"`
+
+	metadataDeleteFlowLogsOutput `json:"-" xml:"-"`
+}
+
+type metadataDeleteFlowLogsOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteFlowLogsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteFlowLogsOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteInternetGatewayInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the Internet gateway.
 	InternetGatewayID *string `locationName:"internetGatewayId" type:"string" required:"true"`
 
-	metadataDeleteInternetGatewayInput `json:"-", xml:"-"`
+	metadataDeleteInternetGatewayInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteInternetGatewayInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteInternetGatewayInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteInternetGatewayInput) GoString() string {
+	return s.String()
+}
+
 type DeleteInternetGatewayOutput struct {
-	metadataDeleteInternetGatewayOutput `json:"-", xml:"-"`
+	metadataDeleteInternetGatewayOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteInternetGatewayOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteInternetGatewayOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteInternetGatewayOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteKeyPairInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The name of the key pair.
 	KeyName *string `type:"string" required:"true"`
 
-	metadataDeleteKeyPairInput `json:"-", xml:"-"`
+	metadataDeleteKeyPairInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteKeyPairInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteKeyPairInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteKeyPairInput) GoString() string {
+	return s.String()
+}
+
 type DeleteKeyPairOutput struct {
-	metadataDeleteKeyPairOutput `json:"-", xml:"-"`
+	metadataDeleteKeyPairOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteKeyPairOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteKeyPairOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteKeyPairOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteNetworkACLEntryInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// Indicates whether the rule is an egress rule.
@@ -8682,82 +10018,174 @@ type DeleteNetworkACLEntryInput struct {
 	// The rule number of the entry to delete.
 	RuleNumber *int64 `locationName:"ruleNumber" type:"integer" required:"true"`
 
-	metadataDeleteNetworkACLEntryInput `json:"-", xml:"-"`
+	metadataDeleteNetworkACLEntryInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteNetworkACLEntryInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteNetworkACLEntryInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteNetworkACLEntryInput) GoString() string {
+	return s.String()
+}
+
 type DeleteNetworkACLEntryOutput struct {
-	metadataDeleteNetworkACLEntryOutput `json:"-", xml:"-"`
+	metadataDeleteNetworkACLEntryOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteNetworkACLEntryOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteNetworkACLEntryOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteNetworkACLEntryOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteNetworkACLInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the network ACL.
 	NetworkACLID *string `locationName:"networkAclId" type:"string" required:"true"`
 
-	metadataDeleteNetworkACLInput `json:"-", xml:"-"`
+	metadataDeleteNetworkACLInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteNetworkACLInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteNetworkACLInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteNetworkACLInput) GoString() string {
+	return s.String()
+}
+
 type DeleteNetworkACLOutput struct {
-	metadataDeleteNetworkACLOutput `json:"-", xml:"-"`
+	metadataDeleteNetworkACLOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteNetworkACLOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteNetworkACLOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteNetworkACLOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteNetworkInterfaceInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the network interface.
 	NetworkInterfaceID *string `locationName:"networkInterfaceId" type:"string" required:"true"`
 
-	metadataDeleteNetworkInterfaceInput `json:"-", xml:"-"`
+	metadataDeleteNetworkInterfaceInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteNetworkInterfaceInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteNetworkInterfaceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteNetworkInterfaceInput) GoString() string {
+	return s.String()
+}
+
 type DeleteNetworkInterfaceOutput struct {
-	metadataDeleteNetworkInterfaceOutput `json:"-", xml:"-"`
+	metadataDeleteNetworkInterfaceOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteNetworkInterfaceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteNetworkInterfaceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteNetworkInterfaceOutput) GoString() string {
+	return s.String()
+}
+
 type DeletePlacementGroupInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The name of the placement group.
 	GroupName *string `locationName:"groupName" type:"string" required:"true"`
 
-	metadataDeletePlacementGroupInput `json:"-", xml:"-"`
+	metadataDeletePlacementGroupInput `json:"-" xml:"-"`
 }
 
 type metadataDeletePlacementGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeletePlacementGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeletePlacementGroupInput) GoString() string {
+	return s.String()
+}
+
 type DeletePlacementGroupOutput struct {
-	metadataDeletePlacementGroupOutput `json:"-", xml:"-"`
+	metadataDeletePlacementGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataDeletePlacementGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeletePlacementGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeletePlacementGroupOutput) GoString() string {
+	return s.String()
 }
 
 type DeleteRouteInput struct {
@@ -8765,48 +10193,100 @@ type DeleteRouteInput struct {
 	// the route exactly.
 	DestinationCIDRBlock *string `locationName:"destinationCidrBlock" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the route table.
 	RouteTableID *string `locationName:"routeTableId" type:"string" required:"true"`
 
-	metadataDeleteRouteInput `json:"-", xml:"-"`
+	metadataDeleteRouteInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteRouteInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteRouteInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteRouteInput) GoString() string {
+	return s.String()
+}
+
 type DeleteRouteOutput struct {
-	metadataDeleteRouteOutput `json:"-", xml:"-"`
+	metadataDeleteRouteOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteRouteOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteRouteOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteRouteOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteRouteTableInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the route table.
 	RouteTableID *string `locationName:"routeTableId" type:"string" required:"true"`
 
-	metadataDeleteRouteTableInput `json:"-", xml:"-"`
+	metadataDeleteRouteTableInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteRouteTableInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteRouteTableInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteRouteTableInput) GoString() string {
+	return s.String()
+}
+
 type DeleteRouteTableOutput struct {
-	metadataDeleteRouteTableOutput `json:"-", xml:"-"`
+	metadataDeleteRouteTableOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteRouteTableOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteRouteTableOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteRouteTableOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteSecurityGroupInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the security group. Required for a nondefault VPC.
@@ -8816,82 +10296,179 @@ type DeleteSecurityGroupInput struct {
 	// either the security group name or the security group ID.
 	GroupName *string `type:"string"`
 
-	metadataDeleteSecurityGroupInput `json:"-", xml:"-"`
+	metadataDeleteSecurityGroupInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteSecurityGroupInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteSecurityGroupInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteSecurityGroupInput) GoString() string {
+	return s.String()
+}
+
 type DeleteSecurityGroupOutput struct {
-	metadataDeleteSecurityGroupOutput `json:"-", xml:"-"`
+	metadataDeleteSecurityGroupOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteSecurityGroupOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteSecurityGroupOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteSecurityGroupOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteSnapshotInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// The ID of the Amazon EBS snapshot.
+	// The ID of the EBS snapshot.
 	SnapshotID *string `locationName:"SnapshotId" type:"string" required:"true"`
 
-	metadataDeleteSnapshotInput `json:"-", xml:"-"`
+	metadataDeleteSnapshotInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteSnapshotInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteSnapshotInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteSnapshotInput) GoString() string {
+	return s.String()
+}
+
 type DeleteSnapshotOutput struct {
-	metadataDeleteSnapshotOutput `json:"-", xml:"-"`
+	metadataDeleteSnapshotOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteSnapshotOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteSnapshotOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteSnapshotOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for DeleteSpotDatafeedSubscription.
 type DeleteSpotDatafeedSubscriptionInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	metadataDeleteSpotDatafeedSubscriptionInput `json:"-", xml:"-"`
+	metadataDeleteSpotDatafeedSubscriptionInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteSpotDatafeedSubscriptionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteSpotDatafeedSubscriptionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteSpotDatafeedSubscriptionInput) GoString() string {
+	return s.String()
+}
+
 type DeleteSpotDatafeedSubscriptionOutput struct {
-	metadataDeleteSpotDatafeedSubscriptionOutput `json:"-", xml:"-"`
+	metadataDeleteSpotDatafeedSubscriptionOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteSpotDatafeedSubscriptionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteSpotDatafeedSubscriptionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteSpotDatafeedSubscriptionOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteSubnetInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the subnet.
 	SubnetID *string `locationName:"SubnetId" type:"string" required:"true"`
 
-	metadataDeleteSubnetInput `json:"-", xml:"-"`
+	metadataDeleteSubnetInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteSubnetInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteSubnetInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteSubnetInput) GoString() string {
+	return s.String()
+}
+
 type DeleteSubnetOutput struct {
-	metadataDeleteSubnetOutput `json:"-", xml:"-"`
+	metadataDeleteSubnetOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteSubnetOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteSubnetOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteSubnetOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteTagsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the resource. For example, ami-1a2b3c4d. You can specify more than
@@ -8903,85 +10480,225 @@ type DeleteTagsInput struct {
 	// string as the value, we delete the key only if its value is an empty string.
 	Tags []*Tag `locationName:"tag" locationNameList:"item" type:"list"`
 
-	metadataDeleteTagsInput `json:"-", xml:"-"`
+	metadataDeleteTagsInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteTagsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteTagsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteTagsInput) GoString() string {
+	return s.String()
+}
+
 type DeleteTagsOutput struct {
-	metadataDeleteTagsOutput `json:"-", xml:"-"`
+	metadataDeleteTagsOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteTagsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteTagsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteTagsOutput) GoString() string {
+	return s.String()
+}
+
+type DeleteVPCEndpointsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
+	DryRun *bool `type:"boolean"`
+
+	// One or more endpoint IDs.
+	VPCEndpointIDs []*string `locationName:"VpcEndpointId" locationNameList:"item" type:"list" required:"true"`
+
+	metadataDeleteVPCEndpointsInput `json:"-" xml:"-"`
+}
+
+type metadataDeleteVPCEndpointsInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteVPCEndpointsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVPCEndpointsInput) GoString() string {
+	return s.String()
+}
+
+type DeleteVPCEndpointsOutput struct {
+	// Information about the endpoints that were not successfully deleted.
+	Unsuccessful []*UnsuccessfulItem `locationName:"unsuccessful" locationNameList:"item" type:"list"`
+
+	metadataDeleteVPCEndpointsOutput `json:"-" xml:"-"`
+}
+
+type metadataDeleteVPCEndpointsOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteVPCEndpointsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVPCEndpointsOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteVPCInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the VPC.
 	VPCID *string `locationName:"VpcId" type:"string" required:"true"`
 
-	metadataDeleteVPCInput `json:"-", xml:"-"`
+	metadataDeleteVPCInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVPCInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteVPCInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVPCInput) GoString() string {
+	return s.String()
+}
+
 type DeleteVPCOutput struct {
-	metadataDeleteVPCOutput `json:"-", xml:"-"`
+	metadataDeleteVPCOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVPCOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteVPCOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVPCOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteVPCPeeringConnectionInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the VPC peering connection.
 	VPCPeeringConnectionID *string `locationName:"vpcPeeringConnectionId" type:"string" required:"true"`
 
-	metadataDeleteVPCPeeringConnectionInput `json:"-", xml:"-"`
+	metadataDeleteVPCPeeringConnectionInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVPCPeeringConnectionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteVPCPeeringConnectionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVPCPeeringConnectionInput) GoString() string {
+	return s.String()
+}
+
 type DeleteVPCPeeringConnectionOutput struct {
 	// Returns true if the request succeeds; otherwise, it returns an error.
 	Return *bool `locationName:"return" type:"boolean"`
 
-	metadataDeleteVPCPeeringConnectionOutput `json:"-", xml:"-"`
+	metadataDeleteVPCPeeringConnectionOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVPCPeeringConnectionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteVPCPeeringConnectionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVPCPeeringConnectionOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteVPNConnectionInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the VPN connection.
 	VPNConnectionID *string `locationName:"VpnConnectionId" type:"string" required:"true"`
 
-	metadataDeleteVPNConnectionInput `json:"-", xml:"-"`
+	metadataDeleteVPNConnectionInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVPNConnectionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteVPNConnectionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVPNConnectionInput) GoString() string {
+	return s.String()
+}
+
 type DeleteVPNConnectionOutput struct {
-	metadataDeleteVPNConnectionOutput `json:"-", xml:"-"`
+	metadataDeleteVPNConnectionOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVPNConnectionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteVPNConnectionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVPNConnectionOutput) GoString() string {
+	return s.String()
 }
 
 type DeleteVPNConnectionRouteInput struct {
@@ -8991,106 +10708,222 @@ type DeleteVPNConnectionRouteInput struct {
 	// The ID of the VPN connection.
 	VPNConnectionID *string `locationName:"VpnConnectionId" type:"string" required:"true"`
 
-	metadataDeleteVPNConnectionRouteInput `json:"-", xml:"-"`
+	metadataDeleteVPNConnectionRouteInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVPNConnectionRouteInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteVPNConnectionRouteInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVPNConnectionRouteInput) GoString() string {
+	return s.String()
+}
+
 type DeleteVPNConnectionRouteOutput struct {
-	metadataDeleteVPNConnectionRouteOutput `json:"-", xml:"-"`
+	metadataDeleteVPNConnectionRouteOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVPNConnectionRouteOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteVPNConnectionRouteOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVPNConnectionRouteOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteVPNGatewayInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the virtual private gateway.
 	VPNGatewayID *string `locationName:"VpnGatewayId" type:"string" required:"true"`
 
-	metadataDeleteVPNGatewayInput `json:"-", xml:"-"`
+	metadataDeleteVPNGatewayInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVPNGatewayInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteVPNGatewayInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVPNGatewayInput) GoString() string {
+	return s.String()
+}
+
 type DeleteVPNGatewayOutput struct {
-	metadataDeleteVPNGatewayOutput `json:"-", xml:"-"`
+	metadataDeleteVPNGatewayOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVPNGatewayOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteVPNGatewayOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVPNGatewayOutput) GoString() string {
+	return s.String()
+}
+
 type DeleteVolumeInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the volume.
 	VolumeID *string `locationName:"VolumeId" type:"string" required:"true"`
 
-	metadataDeleteVolumeInput `json:"-", xml:"-"`
+	metadataDeleteVolumeInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVolumeInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteVolumeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVolumeInput) GoString() string {
+	return s.String()
+}
+
 type DeleteVolumeOutput struct {
-	metadataDeleteVolumeOutput `json:"-", xml:"-"`
+	metadataDeleteVolumeOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVolumeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeleteVolumeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVolumeOutput) GoString() string {
+	return s.String()
+}
+
 type DeregisterImageInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the AMI.
 	ImageID *string `locationName:"ImageId" type:"string" required:"true"`
 
-	metadataDeregisterImageInput `json:"-", xml:"-"`
+	metadataDeregisterImageInput `json:"-" xml:"-"`
 }
 
 type metadataDeregisterImageInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeregisterImageInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeregisterImageInput) GoString() string {
+	return s.String()
+}
+
 type DeregisterImageOutput struct {
-	metadataDeregisterImageOutput `json:"-", xml:"-"`
+	metadataDeregisterImageOutput `json:"-" xml:"-"`
 }
 
 type metadataDeregisterImageOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DeregisterImageOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeregisterImageOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeAccountAttributesInput struct {
 	// One or more account attribute names.
 	AttributeNames []*string `locationName:"attributeName" locationNameList:"attributeName" type:"list"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	metadataDescribeAccountAttributesInput `json:"-", xml:"-"`
+	metadataDescribeAccountAttributesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeAccountAttributesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeAccountAttributesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeAccountAttributesInput) GoString() string {
+	return s.String()
+}
+
 type DescribeAccountAttributesOutput struct {
 	// Information about one or more account attributes.
 	AccountAttributes []*AccountAttribute `locationName:"accountAttributeSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeAccountAttributesOutput `json:"-", xml:"-"`
+	metadataDescribeAccountAttributesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeAccountAttributesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeAccountAttributesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeAccountAttributesOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeAddressesInput struct {
@@ -9099,6 +10932,10 @@ type DescribeAddressesInput struct {
 	// Default: Describes all your Elastic IP addresses.
 	AllocationIDs []*string `locationName:"AllocationId" locationNameList:"AllocationId" type:"list"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters. Filter names and values are case-sensitive.
@@ -9129,25 +10966,49 @@ type DescribeAddressesInput struct {
 	// Default: Describes all your Elastic IP addresses.
 	PublicIPs []*string `locationName:"PublicIp" locationNameList:"PublicIp" type:"list"`
 
-	metadataDescribeAddressesInput `json:"-", xml:"-"`
+	metadataDescribeAddressesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeAddressesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeAddressesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeAddressesInput) GoString() string {
+	return s.String()
+}
+
 type DescribeAddressesOutput struct {
 	// Information about one or more Elastic IP addresses.
 	Addresses []*Address `locationName:"addressesSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeAddressesOutput `json:"-", xml:"-"`
+	metadataDescribeAddressesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeAddressesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeAddressesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeAddressesOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeAvailabilityZonesInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -9165,22 +11026,42 @@ type DescribeAvailabilityZonesInput struct {
 	// The names of one or more Availability Zones.
 	ZoneNames []*string `locationName:"ZoneName" locationNameList:"ZoneName" type:"list"`
 
-	metadataDescribeAvailabilityZonesInput `json:"-", xml:"-"`
+	metadataDescribeAvailabilityZonesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeAvailabilityZonesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeAvailabilityZonesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeAvailabilityZonesInput) GoString() string {
+	return s.String()
+}
+
 type DescribeAvailabilityZonesOutput struct {
 	// Information about one or more Availability Zones.
 	AvailabilityZones []*AvailabilityZone `locationName:"availabilityZoneInfo" locationNameList:"item" type:"list"`
 
-	metadataDescribeAvailabilityZonesOutput `json:"-", xml:"-"`
+	metadataDescribeAvailabilityZonesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeAvailabilityZonesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeAvailabilityZonesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeAvailabilityZonesOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeBundleTasksInput struct {
@@ -9189,6 +11070,10 @@ type DescribeBundleTasksInput struct {
 	// Default: Describes all your bundle tasks.
 	BundleIDs []*string `locationName:"BundleId" locationNameList:"BundleId" type:"list"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -9216,25 +11101,49 @@ type DescribeBundleTasksInput struct {
 	//   update-time - The time of the most recent update for the task.
 	Filters []*Filter `locationName:"Filter" locationNameList:"Filter" type:"list"`
 
-	metadataDescribeBundleTasksInput `json:"-", xml:"-"`
+	metadataDescribeBundleTasksInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeBundleTasksInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeBundleTasksInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeBundleTasksInput) GoString() string {
+	return s.String()
+}
+
 type DescribeBundleTasksOutput struct {
 	// Information about one or more bundle tasks.
 	BundleTasks []*BundleTask `locationName:"bundleInstanceTasksSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeBundleTasksOutput `json:"-", xml:"-"`
+	metadataDescribeBundleTasksOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeBundleTasksOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeBundleTasksOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeBundleTasksOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeClassicLinkInstancesInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -9274,11 +11183,21 @@ type DescribeClassicLinkInstancesInput struct {
 	// The token to retrieve the next page of results.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataDescribeClassicLinkInstancesInput `json:"-", xml:"-"`
+	metadataDescribeClassicLinkInstancesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeClassicLinkInstancesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeClassicLinkInstancesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeClassicLinkInstancesInput) GoString() string {
+	return s.String()
 }
 
 type DescribeClassicLinkInstancesOutput struct {
@@ -9289,36 +11208,72 @@ type DescribeClassicLinkInstancesOutput struct {
 	// when there are no more results to return.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataDescribeClassicLinkInstancesOutput `json:"-", xml:"-"`
+	metadataDescribeClassicLinkInstancesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeClassicLinkInstancesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeClassicLinkInstancesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeClassicLinkInstancesOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeConversionTasksInput struct {
 	// One or more conversion task IDs.
 	ConversionTaskIDs []*string `locationName:"conversionTaskId" locationNameList:"item" type:"list"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
+	// One or more filters.
 	Filters []*Filter `locationName:"filter" locationNameList:"Filter" type:"list"`
 
-	metadataDescribeConversionTasksInput `json:"-", xml:"-"`
+	metadataDescribeConversionTasksInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeConversionTasksInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeConversionTasksInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeConversionTasksInput) GoString() string {
+	return s.String()
+}
+
 type DescribeConversionTasksOutput struct {
+	// Information about the conversion tasks.
 	ConversionTasks []*ConversionTask `locationName:"conversionTasks" locationNameList:"item" type:"list"`
 
-	metadataDescribeConversionTasksOutput `json:"-", xml:"-"`
+	metadataDescribeConversionTasksOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeConversionTasksOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeConversionTasksOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeConversionTasksOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeCustomerGatewaysInput struct {
@@ -9327,6 +11282,10 @@ type DescribeCustomerGatewaysInput struct {
 	// Default: Describes all your customer gateways.
 	CustomerGatewayIDs []*string `locationName:"CustomerGatewayId" locationNameList:"CustomerGatewayId" type:"list"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -9358,22 +11317,42 @@ type DescribeCustomerGatewaysInput struct {
 	// independent of the tag-key filter.
 	Filters []*Filter `locationName:"Filter" locationNameList:"Filter" type:"list"`
 
-	metadataDescribeCustomerGatewaysInput `json:"-", xml:"-"`
+	metadataDescribeCustomerGatewaysInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCustomerGatewaysInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeCustomerGatewaysInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCustomerGatewaysInput) GoString() string {
+	return s.String()
+}
+
 type DescribeCustomerGatewaysOutput struct {
 	// Information about one or more customer gateways.
 	CustomerGateways []*CustomerGateway `locationName:"customerGatewaySet" locationNameList:"item" type:"list"`
 
-	metadataDescribeCustomerGatewaysOutput `json:"-", xml:"-"`
+	metadataDescribeCustomerGatewaysOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeCustomerGatewaysOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeCustomerGatewaysOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeCustomerGatewaysOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeDHCPOptionsInput struct {
@@ -9382,6 +11361,10 @@ type DescribeDHCPOptionsInput struct {
 	// Default: Describes all your DHCP options sets.
 	DHCPOptionsIDs []*string `locationName:"DhcpOptionsId" locationNameList:"DhcpOptionsId" type:"list"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -9405,43 +11388,153 @@ type DescribeDHCPOptionsInput struct {
 	// independent of the tag-key filter.
 	Filters []*Filter `locationName:"Filter" locationNameList:"Filter" type:"list"`
 
-	metadataDescribeDHCPOptionsInput `json:"-", xml:"-"`
+	metadataDescribeDHCPOptionsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDHCPOptionsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeDHCPOptionsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDHCPOptionsInput) GoString() string {
+	return s.String()
+}
+
 type DescribeDHCPOptionsOutput struct {
 	// Information about one or more DHCP options sets.
 	DHCPOptions []*DHCPOptions `locationName:"dhcpOptionsSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeDHCPOptionsOutput `json:"-", xml:"-"`
+	metadataDescribeDHCPOptionsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeDHCPOptionsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeDHCPOptionsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeDHCPOptionsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeExportTasksInput struct {
 	// One or more export task IDs.
 	ExportTaskIDs []*string `locationName:"exportTaskId" locationNameList:"ExportTaskId" type:"list"`
 
-	metadataDescribeExportTasksInput `json:"-", xml:"-"`
+	metadataDescribeExportTasksInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeExportTasksInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeExportTasksInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeExportTasksInput) GoString() string {
+	return s.String()
+}
+
 type DescribeExportTasksOutput struct {
+	// Information about the export tasks.
 	ExportTasks []*ExportTask `locationName:"exportTaskSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeExportTasksOutput `json:"-", xml:"-"`
+	metadataDescribeExportTasksOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeExportTasksOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeExportTasksOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeExportTasksOutput) GoString() string {
+	return s.String()
+}
+
+type DescribeFlowLogsInput struct {
+	// One or more filters.
+	//
+	//  deliver-log-status - The status of the logs delivery (SUCCESS | FAILED).
+	//
+	// flow-log-id - The ID of the flow log.
+	//
+	// log-group-name - The name of the log group.
+	//
+	// resource-id - The ID of the VPC, subnet, or network interface.
+	//
+	// traffic-type - The type of traffic (ACCEPT | REJECT | ALL)
+	Filter []*Filter `locationNameList:"Filter" type:"list"`
+
+	// One or more flow log IDs.
+	FlowLogIDs []*string `locationName:"FlowLogId" locationNameList:"item" type:"list"`
+
+	// The maximum number of results to return for the request in a single page.
+	// The remaining results can be seen by sending another request with the returned
+	// NextToken value. This value can be between 5 and 1000; if MaxResults is given
+	// a value larger than 1000, only 1000 results are returned. You cannot specify
+	// this parameter and the flow log IDs parameter in the same request.
+	MaxResults *int64 `type:"integer"`
+
+	// The token to retrieve the next page of results.
+	NextToken *string `type:"string"`
+
+	metadataDescribeFlowLogsInput `json:"-" xml:"-"`
+}
+
+type metadataDescribeFlowLogsInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeFlowLogsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeFlowLogsInput) GoString() string {
+	return s.String()
+}
+
+type DescribeFlowLogsOutput struct {
+	// Information about the flow logs.
+	FlowLogs []*FlowLog `locationName:"flowLogSet" locationNameList:"item" type:"list"`
+
+	// The token to use to retrieve the next page of results. This value is null
+	// when there are no more results to return.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	metadataDescribeFlowLogsOutput `json:"-" xml:"-"`
+}
+
+type metadataDescribeFlowLogsOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeFlowLogsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeFlowLogsOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeImageAttributeInput struct {
@@ -9452,16 +11545,30 @@ type DescribeImageAttributeInput struct {
 	// to get information about the block device mapping for the AMI.
 	Attribute *string `type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the AMI.
 	ImageID *string `locationName:"ImageId" type:"string" required:"true"`
 
-	metadataDescribeImageAttributeInput `json:"-", xml:"-"`
+	metadataDescribeImageAttributeInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeImageAttributeInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeImageAttributeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeImageAttributeInput) GoString() string {
+	return s.String()
 }
 
 // Describes an image attribute.
@@ -9490,14 +11597,28 @@ type DescribeImageAttributeOutput struct {
 	// The value to use for a resource attribute.
 	SRIOVNetSupport *AttributeValue `locationName:"sriovNetSupport" type:"structure"`
 
-	metadataDescribeImageAttributeOutput `json:"-", xml:"-"`
+	metadataDescribeImageAttributeOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeImageAttributeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeImageAttributeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeImageAttributeOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeImagesInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// Scopes the images by users with explicit launch permissions. Specify an AWS
@@ -9511,17 +11632,17 @@ type DescribeImagesInput struct {
 	//   block-device-mapping.delete-on-termination - A Boolean value that indicates
 	// whether the Amazon EBS volume is deleted on instance termination.
 	//
-	//   block-device-mapping.device-name - The device name for the Amazon EBS
-	// volume (for example, /dev/sdh).
+	//   block-device-mapping.device-name - The device name for the EBS volume
+	// (for example, /dev/sdh).
 	//
 	//   block-device-mapping.snapshot-id - The ID of the snapshot used for the
-	// Amazon EBS volume.
+	// EBS volume.
 	//
-	//   block-device-mapping.volume-size - The volume size of the Amazon EBS volume,
+	//   block-device-mapping.volume-size - The volume size of the EBS volume,
 	// in GiB.
 	//
-	//   block-device-mapping.volume-type - The volume type of the Amazon EBS volume
-	// (gp2 | standard | io1).
+	//   block-device-mapping.volume-type - The volume type of the EBS volume (gp2
+	// | standard | io1).
 	//
 	//   description - The description of the image (provided during image creation).
 	//
@@ -9587,112 +11708,196 @@ type DescribeImagesInput struct {
 	// you have launch permissions, regardless of ownership.
 	Owners []*string `locationName:"Owner" locationNameList:"Owner" type:"list"`
 
-	metadataDescribeImagesInput `json:"-", xml:"-"`
+	metadataDescribeImagesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeImagesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeImagesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeImagesInput) GoString() string {
+	return s.String()
+}
+
 type DescribeImagesOutput struct {
 	// Information about one or more images.
 	Images []*Image `locationName:"imagesSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeImagesOutput `json:"-", xml:"-"`
+	metadataDescribeImagesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeImagesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeImagesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeImagesOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeImportImageTasksInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `type:"boolean"`
 
-	// Filters to be applied on a describe request.
+	// One or more filters.
 	Filters []*Filter `locationNameList:"Filter" type:"list"`
 
-	// A list of ImportImage task IDs to describe.
+	// A list of import image task IDs.
 	ImportTaskIDs []*string `locationName:"ImportTaskId" locationNameList:"ImportTaskId" type:"list"`
 
-	// The maximum number of results in a page.
+	// The maximum number of results to return in a single request.
 	MaxResults *int64 `type:"integer"`
 
-	// The token to get the next page of paginated describe requests.
+	// A token that indicates the next page of results.
 	NextToken *string `type:"string"`
 
-	metadataDescribeImportImageTasksInput `json:"-", xml:"-"`
+	metadataDescribeImportImageTasksInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeImportImageTasksInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeImportImageTasksInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeImportImageTasksInput) GoString() string {
+	return s.String()
+}
+
 type DescribeImportImageTasksOutput struct {
-	// A list of zero or more ImportImage tasks that are currently active or completed/cancelled
-	// in the previous 7 days.
+	// A list of zero or more import image tasks that are currently active or were
+	// completed or canceled in the previous 7 days.
 	ImportImageTasks []*ImportImageTask `locationName:"importImageTaskSet" locationNameList:"item" type:"list"`
 
-	// The token to get the next page of paginated describe requests.
+	// The token to use to get the next page of results. This value is null when
+	// there are no more results to return.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataDescribeImportImageTasksOutput `json:"-", xml:"-"`
+	metadataDescribeImportImageTasksOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeImportImageTasksOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeImportImageTasksOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeImportImageTasksOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeImportSnapshotTasksInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `type:"boolean"`
 
-	// The filters to be applied on a describe request.
+	// One or more filters.
 	Filters []*Filter `locationNameList:"Filter" type:"list"`
 
-	// A list of IDs of the ImportSnapshot tasks to describe.
+	// A list of import snapshot task IDs.
 	ImportTaskIDs []*string `locationName:"ImportTaskId" locationNameList:"ImportTaskId" type:"list"`
 
-	// The maximum number of results in a page.
+	// The maximum number of results to return in a single request.
 	MaxResults *int64 `type:"integer"`
 
-	// The token to get to the next page of paginated describe requests.
+	// A token that indicates the next page of results.
 	NextToken *string `type:"string"`
 
-	metadataDescribeImportSnapshotTasksInput `json:"-", xml:"-"`
+	metadataDescribeImportSnapshotTasksInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeImportSnapshotTasksInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeImportSnapshotTasksInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeImportSnapshotTasksInput) GoString() string {
+	return s.String()
+}
+
 type DescribeImportSnapshotTasksOutput struct {
-	// A list of zero or more ImportSnapshot tasks that are currently active or
-	// completed/cancelled in the previous 7 days.
+	// A list of zero or more import snapshot tasks that are currently active or
+	// were completed or canceled in the previous 7 days.
 	ImportSnapshotTasks []*ImportSnapshotTask `locationName:"importSnapshotTaskSet" locationNameList:"item" type:"list"`
 
-	// The token to get to the next page of paginated describe requests.
+	// The token to use to get the next page of results. This value is null when
+	// there are no more results to return.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataDescribeImportSnapshotTasksOutput `json:"-", xml:"-"`
+	metadataDescribeImportSnapshotTasksOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeImportSnapshotTasksOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeImportSnapshotTasksOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeImportSnapshotTasksOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeInstanceAttributeInput struct {
 	// The instance attribute.
 	Attribute *string `locationName:"attribute" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the instance.
 	InstanceID *string `locationName:"instanceId" type:"string" required:"true"`
 
-	metadataDescribeInstanceAttributeInput `json:"-", xml:"-"`
+	metadataDescribeInstanceAttributeInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeInstanceAttributeInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeInstanceAttributeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeInstanceAttributeInput) GoString() string {
+	return s.String()
 }
 
 // Describes an instance attribute.
@@ -9743,36 +11948,50 @@ type DescribeInstanceAttributeOutput struct {
 	// The Base64-encoded MIME user data.
 	UserData *AttributeValue `locationName:"userData" type:"structure"`
 
-	metadataDescribeInstanceAttributeOutput `json:"-", xml:"-"`
+	metadataDescribeInstanceAttributeOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeInstanceAttributeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeInstanceAttributeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeInstanceAttributeOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeInstanceStatusInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
 	//
 	//   availability-zone - The Availability Zone of the instance.
 	//
-	//   event.code - The code identifying the type of event (instance-reboot |
-	// system-reboot | system-maintenance | instance-retirement | instance-stop).
+	//   event.code - The code for the scheduled event (instance-reboot | system-reboot
+	// | system-maintenance | instance-retirement | instance-stop).
 	//
 	//   event.description - A description of the event.
 	//
-	//   event.not-after - The latest end time for the scheduled event, for example:
-	// 2010-09-15T17:15:20.000Z.
+	//   event.not-after - The latest end time for the scheduled event (for example,
+	// 2014-09-15T17:15:20.000Z).
 	//
-	//   event.not-before - The earliest start time for the scheduled event, for
-	// example: 2010-09-15T17:15:20.000Z.
+	//   event.not-before - The earliest start time for the scheduled event (for
+	// example, 2014-09-15T17:15:20.000Z).
 	//
-	//   instance-state-code - A code representing the state of the instance, as
-	// a 16-bit unsigned integer. The high byte is an opaque internal value and
-	// should be ignored. The low byte is set based on the state represented. The
-	// valid values are 0 (pending), 16 (running), 32 (shutting-down), 48 (terminated),
-	// 64 (stopping), and 80 (stopped).
+	//   instance-state-code - The code for the instance state, as a 16-bit unsigned
+	// integer. The high byte is an opaque internal value and should be ignored.
+	// The low byte is set based on the state represented. The valid values are
+	// 0 (pending), 16 (running), 32 (shutting-down), 48 (terminated), 64 (stopping),
+	// and 80 (stopped).
 	//
 	//   instance-state-name - The state of the instance (pending | running | shutting-down
 	// | terminated | stopping | stopped).
@@ -9814,11 +12033,21 @@ type DescribeInstanceStatusInput struct {
 	// The token to retrieve the next page of results.
 	NextToken *string `type:"string"`
 
-	metadataDescribeInstanceStatusInput `json:"-", xml:"-"`
+	metadataDescribeInstanceStatusInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeInstanceStatusInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeInstanceStatusInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeInstanceStatusInput) GoString() string {
+	return s.String()
 }
 
 type DescribeInstanceStatusOutput struct {
@@ -9829,14 +12058,28 @@ type DescribeInstanceStatusOutput struct {
 	// when there are no more results to return.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataDescribeInstanceStatusOutput `json:"-", xml:"-"`
+	metadataDescribeInstanceStatusOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeInstanceStatusOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeInstanceStatusOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeInstanceStatusOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeInstancesInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -9845,19 +12088,19 @@ type DescribeInstancesInput struct {
 	//
 	//   availability-zone - The Availability Zone of the instance.
 	//
-	//   block-device-mapping.attach-time - The attach time for an Amazon EBS volume
-	// mapped to the instance, for example, 2010-09-15T17:15:20.000Z.
+	//   block-device-mapping.attach-time - The attach time for an EBS volume mapped
+	// to the instance, for example, 2010-09-15T17:15:20.000Z.
 	//
 	//   block-device-mapping.delete-on-termination - A Boolean that indicates
-	// whether the Amazon EBS volume is deleted on instance termination.
+	// whether the EBS volume is deleted on instance termination.
 	//
-	//   block-device-mapping.device-name - The device name for the Amazon EBS
-	// volume (for example, /dev/sdh or xvdh).
+	//   block-device-mapping.device-name - The device name for the EBS volume
+	// (for example, /dev/sdh or xvdh).
 	//
-	//   block-device-mapping.status - The status for the Amazon EBS volume (attaching
+	//   block-device-mapping.status - The status for the EBS volume (attaching
 	// | attached | detaching | detached).
 	//
-	//   block-device-mapping.volume-id - The volume ID of the Amazon EBS volume.
+	//   block-device-mapping.volume-id - The volume ID of the EBS volume.
 	//
 	//   client-token - The idempotency token you provided when you launched the
 	// instance.
@@ -10080,11 +12323,21 @@ type DescribeInstancesInput struct {
 	// The token to request the next page of results.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataDescribeInstancesInput `json:"-", xml:"-"`
+	metadataDescribeInstancesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeInstancesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeInstancesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeInstancesInput) GoString() string {
+	return s.String()
 }
 
 type DescribeInstancesOutput struct {
@@ -10095,14 +12348,28 @@ type DescribeInstancesOutput struct {
 	// One or more reservations.
 	Reservations []*Reservation `locationName:"reservationSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeInstancesOutput `json:"-", xml:"-"`
+	metadataDescribeInstancesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeInstancesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeInstancesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeInstancesOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeInternetGatewaysInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -10132,25 +12399,49 @@ type DescribeInternetGatewaysInput struct {
 	// Default: Describes all your Internet gateways.
 	InternetGatewayIDs []*string `locationName:"internetGatewayId" locationNameList:"item" type:"list"`
 
-	metadataDescribeInternetGatewaysInput `json:"-", xml:"-"`
+	metadataDescribeInternetGatewaysInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeInternetGatewaysInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeInternetGatewaysInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeInternetGatewaysInput) GoString() string {
+	return s.String()
+}
+
 type DescribeInternetGatewaysOutput struct {
 	// Information about one or more Internet gateways.
 	InternetGateways []*InternetGateway `locationName:"internetGatewaySet" locationNameList:"item" type:"list"`
 
-	metadataDescribeInternetGatewaysOutput `json:"-", xml:"-"`
+	metadataDescribeInternetGatewaysOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeInternetGatewaysOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeInternetGatewaysOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeInternetGatewaysOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeKeyPairsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -10165,25 +12456,117 @@ type DescribeKeyPairsInput struct {
 	// Default: Describes all your key pairs.
 	KeyNames []*string `locationName:"KeyName" locationNameList:"KeyName" type:"list"`
 
-	metadataDescribeKeyPairsInput `json:"-", xml:"-"`
+	metadataDescribeKeyPairsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeKeyPairsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeKeyPairsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeKeyPairsInput) GoString() string {
+	return s.String()
+}
+
 type DescribeKeyPairsOutput struct {
 	// Information about one or more key pairs.
 	KeyPairs []*KeyPairInfo `locationName:"keySet" locationNameList:"item" type:"list"`
 
-	metadataDescribeKeyPairsOutput `json:"-", xml:"-"`
+	metadataDescribeKeyPairsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeKeyPairsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeKeyPairsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeKeyPairsOutput) GoString() string {
+	return s.String()
+}
+
+type DescribeMovingAddressesInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
+	DryRun *bool `locationName:"dryRun" type:"boolean"`
+
+	// One or more filters.
+	//
+	//   moving-status - The status of the Elastic IP address (MovingToVpc | RestoringToClassic).
+	Filters []*Filter `locationName:"filter" locationNameList:"Filter" type:"list"`
+
+	// The maximum number of results to return for the request in a single page.
+	// The remaining results of the initial request can be seen by sending another
+	// request with the returned NextToken value. This value can be between 5 and
+	// 1000; if MaxResults is given a value outside of this range, an error is returned.
+	//
+	// Default: If no value is provided, the default is 1000.
+	MaxResults *int64 `locationName:"maxResults" type:"integer"`
+
+	// The token to use to retrieve the next page of results.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// One or more Elastic IP addresses.
+	PublicIPs []*string `locationName:"publicIp" locationNameList:"item" type:"list"`
+
+	metadataDescribeMovingAddressesInput `json:"-" xml:"-"`
+}
+
+type metadataDescribeMovingAddressesInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeMovingAddressesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeMovingAddressesInput) GoString() string {
+	return s.String()
+}
+
+type DescribeMovingAddressesOutput struct {
+	// The status for each Elastic IP address.
+	MovingAddressStatuses []*MovingAddressStatus `locationName:"movingAddressStatusSet" locationNameList:"item" type:"list"`
+
+	// The token to use to retrieve the next page of results. This value is null
+	// when there are no more results to return.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	metadataDescribeMovingAddressesOutput `json:"-" xml:"-"`
+}
+
+type metadataDescribeMovingAddressesOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeMovingAddressesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeMovingAddressesOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeNetworkACLsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -10240,38 +12623,72 @@ type DescribeNetworkACLsInput struct {
 	// Default: Describes all your network ACLs.
 	NetworkACLIDs []*string `locationName:"NetworkAclId" locationNameList:"item" type:"list"`
 
-	metadataDescribeNetworkACLsInput `json:"-", xml:"-"`
+	metadataDescribeNetworkACLsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeNetworkACLsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeNetworkACLsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeNetworkACLsInput) GoString() string {
+	return s.String()
+}
+
 type DescribeNetworkACLsOutput struct {
 	// Information about one or more network ACLs.
 	NetworkACLs []*NetworkACL `locationName:"networkAclSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeNetworkACLsOutput `json:"-", xml:"-"`
+	metadataDescribeNetworkACLsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeNetworkACLsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeNetworkACLsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeNetworkACLsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeNetworkInterfaceAttributeInput struct {
 	// The attribute of the network interface.
 	Attribute *string `locationName:"attribute" type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the network interface.
 	NetworkInterfaceID *string `locationName:"networkInterfaceId" type:"string" required:"true"`
 
-	metadataDescribeNetworkInterfaceAttributeInput `json:"-", xml:"-"`
+	metadataDescribeNetworkInterfaceAttributeInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeNetworkInterfaceAttributeInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeNetworkInterfaceAttributeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeNetworkInterfaceAttributeInput) GoString() string {
+	return s.String()
 }
 
 type DescribeNetworkInterfaceAttributeOutput struct {
@@ -10290,14 +12707,28 @@ type DescribeNetworkInterfaceAttributeOutput struct {
 	// Indicates whether source/destination checking is enabled.
 	SourceDestCheck *AttributeBooleanValue `locationName:"sourceDestCheck" type:"structure"`
 
-	metadataDescribeNetworkInterfaceAttributeOutput `json:"-", xml:"-"`
+	metadataDescribeNetworkInterfaceAttributeOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeNetworkInterfaceAttributeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeNetworkInterfaceAttributeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeNetworkInterfaceAttributeOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeNetworkInterfacesInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -10406,25 +12837,49 @@ type DescribeNetworkInterfacesInput struct {
 	// Default: Describes all your network interfaces.
 	NetworkInterfaceIDs []*string `locationName:"NetworkInterfaceId" locationNameList:"item" type:"list"`
 
-	metadataDescribeNetworkInterfacesInput `json:"-", xml:"-"`
+	metadataDescribeNetworkInterfacesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeNetworkInterfacesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeNetworkInterfacesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeNetworkInterfacesInput) GoString() string {
+	return s.String()
+}
+
 type DescribeNetworkInterfacesOutput struct {
 	// Information about one or more network interfaces.
 	NetworkInterfaces []*NetworkInterface `locationName:"networkInterfaceSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeNetworkInterfacesOutput `json:"-", xml:"-"`
+	metadataDescribeNetworkInterfacesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeNetworkInterfacesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeNetworkInterfacesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeNetworkInterfacesOutput) GoString() string {
+	return s.String()
+}
+
 type DescribePlacementGroupsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -10442,25 +12897,120 @@ type DescribePlacementGroupsInput struct {
 	// Default: Describes all your placement groups, or only those otherwise specified.
 	GroupNames []*string `locationName:"groupName" type:"list"`
 
-	metadataDescribePlacementGroupsInput `json:"-", xml:"-"`
+	metadataDescribePlacementGroupsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribePlacementGroupsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribePlacementGroupsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribePlacementGroupsInput) GoString() string {
+	return s.String()
+}
+
 type DescribePlacementGroupsOutput struct {
 	// One or more placement groups.
 	PlacementGroups []*PlacementGroup `locationName:"placementGroupSet" locationNameList:"item" type:"list"`
 
-	metadataDescribePlacementGroupsOutput `json:"-", xml:"-"`
+	metadataDescribePlacementGroupsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribePlacementGroupsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribePlacementGroupsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribePlacementGroupsOutput) GoString() string {
+	return s.String()
+}
+
+type DescribePrefixListsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
+	DryRun *bool `type:"boolean"`
+
+	// One or more filters.
+	//
+	//   prefix-list-id: The ID of a prefix list.
+	//
+	//   prefix-list-name: The name of a prefix list.
+	Filters []*Filter `locationName:"Filter" locationNameList:"Filter" type:"list"`
+
+	// The maximum number of items to return for this request. The request returns
+	// a token that you can specify in a subsequent call to get the next set of
+	// results.
+	//
+	// Constraint: If the value specified is greater than 1000, we return only
+	// 1000 items.
+	MaxResults *int64 `type:"integer"`
+
+	// The token for the next set of items to return. (You received this token from
+	// a prior call.)
+	NextToken *string `type:"string"`
+
+	// One or more prefix list IDs.
+	PrefixListIDs []*string `locationName:"PrefixListId" locationNameList:"item" type:"list"`
+
+	metadataDescribePrefixListsInput `json:"-" xml:"-"`
+}
+
+type metadataDescribePrefixListsInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribePrefixListsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribePrefixListsInput) GoString() string {
+	return s.String()
+}
+
+type DescribePrefixListsOutput struct {
+	// The token to use when requesting the next set of items. If there are no additional
+	// items to return, the string is empty.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// All available prefix lists.
+	PrefixLists []*PrefixList `locationName:"prefixListSet" locationNameList:"item" type:"list"`
+
+	metadataDescribePrefixListsOutput `json:"-" xml:"-"`
+}
+
+type metadataDescribePrefixListsOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribePrefixListsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribePrefixListsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeRegionsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -10473,25 +13023,49 @@ type DescribeRegionsInput struct {
 	// The names of one or more regions.
 	RegionNames []*string `locationName:"RegionName" locationNameList:"RegionName" type:"list"`
 
-	metadataDescribeRegionsInput `json:"-", xml:"-"`
+	metadataDescribeRegionsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeRegionsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeRegionsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeRegionsInput) GoString() string {
+	return s.String()
+}
+
 type DescribeRegionsOutput struct {
 	// Information about one or more regions.
 	Regions []*Region `locationName:"regionInfo" locationNameList:"item" type:"list"`
 
-	metadataDescribeRegionsOutput `json:"-", xml:"-"`
+	metadataDescribeRegionsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeRegionsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeRegionsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeRegionsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeReservedInstancesInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -10502,7 +13076,7 @@ type DescribeReservedInstancesInput struct {
 	//   duration - The duration of the Reserved Instance (one year or three years),
 	// in seconds (31536000 | 94608000).
 	//
-	//   end - The time when the Reserved Instance expires (for example, 2014-08-07T11:54:42.000Z).
+	//   end - The time when the Reserved Instance expires (for example, 2015-08-07T11:54:42.000Z).
 	//
 	//   fixed-price - The purchase price of the Reserved Instance (for example,
 	// 9800.0).
@@ -10510,15 +13084,22 @@ type DescribeReservedInstancesInput struct {
 	//   instance-type - The instance type on which the Reserved Instance can be
 	// used.
 	//
-	//   product-description - The product description of the Reserved Instance
-	// (Linux/UNIX | Linux/UNIX (Amazon VPC) | Windows | Windows (Amazon VPC)).
+	//   product-description - The Reserved Instance product platform description.
+	// Instances that include (Amazon VPC) in the product platform description will
+	// only be displayed to EC2-Classic account holders and are for use with Amazon
+	// VPC. (Linux/UNIX | Linux/UNIX (Amazon VPC) | SUSE Linux | SUSE Linux (Amazon
+	// VPC) | Red Hat Enterprise Linux | Red Hat Enterprise Linux (Amazon VPC) |
+	// Windows | Windows (Amazon VPC) | Windows with SQL Server Standard | Windows
+	// with SQL Server Standard (Amazon VPC) | Windows with SQL Server Web | Windows
+	// with SQL Server Web (Amazon VPC) | Windows with SQL Server Enterprise | Windows
+	// with SQL Server Enterprise (Amazon VPC)).
 	//
 	//   reserved-instances-id - The ID of the Reserved Instance.
 	//
 	//   start - The time at which the Reserved Instance purchase request was placed
 	// (for example, 2014-08-07T11:54:42.000Z).
 	//
-	//   state - The state of the Reserved Instance (pending-payment | active |
+	//   state - The state of the Reserved Instance (payment-pending | active |
 	// payment-failed | retired).
 	//
 	//   tag:key=value - The key/value combination of a tag assigned to the resource.
@@ -10548,11 +13129,21 @@ type DescribeReservedInstancesInput struct {
 	// specified.
 	ReservedInstancesIDs []*string `locationName:"ReservedInstancesId" locationNameList:"ReservedInstancesId" type:"list"`
 
-	metadataDescribeReservedInstancesInput `json:"-", xml:"-"`
+	metadataDescribeReservedInstancesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReservedInstancesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeReservedInstancesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReservedInstancesInput) GoString() string {
+	return s.String()
 }
 
 type DescribeReservedInstancesListingsInput struct {
@@ -10574,22 +13165,42 @@ type DescribeReservedInstancesListingsInput struct {
 	// One or more Reserved Instance Listing IDs.
 	ReservedInstancesListingID *string `locationName:"reservedInstancesListingId" type:"string"`
 
-	metadataDescribeReservedInstancesListingsInput `json:"-", xml:"-"`
+	metadataDescribeReservedInstancesListingsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReservedInstancesListingsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeReservedInstancesListingsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReservedInstancesListingsInput) GoString() string {
+	return s.String()
+}
+
 type DescribeReservedInstancesListingsOutput struct {
 	// Information about the Reserved Instance listing.
 	ReservedInstancesListings []*ReservedInstancesListing `locationName:"reservedInstancesListingsSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeReservedInstancesListingsOutput `json:"-", xml:"-"`
+	metadataDescribeReservedInstancesListingsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReservedInstancesListingsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeReservedInstancesListingsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReservedInstancesListingsOutput) GoString() string {
+	return s.String()
 }
 
 type DescribeReservedInstancesModificationsInput struct {
@@ -10635,11 +13246,21 @@ type DescribeReservedInstancesModificationsInput struct {
 	// IDs for the submitted modification request.
 	ReservedInstancesModificationIDs []*string `locationName:"ReservedInstancesModificationId" locationNameList:"ReservedInstancesModificationId" type:"list"`
 
-	metadataDescribeReservedInstancesModificationsInput `json:"-", xml:"-"`
+	metadataDescribeReservedInstancesModificationsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReservedInstancesModificationsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeReservedInstancesModificationsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReservedInstancesModificationsInput) GoString() string {
+	return s.String()
 }
 
 type DescribeReservedInstancesModificationsOutput struct {
@@ -10650,17 +13271,31 @@ type DescribeReservedInstancesModificationsOutput struct {
 	// The Reserved Instance modification information.
 	ReservedInstancesModifications []*ReservedInstancesModification `locationName:"reservedInstancesModificationsSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeReservedInstancesModificationsOutput `json:"-", xml:"-"`
+	metadataDescribeReservedInstancesModificationsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReservedInstancesModificationsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeReservedInstancesModificationsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReservedInstancesModificationsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeReservedInstancesOfferingsInput struct {
 	// The Availability Zone in which the Reserved Instance can be used.
 	AvailabilityZone *string `type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -10681,8 +13316,15 @@ type DescribeReservedInstancesOfferingsInput struct {
 	// When this filter is not used, which is the default behavior, all offerings
 	// from AWS and Reserved Instance Marketplace are listed.
 	//
-	//   product-description - The description of the Reserved Instance (Linux/UNIX
-	// | Linux/UNIX (Amazon VPC) | Windows | Windows (Amazon VPC)).
+	//   product-description - The Reserved Instance product platform description.
+	// Instances that include (Amazon VPC) in the product platform description will
+	// only be displayed to EC2-Classic account holders and are for use with Amazon
+	// VPC. (Linux/UNIX | Linux/UNIX (Amazon VPC) | SUSE Linux | SUSE Linux (Amazon
+	// VPC) | Red Hat Enterprise Linux | Red Hat Enterprise Linux (Amazon VPC) |
+	// Windows | Windows (Amazon VPC) | Windows with SQL Server Standard | Windows
+	// with SQL Server Standard (Amazon VPC) | Windows with SQL Server Web |  Windows
+	// with SQL Server Web (Amazon VPC) | Windows with SQL Server Enterprise | Windows
+	// with SQL Server Enterprise (Amazon VPC))
 	//
 	//   reserved-instances-offering-id - The Reserved Instances offering ID.
 	//
@@ -10735,18 +13377,28 @@ type DescribeReservedInstancesOfferingsInput struct {
 	// Reserved Instance offering type.
 	OfferingType *string `locationName:"offeringType" type:"string"`
 
-	// The Reserved Instance description. Instances that include (Amazon VPC) in
-	// the description are for use with Amazon VPC.
+	// The Reserved Instance product platform description. Instances that include
+	// (Amazon VPC) in the description are for use with Amazon VPC.
 	ProductDescription *string `type:"string"`
 
 	// One or more Reserved Instances offering IDs.
 	ReservedInstancesOfferingIDs []*string `locationName:"ReservedInstancesOfferingId" type:"list"`
 
-	metadataDescribeReservedInstancesOfferingsInput `json:"-", xml:"-"`
+	metadataDescribeReservedInstancesOfferingsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReservedInstancesOfferingsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeReservedInstancesOfferingsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReservedInstancesOfferingsInput) GoString() string {
+	return s.String()
 }
 
 type DescribeReservedInstancesOfferingsOutput struct {
@@ -10757,25 +13409,49 @@ type DescribeReservedInstancesOfferingsOutput struct {
 	// A list of Reserved Instances offerings.
 	ReservedInstancesOfferings []*ReservedInstancesOffering `locationName:"reservedInstancesOfferingsSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeReservedInstancesOfferingsOutput `json:"-", xml:"-"`
+	metadataDescribeReservedInstancesOfferingsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReservedInstancesOfferingsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeReservedInstancesOfferingsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReservedInstancesOfferingsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeReservedInstancesOutput struct {
 	// A list of Reserved Instances.
 	ReservedInstances []*ReservedInstances `locationName:"reservedInstancesSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeReservedInstancesOutput `json:"-", xml:"-"`
+	metadataDescribeReservedInstancesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeReservedInstancesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeReservedInstancesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeReservedInstancesOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeRouteTablesInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -10795,6 +13471,9 @@ type DescribeRouteTablesInput struct {
 	//
 	//   route.destination-cidr-block - The CIDR range specified in a route in
 	// the table.
+	//
+	//   route.destination-prefix-list-id - The ID (prefix) of the AWS service
+	// specified in a route in the table.
 	//
 	//   route.gateway-id - The ID of a gateway specified in a route in the table.
 	//
@@ -10835,30 +13514,57 @@ type DescribeRouteTablesInput struct {
 	// Default: Describes all your route tables.
 	RouteTableIDs []*string `locationName:"RouteTableId" locationNameList:"item" type:"list"`
 
-	metadataDescribeRouteTablesInput `json:"-", xml:"-"`
+	metadataDescribeRouteTablesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeRouteTablesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeRouteTablesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeRouteTablesInput) GoString() string {
+	return s.String()
+}
+
 type DescribeRouteTablesOutput struct {
 	// Information about one or more route tables.
 	RouteTables []*RouteTable `locationName:"routeTableSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeRouteTablesOutput `json:"-", xml:"-"`
+	metadataDescribeRouteTablesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeRouteTablesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeRouteTablesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeRouteTablesOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeSecurityGroupsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
 	//
 	//   description - The description of the security group.
+	//
+	//   egress.ip-permission.prefix-list-id - The ID (prefix) of the AWS service
+	// to which the security group allows access.
 	//
 	//   group-id - The ID of the security group.
 	//
@@ -10907,38 +13613,72 @@ type DescribeSecurityGroupsInput struct {
 	// Default: Describes all your security groups.
 	GroupNames []*string `locationName:"GroupName" locationNameList:"GroupName" type:"list"`
 
-	metadataDescribeSecurityGroupsInput `json:"-", xml:"-"`
+	metadataDescribeSecurityGroupsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSecurityGroupsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeSecurityGroupsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSecurityGroupsInput) GoString() string {
+	return s.String()
+}
+
 type DescribeSecurityGroupsOutput struct {
 	// Information about one or more security groups.
 	SecurityGroups []*SecurityGroup `locationName:"securityGroupInfo" locationNameList:"item" type:"list"`
 
-	metadataDescribeSecurityGroupsOutput `json:"-", xml:"-"`
+	metadataDescribeSecurityGroupsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSecurityGroupsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeSecurityGroupsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSecurityGroupsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeSnapshotAttributeInput struct {
 	// The snapshot attribute you would like to view.
 	Attribute *string `type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	// The ID of the Amazon EBS snapshot.
+	// The ID of the EBS snapshot.
 	SnapshotID *string `locationName:"SnapshotId" type:"string" required:"true"`
 
-	metadataDescribeSnapshotAttributeInput `json:"-", xml:"-"`
+	metadataDescribeSnapshotAttributeInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSnapshotAttributeInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeSnapshotAttributeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSnapshotAttributeInput) GoString() string {
+	return s.String()
 }
 
 type DescribeSnapshotAttributeOutput struct {
@@ -10948,17 +13688,31 @@ type DescribeSnapshotAttributeOutput struct {
 	// A list of product codes.
 	ProductCodes []*ProductCode `locationName:"productCodes" locationNameList:"item" type:"list"`
 
-	// The ID of the Amazon EBS snapshot.
+	// The ID of the EBS snapshot.
 	SnapshotID *string `locationName:"snapshotId" type:"string"`
 
-	metadataDescribeSnapshotAttributeOutput `json:"-", xml:"-"`
+	metadataDescribeSnapshotAttributeOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSnapshotAttributeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeSnapshotAttributeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSnapshotAttributeOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeSnapshotsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -11026,11 +13780,21 @@ type DescribeSnapshotsInput struct {
 	// Default: Describes snapshots for which you have launch permissions.
 	SnapshotIDs []*string `locationName:"SnapshotId" locationNameList:"SnapshotId" type:"list"`
 
-	metadataDescribeSnapshotsInput `json:"-", xml:"-"`
+	metadataDescribeSnapshotsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSnapshotsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeSnapshotsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSnapshotsInput) GoString() string {
+	return s.String()
 }
 
 type DescribeSnapshotsOutput struct {
@@ -11040,37 +13804,287 @@ type DescribeSnapshotsOutput struct {
 	// there are no more results to return.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
+	// Information about the snapshots.
 	Snapshots []*Snapshot `locationName:"snapshotSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeSnapshotsOutput `json:"-", xml:"-"`
+	metadataDescribeSnapshotsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSnapshotsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeSnapshotsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSnapshotsOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for DescribeSpotDatafeedSubscription.
 type DescribeSpotDatafeedSubscriptionInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	metadataDescribeSpotDatafeedSubscriptionInput `json:"-", xml:"-"`
+	metadataDescribeSpotDatafeedSubscriptionInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSpotDatafeedSubscriptionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeSpotDatafeedSubscriptionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSpotDatafeedSubscriptionInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of DescribeSpotDatafeedSubscription.
 type DescribeSpotDatafeedSubscriptionOutput struct {
 	// The Spot Instance data feed subscription.
 	SpotDatafeedSubscription *SpotDatafeedSubscription `locationName:"spotDatafeedSubscription" type:"structure"`
 
-	metadataDescribeSpotDatafeedSubscriptionOutput `json:"-", xml:"-"`
+	metadataDescribeSpotDatafeedSubscriptionOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSpotDatafeedSubscriptionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeSpotDatafeedSubscriptionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSpotDatafeedSubscriptionOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for DescribeSpotFleetInstances.
+type DescribeSpotFleetInstancesInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
+	DryRun *bool `locationName:"dryRun" type:"boolean"`
+
+	// The maximum number of results to return in a single call. Specify a value
+	// between 1 and 1000. The default value is 1000. To retrieve the remaining
+	// results, make another call with the returned NextToken value.
+	MaxResults *int64 `locationName:"maxResults" type:"integer"`
+
+	// The token for the next set of results.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// The ID of the Spot fleet request.
+	SpotFleetRequestID *string `locationName:"spotFleetRequestId" type:"string" required:"true"`
+
+	metadataDescribeSpotFleetInstancesInput `json:"-" xml:"-"`
+}
+
+type metadataDescribeSpotFleetInstancesInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeSpotFleetInstancesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSpotFleetInstancesInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of DescribeSpotFleetInstances.
+type DescribeSpotFleetInstancesOutput struct {
+	// The running instances. Note that this list is refreshed periodically and
+	// might be out of date.
+	ActiveInstances []*ActiveInstance `locationName:"activeInstanceSet" locationNameList:"item" type:"list" required:"true"`
+
+	// The token required to retrieve the next set of results. This value is null
+	// when there are no more results to return.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// The ID of the Spot fleet request.
+	SpotFleetRequestID *string `locationName:"spotFleetRequestId" type:"string" required:"true"`
+
+	metadataDescribeSpotFleetInstancesOutput `json:"-" xml:"-"`
+}
+
+type metadataDescribeSpotFleetInstancesOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeSpotFleetInstancesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSpotFleetInstancesOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for DescribeSpotFleetRequestHistory.
+type DescribeSpotFleetRequestHistoryInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
+	DryRun *bool `locationName:"dryRun" type:"boolean"`
+
+	// The type of events to describe. By default, all events are described.
+	EventType *string `locationName:"eventType" type:"string"`
+
+	// The maximum number of results to return in a single call. Specify a value
+	// between 1 and 1000. The default value is 1000. To retrieve the remaining
+	// results, make another call with the returned NextToken value.
+	MaxResults *int64 `locationName:"maxResults" type:"integer"`
+
+	// The token for the next set of results.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// The ID of the Spot fleet request.
+	SpotFleetRequestID *string `locationName:"spotFleetRequestId" type:"string" required:"true"`
+
+	// The starting date and time for the events, in UTC format (for example, YYYY-MM-DDTHH:MM:SSZ).
+	StartTime *time.Time `locationName:"startTime" type:"timestamp" timestampFormat:"iso8601" required:"true"`
+
+	metadataDescribeSpotFleetRequestHistoryInput `json:"-" xml:"-"`
+}
+
+type metadataDescribeSpotFleetRequestHistoryInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeSpotFleetRequestHistoryInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSpotFleetRequestHistoryInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of DescribeSpotFleetRequestHistory.
+type DescribeSpotFleetRequestHistoryOutput struct {
+	// Information about the events in the history of the Spot fleet request.
+	HistoryRecords []*HistoryRecord `locationName:"historyRecordSet" locationNameList:"item" type:"list" required:"true"`
+
+	// The last date and time for the events, in UTC format (for example, YYYY-MM-DDTHH:MM:SSZ).
+	// All records up to this time were retrieved.
+	//
+	// If nextToken indicates that there are more results, this value is not present.
+	LastEvaluatedTime *time.Time `locationName:"lastEvaluatedTime" type:"timestamp" timestampFormat:"iso8601" required:"true"`
+
+	// The token required to retrieve the next set of results. This value is null
+	// when there are no more results to return.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// The ID of the Spot fleet request.
+	SpotFleetRequestID *string `locationName:"spotFleetRequestId" type:"string" required:"true"`
+
+	// The starting date and time for the events, in UTC format (for example, YYYY-MM-DDTHH:MM:SSZ).
+	StartTime *time.Time `locationName:"startTime" type:"timestamp" timestampFormat:"iso8601" required:"true"`
+
+	metadataDescribeSpotFleetRequestHistoryOutput `json:"-" xml:"-"`
+}
+
+type metadataDescribeSpotFleetRequestHistoryOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeSpotFleetRequestHistoryOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSpotFleetRequestHistoryOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for DescribeSpotFleetRequests.
+type DescribeSpotFleetRequestsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
+	DryRun *bool `locationName:"dryRun" type:"boolean"`
+
+	// The maximum number of results to return in a single call. Specify a value
+	// between 1 and 1000. The default value is 1000. To retrieve the remaining
+	// results, make another call with the returned NextToken value.
+	MaxResults *int64 `locationName:"maxResults" type:"integer"`
+
+	// The token for the next set of results.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// The IDs of the Spot fleet requests.
+	SpotFleetRequestIDs []*string `locationName:"spotFleetRequestId" locationNameList:"item" type:"list"`
+
+	metadataDescribeSpotFleetRequestsInput `json:"-" xml:"-"`
+}
+
+type metadataDescribeSpotFleetRequestsInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeSpotFleetRequestsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSpotFleetRequestsInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of DescribeSpotFleetRequests.
+type DescribeSpotFleetRequestsOutput struct {
+	// The token required to retrieve the next set of results. This value is null
+	// when there are no more results to return.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// Information about the configuration of your Spot fleet.
+	SpotFleetRequestConfigs []*SpotFleetRequestConfig `locationName:"spotFleetRequestConfigSet" locationNameList:"item" type:"list" required:"true"`
+
+	metadataDescribeSpotFleetRequestsOutput `json:"-" xml:"-"`
+}
+
+type metadataDescribeSpotFleetRequestsOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeSpotFleetRequestsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSpotFleetRequestsOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for DescribeSpotInstanceRequests.
 type DescribeSpotInstanceRequestsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -11186,32 +14200,58 @@ type DescribeSpotInstanceRequestsInput struct {
 	// One or more Spot Instance request IDs.
 	SpotInstanceRequestIDs []*string `locationName:"SpotInstanceRequestId" locationNameList:"SpotInstanceRequestId" type:"list"`
 
-	metadataDescribeSpotInstanceRequestsInput `json:"-", xml:"-"`
+	metadataDescribeSpotInstanceRequestsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSpotInstanceRequestsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeSpotInstanceRequestsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSpotInstanceRequestsInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of DescribeSpotInstanceRequests.
 type DescribeSpotInstanceRequestsOutput struct {
 	// One or more Spot Instance requests.
 	SpotInstanceRequests []*SpotInstanceRequest `locationName:"spotInstanceRequestSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeSpotInstanceRequestsOutput `json:"-", xml:"-"`
+	metadataDescribeSpotInstanceRequestsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSpotInstanceRequestsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeSpotInstanceRequestsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSpotInstanceRequestsOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for DescribeSpotPriceHistory.
 type DescribeSpotPriceHistoryInput struct {
 	// Filters the results by the specified Availability Zone.
 	AvailabilityZone *string `locationName:"availabilityZone" type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The date and time, up to the current date, from which to stop retrieving
-	// the price history data.
+	// the price history data, in UTC format (for example, YYYY-MM-DDTHH:MM:SSZ).
 	EndTime *time.Time `locationName:"endTime" type:"timestamp" timestampFormat:"iso8601"`
 
 	// One or more filters.
@@ -11227,54 +14267,77 @@ type DescribeSpotPriceHistoryInput struct {
 	//   spot-price - The Spot Price. The value must match exactly (or use wildcards;
 	// greater than or less than comparison is not supported).
 	//
-	//   timestamp - The timestamp of the Spot Price history (for example, 2010-08-16T05:06:11.000Z).
-	// You can use wildcards (* and ?). Greater than or less than comparison is
-	// not supported.
+	//   timestamp - The timestamp of the Spot Price history, in UTC format (for
+	// example, YYYY-MM-DDTHH:MM:SSZ). You can use wildcards (* and ?). Greater
+	// than or less than comparison is not supported.
 	Filters []*Filter `locationName:"Filter" locationNameList:"Filter" type:"list"`
 
 	// Filters the results by the specified instance types.
 	InstanceTypes []*string `locationName:"InstanceType" type:"list"`
 
-	// The maximum number of results to return for the request in a single page.
-	// The remaining results of the initial request can be seen by sending another
-	// request with the returned NextToken value. This value can be between 5 and
-	// 1000; if MaxResults is given a value larger than 1000, only 1000 results
-	// are returned.
+	// The maximum number of results to return in a single call. Specify a value
+	// between 1 and 1000. The default value is 1000. To retrieve the remaining
+	// results, make another call with the returned NextToken value.
 	MaxResults *int64 `locationName:"maxResults" type:"integer"`
 
-	// The token to retrieve the next page of results.
+	// The token for the next set of results.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
 	// Filters the results by the specified basic product descriptions.
 	ProductDescriptions []*string `locationName:"ProductDescription" type:"list"`
 
 	// The date and time, up to the past 90 days, from which to start retrieving
-	// the price history data.
+	// the price history data, in UTC format (for example, YYYY-MM-DDTHH:MM:SSZ).
 	StartTime *time.Time `locationName:"startTime" type:"timestamp" timestampFormat:"iso8601"`
 
-	metadataDescribeSpotPriceHistoryInput `json:"-", xml:"-"`
+	metadataDescribeSpotPriceHistoryInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSpotPriceHistoryInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeSpotPriceHistoryInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSpotPriceHistoryInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of DescribeSpotPriceHistory.
 type DescribeSpotPriceHistoryOutput struct {
-	// The token to use to retrieve the next page of results. This value is null
+	// The token required to retrieve the next set of results. This value is null
 	// when there are no more results to return.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
 	// The historical Spot Prices.
 	SpotPriceHistory []*SpotPrice `locationName:"spotPriceHistorySet" locationNameList:"item" type:"list"`
 
-	metadataDescribeSpotPriceHistoryOutput `json:"-", xml:"-"`
+	metadataDescribeSpotPriceHistoryOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSpotPriceHistoryOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeSpotPriceHistoryOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSpotPriceHistoryOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeSubnetsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -11316,25 +14379,49 @@ type DescribeSubnetsInput struct {
 	// Default: Describes all your subnets.
 	SubnetIDs []*string `locationName:"SubnetId" locationNameList:"SubnetId" type:"list"`
 
-	metadataDescribeSubnetsInput `json:"-", xml:"-"`
+	metadataDescribeSubnetsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSubnetsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeSubnetsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSubnetsInput) GoString() string {
+	return s.String()
+}
+
 type DescribeSubnetsOutput struct {
 	// Information about one or more subnets.
 	Subnets []*Subnet `locationName:"subnetSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeSubnetsOutput `json:"-", xml:"-"`
+	metadataDescribeSubnetsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeSubnetsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeSubnetsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeSubnetsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeTagsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -11361,11 +14448,21 @@ type DescribeTagsInput struct {
 	// The token to retrieve the next page of results.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
-	metadataDescribeTagsInput `json:"-", xml:"-"`
+	metadataDescribeTagsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeTagsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeTagsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeTagsInput) GoString() string {
+	return s.String()
 }
 
 type DescribeTagsOutput struct {
@@ -11376,27 +14473,51 @@ type DescribeTagsOutput struct {
 	// A list of tags.
 	Tags []*TagDescription `locationName:"tagSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeTagsOutput `json:"-", xml:"-"`
+	metadataDescribeTagsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeTagsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeTagsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeTagsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeVPCAttributeInput struct {
 	// The VPC attribute.
 	Attribute *string `type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the VPC.
 	VPCID *string `locationName:"VpcId" type:"string" required:"true"`
 
-	metadataDescribeVPCAttributeInput `json:"-", xml:"-"`
+	metadataDescribeVPCAttributeInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVPCAttributeInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeVPCAttributeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVPCAttributeInput) GoString() string {
+	return s.String()
 }
 
 type DescribeVPCAttributeOutput struct {
@@ -11413,14 +14534,28 @@ type DescribeVPCAttributeOutput struct {
 	// The ID of the VPC.
 	VPCID *string `locationName:"vpcId" type:"string"`
 
-	metadataDescribeVPCAttributeOutput `json:"-", xml:"-"`
+	metadataDescribeVPCAttributeOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVPCAttributeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeVPCAttributeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVPCAttributeOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeVPCClassicLinkInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -11444,25 +14579,184 @@ type DescribeVPCClassicLinkInput struct {
 	// One or more VPCs for which you want to describe the ClassicLink status.
 	VPCIDs []*string `locationName:"VpcId" locationNameList:"VpcId" type:"list"`
 
-	metadataDescribeVPCClassicLinkInput `json:"-", xml:"-"`
+	metadataDescribeVPCClassicLinkInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVPCClassicLinkInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeVPCClassicLinkInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVPCClassicLinkInput) GoString() string {
+	return s.String()
+}
+
 type DescribeVPCClassicLinkOutput struct {
 	// The ClassicLink status of one or more VPCs.
 	VPCs []*VPCClassicLink `locationName:"vpcSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeVPCClassicLinkOutput `json:"-", xml:"-"`
+	metadataDescribeVPCClassicLinkOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVPCClassicLinkOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeVPCClassicLinkOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVPCClassicLinkOutput) GoString() string {
+	return s.String()
+}
+
+type DescribeVPCEndpointServicesInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
+	DryRun *bool `type:"boolean"`
+
+	// The maximum number of items to return for this request. The request returns
+	// a token that you can specify in a subsequent call to get the next set of
+	// results.
+	//
+	// Constraint: If the value is greater than 1000, we return only 1000 items.
+	MaxResults *int64 `type:"integer"`
+
+	// The token for the next set of items to return. (You received this token from
+	// a prior call.)
+	NextToken *string `type:"string"`
+
+	metadataDescribeVPCEndpointServicesInput `json:"-" xml:"-"`
+}
+
+type metadataDescribeVPCEndpointServicesInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeVPCEndpointServicesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVPCEndpointServicesInput) GoString() string {
+	return s.String()
+}
+
+type DescribeVPCEndpointServicesOutput struct {
+	// The token to use when requesting the next set of items. If there are no additional
+	// items to return, the string is empty.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// A list of supported AWS services.
+	ServiceNames []*string `locationName:"serviceNameSet" locationNameList:"item" type:"list"`
+
+	metadataDescribeVPCEndpointServicesOutput `json:"-" xml:"-"`
+}
+
+type metadataDescribeVPCEndpointServicesOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeVPCEndpointServicesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVPCEndpointServicesOutput) GoString() string {
+	return s.String()
+}
+
+type DescribeVPCEndpointsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
+	DryRun *bool `type:"boolean"`
+
+	// One or more filters.
+	//
+	//   service-name: The name of the AWS service.
+	//
+	//   vpc-id: The ID of the VPC in which the endpoint resides.
+	//
+	//   vpc-endpoint-id: The ID of the endpoint.
+	//
+	//   vpc-endpoint-state: The state of the endpoint. (pending | available |
+	// deleting | deleted)
+	Filters []*Filter `locationName:"Filter" locationNameList:"Filter" type:"list"`
+
+	// The maximum number of items to return for this request. The request returns
+	// a token that you can specify in a subsequent call to get the next set of
+	// results.
+	//
+	// Constraint: If the value is greater than 1000, we return only 1000 items.
+	MaxResults *int64 `type:"integer"`
+
+	// The token for the next set of items to return. (You received this token from
+	// a prior call.)
+	NextToken *string `type:"string"`
+
+	// One or more endpoint IDs.
+	VPCEndpointIDs []*string `locationName:"VpcEndpointId" locationNameList:"item" type:"list"`
+
+	metadataDescribeVPCEndpointsInput `json:"-" xml:"-"`
+}
+
+type metadataDescribeVPCEndpointsInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeVPCEndpointsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVPCEndpointsInput) GoString() string {
+	return s.String()
+}
+
+type DescribeVPCEndpointsOutput struct {
+	// The token to use when requesting the next set of items. If there are no additional
+	// items to return, the string is empty.
+	NextToken *string `locationName:"nextToken" type:"string"`
+
+	// Information about the endpoints.
+	VPCEndpoints []*VPCEndpoint `locationName:"vpcEndpointSet" locationNameList:"item" type:"list"`
+
+	metadataDescribeVPCEndpointsOutput `json:"-" xml:"-"`
+}
+
+type metadataDescribeVPCEndpointsOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeVPCEndpointsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVPCEndpointsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeVPCPeeringConnectionsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -11509,25 +14803,49 @@ type DescribeVPCPeeringConnectionsInput struct {
 	// Default: Describes all your VPC peering connections.
 	VPCPeeringConnectionIDs []*string `locationName:"VpcPeeringConnectionId" locationNameList:"item" type:"list"`
 
-	metadataDescribeVPCPeeringConnectionsInput `json:"-", xml:"-"`
+	metadataDescribeVPCPeeringConnectionsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVPCPeeringConnectionsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeVPCPeeringConnectionsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVPCPeeringConnectionsInput) GoString() string {
+	return s.String()
+}
+
 type DescribeVPCPeeringConnectionsOutput struct {
 	// Information about the VPC peering connections.
 	VPCPeeringConnections []*VPCPeeringConnection `locationName:"vpcPeeringConnectionSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeVPCPeeringConnectionsOutput `json:"-", xml:"-"`
+	metadataDescribeVPCPeeringConnectionsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVPCPeeringConnectionsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeVPCPeeringConnectionsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVPCPeeringConnectionsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeVPCsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -11562,25 +14880,49 @@ type DescribeVPCsInput struct {
 	// Default: Describes all your VPCs.
 	VPCIDs []*string `locationName:"VpcId" locationNameList:"VpcId" type:"list"`
 
-	metadataDescribeVPCsInput `json:"-", xml:"-"`
+	metadataDescribeVPCsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVPCsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeVPCsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVPCsInput) GoString() string {
+	return s.String()
+}
+
 type DescribeVPCsOutput struct {
 	// Information about one or more VPCs.
 	VPCs []*VPC `locationName:"vpcSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeVPCsOutput `json:"-", xml:"-"`
+	metadataDescribeVPCsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVPCsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeVPCsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVPCsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeVPNConnectionsInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -11630,25 +14972,49 @@ type DescribeVPNConnectionsInput struct {
 	// Default: Describes your VPN connections.
 	VPNConnectionIDs []*string `locationName:"VpnConnectionId" locationNameList:"VpnConnectionId" type:"list"`
 
-	metadataDescribeVPNConnectionsInput `json:"-", xml:"-"`
+	metadataDescribeVPNConnectionsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVPNConnectionsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeVPNConnectionsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVPNConnectionsInput) GoString() string {
+	return s.String()
+}
+
 type DescribeVPNConnectionsOutput struct {
 	// Information about one or more VPN connections.
 	VPNConnections []*VPNConnection `locationName:"vpnConnectionSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeVPNConnectionsOutput `json:"-", xml:"-"`
+	metadataDescribeVPNConnectionsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVPNConnectionsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeVPNConnectionsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVPNConnectionsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeVPNGatewaysInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -11686,38 +15052,72 @@ type DescribeVPNGatewaysInput struct {
 	// Default: Describes all your virtual private gateways.
 	VPNGatewayIDs []*string `locationName:"VpnGatewayId" locationNameList:"VpnGatewayId" type:"list"`
 
-	metadataDescribeVPNGatewaysInput `json:"-", xml:"-"`
+	metadataDescribeVPNGatewaysInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVPNGatewaysInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeVPNGatewaysInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVPNGatewaysInput) GoString() string {
+	return s.String()
+}
+
 type DescribeVPNGatewaysOutput struct {
 	// Information about one or more virtual private gateways.
 	VPNGateways []*VPNGateway `locationName:"vpnGatewaySet" locationNameList:"item" type:"list"`
 
-	metadataDescribeVPNGatewaysOutput `json:"-", xml:"-"`
+	metadataDescribeVPNGatewaysOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVPNGatewaysOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeVPNGatewaysOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVPNGatewaysOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeVolumeAttributeInput struct {
 	// The instance attribute.
 	Attribute *string `type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the volume.
 	VolumeID *string `locationName:"VolumeId" type:"string" required:"true"`
 
-	metadataDescribeVolumeAttributeInput `json:"-", xml:"-"`
+	metadataDescribeVolumeAttributeInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVolumeAttributeInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeVolumeAttributeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVolumeAttributeInput) GoString() string {
+	return s.String()
 }
 
 type DescribeVolumeAttributeOutput struct {
@@ -11730,14 +15130,28 @@ type DescribeVolumeAttributeOutput struct {
 	// The ID of the volume.
 	VolumeID *string `locationName:"volumeId" type:"string"`
 
-	metadataDescribeVolumeAttributeOutput `json:"-", xml:"-"`
+	metadataDescribeVolumeAttributeOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVolumeAttributeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeVolumeAttributeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVolumeAttributeOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeVolumeStatusInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -11794,11 +15208,21 @@ type DescribeVolumeStatusInput struct {
 	// Default: Describes all your volumes.
 	VolumeIDs []*string `locationName:"VolumeId" locationNameList:"VolumeId" type:"list"`
 
-	metadataDescribeVolumeStatusInput `json:"-", xml:"-"`
+	metadataDescribeVolumeStatusInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVolumeStatusInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeVolumeStatusInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVolumeStatusInput) GoString() string {
+	return s.String()
 }
 
 type DescribeVolumeStatusOutput struct {
@@ -11809,14 +15233,28 @@ type DescribeVolumeStatusOutput struct {
 	// A list of volumes.
 	VolumeStatuses []*VolumeStatusItem `locationName:"volumeStatusSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeVolumeStatusOutput `json:"-", xml:"-"`
+	metadataDescribeVolumeStatusOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVolumeStatusOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeVolumeStatusOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVolumeStatusOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeVolumesInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more filters.
@@ -11887,11 +15325,21 @@ type DescribeVolumesInput struct {
 	// One or more volume IDs.
 	VolumeIDs []*string `locationName:"VolumeId" locationNameList:"VolumeId" type:"list"`
 
-	metadataDescribeVolumesInput `json:"-", xml:"-"`
+	metadataDescribeVolumesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVolumesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeVolumesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVolumesInput) GoString() string {
+	return s.String()
 }
 
 type DescribeVolumesOutput struct {
@@ -11901,16 +15349,31 @@ type DescribeVolumesOutput struct {
 	// are no more results to return.
 	NextToken *string `locationName:"nextToken" type:"string"`
 
+	// Information about the volumes.
 	Volumes []*Volume `locationName:"volumeSet" locationNameList:"item" type:"list"`
 
-	metadataDescribeVolumesOutput `json:"-", xml:"-"`
+	metadataDescribeVolumesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVolumesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeVolumesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVolumesOutput) GoString() string {
+	return s.String()
+}
+
 type DetachClassicLinkVPCInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the instance to unlink from the VPC.
@@ -11919,25 +15382,49 @@ type DetachClassicLinkVPCInput struct {
 	// The ID of the VPC to which the instance is linked.
 	VPCID *string `locationName:"vpcId" type:"string" required:"true"`
 
-	metadataDetachClassicLinkVPCInput `json:"-", xml:"-"`
+	metadataDetachClassicLinkVPCInput `json:"-" xml:"-"`
 }
 
 type metadataDetachClassicLinkVPCInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DetachClassicLinkVPCInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DetachClassicLinkVPCInput) GoString() string {
+	return s.String()
+}
+
 type DetachClassicLinkVPCOutput struct {
 	// Returns true if the request succeeds; otherwise, it returns an error.
 	Return *bool `locationName:"return" type:"boolean"`
 
-	metadataDetachClassicLinkVPCOutput `json:"-", xml:"-"`
+	metadataDetachClassicLinkVPCOutput `json:"-" xml:"-"`
 }
 
 type metadataDetachClassicLinkVPCOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DetachClassicLinkVPCOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DetachClassicLinkVPCOutput) GoString() string {
+	return s.String()
+}
+
 type DetachInternetGatewayInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the Internet gateway.
@@ -11946,46 +15433,94 @@ type DetachInternetGatewayInput struct {
 	// The ID of the VPC.
 	VPCID *string `locationName:"vpcId" type:"string" required:"true"`
 
-	metadataDetachInternetGatewayInput `json:"-", xml:"-"`
+	metadataDetachInternetGatewayInput `json:"-" xml:"-"`
 }
 
 type metadataDetachInternetGatewayInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DetachInternetGatewayInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DetachInternetGatewayInput) GoString() string {
+	return s.String()
+}
+
 type DetachInternetGatewayOutput struct {
-	metadataDetachInternetGatewayOutput `json:"-", xml:"-"`
+	metadataDetachInternetGatewayOutput `json:"-" xml:"-"`
 }
 
 type metadataDetachInternetGatewayOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DetachInternetGatewayOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DetachInternetGatewayOutput) GoString() string {
+	return s.String()
+}
+
 type DetachNetworkInterfaceInput struct {
 	// The ID of the attachment.
 	AttachmentID *string `locationName:"attachmentId" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// Specifies whether to force a detachment.
 	Force *bool `locationName:"force" type:"boolean"`
 
-	metadataDetachNetworkInterfaceInput `json:"-", xml:"-"`
+	metadataDetachNetworkInterfaceInput `json:"-" xml:"-"`
 }
 
 type metadataDetachNetworkInterfaceInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DetachNetworkInterfaceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DetachNetworkInterfaceInput) GoString() string {
+	return s.String()
+}
+
 type DetachNetworkInterfaceOutput struct {
-	metadataDetachNetworkInterfaceOutput `json:"-", xml:"-"`
+	metadataDetachNetworkInterfaceOutput `json:"-" xml:"-"`
 }
 
 type metadataDetachNetworkInterfaceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DetachNetworkInterfaceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DetachNetworkInterfaceOutput) GoString() string {
+	return s.String()
+}
+
 type DetachVPNGatewayInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the VPC.
@@ -11994,25 +15529,49 @@ type DetachVPNGatewayInput struct {
 	// The ID of the virtual private gateway.
 	VPNGatewayID *string `locationName:"VpnGatewayId" type:"string" required:"true"`
 
-	metadataDetachVPNGatewayInput `json:"-", xml:"-"`
+	metadataDetachVPNGatewayInput `json:"-" xml:"-"`
 }
 
 type metadataDetachVPNGatewayInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DetachVPNGatewayInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DetachVPNGatewayInput) GoString() string {
+	return s.String()
+}
+
 type DetachVPNGatewayOutput struct {
-	metadataDetachVPNGatewayOutput `json:"-", xml:"-"`
+	metadataDetachVPNGatewayOutput `json:"-" xml:"-"`
 }
 
 type metadataDetachVPNGatewayOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DetachVPNGatewayOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DetachVPNGatewayOutput) GoString() string {
+	return s.String()
+}
+
 type DetachVolumeInput struct {
 	// The device name.
 	Device *string `type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// Forces detachment if the previous detachment attempt did not occur cleanly
@@ -12030,11 +15589,21 @@ type DetachVolumeInput struct {
 	// The ID of the volume.
 	VolumeID *string `locationName:"VolumeId" type:"string" required:"true"`
 
-	metadataDetachVolumeInput `json:"-", xml:"-"`
+	metadataDetachVolumeInput `json:"-" xml:"-"`
 }
 
 type metadataDetachVolumeInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DetachVolumeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DetachVolumeInput) GoString() string {
+	return s.String()
 }
 
 type DisableVGWRoutePropagationInput struct {
@@ -12044,67 +15613,135 @@ type DisableVGWRoutePropagationInput struct {
 	// The ID of the route table.
 	RouteTableID *string `locationName:"RouteTableId" type:"string" required:"true"`
 
-	metadataDisableVGWRoutePropagationInput `json:"-", xml:"-"`
+	metadataDisableVGWRoutePropagationInput `json:"-" xml:"-"`
 }
 
 type metadataDisableVGWRoutePropagationInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DisableVGWRoutePropagationInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DisableVGWRoutePropagationInput) GoString() string {
+	return s.String()
+}
+
 type DisableVGWRoutePropagationOutput struct {
-	metadataDisableVGWRoutePropagationOutput `json:"-", xml:"-"`
+	metadataDisableVGWRoutePropagationOutput `json:"-" xml:"-"`
 }
 
 type metadataDisableVGWRoutePropagationOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DisableVGWRoutePropagationOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DisableVGWRoutePropagationOutput) GoString() string {
+	return s.String()
+}
+
 type DisableVPCClassicLinkInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the VPC.
 	VPCID *string `locationName:"vpcId" type:"string" required:"true"`
 
-	metadataDisableVPCClassicLinkInput `json:"-", xml:"-"`
+	metadataDisableVPCClassicLinkInput `json:"-" xml:"-"`
 }
 
 type metadataDisableVPCClassicLinkInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DisableVPCClassicLinkInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DisableVPCClassicLinkInput) GoString() string {
+	return s.String()
+}
+
 type DisableVPCClassicLinkOutput struct {
 	// Returns true if the request succeeds; otherwise, it returns an error.
 	Return *bool `locationName:"return" type:"boolean"`
 
-	metadataDisableVPCClassicLinkOutput `json:"-", xml:"-"`
+	metadataDisableVPCClassicLinkOutput `json:"-" xml:"-"`
 }
 
 type metadataDisableVPCClassicLinkOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DisableVPCClassicLinkOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DisableVPCClassicLinkOutput) GoString() string {
+	return s.String()
+}
+
 type DisassociateAddressInput struct {
 	// [EC2-VPC] The association ID. Required for EC2-VPC.
 	AssociationID *string `locationName:"AssociationId" type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// [EC2-Classic] The Elastic IP address. Required for EC2-Classic.
 	PublicIP *string `locationName:"PublicIp" type:"string"`
 
-	metadataDisassociateAddressInput `json:"-", xml:"-"`
+	metadataDisassociateAddressInput `json:"-" xml:"-"`
 }
 
 type metadataDisassociateAddressInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DisassociateAddressInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DisassociateAddressInput) GoString() string {
+	return s.String()
+}
+
 type DisassociateAddressOutput struct {
-	metadataDisassociateAddressOutput `json:"-", xml:"-"`
+	metadataDisassociateAddressOutput `json:"-" xml:"-"`
 }
 
 type metadataDisassociateAddressOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DisassociateAddressOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DisassociateAddressOutput) GoString() string {
+	return s.String()
 }
 
 type DisassociateRouteTableInput struct {
@@ -12112,39 +15749,76 @@ type DisassociateRouteTableInput struct {
 	// table and subnet.
 	AssociationID *string `locationName:"associationId" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
-	metadataDisassociateRouteTableInput `json:"-", xml:"-"`
+	metadataDisassociateRouteTableInput `json:"-" xml:"-"`
 }
 
 type metadataDisassociateRouteTableInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DisassociateRouteTableInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DisassociateRouteTableInput) GoString() string {
+	return s.String()
+}
+
 type DisassociateRouteTableOutput struct {
-	metadataDisassociateRouteTableOutput `json:"-", xml:"-"`
+	metadataDisassociateRouteTableOutput `json:"-" xml:"-"`
 }
 
 type metadataDisassociateRouteTableOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DisassociateRouteTableOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DisassociateRouteTableOutput) GoString() string {
+	return s.String()
+}
+
 // Describes a disk image.
 type DiskImage struct {
+	// A description of the disk image.
 	Description *string `type:"string"`
 
+	// Information about the disk image.
 	Image *DiskImageDetail `type:"structure"`
 
-	// Describes an Amazon EBS volume.
+	// Information about the volume.
 	Volume *VolumeDetail `type:"structure"`
 
-	metadataDiskImage `json:"-", xml:"-"`
+	metadataDiskImage `json:"-" xml:"-"`
 }
 
 type metadataDiskImage struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DiskImage) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DiskImage) GoString() string {
+	return s.String()
+}
+
+// Describes a disk image.
 type DiskImageDescription struct {
 	// The checksum computed for the disk image.
 	Checksum *string `locationName:"checksum" type:"string"`
@@ -12159,17 +15833,29 @@ type DiskImageDescription struct {
 	// topic in the Amazon Simple Storage Service Developer Guide.
 	ImportManifestURL *string `locationName:"importManifestUrl" type:"string" required:"true"`
 
-	// The size of the disk image.
+	// The size of the disk image, in GiB.
 	Size *int64 `locationName:"size" type:"long" required:"true"`
 
-	metadataDiskImageDescription `json:"-", xml:"-"`
+	metadataDiskImageDescription `json:"-" xml:"-"`
 }
 
 type metadataDiskImageDescription struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DiskImageDescription) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DiskImageDescription) GoString() string {
+	return s.String()
+}
+
+// Describes a disk image.
 type DiskImageDetail struct {
+	// The size of the disk image, in GiB.
 	Bytes *int64 `locationName:"bytes" type:"long" required:"true"`
 
 	// The disk image format.
@@ -12182,34 +15868,55 @@ type DiskImageDetail struct {
 	// topic in the Amazon Simple Storage Service Developer Guide.
 	ImportManifestURL *string `locationName:"importManifestUrl" type:"string" required:"true"`
 
-	metadataDiskImageDetail `json:"-", xml:"-"`
+	metadataDiskImageDetail `json:"-" xml:"-"`
 }
 
 type metadataDiskImageDetail struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DiskImageDetail) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DiskImageDetail) GoString() string {
+	return s.String()
+}
+
+// Describes a disk image volume.
 type DiskImageVolumeDescription struct {
 	// The volume identifier.
 	ID *string `locationName:"id" type:"string" required:"true"`
 
-	// The size of the volume.
+	// The size of the volume, in GiB.
 	Size *int64 `locationName:"size" type:"long"`
 
-	metadataDiskImageVolumeDescription `json:"-", xml:"-"`
+	metadataDiskImageVolumeDescription `json:"-" xml:"-"`
 }
 
 type metadataDiskImageVolumeDescription struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Describes an Amazon EBS block device.
+// String returns the string representation
+func (s DiskImageVolumeDescription) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DiskImageVolumeDescription) GoString() string {
+	return s.String()
+}
+
+// Describes a block device for an EBS volume.
 type EBSBlockDevice struct {
-	// Indicates whether the Amazon EBS volume is deleted on instance termination.
+	// Indicates whether the EBS volume is deleted on instance termination.
 	DeleteOnTermination *bool `locationName:"deleteOnTermination" type:"boolean"`
 
-	// Indicates whether the Amazon EBS volume is encrypted. Encrypted Amazon EBS
-	// volumes may only be attached to instances that support Amazon EBS encryption.
+	// Indicates whether the EBS volume is encrypted. Encrypted Amazon EBS volumes
+	// may only be attached to instances that support Amazon EBS encryption.
 	Encrypted *bool `locationName:"encrypted" type:"boolean"`
 
 	// The number of I/O operations per second (IOPS) that the volume supports.
@@ -12246,15 +15953,24 @@ type EBSBlockDevice struct {
 	// Default: standard
 	VolumeType *string `locationName:"volumeType" type:"string"`
 
-	metadataEBSBlockDevice `json:"-", xml:"-"`
+	metadataEBSBlockDevice `json:"-" xml:"-"`
 }
 
 type metadataEBSBlockDevice struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Describes a parameter used to set up an Amazon EBS volume in a block device
-// mapping.
+// String returns the string representation
+func (s EBSBlockDevice) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EBSBlockDevice) GoString() string {
+	return s.String()
+}
+
+// Describes a parameter used to set up an EBS volume in a block device mapping.
 type EBSInstanceBlockDevice struct {
 	// The time stamp when the attachment initiated.
 	AttachTime *time.Time `locationName:"attachTime" type:"timestamp" timestampFormat:"iso8601"`
@@ -12265,28 +15981,48 @@ type EBSInstanceBlockDevice struct {
 	// The attachment state.
 	Status *string `locationName:"status" type:"string"`
 
-	// The ID of the Amazon EBS volume.
+	// The ID of the EBS volume.
 	VolumeID *string `locationName:"volumeId" type:"string"`
 
-	metadataEBSInstanceBlockDevice `json:"-", xml:"-"`
+	metadataEBSInstanceBlockDevice `json:"-" xml:"-"`
 }
 
 type metadataEBSInstanceBlockDevice struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s EBSInstanceBlockDevice) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EBSInstanceBlockDevice) GoString() string {
+	return s.String()
+}
+
 type EBSInstanceBlockDeviceSpecification struct {
 	// Indicates whether the volume is deleted on instance termination.
 	DeleteOnTermination *bool `locationName:"deleteOnTermination" type:"boolean"`
 
-	// The ID of the Amazon EBS volume.
+	// The ID of the EBS volume.
 	VolumeID *string `locationName:"volumeId" type:"string"`
 
-	metadataEBSInstanceBlockDeviceSpecification `json:"-", xml:"-"`
+	metadataEBSInstanceBlockDeviceSpecification `json:"-" xml:"-"`
 }
 
 type metadataEBSInstanceBlockDeviceSpecification struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s EBSInstanceBlockDeviceSpecification) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EBSInstanceBlockDeviceSpecification) GoString() string {
+	return s.String()
 }
 
 type EnableVGWRoutePropagationInput struct {
@@ -12296,67 +16032,204 @@ type EnableVGWRoutePropagationInput struct {
 	// The ID of the route table.
 	RouteTableID *string `locationName:"RouteTableId" type:"string" required:"true"`
 
-	metadataEnableVGWRoutePropagationInput `json:"-", xml:"-"`
+	metadataEnableVGWRoutePropagationInput `json:"-" xml:"-"`
 }
 
 type metadataEnableVGWRoutePropagationInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s EnableVGWRoutePropagationInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EnableVGWRoutePropagationInput) GoString() string {
+	return s.String()
+}
+
 type EnableVGWRoutePropagationOutput struct {
-	metadataEnableVGWRoutePropagationOutput `json:"-", xml:"-"`
+	metadataEnableVGWRoutePropagationOutput `json:"-" xml:"-"`
 }
 
 type metadataEnableVGWRoutePropagationOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s EnableVGWRoutePropagationOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EnableVGWRoutePropagationOutput) GoString() string {
+	return s.String()
+}
+
 type EnableVPCClassicLinkInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the VPC.
 	VPCID *string `locationName:"vpcId" type:"string" required:"true"`
 
-	metadataEnableVPCClassicLinkInput `json:"-", xml:"-"`
+	metadataEnableVPCClassicLinkInput `json:"-" xml:"-"`
 }
 
 type metadataEnableVPCClassicLinkInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s EnableVPCClassicLinkInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EnableVPCClassicLinkInput) GoString() string {
+	return s.String()
+}
+
 type EnableVPCClassicLinkOutput struct {
 	// Returns true if the request succeeds; otherwise, it returns an error.
 	Return *bool `locationName:"return" type:"boolean"`
 
-	metadataEnableVPCClassicLinkOutput `json:"-", xml:"-"`
+	metadataEnableVPCClassicLinkOutput `json:"-" xml:"-"`
 }
 
 type metadataEnableVPCClassicLinkOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s EnableVPCClassicLinkOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EnableVPCClassicLinkOutput) GoString() string {
+	return s.String()
+}
+
 type EnableVolumeIOInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the volume.
 	VolumeID *string `locationName:"volumeId" type:"string" required:"true"`
 
-	metadataEnableVolumeIOInput `json:"-", xml:"-"`
+	metadataEnableVolumeIOInput `json:"-" xml:"-"`
 }
 
 type metadataEnableVolumeIOInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s EnableVolumeIOInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EnableVolumeIOInput) GoString() string {
+	return s.String()
+}
+
 type EnableVolumeIOOutput struct {
-	metadataEnableVolumeIOOutput `json:"-", xml:"-"`
+	metadataEnableVolumeIOOutput `json:"-" xml:"-"`
 }
 
 type metadataEnableVolumeIOOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Describes an export task.
+// String returns the string representation
+func (s EnableVolumeIOOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EnableVolumeIOOutput) GoString() string {
+	return s.String()
+}
+
+// Describes a Spot fleet event.
+type EventInformation struct {
+	// The description of the event.
+	EventDescription *string `locationName:"eventDescription" type:"string"`
+
+	// The event.
+	//
+	// The following are the error events.
+	//
+	//   iamFleetRoleInvalid - Spot fleet did not have the required permissions
+	// either to launch or terminate an instance.
+	//
+	//   spotFleetRequestConfigurationInvalid - The configuration is not valid.
+	// For more information, see the description.   spotInstanceCountLimitExceeded
+	// - You've reached the limit on the number of Spot Instances that you can launch.
+	//
+	//   The following are the fleetRequestChange events.
+	//
+	//   active - The Spot fleet has been validated and Amazon EC2 is attempting
+	// to maintain the target number of running Spot Instances.
+	//
+	//   cancelled - The Spot fleet is canceled and has no running Spot Instances.
+	// The Spot fleet will be deleted two days after its instances were terminated.
+	//
+	//   cancelled_running - The Spot fleet is canceled and will not launch additional
+	// Spot Instances, but its existing Spot Instances will continue to run until
+	// they are interrupted or terminated.
+	//
+	//   cancelled_terminating - The Spot fleet is canceled and its Spot Instances
+	// are terminating.
+	//
+	//   expired - The Spot fleet request has expired. A subsequent event indicates
+	// that the instances were terminated, if the request was created with terminateInstancesWithExpiration
+	// set.
+	//
+	//   price_update - The bid price for a launch configuration was adjusted because
+	// it was too high. This change is permanent.
+	//
+	//   submitted - The Spot fleet request is being evaluated and Amazon EC2 is
+	// preparing to launch the target number of Spot Instances.
+	//
+	//   The following are the instanceChange events.
+	//
+	//   launched - A bid was fulfilled and a new instance was launched.
+	//
+	//   terminated - An instance was terminated by the user.
+	EventSubType *string `locationName:"eventSubType" type:"string"`
+
+	// The ID of the instance. This information is available only for instanceChange
+	// events.
+	InstanceID *string `locationName:"instanceId" type:"string"`
+
+	metadataEventInformation `json:"-" xml:"-"`
+}
+
+type metadataEventInformation struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s EventInformation) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s EventInformation) GoString() string {
+	return s.String()
+}
+
+// Describes an instance export task.
 type ExportTask struct {
 	// A description of the resource being exported.
 	Description *string `locationName:"description" type:"string"`
@@ -12364,24 +16237,36 @@ type ExportTask struct {
 	// The ID of the export task.
 	ExportTaskID *string `locationName:"exportTaskId" type:"string"`
 
+	// Information about the export task.
 	ExportToS3Task *ExportToS3Task `locationName:"exportToS3" type:"structure"`
 
-	// The instance being exported.
+	// Information about the instance to export.
 	InstanceExportDetails *InstanceExportDetails `locationName:"instanceExport" type:"structure"`
 
-	// The state of the conversion task.
+	// The state of the export task.
 	State *string `locationName:"state" type:"string"`
 
 	// The status message related to the export task.
 	StatusMessage *string `locationName:"statusMessage" type:"string"`
 
-	metadataExportTask `json:"-", xml:"-"`
+	metadataExportTask `json:"-" xml:"-"`
 }
 
 type metadataExportTask struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ExportTask) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ExportTask) GoString() string {
+	return s.String()
+}
+
+// Describes the format and location for an instance export task.
 type ExportToS3Task struct {
 	// The container format used to combine disk images with metadata (such as OVF).
 	// If absent, only the disk image is exported.
@@ -12390,35 +16275,62 @@ type ExportToS3Task struct {
 	// The format for the exported image.
 	DiskImageFormat *string `locationName:"diskImageFormat" type:"string"`
 
-	// The Amazon S3 bucket for the destination image. The destination bucket must
-	// exist and grant WRITE and READ_ACP permissions to the AWS account vm-import-export@amazon.com.
+	// The S3 bucket for the destination image. The destination bucket must exist
+	// and grant WRITE and READ_ACP permissions to the AWS account vm-import-export@amazon.com.
 	S3Bucket *string `locationName:"s3Bucket" type:"string"`
 
+	// The encryption key for your S3 bucket.
 	S3Key *string `locationName:"s3Key" type:"string"`
 
-	metadataExportToS3Task `json:"-", xml:"-"`
+	metadataExportToS3Task `json:"-" xml:"-"`
 }
 
 type metadataExportToS3Task struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ExportToS3Task) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ExportToS3Task) GoString() string {
+	return s.String()
+}
+
+// Describes an instance export task.
 type ExportToS3TaskSpecification struct {
+	// The container format used to combine disk images with metadata (such as OVF).
+	// If absent, only the disk image is exported.
 	ContainerFormat *string `locationName:"containerFormat" type:"string"`
 
+	// The format for the exported image.
 	DiskImageFormat *string `locationName:"diskImageFormat" type:"string"`
 
+	// The S3 bucket for the destination image. The destination bucket must exist
+	// and grant WRITE and READ_ACP permissions to the AWS account vm-import-export@amazon.com.
 	S3Bucket *string `locationName:"s3Bucket" type:"string"`
 
-	// The image is written to a single object in the Amazon S3 bucket at the S3
-	// key s3prefix + exportTaskId + '.' + diskImageFormat.
+	// The image is written to a single object in the S3 bucket at the S3 key s3prefix
+	// + exportTaskId + '.' + diskImageFormat.
 	S3Prefix *string `locationName:"s3Prefix" type:"string"`
 
-	metadataExportToS3TaskSpecification `json:"-", xml:"-"`
+	metadataExportToS3TaskSpecification `json:"-" xml:"-"`
 }
 
 type metadataExportToS3TaskSpecification struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ExportToS3TaskSpecification) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ExportToS3TaskSpecification) GoString() string {
+	return s.String()
 }
 
 // A filter name and value pair that is used to return a more specific list
@@ -12431,24 +16343,98 @@ type Filter struct {
 	// One or more filter values. Filter values are case-sensitive.
 	Values []*string `locationName:"Value" locationNameList:"item" type:"list"`
 
-	metadataFilter `json:"-", xml:"-"`
+	metadataFilter `json:"-" xml:"-"`
 }
 
 type metadataFilter struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s Filter) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Filter) GoString() string {
+	return s.String()
+}
+
+// Describes a flow log.
+type FlowLog struct {
+	// The date and time the flow log was created.
+	CreationTime *time.Time `locationName:"creationTime" type:"timestamp" timestampFormat:"iso8601"`
+
+	// Information about the error that occurred. Rate limited indicates that CloudWatch
+	// logs throttling has been applied for one or more network interfaces. Access
+	// error indicates that the IAM role associated with the flow log does not have
+	// sufficient permissions to publish to CloudWatch Logs. Unknown error indicates
+	// an internal error.
+	DeliverLogsErrorMessage *string `locationName:"deliverLogsErrorMessage" type:"string"`
+
+	// The ARN of the IAM role that posts logs to CloudWatch Logs.
+	DeliverLogsPermissionARN *string `locationName:"deliverLogsPermissionArn" type:"string"`
+
+	// The status of the logs delivery (SUCCESS | FAILED).
+	DeliverLogsStatus *string `locationName:"deliverLogsStatus" type:"string"`
+
+	// The flow log ID.
+	FlowLogID *string `locationName:"flowLogId" type:"string"`
+
+	// The status of the flow log (ACTIVE).
+	FlowLogStatus *string `locationName:"flowLogStatus" type:"string"`
+
+	// The name of the flow log group.
+	LogGroupName *string `locationName:"logGroupName" type:"string"`
+
+	// The ID of the resource on which the flow log was created.
+	ResourceID *string `locationName:"resourceId" type:"string"`
+
+	// The type of traffic captured for the flow log.
+	TrafficType *string `locationName:"trafficType" type:"string"`
+
+	metadataFlowLog `json:"-" xml:"-"`
+}
+
+type metadataFlowLog struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s FlowLog) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s FlowLog) GoString() string {
+	return s.String()
+}
+
 type GetConsoleOutputInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the instance.
 	InstanceID *string `locationName:"InstanceId" type:"string" required:"true"`
 
-	metadataGetConsoleOutputInput `json:"-", xml:"-"`
+	metadataGetConsoleOutputInput `json:"-" xml:"-"`
 }
 
 type metadataGetConsoleOutputInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetConsoleOutputInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetConsoleOutputInput) GoString() string {
+	return s.String()
 }
 
 type GetConsoleOutputOutput struct {
@@ -12461,24 +16447,48 @@ type GetConsoleOutputOutput struct {
 	// The time the output was last updated.
 	Timestamp *time.Time `locationName:"timestamp" type:"timestamp" timestampFormat:"iso8601"`
 
-	metadataGetConsoleOutputOutput `json:"-", xml:"-"`
+	metadataGetConsoleOutputOutput `json:"-" xml:"-"`
 }
 
 type metadataGetConsoleOutputOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s GetConsoleOutputOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetConsoleOutputOutput) GoString() string {
+	return s.String()
+}
+
 type GetPasswordDataInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the Windows instance.
 	InstanceID *string `locationName:"InstanceId" type:"string" required:"true"`
 
-	metadataGetPasswordDataInput `json:"-", xml:"-"`
+	metadataGetPasswordDataInput `json:"-" xml:"-"`
 }
 
 type metadataGetPasswordDataInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetPasswordDataInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetPasswordDataInput) GoString() string {
+	return s.String()
 }
 
 type GetPasswordDataOutput struct {
@@ -12491,11 +16501,21 @@ type GetPasswordDataOutput struct {
 	// The time the data was last updated.
 	Timestamp *time.Time `locationName:"timestamp" type:"timestamp" timestampFormat:"iso8601"`
 
-	metadataGetPasswordDataOutput `json:"-", xml:"-"`
+	metadataGetPasswordDataOutput `json:"-" xml:"-"`
 }
 
 type metadataGetPasswordDataOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GetPasswordDataOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GetPasswordDataOutput) GoString() string {
+	return s.String()
 }
 
 // Describes a security group.
@@ -12506,11 +16526,56 @@ type GroupIdentifier struct {
 	// The name of the security group.
 	GroupName *string `locationName:"groupName" type:"string"`
 
-	metadataGroupIdentifier `json:"-", xml:"-"`
+	metadataGroupIdentifier `json:"-" xml:"-"`
 }
 
 type metadataGroupIdentifier struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s GroupIdentifier) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s GroupIdentifier) GoString() string {
+	return s.String()
+}
+
+// Describes an event in the history of the Spot fleet request.
+type HistoryRecord struct {
+	// Information about the event.
+	EventInformation *EventInformation `locationName:"eventInformation" type:"structure" required:"true"`
+
+	// The event type.
+	//
+	//   error - Indicates an error with the Spot fleet request.
+	//
+	//   fleetRequestChange - Indicates a change in the status or configuration
+	// of the Spot fleet request.
+	//
+	//   instanceChange - Indicates that an instance was launched or terminated.
+	EventType *string `locationName:"eventType" type:"string" required:"true"`
+
+	// The date and time of the event, in UTC format (for example, YYYY-MM-DDTHH:MM:SSZ).
+	Timestamp *time.Time `locationName:"timestamp" type:"timestamp" timestampFormat:"iso8601" required:"true"`
+
+	metadataHistoryRecord `json:"-" xml:"-"`
+}
+
+type metadataHistoryRecord struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s HistoryRecord) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s HistoryRecord) GoString() string {
+	return s.String()
 }
 
 // Describes an IAM instance profile.
@@ -12521,11 +16586,21 @@ type IAMInstanceProfile struct {
 	// The ID of the instance profile.
 	ID *string `locationName:"id" type:"string"`
 
-	metadataIAMInstanceProfile `json:"-", xml:"-"`
+	metadataIAMInstanceProfile `json:"-" xml:"-"`
 }
 
 type metadataIAMInstanceProfile struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s IAMInstanceProfile) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s IAMInstanceProfile) GoString() string {
+	return s.String()
 }
 
 // Describes an IAM instance profile.
@@ -12536,11 +16611,21 @@ type IAMInstanceProfileSpecification struct {
 	// The name of the instance profile.
 	Name *string `locationName:"name" type:"string"`
 
-	metadataIAMInstanceProfileSpecification `json:"-", xml:"-"`
+	metadataIAMInstanceProfileSpecification `json:"-" xml:"-"`
 }
 
 type metadataIAMInstanceProfileSpecification struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s IAMInstanceProfileSpecification) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s IAMInstanceProfileSpecification) GoString() string {
+	return s.String()
 }
 
 // Describes the ICMP type and code.
@@ -12551,11 +16636,21 @@ type ICMPTypeCode struct {
 	// The ICMP code. A value of -1 means all codes for the specified ICMP type.
 	Type *int64 `locationName:"type" type:"integer"`
 
-	metadataICMPTypeCode `json:"-", xml:"-"`
+	metadataICMPTypeCode `json:"-" xml:"-"`
 }
 
 type metadataICMPTypeCode struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ICMPTypeCode) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ICMPTypeCode) GoString() string {
+	return s.String()
 }
 
 // Describes a security group rule.
@@ -12577,6 +16672,12 @@ type IPPermission struct {
 	// One or more IP ranges.
 	IPRanges []*IPRange `locationName:"ipRanges" locationNameList:"item" type:"list"`
 
+	// (Valid for AuthorizeSecurityGroupEgress, RevokeSecurityGroupEgress and DescribeSecurityGroups
+	// only) One or more prefix list IDs for an AWS service. In an AuthorizeSecurityGroupEgress
+	// request, this is the AWS service that you want to access through a VPC endpoint
+	// from instances associated with the security group.
+	PrefixListIDs []*PrefixListID `locationName:"prefixListIds" locationNameList:"item" type:"list"`
+
 	// The end of port range for the TCP and UDP protocols, or an ICMP code. A value
 	// of -1 indicates all ICMP codes for the specified ICMP type.
 	ToPort *int64 `locationName:"toPort" type:"integer"`
@@ -12584,11 +16685,21 @@ type IPPermission struct {
 	// One or more security group and AWS account ID pairs.
 	UserIDGroupPairs []*UserIDGroupPair `locationName:"groups" locationNameList:"item" type:"list"`
 
-	metadataIPPermission `json:"-", xml:"-"`
+	metadataIPPermission `json:"-" xml:"-"`
 }
 
 type metadataIPPermission struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s IPPermission) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s IPPermission) GoString() string {
+	return s.String()
 }
 
 // Describes an IP range.
@@ -12597,11 +16708,21 @@ type IPRange struct {
 	// group, not both.
 	CIDRIP *string `locationName:"cidrIp" type:"string"`
 
-	metadataIPRange `json:"-", xml:"-"`
+	metadataIPRange `json:"-" xml:"-"`
 }
 
 type metadataIPRange struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s IPRange) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s IPRange) GoString() string {
+	return s.String()
 }
 
 // Describes an image.
@@ -12662,8 +16783,8 @@ type Image struct {
 	// The device name of the root device (for example, /dev/sda1 or /dev/xvda).
 	RootDeviceName *string `locationName:"rootDeviceName" type:"string"`
 
-	// The type of root device used by the AMI. The AMI can use an Amazon EBS volume
-	// or an instance store volume.
+	// The type of root device used by the AMI. The AMI can use an EBS volume or
+	// an instance store volume.
 	RootDeviceType *string `locationName:"rootDeviceType" type:"string"`
 
 	// Specifies whether enhanced networking is enabled.
@@ -12682,111 +16803,153 @@ type Image struct {
 	// The type of virtualization of the AMI.
 	VirtualizationType *string `locationName:"virtualizationType" type:"string"`
 
-	metadataImage `json:"-", xml:"-"`
+	metadataImage `json:"-" xml:"-"`
 }
 
 type metadataImage struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The disk container object for an ImportImage task.
+// String returns the string representation
+func (s Image) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Image) GoString() string {
+	return s.String()
+}
+
+// Describes the disk container object for an import image task.
 type ImageDiskContainer struct {
-	// The description of the disk image (optional).
+	// The description of the disk image.
 	Description *string `type:"string"`
 
-	// The Amazon EBS block device mapping for the disk (optional).
+	// The block device mapping for the disk.
 	DeviceName *string `type:"string"`
 
-	// The format of the disk image being imported (optional).
+	// The format of the disk image being imported.
+	//
+	// Valid values: RAW | VHD | VMDK | OVA
 	Format *string `type:"string"`
 
-	// The Amazon EBS snapshot ID to be used for importing the snapshot.
+	// The ID of the EBS snapshot to be used for importing the snapshot.
 	SnapshotID *string `locationName:"SnapshotId" type:"string"`
 
 	// The URL to the Amazon S3-based disk image being imported. The URL can either
 	// be a https URL (https://..) or an Amazon S3 URL (s3://..)
 	URL *string `locationName:"Url" type:"string"`
 
-	// User's Amazon S3 bucket details used to access the image.
+	// The S3 bucket for the disk image.
 	UserBucket *UserBucket `type:"structure"`
 
-	metadataImageDiskContainer `json:"-", xml:"-"`
+	metadataImageDiskContainer `json:"-" xml:"-"`
 }
 
 type metadataImageDiskContainer struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ImageDiskContainer) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ImageDiskContainer) GoString() string {
+	return s.String()
+}
+
 type ImportImageInput struct {
-	// The architecture of the virtual machine being imported (optional).
+	// The architecture of the virtual machine.
+	//
+	// Valid values: i386 | x86_64
 	Architecture *string `type:"string"`
 
-	// Client-specific data.
+	// The client-specific data.
 	ClientData *ClientData `type:"structure"`
 
-	// The token to enable idempotency for VM import requests (optional).
+	// The token to enable idempotency for VM import requests.
 	ClientToken *string `type:"string"`
 
-	// A description string for the import image task (optional).
+	// A description string for the import image task.
 	Description *string `type:"string"`
 
+	// Information about the disk containers.
 	DiskContainers []*ImageDiskContainer `locationName:"DiskContainer" locationNameList:"item" type:"list"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `type:"boolean"`
 
-	// The target hypervisor platform to use (optional).
+	// The target hypervisor platform.
+	//
+	// Valid values: xen
 	Hypervisor *string `type:"string"`
 
-	// The license type to be used for the Amazon Machine Image (AMI) after importing
-	// (optional).
+	// The license type to be used for the Amazon Machine Image (AMI) after importing.
 	//
 	// Note: You may only use BYOL if you have existing licenses with rights to
 	// use these licenses in a third party cloud like AWS. For more information,
 	// see VM Import/Export Prerequisites (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/VMImportPrerequisites.html)
 	// in the Amazon Elastic Compute Cloud User Guide.
 	//
-	// Valid Values: AWS | BYOL
+	// Valid values: AWS | BYOL
 	LicenseType *string `type:"string"`
 
-	// The operating system of the virtual machine being imported (optional).
+	// The operating system of the virtual machine.
+	//
+	// Valid values: Windows | Linux
 	Platform *string `type:"string"`
 
-	// The name of the role to use when not using the default role name 'vmimport'
-	// (optional).
+	// The name of the role to use when not using the default role, 'vmimport'.
 	RoleName *string `type:"string"`
 
-	metadataImportImageInput `json:"-", xml:"-"`
+	metadataImportImageInput `json:"-" xml:"-"`
 }
 
 type metadataImportImageInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ImportImageInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ImportImageInput) GoString() string {
+	return s.String()
+}
+
 type ImportImageOutput struct {
-	// Architecture of the virtual machine being imported.
+	// The architecture of the virtual machine.
 	Architecture *string `locationName:"architecture" type:"string"`
 
 	// A description of the import task.
 	Description *string `locationName:"description" type:"string"`
 
-	// Target hypervisor of the import task.
+	// The target hypervisor of the import task.
 	Hypervisor *string `locationName:"hypervisor" type:"string"`
 
-	// The Amazon Machine Image (AMI) ID created by the import task.
+	// The ID of the Amazon Machine Image (AMI) created by the import task.
 	ImageID *string `locationName:"imageId" type:"string"`
 
-	// The task id of the ImportImage task.
+	// The task ID of the import image task.
 	ImportTaskID *string `locationName:"importTaskId" type:"string"`
 
-	// License type of the virtual machine being imported.
+	// The license type of the virtual machine.
 	LicenseType *string `locationName:"licenseType" type:"string"`
 
-	// Operating system of the VM being imported.
+	// The operating system of the virtual machine.
 	Platform *string `locationName:"platform" type:"string"`
 
-	// The task's progress.
+	// The progress of the task.
 	Progress *string `locationName:"progress" type:"string"`
 
+	// Information about the snapshots.
 	SnapshotDetails []*SnapshotDetail `locationName:"snapshotDetailSet" locationNameList:"item" type:"list"`
 
 	// A brief status of the task.
@@ -12795,74 +16958,118 @@ type ImportImageOutput struct {
 	// A detailed status message of the import task.
 	StatusMessage *string `locationName:"statusMessage" type:"string"`
 
-	metadataImportImageOutput `json:"-", xml:"-"`
+	metadataImportImageOutput `json:"-" xml:"-"`
 }
 
 type metadataImportImageOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ImportImageOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ImportImageOutput) GoString() string {
+	return s.String()
+}
+
+// Describes an import image task.
 type ImportImageTask struct {
-	// Architecture of the VM being imported.
+	// The architecture of the virtual machine.
+	//
+	// Valid values: i386 | x86_64
 	Architecture *string `locationName:"architecture" type:"string"`
 
-	// Description of the import task.
+	// A description of the import task.
 	Description *string `locationName:"description" type:"string"`
 
-	// Target hypervisor for the import task.
+	// The target hypervisor for the import task.
+	//
+	// Valid values: xen
 	Hypervisor *string `locationName:"hypervisor" type:"string"`
 
-	// The Amazon Machine Image (AMI) ID of the imported virtual machine.
+	// The ID of the Amazon Machine Image (AMI) of the imported virtual machine.
 	ImageID *string `locationName:"imageId" type:"string"`
 
-	// The ID of the import task.
+	// The ID of the import image task.
 	ImportTaskID *string `locationName:"importTaskId" type:"string"`
 
-	// License type of the VM being imported.
+	// The license type of the virtual machine.
 	LicenseType *string `locationName:"licenseType" type:"string"`
 
 	// The description string for the import image task.
 	Platform *string `locationName:"platform" type:"string"`
 
-	// The percentage of progress of the ImportImage task.
+	// The percentage of progress of the import image task.
 	Progress *string `locationName:"progress" type:"string"`
 
+	// Information about the snapshots.
 	SnapshotDetails []*SnapshotDetail `locationName:"snapshotDetailSet" locationNameList:"item" type:"list"`
 
-	// A brief status for the ImportImage task.
+	// A brief status for the import image task.
 	Status *string `locationName:"status" type:"string"`
 
-	// A descriptive status message for the ImportImage task.
+	// A descriptive status message for the import image task.
 	StatusMessage *string `locationName:"statusMessage" type:"string"`
 
-	metadataImportImageTask `json:"-", xml:"-"`
+	metadataImportImageTask `json:"-" xml:"-"`
 }
 
 type metadataImportImageTask struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ImportImageTask) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ImportImageTask) GoString() string {
+	return s.String()
+}
+
 type ImportInstanceInput struct {
 	// A description for the instance being imported.
 	Description *string `locationName:"description" type:"string"`
 
+	// The disk image.
 	DiskImages []*DiskImage `locationName:"diskImage" type:"list"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
+	// The launch specification.
 	LaunchSpecification *ImportInstanceLaunchSpecification `locationName:"launchSpecification" type:"structure"`
 
 	// The instance operating system.
 	Platform *string `locationName:"platform" type:"string" required:"true"`
 
-	metadataImportInstanceInput `json:"-", xml:"-"`
+	metadataImportInstanceInput `json:"-" xml:"-"`
 }
 
 type metadataImportInstanceInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ImportInstanceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ImportInstanceInput) GoString() string {
+	return s.String()
+}
+
+// Describes the launch specification for VM import.
 type ImportInstanceLaunchSpecification struct {
+	// Reserved.
 	AdditionalInfo *string `locationName:"additionalInfo" type:"string"`
 
 	// The architecture of the instance.
@@ -12878,63 +17085,93 @@ type ImportInstanceLaunchSpecification struct {
 	// from the instance (using the operating system command for system shutdown).
 	InstanceInitiatedShutdownBehavior *string `locationName:"instanceInitiatedShutdownBehavior" type:"string"`
 
-	// The instance type. This is not supported for VMs imported into a VPC, which
-	// are assigned the default security group. After a VM is imported into a VPC,
-	// you can specify another security group using the AWS Management Console.
-	// For more information, see Instance Types (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/instance-types.html)
-	// in the Amazon Elastic Compute Cloud User Guide. For more information about
-	// the Linux instance types you can import, see Before You Get Started (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/VMImportPrerequisites.html)
+	// The instance type. For more information about the instance types that you
+	// can import, see Before You Get Started (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/VMImportPrerequisites.html)
 	// in the Amazon Elastic Compute Cloud User Guide.
 	InstanceType *string `locationName:"instanceType" type:"string"`
 
+	// Indicates whether monitoring is enabled.
 	Monitoring *bool `locationName:"monitoring" type:"boolean"`
 
-	// Describes the placement for the instance.
+	// The placement information for the instance.
 	Placement *Placement `locationName:"placement" type:"structure"`
 
-	// [EC2-VPC] Optionally, you can use this parameter to assign the instance a
-	// specific available IP address from the IP address range of the subnet.
+	// [EC2-VPC] An available IP address from the IP address range of the subnet.
 	PrivateIPAddress *string `locationName:"privateIpAddress" type:"string"`
 
-	// [EC2-VPC] The ID of the subnet to launch the instance into.
+	// [EC2-VPC] The ID of the subnet in which to launch the instance.
 	SubnetID *string `locationName:"subnetId" type:"string"`
 
-	// User data to be made available to the instance.
+	// The Base64-encoded MIME user data to be made available to the instance.
 	UserData *UserData `locationName:"userData" type:"structure"`
 
-	metadataImportInstanceLaunchSpecification `json:"-", xml:"-"`
+	metadataImportInstanceLaunchSpecification `json:"-" xml:"-"`
 }
 
 type metadataImportInstanceLaunchSpecification struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ImportInstanceLaunchSpecification) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ImportInstanceLaunchSpecification) GoString() string {
+	return s.String()
+}
+
 type ImportInstanceOutput struct {
-	// Describes a conversion task.
+	// Information about the conversion task.
 	ConversionTask *ConversionTask `locationName:"conversionTask" type:"structure"`
 
-	metadataImportInstanceOutput `json:"-", xml:"-"`
+	metadataImportInstanceOutput `json:"-" xml:"-"`
 }
 
 type metadataImportInstanceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ImportInstanceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ImportInstanceOutput) GoString() string {
+	return s.String()
+}
+
+// Describes an import instance task.
 type ImportInstanceTaskDetails struct {
+	// A description of the task.
 	Description *string `locationName:"description" type:"string"`
 
+	// The ID of the instance.
 	InstanceID *string `locationName:"instanceId" type:"string"`
 
 	// The instance operating system.
 	Platform *string `locationName:"platform" type:"string"`
 
+	// One or more volumes.
 	Volumes []*ImportInstanceVolumeDetailItem `locationName:"volumes" locationNameList:"item" type:"list" required:"true"`
 
-	metadataImportInstanceTaskDetails `json:"-", xml:"-"`
+	metadataImportInstanceTaskDetails `json:"-" xml:"-"`
 }
 
 type metadataImportInstanceTaskDetails struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ImportInstanceTaskDetails) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ImportInstanceTaskDetails) GoString() string {
+	return s.String()
 }
 
 // Describes an import volume task.
@@ -12945,6 +17182,7 @@ type ImportInstanceVolumeDetailItem struct {
 	// The number of bytes converted so far.
 	BytesConverted *int64 `locationName:"bytesConverted" type:"long" required:"true"`
 
+	// A description of the task.
 	Description *string `locationName:"description" type:"string"`
 
 	// The image.
@@ -12959,14 +17197,28 @@ type ImportInstanceVolumeDetailItem struct {
 	// The volume.
 	Volume *DiskImageVolumeDescription `locationName:"volume" type:"structure" required:"true"`
 
-	metadataImportInstanceVolumeDetailItem `json:"-", xml:"-"`
+	metadataImportInstanceVolumeDetailItem `json:"-" xml:"-"`
 }
 
 type metadataImportInstanceVolumeDetailItem struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ImportInstanceVolumeDetailItem) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ImportInstanceVolumeDetailItem) GoString() string {
+	return s.String()
+}
+
 type ImportKeyPairInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// A unique name for the key pair.
@@ -12976,11 +17228,21 @@ type ImportKeyPairInput struct {
 	// it to AWS.
 	PublicKeyMaterial []byte `locationName:"publicKeyMaterial" type:"blob" required:"true"`
 
-	metadataImportKeyPairInput `json:"-", xml:"-"`
+	metadataImportKeyPairInput `json:"-" xml:"-"`
 }
 
 type metadataImportKeyPairInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ImportKeyPairInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ImportKeyPairInput) GoString() string {
+	return s.String()
 }
 
 type ImportKeyPairOutput struct {
@@ -12990,103 +17252,172 @@ type ImportKeyPairOutput struct {
 	// The key pair name you provided.
 	KeyName *string `locationName:"keyName" type:"string"`
 
-	metadataImportKeyPairOutput `json:"-", xml:"-"`
+	metadataImportKeyPairOutput `json:"-" xml:"-"`
 }
 
 type metadataImportKeyPairOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ImportKeyPairOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ImportKeyPairOutput) GoString() string {
+	return s.String()
+}
+
 type ImportSnapshotInput struct {
-	// Client-specific data.
+	// The client-specific data.
 	ClientData *ClientData `type:"structure"`
 
-	// Token to enable idempotency for VM import requests (optional).
+	// Token to enable idempotency for VM import requests.
 	ClientToken *string `type:"string"`
 
-	// The description string for the ImportSnapshot task.
+	// The description string for the import snapshot task.
 	Description *string `type:"string"`
 
-	// The disk container object for the ImportSnapshot request.
+	// Information about the disk container.
 	DiskContainer *SnapshotDiskContainer `type:"structure"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `type:"boolean"`
 
-	// The name of the role to use when not using the default role name 'vmimport'
-	// (optional).
+	// The name of the role to use when not using the default role, 'vmimport'.
 	RoleName *string `type:"string"`
 
-	metadataImportSnapshotInput `json:"-", xml:"-"`
+	metadataImportSnapshotInput `json:"-" xml:"-"`
 }
 
 type metadataImportSnapshotInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ImportSnapshotInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ImportSnapshotInput) GoString() string {
+	return s.String()
+}
+
 type ImportSnapshotOutput struct {
-	// Description of the import snapshot task.
+	// A description of the import snapshot task.
 	Description *string `locationName:"description" type:"string"`
 
-	// Task ID of the ImportSnapshot task.
+	// The ID of the import snapshot task.
 	ImportTaskID *string `locationName:"importTaskId" type:"string"`
 
-	// Details about the import snapshot task.
+	// Information about the import snapshot task.
 	SnapshotTaskDetail *SnapshotTaskDetail `locationName:"snapshotTaskDetail" type:"structure"`
 
-	metadataImportSnapshotOutput `json:"-", xml:"-"`
+	metadataImportSnapshotOutput `json:"-" xml:"-"`
 }
 
 type metadataImportSnapshotOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ImportSnapshotOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ImportSnapshotOutput) GoString() string {
+	return s.String()
+}
+
+// Describes an import snapshot task.
 type ImportSnapshotTask struct {
-	// Description for the import snapshot task.
+	// A description of the import snapshot task.
 	Description *string `locationName:"description" type:"string"`
 
-	// The task ID of the ImportSnapshot task.
+	// The ID of the import snapshot task.
 	ImportTaskID *string `locationName:"importTaskId" type:"string"`
 
-	// Details about the import snapshot task.
+	// Describes an import snapshot task.
 	SnapshotTaskDetail *SnapshotTaskDetail `locationName:"snapshotTaskDetail" type:"structure"`
 
-	metadataImportSnapshotTask `json:"-", xml:"-"`
+	metadataImportSnapshotTask `json:"-" xml:"-"`
 }
 
 type metadataImportSnapshotTask struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ImportSnapshotTask) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ImportSnapshotTask) GoString() string {
+	return s.String()
+}
+
 type ImportVolumeInput struct {
-	// The Availability Zone for the resulting Amazon EBS volume.
+	// The Availability Zone for the resulting EBS volume.
 	AvailabilityZone *string `locationName:"availabilityZone" type:"string" required:"true"`
 
-	// An optional description for the volume being imported.
+	// A description of the volume.
 	Description *string `locationName:"description" type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
+	// The disk image.
 	Image *DiskImageDetail `locationName:"image" type:"structure" required:"true"`
 
-	// Describes an Amazon EBS volume.
+	// The volume size.
 	Volume *VolumeDetail `locationName:"volume" type:"structure" required:"true"`
 
-	metadataImportVolumeInput `json:"-", xml:"-"`
+	metadataImportVolumeInput `json:"-" xml:"-"`
 }
 
 type metadataImportVolumeInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ImportVolumeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ImportVolumeInput) GoString() string {
+	return s.String()
+}
+
 type ImportVolumeOutput struct {
-	// Describes a conversion task.
+	// Information about the conversion task.
 	ConversionTask *ConversionTask `locationName:"conversionTask" type:"structure"`
 
-	metadataImportVolumeOutput `json:"-", xml:"-"`
+	metadataImportVolumeOutput `json:"-" xml:"-"`
 }
 
 type metadataImportVolumeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ImportVolumeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ImportVolumeOutput) GoString() string {
+	return s.String()
 }
 
 // Describes an import volume task.
@@ -13106,11 +17437,21 @@ type ImportVolumeTaskDetails struct {
 	// The volume.
 	Volume *DiskImageVolumeDescription `locationName:"volume" type:"structure" required:"true"`
 
-	metadataImportVolumeTaskDetails `json:"-", xml:"-"`
+	metadataImportVolumeTaskDetails `json:"-" xml:"-"`
 }
 
 type metadataImportVolumeTaskDetails struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ImportVolumeTaskDetails) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ImportVolumeTaskDetails) GoString() string {
+	return s.String()
 }
 
 // Describes an instance.
@@ -13199,8 +17540,8 @@ type Instance struct {
 	// The root device name (for example, /dev/sda1 or /dev/xvda).
 	RootDeviceName *string `locationName:"rootDeviceName" type:"string"`
 
-	// The root device type used by the AMI. The AMI can use an Amazon EBS volume
-	// or an instance store volume.
+	// The root device type used by the AMI. The AMI can use an EBS volume or an
+	// instance store volume.
 	RootDeviceType *string `locationName:"rootDeviceType" type:"string"`
 
 	// Specifies whether enhanced networking is enabled.
@@ -13241,11 +17582,21 @@ type Instance struct {
 	// The virtualization type of the instance.
 	VirtualizationType *string `locationName:"virtualizationType" type:"string"`
 
-	metadataInstance `json:"-", xml:"-"`
+	metadataInstance `json:"-" xml:"-"`
 }
 
 type metadataInstance struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Instance) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Instance) GoString() string {
+	return s.String()
 }
 
 // Describes a block device mapping.
@@ -13253,15 +17604,25 @@ type InstanceBlockDeviceMapping struct {
 	// The device name exposed to the instance (for example, /dev/sdh or xvdh).
 	DeviceName *string `locationName:"deviceName" type:"string"`
 
-	// Parameters used to automatically set up Amazon EBS volumes when the instance
-	// is launched.
+	// Parameters used to automatically set up EBS volumes when the instance is
+	// launched.
 	EBS *EBSInstanceBlockDevice `locationName:"ebs" type:"structure"`
 
-	metadataInstanceBlockDeviceMapping `json:"-", xml:"-"`
+	metadataInstanceBlockDeviceMapping `json:"-" xml:"-"`
 }
 
 type metadataInstanceBlockDeviceMapping struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceBlockDeviceMapping) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceBlockDeviceMapping) GoString() string {
+	return s.String()
 }
 
 // Describes a block device mapping entry.
@@ -13269,8 +17630,8 @@ type InstanceBlockDeviceMappingSpecification struct {
 	// The device name exposed to the instance (for example, /dev/sdh or xvdh).
 	DeviceName *string `locationName:"deviceName" type:"string"`
 
-	// Parameters used to automatically set up Amazon EBS volumes when the instance
-	// is launched.
+	// Parameters used to automatically set up EBS volumes when the instance is
+	// launched.
 	EBS *EBSInstanceBlockDeviceSpecification `locationName:"ebs" type:"structure"`
 
 	// suppress the specified device included in the block device mapping.
@@ -13279,29 +17640,49 @@ type InstanceBlockDeviceMappingSpecification struct {
 	// The virtual device name.
 	VirtualName *string `locationName:"virtualName" type:"string"`
 
-	metadataInstanceBlockDeviceMappingSpecification `json:"-", xml:"-"`
+	metadataInstanceBlockDeviceMappingSpecification `json:"-" xml:"-"`
 }
 
 type metadataInstanceBlockDeviceMappingSpecification struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s InstanceBlockDeviceMappingSpecification) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceBlockDeviceMappingSpecification) GoString() string {
+	return s.String()
+}
+
 // Describes a Reserved Instance listing state.
 type InstanceCount struct {
-	// he number of listed Reserved Instances in the state specified by the state.
+	// The number of listed Reserved Instances in the state specified by the state.
 	InstanceCount *int64 `locationName:"instanceCount" type:"integer"`
 
 	// The states of the listed Reserved Instances.
 	State *string `locationName:"state" type:"string"`
 
-	metadataInstanceCount `json:"-", xml:"-"`
+	metadataInstanceCount `json:"-" xml:"-"`
 }
 
 type metadataInstanceCount struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Describes an instance export task.
+// String returns the string representation
+func (s InstanceCount) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceCount) GoString() string {
+	return s.String()
+}
+
+// Describes an instance to export.
 type InstanceExportDetails struct {
 	// The ID of the resource being exported.
 	InstanceID *string `locationName:"instanceId" type:"string"`
@@ -13309,11 +17690,21 @@ type InstanceExportDetails struct {
 	// The target virtualization environment.
 	TargetEnvironment *string `locationName:"targetEnvironment" type:"string"`
 
-	metadataInstanceExportDetails `json:"-", xml:"-"`
+	metadataInstanceExportDetails `json:"-" xml:"-"`
 }
 
 type metadataInstanceExportDetails struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceExportDetails) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceExportDetails) GoString() string {
+	return s.String()
 }
 
 // Describes the monitoring information of the instance.
@@ -13324,11 +17715,21 @@ type InstanceMonitoring struct {
 	// The monitoring information.
 	Monitoring *Monitoring `locationName:"monitoring" type:"structure"`
 
-	metadataInstanceMonitoring `json:"-", xml:"-"`
+	metadataInstanceMonitoring `json:"-" xml:"-"`
 }
 
 type metadataInstanceMonitoring struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceMonitoring) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceMonitoring) GoString() string {
+	return s.String()
 }
 
 // Describes a network interface.
@@ -13376,11 +17777,21 @@ type InstanceNetworkInterface struct {
 	// The ID of the VPC.
 	VPCID *string `locationName:"vpcId" type:"string"`
 
-	metadataInstanceNetworkInterface `json:"-", xml:"-"`
+	metadataInstanceNetworkInterface `json:"-" xml:"-"`
 }
 
 type metadataInstanceNetworkInterface struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceNetworkInterface) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceNetworkInterface) GoString() string {
+	return s.String()
 }
 
 // Describes association information for an Elastic IP address.
@@ -13394,11 +17805,21 @@ type InstanceNetworkInterfaceAssociation struct {
 	// The public IP address or Elastic IP address bound to the network interface.
 	PublicIP *string `locationName:"publicIp" type:"string"`
 
-	metadataInstanceNetworkInterfaceAssociation `json:"-", xml:"-"`
+	metadataInstanceNetworkInterfaceAssociation `json:"-" xml:"-"`
 }
 
 type metadataInstanceNetworkInterfaceAssociation struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceNetworkInterfaceAssociation) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceNetworkInterfaceAssociation) GoString() string {
+	return s.String()
 }
 
 // Describes a network interface attachment.
@@ -13418,11 +17839,21 @@ type InstanceNetworkInterfaceAttachment struct {
 	// The attachment state.
 	Status *string `locationName:"status" type:"string"`
 
-	metadataInstanceNetworkInterfaceAttachment `json:"-", xml:"-"`
+	metadataInstanceNetworkInterfaceAttachment `json:"-" xml:"-"`
 }
 
 type metadataInstanceNetworkInterfaceAttachment struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceNetworkInterfaceAttachment) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceNetworkInterfaceAttachment) GoString() string {
+	return s.String()
 }
 
 // Describes a network interface.
@@ -13472,11 +17903,21 @@ type InstanceNetworkInterfaceSpecification struct {
 	// creating a network interface when launching an instance.
 	SubnetID *string `locationName:"subnetId" type:"string"`
 
-	metadataInstanceNetworkInterfaceSpecification `json:"-", xml:"-"`
+	metadataInstanceNetworkInterfaceSpecification `json:"-" xml:"-"`
 }
 
 type metadataInstanceNetworkInterfaceSpecification struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceNetworkInterfaceSpecification) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceNetworkInterfaceSpecification) GoString() string {
+	return s.String()
 }
 
 // Describes a private IP address.
@@ -13494,11 +17935,21 @@ type InstancePrivateIPAddress struct {
 	// The private IP address of the network interface.
 	PrivateIPAddress *string `locationName:"privateIpAddress" type:"string"`
 
-	metadataInstancePrivateIPAddress `json:"-", xml:"-"`
+	metadataInstancePrivateIPAddress `json:"-" xml:"-"`
 }
 
 type metadataInstancePrivateIPAddress struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstancePrivateIPAddress) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstancePrivateIPAddress) GoString() string {
+	return s.String()
 }
 
 // Describes the current state of the instance.
@@ -13522,11 +17973,21 @@ type InstanceState struct {
 	// The current state of the instance.
 	Name *string `locationName:"name" type:"string"`
 
-	metadataInstanceState `json:"-", xml:"-"`
+	metadataInstanceState `json:"-" xml:"-"`
 }
 
 type metadataInstanceState struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceState) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceState) GoString() string {
+	return s.String()
 }
 
 // Describes an instance state change.
@@ -13540,11 +18001,21 @@ type InstanceStateChange struct {
 	// The previous state of the instance.
 	PreviousState *InstanceState `locationName:"previousState" type:"structure"`
 
-	metadataInstanceStateChange `json:"-", xml:"-"`
+	metadataInstanceStateChange `json:"-" xml:"-"`
 }
 
 type metadataInstanceStateChange struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceStateChange) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceStateChange) GoString() string {
+	return s.String()
 }
 
 // Describes the status of an instance.
@@ -13552,7 +18023,7 @@ type InstanceStatus struct {
 	// The Availability Zone of the instance.
 	AvailabilityZone *string `locationName:"availabilityZone" type:"string"`
 
-	// Extra information regarding events associated with the instance.
+	// Any scheduled events associated with the instance.
 	Events []*InstanceStatusEvent `locationName:"eventsSet" locationNameList:"item" type:"list"`
 
 	// The ID of the instance.
@@ -13571,11 +18042,21 @@ type InstanceStatus struct {
 	// problems.
 	SystemStatus *InstanceStatusSummary `locationName:"systemStatus" type:"structure"`
 
-	metadataInstanceStatus `json:"-", xml:"-"`
+	metadataInstanceStatus `json:"-" xml:"-"`
 }
 
 type metadataInstanceStatus struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceStatus) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceStatus) GoString() string {
+	return s.String()
 }
 
 // Describes the instance status.
@@ -13590,19 +18071,33 @@ type InstanceStatusDetails struct {
 	// The status.
 	Status *string `locationName:"status" type:"string"`
 
-	metadataInstanceStatusDetails `json:"-", xml:"-"`
+	metadataInstanceStatusDetails `json:"-" xml:"-"`
 }
 
 type metadataInstanceStatusDetails struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Describes an instance event.
+// String returns the string representation
+func (s InstanceStatusDetails) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceStatusDetails) GoString() string {
+	return s.String()
+}
+
+// Describes a scheduled event for an instance.
 type InstanceStatusEvent struct {
-	// The associated code of the event.
+	// The event code.
 	Code *string `locationName:"code" type:"string"`
 
 	// A description of the event.
+	//
+	// After a scheduled event is completed, it can still be described for up to
+	// a week. If the event has been completed, this description starts with the
+	// following text: [Completed].
 	Description *string `locationName:"description" type:"string"`
 
 	// The latest scheduled end time for the event.
@@ -13611,11 +18106,21 @@ type InstanceStatusEvent struct {
 	// The earliest scheduled start time for the event.
 	NotBefore *time.Time `locationName:"notBefore" type:"timestamp" timestampFormat:"iso8601"`
 
-	metadataInstanceStatusEvent `json:"-", xml:"-"`
+	metadataInstanceStatusEvent `json:"-" xml:"-"`
 }
 
 type metadataInstanceStatusEvent struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceStatusEvent) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceStatusEvent) GoString() string {
+	return s.String()
 }
 
 // Describes the status of an instance.
@@ -13626,11 +18131,21 @@ type InstanceStatusSummary struct {
 	// The status.
 	Status *string `locationName:"status" type:"string"`
 
-	metadataInstanceStatusSummary `json:"-", xml:"-"`
+	metadataInstanceStatusSummary `json:"-" xml:"-"`
 }
 
 type metadataInstanceStatusSummary struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InstanceStatusSummary) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InstanceStatusSummary) GoString() string {
+	return s.String()
 }
 
 // Describes an Internet gateway.
@@ -13644,11 +18159,21 @@ type InternetGateway struct {
 	// Any tags assigned to the Internet gateway.
 	Tags []*Tag `locationName:"tagSet" locationNameList:"item" type:"list"`
 
-	metadataInternetGateway `json:"-", xml:"-"`
+	metadataInternetGateway `json:"-" xml:"-"`
 }
 
 type metadataInternetGateway struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InternetGateway) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InternetGateway) GoString() string {
+	return s.String()
 }
 
 // Describes the attachment of a VPC to an Internet gateway.
@@ -13659,11 +18184,21 @@ type InternetGatewayAttachment struct {
 	// The ID of the VPC.
 	VPCID *string `locationName:"vpcId" type:"string"`
 
-	metadataInternetGatewayAttachment `json:"-", xml:"-"`
+	metadataInternetGatewayAttachment `json:"-" xml:"-"`
 }
 
 type metadataInternetGatewayAttachment struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s InternetGatewayAttachment) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s InternetGatewayAttachment) GoString() string {
+	return s.String()
 }
 
 // Describes a key pair.
@@ -13677,11 +18212,21 @@ type KeyPairInfo struct {
 	// The name of the key pair.
 	KeyName *string `locationName:"keyName" type:"string"`
 
-	metadataKeyPairInfo `json:"-", xml:"-"`
+	metadataKeyPairInfo `json:"-" xml:"-"`
 }
 
 type metadataKeyPairInfo struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s KeyPairInfo) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s KeyPairInfo) GoString() string {
+	return s.String()
 }
 
 // Describes a launch permission.
@@ -13692,11 +18237,21 @@ type LaunchPermission struct {
 	// The AWS account ID.
 	UserID *string `locationName:"userId" type:"string"`
 
-	metadataLaunchPermission `json:"-", xml:"-"`
+	metadataLaunchPermission `json:"-" xml:"-"`
 }
 
 type metadataLaunchPermission struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s LaunchPermission) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s LaunchPermission) GoString() string {
+	return s.String()
 }
 
 // Describes a launch permission modification.
@@ -13708,11 +18263,21 @@ type LaunchPermissionModifications struct {
 	// AMI.
 	Remove []*LaunchPermission `locationNameList:"item" type:"list"`
 
-	metadataLaunchPermissionModifications `json:"-", xml:"-"`
+	metadataLaunchPermissionModifications `json:"-" xml:"-"`
 }
 
 type metadataLaunchPermissionModifications struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s LaunchPermissionModifications) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s LaunchPermissionModifications) GoString() string {
+	return s.String()
 }
 
 // Describes the launch specification for an instance.
@@ -13771,11 +18336,21 @@ type LaunchSpecification struct {
 	// The Base64-encoded MIME user data to make available to the instances.
 	UserData *string `locationName:"userData" type:"string"`
 
-	metadataLaunchSpecification `json:"-", xml:"-"`
+	metadataLaunchSpecification `json:"-" xml:"-"`
 }
 
 type metadataLaunchSpecification struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s LaunchSpecification) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s LaunchSpecification) GoString() string {
+	return s.String()
 }
 
 type ModifyImageAttributeInput struct {
@@ -13785,6 +18360,10 @@ type ModifyImageAttributeInput struct {
 	// A description for the AMI.
 	Description *AttributeValue `type:"structure"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the AMI.
@@ -13812,19 +18391,39 @@ type ModifyImageAttributeInput struct {
 	// the description attribute.
 	Value *string `type:"string"`
 
-	metadataModifyImageAttributeInput `json:"-", xml:"-"`
+	metadataModifyImageAttributeInput `json:"-" xml:"-"`
 }
 
 type metadataModifyImageAttributeInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ModifyImageAttributeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyImageAttributeInput) GoString() string {
+	return s.String()
+}
+
 type ModifyImageAttributeOutput struct {
-	metadataModifyImageAttributeOutput `json:"-", xml:"-"`
+	metadataModifyImageAttributeOutput `json:"-" xml:"-"`
 }
 
 type metadataModifyImageAttributeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyImageAttributeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyImageAttributeOutput) GoString() string {
+	return s.String()
 }
 
 type ModifyInstanceAttributeInput struct {
@@ -13846,6 +18445,10 @@ type ModifyInstanceAttributeInput struct {
 	// console, CLI, or API; otherwise, you can.
 	DisableAPITermination *AttributeBooleanValue `locationName:"disableApiTermination" type:"structure"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// Specifies whether the instance is optimized for EBS I/O. This optimization
@@ -13902,19 +18505,39 @@ type ModifyInstanceAttributeInput struct {
 	// disableApiTermination, or intanceInitiateShutdownBehavior attribute.
 	Value *string `locationName:"value" type:"string"`
 
-	metadataModifyInstanceAttributeInput `json:"-", xml:"-"`
+	metadataModifyInstanceAttributeInput `json:"-" xml:"-"`
 }
 
 type metadataModifyInstanceAttributeInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ModifyInstanceAttributeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyInstanceAttributeInput) GoString() string {
+	return s.String()
+}
+
 type ModifyInstanceAttributeOutput struct {
-	metadataModifyInstanceAttributeOutput `json:"-", xml:"-"`
+	metadataModifyInstanceAttributeOutput `json:"-" xml:"-"`
 }
 
 type metadataModifyInstanceAttributeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyInstanceAttributeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyInstanceAttributeOutput) GoString() string {
+	return s.String()
 }
 
 type ModifyNetworkInterfaceAttributeInput struct {
@@ -13925,6 +18548,10 @@ type ModifyNetworkInterfaceAttributeInput struct {
 	// A description for the network interface.
 	Description *AttributeValue `locationName:"description" type:"structure"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// Changes the security groups for the network interface. The new set of groups
@@ -13943,19 +18570,39 @@ type ModifyNetworkInterfaceAttributeInput struct {
 	// in the Amazon Virtual Private Cloud User Guide.
 	SourceDestCheck *AttributeBooleanValue `locationName:"sourceDestCheck" type:"structure"`
 
-	metadataModifyNetworkInterfaceAttributeInput `json:"-", xml:"-"`
+	metadataModifyNetworkInterfaceAttributeInput `json:"-" xml:"-"`
 }
 
 type metadataModifyNetworkInterfaceAttributeInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ModifyNetworkInterfaceAttributeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyNetworkInterfaceAttributeInput) GoString() string {
+	return s.String()
+}
+
 type ModifyNetworkInterfaceAttributeOutput struct {
-	metadataModifyNetworkInterfaceAttributeOutput `json:"-", xml:"-"`
+	metadataModifyNetworkInterfaceAttributeOutput `json:"-" xml:"-"`
 }
 
 type metadataModifyNetworkInterfaceAttributeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyNetworkInterfaceAttributeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyNetworkInterfaceAttributeOutput) GoString() string {
+	return s.String()
 }
 
 type ModifyReservedInstancesInput struct {
@@ -13969,22 +18616,42 @@ type ModifyReservedInstancesInput struct {
 	// The configuration settings for the Reserved Instances to modify.
 	TargetConfigurations []*ReservedInstancesConfiguration `locationName:"ReservedInstancesConfigurationSetItemType" locationNameList:"item" type:"list" required:"true"`
 
-	metadataModifyReservedInstancesInput `json:"-", xml:"-"`
+	metadataModifyReservedInstancesInput `json:"-" xml:"-"`
 }
 
 type metadataModifyReservedInstancesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ModifyReservedInstancesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyReservedInstancesInput) GoString() string {
+	return s.String()
+}
+
 type ModifyReservedInstancesOutput struct {
 	// The ID for the modification.
 	ReservedInstancesModificationID *string `locationName:"reservedInstancesModificationId" type:"string"`
 
-	metadataModifyReservedInstancesOutput `json:"-", xml:"-"`
+	metadataModifyReservedInstancesOutput `json:"-" xml:"-"`
 }
 
 type metadataModifyReservedInstancesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyReservedInstancesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyReservedInstancesOutput) GoString() string {
+	return s.String()
 }
 
 type ModifySnapshotAttributeInput struct {
@@ -13994,6 +18661,10 @@ type ModifySnapshotAttributeInput struct {
 	// A JSON representation of the snapshot attribute modification.
 	CreateVolumePermission *CreateVolumePermissionModifications `type:"structure"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The group to modify for the snapshot.
@@ -14008,19 +18679,39 @@ type ModifySnapshotAttributeInput struct {
 	// The account ID to modify for the snapshot.
 	UserIDs []*string `locationName:"UserId" locationNameList:"UserId" type:"list"`
 
-	metadataModifySnapshotAttributeInput `json:"-", xml:"-"`
+	metadataModifySnapshotAttributeInput `json:"-" xml:"-"`
 }
 
 type metadataModifySnapshotAttributeInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ModifySnapshotAttributeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifySnapshotAttributeInput) GoString() string {
+	return s.String()
+}
+
 type ModifySnapshotAttributeOutput struct {
-	metadataModifySnapshotAttributeOutput `json:"-", xml:"-"`
+	metadataModifySnapshotAttributeOutput `json:"-" xml:"-"`
 }
 
 type metadataModifySnapshotAttributeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifySnapshotAttributeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifySnapshotAttributeOutput) GoString() string {
+	return s.String()
 }
 
 type ModifySubnetAttributeInput struct {
@@ -14031,19 +18722,39 @@ type ModifySubnetAttributeInput struct {
 	// The ID of the subnet.
 	SubnetID *string `locationName:"subnetId" type:"string" required:"true"`
 
-	metadataModifySubnetAttributeInput `json:"-", xml:"-"`
+	metadataModifySubnetAttributeInput `json:"-" xml:"-"`
 }
 
 type metadataModifySubnetAttributeInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ModifySubnetAttributeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifySubnetAttributeInput) GoString() string {
+	return s.String()
+}
+
 type ModifySubnetAttributeOutput struct {
-	metadataModifySubnetAttributeOutput `json:"-", xml:"-"`
+	metadataModifySubnetAttributeOutput `json:"-" xml:"-"`
 }
 
 type metadataModifySubnetAttributeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifySubnetAttributeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifySubnetAttributeOutput) GoString() string {
+	return s.String()
 }
 
 type ModifyVPCAttributeInput struct {
@@ -14063,67 +18774,197 @@ type ModifyVPCAttributeInput struct {
 	// The ID of the VPC.
 	VPCID *string `locationName:"vpcId" type:"string" required:"true"`
 
-	metadataModifyVPCAttributeInput `json:"-", xml:"-"`
+	metadataModifyVPCAttributeInput `json:"-" xml:"-"`
 }
 
 type metadataModifyVPCAttributeInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ModifyVPCAttributeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyVPCAttributeInput) GoString() string {
+	return s.String()
+}
+
 type ModifyVPCAttributeOutput struct {
-	metadataModifyVPCAttributeOutput `json:"-", xml:"-"`
+	metadataModifyVPCAttributeOutput `json:"-" xml:"-"`
 }
 
 type metadataModifyVPCAttributeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ModifyVPCAttributeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyVPCAttributeOutput) GoString() string {
+	return s.String()
+}
+
+type ModifyVPCEndpointInput struct {
+	// One or more route tables IDs to associate with the endpoint.
+	AddRouteTableIDs []*string `locationName:"AddRouteTableId" locationNameList:"item" type:"list"`
+
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
+	DryRun *bool `type:"boolean"`
+
+	// A policy document to attach to the endpoint. The policy must be in valid
+	// JSON format.
+	PolicyDocument *string `type:"string"`
+
+	// One or more route table IDs to disassociate from the endpoint.
+	RemoveRouteTableIDs []*string `locationName:"RemoveRouteTableId" locationNameList:"item" type:"list"`
+
+	// Specify true to reset the policy document to the default policy. The default
+	// policy allows access to the service.
+	ResetPolicy *bool `type:"boolean"`
+
+	// The ID of the endpoint.
+	VPCEndpointID *string `locationName:"VpcEndpointId" type:"string" required:"true"`
+
+	metadataModifyVPCEndpointInput `json:"-" xml:"-"`
+}
+
+type metadataModifyVPCEndpointInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyVPCEndpointInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyVPCEndpointInput) GoString() string {
+	return s.String()
+}
+
+type ModifyVPCEndpointOutput struct {
+	// Returns true if the request succeeds; otherwise, it returns an error.
+	Return *bool `locationName:"return" type:"boolean"`
+
+	metadataModifyVPCEndpointOutput `json:"-" xml:"-"`
+}
+
+type metadataModifyVPCEndpointOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ModifyVPCEndpointOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyVPCEndpointOutput) GoString() string {
+	return s.String()
+}
+
 type ModifyVolumeAttributeInput struct {
 	// Indicates whether the volume should be auto-enabled for I/O operations.
 	AutoEnableIO *AttributeBooleanValue `type:"structure"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the volume.
 	VolumeID *string `locationName:"VolumeId" type:"string" required:"true"`
 
-	metadataModifyVolumeAttributeInput `json:"-", xml:"-"`
+	metadataModifyVolumeAttributeInput `json:"-" xml:"-"`
 }
 
 type metadataModifyVolumeAttributeInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ModifyVolumeAttributeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyVolumeAttributeInput) GoString() string {
+	return s.String()
+}
+
 type ModifyVolumeAttributeOutput struct {
-	metadataModifyVolumeAttributeOutput `json:"-", xml:"-"`
+	metadataModifyVolumeAttributeOutput `json:"-" xml:"-"`
 }
 
 type metadataModifyVolumeAttributeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ModifyVolumeAttributeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ModifyVolumeAttributeOutput) GoString() string {
+	return s.String()
+}
+
 type MonitorInstancesInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more instance IDs.
 	InstanceIDs []*string `locationName:"InstanceId" locationNameList:"InstanceId" type:"list" required:"true"`
 
-	metadataMonitorInstancesInput `json:"-", xml:"-"`
+	metadataMonitorInstancesInput `json:"-" xml:"-"`
 }
 
 type metadataMonitorInstancesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s MonitorInstancesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s MonitorInstancesInput) GoString() string {
+	return s.String()
+}
+
 type MonitorInstancesOutput struct {
 	// Monitoring information for one or more instances.
 	InstanceMonitorings []*InstanceMonitoring `locationName:"instancesSet" locationNameList:"item" type:"list"`
 
-	metadataMonitorInstancesOutput `json:"-", xml:"-"`
+	metadataMonitorInstancesOutput `json:"-" xml:"-"`
 }
 
 type metadataMonitorInstancesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s MonitorInstancesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s MonitorInstancesOutput) GoString() string {
+	return s.String()
 }
 
 // Describes the monitoring for the instance.
@@ -14131,11 +18972,98 @@ type Monitoring struct {
 	// Indicates whether monitoring is enabled for the instance.
 	State *string `locationName:"state" type:"string"`
 
-	metadataMonitoring `json:"-", xml:"-"`
+	metadataMonitoring `json:"-" xml:"-"`
 }
 
 type metadataMonitoring struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Monitoring) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Monitoring) GoString() string {
+	return s.String()
+}
+
+type MoveAddressToVPCInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
+	DryRun *bool `locationName:"dryRun" type:"boolean"`
+
+	// The Elastic IP address.
+	PublicIP *string `locationName:"publicIp" type:"string" required:"true"`
+
+	metadataMoveAddressToVPCInput `json:"-" xml:"-"`
+}
+
+type metadataMoveAddressToVPCInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s MoveAddressToVPCInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s MoveAddressToVPCInput) GoString() string {
+	return s.String()
+}
+
+type MoveAddressToVPCOutput struct {
+	// The allocation ID for the Elastic IP address.
+	AllocationID *string `locationName:"allocationId" type:"string"`
+
+	// The status of the move of the IP address.
+	Status *string `locationName:"status" type:"string"`
+
+	metadataMoveAddressToVPCOutput `json:"-" xml:"-"`
+}
+
+type metadataMoveAddressToVPCOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s MoveAddressToVPCOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s MoveAddressToVPCOutput) GoString() string {
+	return s.String()
+}
+
+// Describes the status of a moving Elastic IP address.
+type MovingAddressStatus struct {
+	// The status of the Elastic IP address that's being moved to the EC2-VPC platform,
+	// or restored to the EC2-Classic platform.
+	MoveStatus *string `locationName:"moveStatus" type:"string"`
+
+	// The Elastic IP address.
+	PublicIP *string `locationName:"publicIp" type:"string"`
+
+	metadataMovingAddressStatus `json:"-" xml:"-"`
+}
+
+type metadataMovingAddressStatus struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s MovingAddressStatus) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s MovingAddressStatus) GoString() string {
+	return s.String()
 }
 
 // Describes a network ACL.
@@ -14158,11 +19086,21 @@ type NetworkACL struct {
 	// The ID of the VPC for the network ACL.
 	VPCID *string `locationName:"vpcId" type:"string"`
 
-	metadataNetworkACL `json:"-", xml:"-"`
+	metadataNetworkACL `json:"-" xml:"-"`
 }
 
 type metadataNetworkACL struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s NetworkACL) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s NetworkACL) GoString() string {
+	return s.String()
 }
 
 // Describes an association between a network ACL and a subnet.
@@ -14176,11 +19114,21 @@ type NetworkACLAssociation struct {
 	// The ID of the subnet.
 	SubnetID *string `locationName:"subnetId" type:"string"`
 
-	metadataNetworkACLAssociation `json:"-", xml:"-"`
+	metadataNetworkACLAssociation `json:"-" xml:"-"`
 }
 
 type metadataNetworkACLAssociation struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s NetworkACLAssociation) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s NetworkACLAssociation) GoString() string {
+	return s.String()
 }
 
 // Describes an entry in a network ACL.
@@ -14208,11 +19156,21 @@ type NetworkACLEntry struct {
 	// by rule number.
 	RuleNumber *int64 `locationName:"ruleNumber" type:"integer"`
 
-	metadataNetworkACLEntry `json:"-", xml:"-"`
+	metadataNetworkACLEntry `json:"-" xml:"-"`
 }
 
 type metadataNetworkACLEntry struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s NetworkACLEntry) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s NetworkACLEntry) GoString() string {
+	return s.String()
 }
 
 // Describes a network interface.
@@ -14273,11 +19231,21 @@ type NetworkInterface struct {
 	// The ID of the VPC.
 	VPCID *string `locationName:"vpcId" type:"string"`
 
-	metadataNetworkInterface `json:"-", xml:"-"`
+	metadataNetworkInterface `json:"-" xml:"-"`
 }
 
 type metadataNetworkInterface struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s NetworkInterface) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s NetworkInterface) GoString() string {
+	return s.String()
 }
 
 // Describes association information for an Elastic IP address.
@@ -14297,11 +19265,21 @@ type NetworkInterfaceAssociation struct {
 	// The address of the Elastic IP address bound to the network interface.
 	PublicIP *string `locationName:"publicIp" type:"string"`
 
-	metadataNetworkInterfaceAssociation `json:"-", xml:"-"`
+	metadataNetworkInterfaceAssociation `json:"-" xml:"-"`
 }
 
 type metadataNetworkInterfaceAssociation struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s NetworkInterfaceAssociation) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s NetworkInterfaceAssociation) GoString() string {
+	return s.String()
 }
 
 // Describes a network interface attachment.
@@ -14327,11 +19305,21 @@ type NetworkInterfaceAttachment struct {
 	// The attachment state.
 	Status *string `locationName:"status" type:"string"`
 
-	metadataNetworkInterfaceAttachment `json:"-", xml:"-"`
+	metadataNetworkInterfaceAttachment `json:"-" xml:"-"`
 }
 
 type metadataNetworkInterfaceAttachment struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s NetworkInterfaceAttachment) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s NetworkInterfaceAttachment) GoString() string {
+	return s.String()
 }
 
 // Describes an attachment change.
@@ -14342,11 +19330,21 @@ type NetworkInterfaceAttachmentChanges struct {
 	// Indicates whether the network interface is deleted when the instance is terminated.
 	DeleteOnTermination *bool `locationName:"deleteOnTermination" type:"boolean"`
 
-	metadataNetworkInterfaceAttachmentChanges `json:"-", xml:"-"`
+	metadataNetworkInterfaceAttachmentChanges `json:"-" xml:"-"`
 }
 
 type metadataNetworkInterfaceAttachmentChanges struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s NetworkInterfaceAttachmentChanges) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s NetworkInterfaceAttachmentChanges) GoString() string {
+	return s.String()
 }
 
 // Describes the private IP address of a network interface.
@@ -14365,11 +19363,21 @@ type NetworkInterfacePrivateIPAddress struct {
 	// The private IP address.
 	PrivateIPAddress *string `locationName:"privateIpAddress" type:"string"`
 
-	metadataNetworkInterfacePrivateIPAddress `json:"-", xml:"-"`
+	metadataNetworkInterfacePrivateIPAddress `json:"-" xml:"-"`
 }
 
 type metadataNetworkInterfacePrivateIPAddress struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s NetworkInterfacePrivateIPAddress) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s NetworkInterfacePrivateIPAddress) GoString() string {
+	return s.String()
 }
 
 type NewDHCPConfiguration struct {
@@ -14377,11 +19385,21 @@ type NewDHCPConfiguration struct {
 
 	Values []*string `locationName:"Value" locationNameList:"item" type:"list"`
 
-	metadataNewDHCPConfiguration `json:"-", xml:"-"`
+	metadataNewDHCPConfiguration `json:"-" xml:"-"`
 }
 
 type metadataNewDHCPConfiguration struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s NewDHCPConfiguration) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s NewDHCPConfiguration) GoString() string {
+	return s.String()
 }
 
 // Describes the placement for the instance.
@@ -14396,11 +19414,21 @@ type Placement struct {
 	// with a tenancy of dedicated runs on single-tenant hardware.
 	Tenancy *string `locationName:"tenancy" type:"string"`
 
-	metadataPlacement `json:"-", xml:"-"`
+	metadataPlacement `json:"-" xml:"-"`
 }
 
 type metadataPlacement struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Placement) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Placement) GoString() string {
+	return s.String()
 }
 
 // Describes a placement group.
@@ -14414,11 +19442,21 @@ type PlacementGroup struct {
 	// The placement strategy.
 	Strategy *string `locationName:"strategy" type:"string"`
 
-	metadataPlacementGroup `json:"-", xml:"-"`
+	metadataPlacementGroup `json:"-" xml:"-"`
 }
 
 type metadataPlacementGroup struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PlacementGroup) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PlacementGroup) GoString() string {
+	return s.String()
 }
 
 // Describes a range of ports.
@@ -14429,11 +19467,71 @@ type PortRange struct {
 	// The last port in the range.
 	To *int64 `locationName:"to" type:"integer"`
 
-	metadataPortRange `json:"-", xml:"-"`
+	metadataPortRange `json:"-" xml:"-"`
 }
 
 type metadataPortRange struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PortRange) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PortRange) GoString() string {
+	return s.String()
+}
+
+// Describes prefixes for AWS services.
+type PrefixList struct {
+	// The IP address range of the AWS service.
+	CIDRs []*string `locationName:"cidrSet" locationNameList:"item" type:"list"`
+
+	// The ID of the prefix.
+	PrefixListID *string `locationName:"prefixListId" type:"string"`
+
+	// The name of the prefix.
+	PrefixListName *string `locationName:"prefixListName" type:"string"`
+
+	metadataPrefixList `json:"-" xml:"-"`
+}
+
+type metadataPrefixList struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PrefixList) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PrefixList) GoString() string {
+	return s.String()
+}
+
+// The ID of the prefix.
+type PrefixListID struct {
+	// The ID of the prefix.
+	PrefixListID *string `locationName:"prefixListId" type:"string"`
+
+	metadataPrefixListID `json:"-" xml:"-"`
+}
+
+type metadataPrefixListID struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PrefixListID) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PrefixListID) GoString() string {
+	return s.String()
 }
 
 // Describes the price for a Reserved Instance.
@@ -14461,11 +19559,21 @@ type PriceSchedule struct {
 	// second to the last month before the capacity reservation expires.
 	Term *int64 `locationName:"term" type:"long"`
 
-	metadataPriceSchedule `json:"-", xml:"-"`
+	metadataPriceSchedule `json:"-" xml:"-"`
 }
 
 type metadataPriceSchedule struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PriceSchedule) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PriceSchedule) GoString() string {
+	return s.String()
 }
 
 // Describes the price for a Reserved Instance.
@@ -14481,11 +19589,21 @@ type PriceScheduleSpecification struct {
 	// second to the last month before the capacity reservation expires.
 	Term *int64 `locationName:"term" type:"long"`
 
-	metadataPriceScheduleSpecification `json:"-", xml:"-"`
+	metadataPriceScheduleSpecification `json:"-" xml:"-"`
 }
 
 type metadataPriceScheduleSpecification struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PriceScheduleSpecification) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PriceScheduleSpecification) GoString() string {
+	return s.String()
 }
 
 // Describes a Reserved Instance offering.
@@ -14496,11 +19614,21 @@ type PricingDetail struct {
 	// The price per instance.
 	Price *float64 `locationName:"price" type:"double"`
 
-	metadataPricingDetail `json:"-", xml:"-"`
+	metadataPricingDetail `json:"-" xml:"-"`
 }
 
 type metadataPricingDetail struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PricingDetail) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PricingDetail) GoString() string {
+	return s.String()
 }
 
 // Describes a secondary private IP address for a network interface.
@@ -14512,11 +19640,21 @@ type PrivateIPAddressSpecification struct {
 	// The private IP addresses.
 	PrivateIPAddress *string `locationName:"privateIpAddress" type:"string" required:"true"`
 
-	metadataPrivateIPAddressSpecification `json:"-", xml:"-"`
+	metadataPrivateIPAddressSpecification `json:"-" xml:"-"`
 }
 
 type metadataPrivateIPAddressSpecification struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s PrivateIPAddressSpecification) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PrivateIPAddressSpecification) GoString() string {
+	return s.String()
 }
 
 // Describes a product code.
@@ -14527,11 +19665,21 @@ type ProductCode struct {
 	// The type of product code.
 	ProductCodeType *string `locationName:"type" type:"string"`
 
-	metadataProductCode `json:"-", xml:"-"`
+	metadataProductCode `json:"-" xml:"-"`
 }
 
 type metadataProductCode struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ProductCode) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ProductCode) GoString() string {
+	return s.String()
 }
 
 // Describes a virtual private gateway propagating route.
@@ -14539,14 +19687,28 @@ type PropagatingVGW struct {
 	// The ID of the virtual private gateway (VGW).
 	GatewayID *string `locationName:"gatewayId" type:"string"`
 
-	metadataPropagatingVGW `json:"-", xml:"-"`
+	metadataPropagatingVGW `json:"-" xml:"-"`
 }
 
 type metadataPropagatingVGW struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s PropagatingVGW) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PropagatingVGW) GoString() string {
+	return s.String()
+}
+
 type PurchaseReservedInstancesOfferingInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The number of Reserved Instances to purchase.
@@ -14560,43 +19722,87 @@ type PurchaseReservedInstancesOfferingInput struct {
 	// The ID of the Reserved Instance offering to purchase.
 	ReservedInstancesOfferingID *string `locationName:"ReservedInstancesOfferingId" type:"string" required:"true"`
 
-	metadataPurchaseReservedInstancesOfferingInput `json:"-", xml:"-"`
+	metadataPurchaseReservedInstancesOfferingInput `json:"-" xml:"-"`
 }
 
 type metadataPurchaseReservedInstancesOfferingInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s PurchaseReservedInstancesOfferingInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PurchaseReservedInstancesOfferingInput) GoString() string {
+	return s.String()
+}
+
 type PurchaseReservedInstancesOfferingOutput struct {
 	// The IDs of the purchased Reserved Instances.
 	ReservedInstancesID *string `locationName:"reservedInstancesId" type:"string"`
 
-	metadataPurchaseReservedInstancesOfferingOutput `json:"-", xml:"-"`
+	metadataPurchaseReservedInstancesOfferingOutput `json:"-" xml:"-"`
 }
 
 type metadataPurchaseReservedInstancesOfferingOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s PurchaseReservedInstancesOfferingOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s PurchaseReservedInstancesOfferingOutput) GoString() string {
+	return s.String()
+}
+
 type RebootInstancesInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more instance IDs.
 	InstanceIDs []*string `locationName:"InstanceId" locationNameList:"InstanceId" type:"list" required:"true"`
 
-	metadataRebootInstancesInput `json:"-", xml:"-"`
+	metadataRebootInstancesInput `json:"-" xml:"-"`
 }
 
 type metadataRebootInstancesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RebootInstancesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RebootInstancesInput) GoString() string {
+	return s.String()
+}
+
 type RebootInstancesOutput struct {
-	metadataRebootInstancesOutput `json:"-", xml:"-"`
+	metadataRebootInstancesOutput `json:"-" xml:"-"`
 }
 
 type metadataRebootInstancesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RebootInstancesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RebootInstancesOutput) GoString() string {
+	return s.String()
 }
 
 // Describes a recurring charge.
@@ -14607,11 +19813,21 @@ type RecurringCharge struct {
 	// The frequency of the recurring charge.
 	Frequency *string `locationName:"frequency" type:"string"`
 
-	metadataRecurringCharge `json:"-", xml:"-"`
+	metadataRecurringCharge `json:"-" xml:"-"`
 }
 
 type metadataRecurringCharge struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RecurringCharge) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RecurringCharge) GoString() string {
+	return s.String()
 }
 
 // Describes a region.
@@ -14622,11 +19838,21 @@ type Region struct {
 	// The name of the region.
 	RegionName *string `locationName:"regionName" type:"string"`
 
-	metadataRegion `json:"-", xml:"-"`
+	metadataRegion `json:"-" xml:"-"`
 }
 
 type metadataRegion struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Region) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Region) GoString() string {
+	return s.String()
 }
 
 type RegisterImageInput struct {
@@ -14642,6 +19868,10 @@ type RegisterImageInput struct {
 	// A description for your AMI.
 	Description *string `locationName:"description" type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The full path to your AMI manifest in Amazon S3 storage.
@@ -14677,70 +19907,138 @@ type RegisterImageInput struct {
 	// Default: paravirtual
 	VirtualizationType *string `locationName:"virtualizationType" type:"string"`
 
-	metadataRegisterImageInput `json:"-", xml:"-"`
+	metadataRegisterImageInput `json:"-" xml:"-"`
 }
 
 type metadataRegisterImageInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RegisterImageInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RegisterImageInput) GoString() string {
+	return s.String()
+}
+
 type RegisterImageOutput struct {
 	// The ID of the newly registered AMI.
 	ImageID *string `locationName:"imageId" type:"string"`
 
-	metadataRegisterImageOutput `json:"-", xml:"-"`
+	metadataRegisterImageOutput `json:"-" xml:"-"`
 }
 
 type metadataRegisterImageOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RegisterImageOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RegisterImageOutput) GoString() string {
+	return s.String()
+}
+
 type RejectVPCPeeringConnectionInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the VPC peering connection.
 	VPCPeeringConnectionID *string `locationName:"vpcPeeringConnectionId" type:"string" required:"true"`
 
-	metadataRejectVPCPeeringConnectionInput `json:"-", xml:"-"`
+	metadataRejectVPCPeeringConnectionInput `json:"-" xml:"-"`
 }
 
 type metadataRejectVPCPeeringConnectionInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RejectVPCPeeringConnectionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RejectVPCPeeringConnectionInput) GoString() string {
+	return s.String()
+}
+
 type RejectVPCPeeringConnectionOutput struct {
 	// Returns true if the request succeeds; otherwise, it returns an error.
 	Return *bool `locationName:"return" type:"boolean"`
 
-	metadataRejectVPCPeeringConnectionOutput `json:"-", xml:"-"`
+	metadataRejectVPCPeeringConnectionOutput `json:"-" xml:"-"`
 }
 
 type metadataRejectVPCPeeringConnectionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RejectVPCPeeringConnectionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RejectVPCPeeringConnectionOutput) GoString() string {
+	return s.String()
+}
+
 type ReleaseAddressInput struct {
 	// [EC2-VPC] The allocation ID. Required for EC2-VPC.
 	AllocationID *string `locationName:"AllocationId" type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// [EC2-Classic] The Elastic IP address. Required for EC2-Classic.
 	PublicIP *string `locationName:"PublicIp" type:"string"`
 
-	metadataReleaseAddressInput `json:"-", xml:"-"`
+	metadataReleaseAddressInput `json:"-" xml:"-"`
 }
 
 type metadataReleaseAddressInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ReleaseAddressInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReleaseAddressInput) GoString() string {
+	return s.String()
+}
+
 type ReleaseAddressOutput struct {
-	metadataReleaseAddressOutput `json:"-", xml:"-"`
+	metadataReleaseAddressOutput `json:"-" xml:"-"`
 }
 
 type metadataReleaseAddressOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ReleaseAddressOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReleaseAddressOutput) GoString() string {
+	return s.String()
 }
 
 type ReplaceNetworkACLAssociationInput struct {
@@ -14748,33 +20046,61 @@ type ReplaceNetworkACLAssociationInput struct {
 	// subnet.
 	AssociationID *string `locationName:"associationId" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the new network ACL to associate with the subnet.
 	NetworkACLID *string `locationName:"networkAclId" type:"string" required:"true"`
 
-	metadataReplaceNetworkACLAssociationInput `json:"-", xml:"-"`
+	metadataReplaceNetworkACLAssociationInput `json:"-" xml:"-"`
 }
 
 type metadataReplaceNetworkACLAssociationInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ReplaceNetworkACLAssociationInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReplaceNetworkACLAssociationInput) GoString() string {
+	return s.String()
+}
+
 type ReplaceNetworkACLAssociationOutput struct {
 	// The ID of the new association.
 	NewAssociationID *string `locationName:"newAssociationId" type:"string"`
 
-	metadataReplaceNetworkACLAssociationOutput `json:"-", xml:"-"`
+	metadataReplaceNetworkACLAssociationOutput `json:"-" xml:"-"`
 }
 
 type metadataReplaceNetworkACLAssociationOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ReplaceNetworkACLAssociationOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReplaceNetworkACLAssociationOutput) GoString() string {
+	return s.String()
+}
+
 type ReplaceNetworkACLEntryInput struct {
 	// The network range to allow or deny, in CIDR notation.
 	CIDRBlock *string `locationName:"cidrBlock" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// Indicates whether to replace the egress rule.
@@ -14802,19 +20128,39 @@ type ReplaceNetworkACLEntryInput struct {
 	// The rule number of the entry to replace.
 	RuleNumber *int64 `locationName:"ruleNumber" type:"integer" required:"true"`
 
-	metadataReplaceNetworkACLEntryInput `json:"-", xml:"-"`
+	metadataReplaceNetworkACLEntryInput `json:"-" xml:"-"`
 }
 
 type metadataReplaceNetworkACLEntryInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ReplaceNetworkACLEntryInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReplaceNetworkACLEntryInput) GoString() string {
+	return s.String()
+}
+
 type ReplaceNetworkACLEntryOutput struct {
-	metadataReplaceNetworkACLEntryOutput `json:"-", xml:"-"`
+	metadataReplaceNetworkACLEntryOutput `json:"-" xml:"-"`
 }
 
 type metadataReplaceNetworkACLEntryOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ReplaceNetworkACLEntryOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReplaceNetworkACLEntryOutput) GoString() string {
+	return s.String()
 }
 
 type ReplaceRouteInput struct {
@@ -14822,6 +20168,10 @@ type ReplaceRouteInput struct {
 	// must match the CIDR of an existing route in the table.
 	DestinationCIDRBlock *string `locationName:"destinationCidrBlock" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of an Internet gateway or virtual private gateway.
@@ -14839,52 +20189,100 @@ type ReplaceRouteInput struct {
 	// The ID of a VPC peering connection.
 	VPCPeeringConnectionID *string `locationName:"vpcPeeringConnectionId" type:"string"`
 
-	metadataReplaceRouteInput `json:"-", xml:"-"`
+	metadataReplaceRouteInput `json:"-" xml:"-"`
 }
 
 type metadataReplaceRouteInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ReplaceRouteInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReplaceRouteInput) GoString() string {
+	return s.String()
+}
+
 type ReplaceRouteOutput struct {
-	metadataReplaceRouteOutput `json:"-", xml:"-"`
+	metadataReplaceRouteOutput `json:"-" xml:"-"`
 }
 
 type metadataReplaceRouteOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ReplaceRouteOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReplaceRouteOutput) GoString() string {
+	return s.String()
+}
+
 type ReplaceRouteTableAssociationInput struct {
 	// The association ID.
 	AssociationID *string `locationName:"associationId" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the new route table to associate with the subnet.
 	RouteTableID *string `locationName:"routeTableId" type:"string" required:"true"`
 
-	metadataReplaceRouteTableAssociationInput `json:"-", xml:"-"`
+	metadataReplaceRouteTableAssociationInput `json:"-" xml:"-"`
 }
 
 type metadataReplaceRouteTableAssociationInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ReplaceRouteTableAssociationInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReplaceRouteTableAssociationInput) GoString() string {
+	return s.String()
+}
+
 type ReplaceRouteTableAssociationOutput struct {
 	// The ID of the new association.
 	NewAssociationID *string `locationName:"newAssociationId" type:"string"`
 
-	metadataReplaceRouteTableAssociationOutput `json:"-", xml:"-"`
+	metadataReplaceRouteTableAssociationOutput `json:"-" xml:"-"`
 }
 
 type metadataReplaceRouteTableAssociationOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ReplaceRouteTableAssociationOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReplaceRouteTableAssociationOutput) GoString() string {
+	return s.String()
+}
+
 type ReportInstanceStatusInput struct {
 	// Descriptive text about the health state of your instance.
 	Description *string `locationName:"description" type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The time at which the reported instance health state ended.
@@ -14923,21 +20321,92 @@ type ReportInstanceStatusInput struct {
 	// The status of all instances listed.
 	Status *string `locationName:"status" type:"string" required:"true"`
 
-	metadataReportInstanceStatusInput `json:"-", xml:"-"`
+	metadataReportInstanceStatusInput `json:"-" xml:"-"`
 }
 
 type metadataReportInstanceStatusInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ReportInstanceStatusInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReportInstanceStatusInput) GoString() string {
+	return s.String()
+}
+
 type ReportInstanceStatusOutput struct {
-	metadataReportInstanceStatusOutput `json:"-", xml:"-"`
+	metadataReportInstanceStatusOutput `json:"-" xml:"-"`
 }
 
 type metadataReportInstanceStatusOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ReportInstanceStatusOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReportInstanceStatusOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for RequestSpotFleet.
+type RequestSpotFleetInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
+	DryRun *bool `locationName:"dryRun" type:"boolean"`
+
+	// The configuration for the Spot fleet request.
+	SpotFleetRequestConfig *SpotFleetRequestConfigData `locationName:"spotFleetRequestConfig" type:"structure" required:"true"`
+
+	metadataRequestSpotFleetInput `json:"-" xml:"-"`
+}
+
+type metadataRequestSpotFleetInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RequestSpotFleetInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RequestSpotFleetInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of RequestSpotFleet.
+type RequestSpotFleetOutput struct {
+	// The ID of the Spot fleet request.
+	SpotFleetRequestID *string `locationName:"spotFleetRequestId" type:"string" required:"true"`
+
+	metadataRequestSpotFleetOutput `json:"-" xml:"-"`
+}
+
+type metadataRequestSpotFleetOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RequestSpotFleetOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RequestSpotFleetOutput) GoString() string {
+	return s.String()
+}
+
+// Contains the parameters for RequestSpotInstances.
 type RequestSpotInstancesInput struct {
 	// The user-specified name for a logical grouping of bids.
 	//
@@ -14960,6 +20429,15 @@ type RequestSpotInstancesInput struct {
 	// Default: Instances are launched in any available Availability Zone.
 	AvailabilityZoneGroup *string `locationName:"availabilityZoneGroup" type:"string"`
 
+	// Unique, case-sensitive identifier that you provide to ensure the idempotency
+	// of the request. For more information, see How to Ensure Idempotency (http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Run_Instance_Idempotency.html)
+	// in the Amazon Elastic Compute Cloud User Guide.
+	ClientToken *string `locationName:"clientToken" type:"string"`
+
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The maximum number of Spot Instances to launch.
@@ -15002,22 +20480,43 @@ type RequestSpotInstancesInput struct {
 	// Default: The request is effective indefinitely.
 	ValidUntil *time.Time `locationName:"validUntil" type:"timestamp" timestampFormat:"iso8601"`
 
-	metadataRequestSpotInstancesInput `json:"-", xml:"-"`
+	metadataRequestSpotInstancesInput `json:"-" xml:"-"`
 }
 
 type metadataRequestSpotInstancesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RequestSpotInstancesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RequestSpotInstancesInput) GoString() string {
+	return s.String()
+}
+
+// Contains the output of RequestSpotInstances.
 type RequestSpotInstancesOutput struct {
 	// One or more Spot Instance requests.
 	SpotInstanceRequests []*SpotInstanceRequest `locationName:"spotInstanceRequestSet" locationNameList:"item" type:"list"`
 
-	metadataRequestSpotInstancesOutput `json:"-", xml:"-"`
+	metadataRequestSpotInstancesOutput `json:"-" xml:"-"`
 }
 
 type metadataRequestSpotInstancesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RequestSpotInstancesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RequestSpotInstancesOutput) GoString() string {
+	return s.String()
 }
 
 // Describes the launch specification for an instance.
@@ -15074,11 +20573,21 @@ type RequestSpotLaunchSpecification struct {
 	// The Base64-encoded MIME user data to make available to the instances.
 	UserData *string `locationName:"userData" type:"string"`
 
-	metadataRequestSpotLaunchSpecification `json:"-", xml:"-"`
+	metadataRequestSpotLaunchSpecification `json:"-" xml:"-"`
 }
 
 type metadataRequestSpotLaunchSpecification struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RequestSpotLaunchSpecification) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RequestSpotLaunchSpecification) GoString() string {
+	return s.String()
 }
 
 // Describes a reservation.
@@ -15099,11 +20608,21 @@ type Reservation struct {
 	// The ID of the reservation.
 	ReservationID *string `locationName:"reservationId" type:"string"`
 
-	metadataReservation `json:"-", xml:"-"`
+	metadataReservation `json:"-" xml:"-"`
 }
 
 type metadataReservation struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Reservation) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Reservation) GoString() string {
+	return s.String()
 }
 
 // Describes the limit price of a Reserved Instance offering.
@@ -15116,11 +20635,21 @@ type ReservedInstanceLimitPrice struct {
 	// only supported currency is USD.
 	CurrencyCode *string `locationName:"currencyCode" type:"string"`
 
-	metadataReservedInstanceLimitPrice `json:"-", xml:"-"`
+	metadataReservedInstanceLimitPrice `json:"-" xml:"-"`
 }
 
 type metadataReservedInstanceLimitPrice struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ReservedInstanceLimitPrice) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReservedInstanceLimitPrice) GoString() string {
+	return s.String()
 }
 
 // Describes a Reserved Instance.
@@ -15153,7 +20682,7 @@ type ReservedInstances struct {
 	// The Reserved Instance offering type.
 	OfferingType *string `locationName:"offeringType" type:"string"`
 
-	// The Reserved Instance description.
+	// The Reserved Instance product platform description.
 	ProductDescription *string `locationName:"productDescription" type:"string"`
 
 	// The recurring charge tag assigned to the resource.
@@ -15174,11 +20703,21 @@ type ReservedInstances struct {
 	// The usage price of the Reserved Instance, per hour.
 	UsagePrice *float64 `locationName:"usagePrice" type:"float"`
 
-	metadataReservedInstances `json:"-", xml:"-"`
+	metadataReservedInstances `json:"-" xml:"-"`
 }
 
 type metadataReservedInstances struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ReservedInstances) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReservedInstances) GoString() string {
+	return s.String()
 }
 
 // Describes the configuration settings for the modified Reserved Instances.
@@ -15196,11 +20735,21 @@ type ReservedInstancesConfiguration struct {
 	// EC2-Classic or EC2-VPC.
 	Platform *string `locationName:"platform" type:"string"`
 
-	metadataReservedInstancesConfiguration `json:"-", xml:"-"`
+	metadataReservedInstancesConfiguration `json:"-" xml:"-"`
 }
 
 type metadataReservedInstancesConfiguration struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ReservedInstancesConfiguration) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReservedInstancesConfiguration) GoString() string {
+	return s.String()
 }
 
 // Describes the ID of a Reserved Instance.
@@ -15208,11 +20757,21 @@ type ReservedInstancesID struct {
 	// The ID of the Reserved Instance.
 	ReservedInstancesID *string `locationName:"reservedInstancesId" type:"string"`
 
-	metadataReservedInstancesID `json:"-", xml:"-"`
+	metadataReservedInstancesID `json:"-" xml:"-"`
 }
 
 type metadataReservedInstancesID struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ReservedInstancesID) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReservedInstancesID) GoString() string {
+	return s.String()
 }
 
 // Describes a Reserved Instance listing.
@@ -15249,11 +20808,21 @@ type ReservedInstancesListing struct {
 	// The last modified timestamp of the listing.
 	UpdateDate *time.Time `locationName:"updateDate" type:"timestamp" timestampFormat:"iso8601"`
 
-	metadataReservedInstancesListing `json:"-", xml:"-"`
+	metadataReservedInstancesListing `json:"-" xml:"-"`
 }
 
 type metadataReservedInstancesListing struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ReservedInstancesListing) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReservedInstancesListing) GoString() string {
+	return s.String()
 }
 
 // Describes a Reserved Instance modification.
@@ -15287,11 +20856,21 @@ type ReservedInstancesModification struct {
 	// The time when the modification request was last updated.
 	UpdateDate *time.Time `locationName:"updateDate" type:"timestamp" timestampFormat:"iso8601"`
 
-	metadataReservedInstancesModification `json:"-", xml:"-"`
+	metadataReservedInstancesModification `json:"-" xml:"-"`
 }
 
 type metadataReservedInstancesModification struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ReservedInstancesModification) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReservedInstancesModification) GoString() string {
+	return s.String()
 }
 
 type ReservedInstancesModificationResult struct {
@@ -15303,11 +20882,21 @@ type ReservedInstancesModificationResult struct {
 	// request.
 	TargetConfiguration *ReservedInstancesConfiguration `locationName:"targetConfiguration" type:"structure"`
 
-	metadataReservedInstancesModificationResult `json:"-", xml:"-"`
+	metadataReservedInstancesModificationResult `json:"-" xml:"-"`
 }
 
 type metadataReservedInstancesModificationResult struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ReservedInstancesModificationResult) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReservedInstancesModificationResult) GoString() string {
+	return s.String()
 }
 
 // Describes a Reserved Instance offering.
@@ -15343,7 +20932,7 @@ type ReservedInstancesOffering struct {
 	// The pricing details of the Reserved Instance offering.
 	PricingDetails []*PricingDetail `locationName:"pricingDetailsSet" locationNameList:"item" type:"list"`
 
-	// The Reserved Instance description.
+	// The Reserved Instance product platform description.
 	ProductDescription *string `locationName:"productDescription" type:"string"`
 
 	// The recurring charge tag assigned to the resource.
@@ -15355,11 +20944,21 @@ type ReservedInstancesOffering struct {
 	// The usage price of the Reserved Instance, per hour.
 	UsagePrice *float64 `locationName:"usagePrice" type:"float"`
 
-	metadataReservedInstancesOffering `json:"-", xml:"-"`
+	metadataReservedInstancesOffering `json:"-" xml:"-"`
 }
 
 type metadataReservedInstancesOffering struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ReservedInstancesOffering) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ReservedInstancesOffering) GoString() string {
+	return s.String()
 }
 
 type ResetImageAttributeInput struct {
@@ -15367,51 +20966,103 @@ type ResetImageAttributeInput struct {
 	// attribute).
 	Attribute *string `type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the AMI.
 	ImageID *string `locationName:"ImageId" type:"string" required:"true"`
 
-	metadataResetImageAttributeInput `json:"-", xml:"-"`
+	metadataResetImageAttributeInput `json:"-" xml:"-"`
 }
 
 type metadataResetImageAttributeInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ResetImageAttributeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ResetImageAttributeInput) GoString() string {
+	return s.String()
+}
+
 type ResetImageAttributeOutput struct {
-	metadataResetImageAttributeOutput `json:"-", xml:"-"`
+	metadataResetImageAttributeOutput `json:"-" xml:"-"`
 }
 
 type metadataResetImageAttributeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ResetImageAttributeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ResetImageAttributeOutput) GoString() string {
+	return s.String()
+}
+
 type ResetInstanceAttributeInput struct {
 	// The attribute to reset.
 	Attribute *string `locationName:"attribute" type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the instance.
 	InstanceID *string `locationName:"instanceId" type:"string" required:"true"`
 
-	metadataResetInstanceAttributeInput `json:"-", xml:"-"`
+	metadataResetInstanceAttributeInput `json:"-" xml:"-"`
 }
 
 type metadataResetInstanceAttributeInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ResetInstanceAttributeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ResetInstanceAttributeInput) GoString() string {
+	return s.String()
+}
+
 type ResetInstanceAttributeOutput struct {
-	metadataResetInstanceAttributeOutput `json:"-", xml:"-"`
+	metadataResetInstanceAttributeOutput `json:"-" xml:"-"`
 }
 
 type metadataResetInstanceAttributeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ResetInstanceAttributeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ResetInstanceAttributeOutput) GoString() string {
+	return s.String()
+}
+
 type ResetNetworkInterfaceAttributeInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the network interface.
@@ -15420,44 +21071,139 @@ type ResetNetworkInterfaceAttributeInput struct {
 	// The source/destination checking attribute. Resets the value to true.
 	SourceDestCheck *string `locationName:"sourceDestCheck" type:"string"`
 
-	metadataResetNetworkInterfaceAttributeInput `json:"-", xml:"-"`
+	metadataResetNetworkInterfaceAttributeInput `json:"-" xml:"-"`
 }
 
 type metadataResetNetworkInterfaceAttributeInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ResetNetworkInterfaceAttributeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ResetNetworkInterfaceAttributeInput) GoString() string {
+	return s.String()
+}
+
 type ResetNetworkInterfaceAttributeOutput struct {
-	metadataResetNetworkInterfaceAttributeOutput `json:"-", xml:"-"`
+	metadataResetNetworkInterfaceAttributeOutput `json:"-" xml:"-"`
 }
 
 type metadataResetNetworkInterfaceAttributeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ResetNetworkInterfaceAttributeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ResetNetworkInterfaceAttributeOutput) GoString() string {
+	return s.String()
+}
+
 type ResetSnapshotAttributeInput struct {
-	// The attribute to reset (currently only the attribute for permission to create
-	// volumes can be reset).
+	// The attribute to reset. Currently, only the attribute for permission to create
+	// volumes can be reset.
 	Attribute *string `type:"string" required:"true"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The ID of the snapshot.
 	SnapshotID *string `locationName:"SnapshotId" type:"string" required:"true"`
 
-	metadataResetSnapshotAttributeInput `json:"-", xml:"-"`
+	metadataResetSnapshotAttributeInput `json:"-" xml:"-"`
 }
 
 type metadataResetSnapshotAttributeInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s ResetSnapshotAttributeInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ResetSnapshotAttributeInput) GoString() string {
+	return s.String()
+}
+
 type ResetSnapshotAttributeOutput struct {
-	metadataResetSnapshotAttributeOutput `json:"-", xml:"-"`
+	metadataResetSnapshotAttributeOutput `json:"-" xml:"-"`
 }
 
 type metadataResetSnapshotAttributeOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ResetSnapshotAttributeOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ResetSnapshotAttributeOutput) GoString() string {
+	return s.String()
+}
+
+type RestoreAddressToClassicInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
+	DryRun *bool `locationName:"dryRun" type:"boolean"`
+
+	// The Elastic IP address.
+	PublicIP *string `locationName:"publicIp" type:"string" required:"true"`
+
+	metadataRestoreAddressToClassicInput `json:"-" xml:"-"`
+}
+
+type metadataRestoreAddressToClassicInput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RestoreAddressToClassicInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RestoreAddressToClassicInput) GoString() string {
+	return s.String()
+}
+
+type RestoreAddressToClassicOutput struct {
+	// The Elastic IP address.
+	PublicIP *string `locationName:"publicIp" type:"string"`
+
+	// The move status for the IP address.
+	Status *string `locationName:"status" type:"string"`
+
+	metadataRestoreAddressToClassicOutput `json:"-" xml:"-"`
+}
+
+type metadataRestoreAddressToClassicOutput struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RestoreAddressToClassicOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RestoreAddressToClassicOutput) GoString() string {
+	return s.String()
 }
 
 type RevokeSecurityGroupEgressInput struct {
@@ -15465,6 +21211,10 @@ type RevokeSecurityGroupEgressInput struct {
 	// a source security group.
 	CIDRIP *string `locationName:"cidrIp" type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The start of port range for the TCP and UDP protocols, or an ICMP type number.
@@ -15494,19 +21244,39 @@ type RevokeSecurityGroupEgressInput struct {
 	// For the ICMP code number, use -1 to specify all ICMP codes for the ICMP type.
 	ToPort *int64 `locationName:"toPort" type:"integer"`
 
-	metadataRevokeSecurityGroupEgressInput `json:"-", xml:"-"`
+	metadataRevokeSecurityGroupEgressInput `json:"-" xml:"-"`
 }
 
 type metadataRevokeSecurityGroupEgressInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RevokeSecurityGroupEgressInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RevokeSecurityGroupEgressInput) GoString() string {
+	return s.String()
+}
+
 type RevokeSecurityGroupEgressOutput struct {
-	metadataRevokeSecurityGroupEgressOutput `json:"-", xml:"-"`
+	metadataRevokeSecurityGroupEgressOutput `json:"-" xml:"-"`
 }
 
 type metadataRevokeSecurityGroupEgressOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RevokeSecurityGroupEgressOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RevokeSecurityGroupEgressOutput) GoString() string {
+	return s.String()
 }
 
 type RevokeSecurityGroupIngressInput struct {
@@ -15514,6 +21284,10 @@ type RevokeSecurityGroupIngressInput struct {
 	// a source security group.
 	CIDRIP *string `locationName:"CidrIp" type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// The start of port range for the TCP and UDP protocols, or an ICMP type number.
@@ -15535,36 +21309,62 @@ type RevokeSecurityGroupIngressInput struct {
 	IPProtocol *string `locationName:"IpProtocol" type:"string"`
 
 	// [EC2-Classic, default VPC] The name of the source security group. You can't
-	// specify a source security group and a CIDR IP address range.
+	// specify this parameter in combination with the following parameters: the
+	// CIDR IP address range, the start of the port range, and the end of the port
+	// range.
 	SourceSecurityGroupName *string `type:"string"`
 
-	// The ID of the source security group. You can't specify a source security
-	// group and a CIDR IP address range.
+	// The ID of the source security group. You can't specify this parameter in
+	// combination with the following parameters: the CIDR IP address range, the
+	// start of the port range, and the end of the port range.
 	SourceSecurityGroupOwnerID *string `locationName:"SourceSecurityGroupOwnerId" type:"string"`
 
 	// The end of port range for the TCP and UDP protocols, or an ICMP code number.
 	// For the ICMP code number, use -1 to specify all ICMP codes for the ICMP type.
 	ToPort *int64 `type:"integer"`
 
-	metadataRevokeSecurityGroupIngressInput `json:"-", xml:"-"`
+	metadataRevokeSecurityGroupIngressInput `json:"-" xml:"-"`
 }
 
 type metadataRevokeSecurityGroupIngressInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RevokeSecurityGroupIngressInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RevokeSecurityGroupIngressInput) GoString() string {
+	return s.String()
+}
+
 type RevokeSecurityGroupIngressOutput struct {
-	metadataRevokeSecurityGroupIngressOutput `json:"-", xml:"-"`
+	metadataRevokeSecurityGroupIngressOutput `json:"-" xml:"-"`
 }
 
 type metadataRevokeSecurityGroupIngressOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s RevokeSecurityGroupIngressOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RevokeSecurityGroupIngressOutput) GoString() string {
+	return s.String()
+}
+
 // Describes a route in a route table.
 type Route struct {
 	// The CIDR block used for the destination match.
 	DestinationCIDRBlock *string `locationName:"destinationCidrBlock" type:"string"`
+
+	// The prefix of the AWS service.
+	DestinationPrefixListID *string `locationName:"destinationPrefixListId" type:"string"`
 
 	// The ID of a gateway attached to your VPC.
 	GatewayID *string `locationName:"gatewayId" type:"string"`
@@ -15594,11 +21394,21 @@ type Route struct {
 	// The ID of the VPC peering connection.
 	VPCPeeringConnectionID *string `locationName:"vpcPeeringConnectionId" type:"string"`
 
-	metadataRoute `json:"-", xml:"-"`
+	metadataRoute `json:"-" xml:"-"`
 }
 
 type metadataRoute struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Route) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Route) GoString() string {
+	return s.String()
 }
 
 // Describes a route table.
@@ -15621,11 +21431,21 @@ type RouteTable struct {
 	// The ID of the VPC.
 	VPCID *string `locationName:"vpcId" type:"string"`
 
-	metadataRouteTable `json:"-", xml:"-"`
+	metadataRouteTable `json:"-" xml:"-"`
 }
 
 type metadataRouteTable struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RouteTable) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RouteTable) GoString() string {
+	return s.String()
 }
 
 // Describes an association between a route table and a subnet.
@@ -15639,14 +21459,24 @@ type RouteTableAssociation struct {
 	// The ID of the route table.
 	RouteTableID *string `locationName:"routeTableId" type:"string"`
 
-	// The ID of the subnet.
+	// The ID of the subnet. A subnet ID is not returned for an implicit association.
 	SubnetID *string `locationName:"subnetId" type:"string"`
 
-	metadataRouteTableAssociation `json:"-", xml:"-"`
+	metadataRouteTableAssociation `json:"-" xml:"-"`
 }
 
 type metadataRouteTableAssociation struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RouteTableAssociation) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RouteTableAssociation) GoString() string {
+	return s.String()
 }
 
 type RunInstancesInput struct {
@@ -15673,13 +21503,17 @@ type RunInstancesInput struct {
 	// Default: false
 	DisableAPITermination *bool `locationName:"disableApiTermination" type:"boolean"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// Indicates whether the instance is optimized for EBS I/O. This optimization
 	// provides dedicated throughput to Amazon EBS and an optimized configuration
-	// stack to provide optimal Amazon EBS I/O performance. This optimization isn't
-	// available with all instance types. Additional usage charges apply when using
-	// an EBS-optimized instance.
+	// stack to provide optimal EBS I/O performance. This optimization isn't available
+	// with all instance types. Additional usage charges apply when using an EBS-optimized
+	// instance.
 	//
 	// Default: false
 	EBSOptimized *bool `locationName:"ebsOptimized" type:"boolean"`
@@ -15712,8 +21546,8 @@ type RunInstancesInput struct {
 	// The name of the key pair. You can create a key pair using CreateKeyPair or
 	// ImportKeyPair.
 	//
-	//  If you launch an instance without specifying a key pair, you can't connect
-	// to the instance.
+	//  If you do not specify a key pair, you can't connect to the instance unless
+	// you choose an AMI that is configured to allow users another way to log in.
 	KeyName *string `type:"string"`
 
 	// The maximum number of instances to launch. If you specify more instances
@@ -15779,11 +21613,21 @@ type RunInstancesInput struct {
 	// The Base64-encoded MIME user data for the instances.
 	UserData *string `type:"string"`
 
-	metadataRunInstancesInput `json:"-", xml:"-"`
+	metadataRunInstancesInput `json:"-" xml:"-"`
 }
 
 type metadataRunInstancesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RunInstancesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RunInstancesInput) GoString() string {
+	return s.String()
 }
 
 // Describes the monitoring for the instance.
@@ -15791,11 +21635,21 @@ type RunInstancesMonitoringEnabled struct {
 	// Indicates whether monitoring is enabled for the instance.
 	Enabled *bool `locationName:"enabled" type:"boolean" required:"true"`
 
-	metadataRunInstancesMonitoringEnabled `json:"-", xml:"-"`
+	metadataRunInstancesMonitoringEnabled `json:"-" xml:"-"`
 }
 
 type metadataRunInstancesMonitoringEnabled struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RunInstancesMonitoringEnabled) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RunInstancesMonitoringEnabled) GoString() string {
+	return s.String()
 }
 
 // Describes the storage parameters for S3 and S3 buckets for an instance store-backed
@@ -15821,11 +21675,21 @@ type S3Storage struct {
 	// The signature of the Base64 encoded JSON document.
 	UploadPolicySignature *string `locationName:"uploadPolicySignature" type:"string"`
 
-	metadataS3Storage `json:"-", xml:"-"`
+	metadataS3Storage `json:"-" xml:"-"`
 }
 
 type metadataS3Storage struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s S3Storage) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s S3Storage) GoString() string {
+	return s.String()
 }
 
 // Describes a security group
@@ -15854,11 +21718,21 @@ type SecurityGroup struct {
 	// [EC2-VPC] The ID of the VPC for the security group.
 	VPCID *string `locationName:"vpcId" type:"string"`
 
-	metadataSecurityGroup `json:"-", xml:"-"`
+	metadataSecurityGroup `json:"-" xml:"-"`
 }
 
 type metadataSecurityGroup struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SecurityGroup) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SecurityGroup) GoString() string {
+	return s.String()
 }
 
 // Describes a snapshot.
@@ -15869,15 +21743,15 @@ type Snapshot struct {
 	// Indicates whether the snapshot is encrypted.
 	Encrypted *bool `locationName:"encrypted" type:"boolean"`
 
-	// The full ARN of the AWS Key Management Service (KMS) master key that was
-	// used to protect the volume encryption key for the parent volume.
+	// The full ARN of the AWS Key Management Service (KMS) Customer Master Key
+	// (CMK) that was used to protect the volume encryption key for the parent volume.
 	KMSKeyID *string `locationName:"kmsKeyId" type:"string"`
 
 	// The AWS account alias (for example, amazon, self) or AWS account ID that
 	// owns the snapshot.
 	OwnerAlias *string `locationName:"ownerAlias" type:"string"`
 
-	// The AWS account ID of the Amazon EBS snapshot owner.
+	// The AWS account ID of the EBS snapshot owner.
 	OwnerID *string `locationName:"ownerId" type:"string"`
 
 	// The progress of the snapshot, as a percentage.
@@ -15901,22 +21775,32 @@ type Snapshot struct {
 	// The size of the volume, in GiB.
 	VolumeSize *int64 `locationName:"volumeSize" type:"integer"`
 
-	metadataSnapshot `json:"-", xml:"-"`
+	metadataSnapshot `json:"-" xml:"-"`
 }
 
 type metadataSnapshot struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The details of the snapshot created from the imported disk.
+// String returns the string representation
+func (s Snapshot) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Snapshot) GoString() string {
+	return s.String()
+}
+
+// Describes the snapshot created from the imported disk.
 type SnapshotDetail struct {
-	// Description for the snapshot.
+	// A description for the snapshot.
 	Description *string `locationName:"description" type:"string"`
 
-	// The Amazon EBS block device mapping for the snapshot.
+	// The block device mapping for the snapshot.
 	DeviceName *string `locationName:"deviceName" type:"string"`
 
-	// The size of the disk in the snapshot.
+	// The size of the disk in the snapshot, in GiB.
 	DiskImageSize *float64 `locationName:"diskImageSize" type:"double"`
 
 	// The format of the disk image from which the snapshot is created.
@@ -15937,36 +21821,58 @@ type SnapshotDetail struct {
 	// The URL used to access the disk image.
 	URL *string `locationName:"url" type:"string"`
 
-	// User's Amazon S3 bucket details used to access the image.
+	// Describes the S3 bucket for the disk image.
 	UserBucket *UserBucketDetails `locationName:"userBucket" type:"structure"`
 
-	metadataSnapshotDetail `json:"-", xml:"-"`
+	metadataSnapshotDetail `json:"-" xml:"-"`
 }
 
 type metadataSnapshotDetail struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// The disk container object for the ImportSnapshot request.
+// String returns the string representation
+func (s SnapshotDetail) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SnapshotDetail) GoString() string {
+	return s.String()
+}
+
+// The disk container object for the import snapshot request.
 type SnapshotDiskContainer struct {
 	// The description of the disk image being imported.
 	Description *string `type:"string"`
 
 	// The format of the disk image being imported.
+	//
+	// Valid values: RAW | VHD | VMDK | OVA
 	Format *string `type:"string"`
 
 	// The URL to the Amazon S3-based disk image being imported. It can either be
 	// a https URL (https://..) or an Amazon S3 URL (s3://..).
 	URL *string `locationName:"Url" type:"string"`
 
-	// User's Amazon S3 bucket details used to access the image.
+	// Describes the S3 bucket for the disk image.
 	UserBucket *UserBucket `type:"structure"`
 
-	metadataSnapshotDiskContainer `json:"-", xml:"-"`
+	metadataSnapshotDiskContainer `json:"-" xml:"-"`
 }
 
 type metadataSnapshotDiskContainer struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SnapshotDiskContainer) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SnapshotDiskContainer) GoString() string {
+	return s.String()
 }
 
 // Details about the import snapshot task.
@@ -15974,35 +21880,45 @@ type SnapshotTaskDetail struct {
 	// The description of the snapshot.
 	Description *string `locationName:"description" type:"string"`
 
-	// The size of the disk in the snapshot.
+	// The size of the disk in the snapshot, in GiB.
 	DiskImageSize *float64 `locationName:"diskImageSize" type:"double"`
 
 	// The format of the disk image from which the snapshot is created.
 	Format *string `locationName:"format" type:"string"`
 
-	// The percentage of completion for the ImportSnapshot task.
+	// The percentage of completion for the import snapshot task.
 	Progress *string `locationName:"progress" type:"string"`
 
 	// The snapshot ID of the disk being imported.
 	SnapshotID *string `locationName:"snapshotId" type:"string"`
 
-	// A brief status for the ImportSnapshot task.
+	// A brief status for the import snapshot task.
 	Status *string `locationName:"status" type:"string"`
 
-	// A detailed status message for the ImportSnapshot task.
+	// A detailed status message for the import snapshot task.
 	StatusMessage *string `locationName:"statusMessage" type:"string"`
 
 	// The URL of the disk image from which the snapshot is created.
 	URL *string `locationName:"url" type:"string"`
 
-	// User's Amazon S3 bucket details used to access the image.
+	// The S3 bucket for the disk image.
 	UserBucket *UserBucketDetails `locationName:"userBucket" type:"structure"`
 
-	metadataSnapshotTaskDetail `json:"-", xml:"-"`
+	metadataSnapshotTaskDetail `json:"-" xml:"-"`
 }
 
 type metadataSnapshotTaskDetail struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SnapshotTaskDetail) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SnapshotTaskDetail) GoString() string {
+	return s.String()
 }
 
 // Describes the data feed for a Spot Instance.
@@ -16022,11 +21938,101 @@ type SpotDatafeedSubscription struct {
 	// The state of the Spot Instance data feed subscription.
 	State *string `locationName:"state" type:"string"`
 
-	metadataSpotDatafeedSubscription `json:"-", xml:"-"`
+	metadataSpotDatafeedSubscription `json:"-" xml:"-"`
 }
 
 type metadataSpotDatafeedSubscription struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SpotDatafeedSubscription) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SpotDatafeedSubscription) GoString() string {
+	return s.String()
+}
+
+// Describes a Spot fleet request.
+type SpotFleetRequestConfig struct {
+	// Information about the configuration of the Spot fleet request.
+	SpotFleetRequestConfig *SpotFleetRequestConfigData `locationName:"spotFleetRequestConfig" type:"structure" required:"true"`
+
+	// The ID of the Spot fleet request.
+	SpotFleetRequestID *string `locationName:"spotFleetRequestId" type:"string" required:"true"`
+
+	// The state of the Spot fleet request.
+	SpotFleetRequestState *string `locationName:"spotFleetRequestState" type:"string" required:"true"`
+
+	metadataSpotFleetRequestConfig `json:"-" xml:"-"`
+}
+
+type metadataSpotFleetRequestConfig struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SpotFleetRequestConfig) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SpotFleetRequestConfig) GoString() string {
+	return s.String()
+}
+
+// Describes the configuration of a Spot fleet request.
+type SpotFleetRequestConfigData struct {
+	// A unique, case-sensitive identifier you provide to ensure idempotency of
+	// your listings. This helps avoid duplicate listings. For more information,
+	// see Ensuring Idempotency (http://docs.aws.amazon.com/AWSEC2/latest/APIReference/Run_Instance_Idempotency.html).
+	ClientToken *string `locationName:"clientToken" type:"string"`
+
+	// Grants the Spot fleet service permission to terminate instances on your behalf
+	// when you cancel a Spot fleet request using CancelSpotFleetRequests or when
+	// the Spot fleet request expires, if you set terminateInstancesWithExpiration.
+	IAMFleetRole *string `locationName:"iamFleetRole" type:"string" required:"true"`
+
+	// Information about the launch specifications for the instances.
+	LaunchSpecifications []*LaunchSpecification `locationName:"launchSpecifications" locationNameList:"item" type:"list" required:"true"`
+
+	// The maximum hourly price (bid) for any Spot Instance launched to fulfill
+	// the request.
+	SpotPrice *string `locationName:"spotPrice" type:"string" required:"true"`
+
+	// The maximum number of Spot Instances to launch.
+	TargetCapacity *int64 `locationName:"targetCapacity" type:"integer" required:"true"`
+
+	// Indicates whether running instances should be terminated when the Spot fleet
+	// request expires.
+	TerminateInstancesWithExpiration *bool `locationName:"terminateInstancesWithExpiration" type:"boolean"`
+
+	// The start date and time of the request, in UTC format (for example, YYYY-MM-DDTHH:MM:SSZ).
+	// The default is to start fulfilling the request immediately.
+	ValidFrom *time.Time `locationName:"validFrom" type:"timestamp" timestampFormat:"iso8601"`
+
+	// The end date and time of the request, in UTC format (for example, YYYY-MM-DDTHH:MM:SSZ).
+	// At this point, no new Spot Instance requests are placed or enabled to fulfill
+	// the request.
+	ValidUntil *time.Time `locationName:"validUntil" type:"timestamp" timestampFormat:"iso8601"`
+
+	metadataSpotFleetRequestConfigData `json:"-" xml:"-"`
+}
+
+type metadataSpotFleetRequestConfigData struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SpotFleetRequestConfigData) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SpotFleetRequestConfigData) GoString() string {
+	return s.String()
 }
 
 // Describe a Spot Instance request.
@@ -16036,7 +22042,8 @@ type SpotInstanceRequest struct {
 	// Availability Zone.
 	AvailabilityZoneGroup *string `locationName:"availabilityZoneGroup" type:"string"`
 
-	// The time stamp when the Spot Instance request was created.
+	// The date and time when the Spot Instance request was created, in UTC format
+	// (for example, YYYY-MM-DDTHH:MM:SSZ).
 	CreateTime *time.Time `locationName:"createTime" type:"timestamp" timestampFormat:"iso8601"`
 
 	// The fault codes for the Spot Instance request, if any.
@@ -16081,24 +22088,34 @@ type SpotInstanceRequest struct {
 	// The Spot Instance request type.
 	Type *string `locationName:"type" type:"string"`
 
-	// The start date of the request. If this is a one-time request, the request
-	// becomes active at this date and time and remains active until all instances
-	// launch, the request expires, or the request is canceled. If the request is
-	// persistent, the request becomes active at this date and time and remains
-	// active until it expires or is canceled.
+	// The start date of the request, in UTC format (for example, YYYY-MM-DDTHH:MM:SSZ).
+	// If this is a one-time request, the request becomes active at this date and
+	// time and remains active until all instances launch, the request expires,
+	// or the request is canceled. If the request is persistent, the request becomes
+	// active at this date and time and remains active until it expires or is canceled.
 	ValidFrom *time.Time `locationName:"validFrom" type:"timestamp" timestampFormat:"iso8601"`
 
-	// The end date of the request. If this is a one-time request, the request remains
-	// active until all instances launch, the request is canceled, or this date
-	// is reached. If the request is persistent, it remains active until it is canceled
-	// or this date is reached.
+	// The end date of the request, in UTC format (for example, YYYY-MM-DDTHH:MM:SSZ).
+	// If this is a one-time request, the request remains active until all instances
+	// launch, the request is canceled, or this date is reached. If the request
+	// is persistent, it remains active until it is canceled or this date is reached.
 	ValidUntil *time.Time `locationName:"validUntil" type:"timestamp" timestampFormat:"iso8601"`
 
-	metadataSpotInstanceRequest `json:"-", xml:"-"`
+	metadataSpotInstanceRequest `json:"-" xml:"-"`
 }
 
 type metadataSpotInstanceRequest struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SpotInstanceRequest) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SpotInstanceRequest) GoString() string {
+	return s.String()
 }
 
 // Describes a Spot Instance state change.
@@ -16109,11 +22126,21 @@ type SpotInstanceStateFault struct {
 	// The message for the Spot Instance state change.
 	Message *string `locationName:"message" type:"string"`
 
-	metadataSpotInstanceStateFault `json:"-", xml:"-"`
+	metadataSpotInstanceStateFault `json:"-" xml:"-"`
 }
 
 type metadataSpotInstanceStateFault struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SpotInstanceStateFault) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SpotInstanceStateFault) GoString() string {
+	return s.String()
 }
 
 // Describes the status of a Spot Instance request.
@@ -16124,14 +22151,25 @@ type SpotInstanceStatus struct {
 	// The description for the status code.
 	Message *string `locationName:"message" type:"string"`
 
-	// The time of the most recent status update.
+	// The date and time of the most recent status update, in UTC format (for example,
+	// YYYY-MM-DDTHH:MM:SSZ).
 	UpdateTime *time.Time `locationName:"updateTime" type:"timestamp" timestampFormat:"iso8601"`
 
-	metadataSpotInstanceStatus `json:"-", xml:"-"`
+	metadataSpotInstanceStatus `json:"-" xml:"-"`
 }
 
 type metadataSpotInstanceStatus struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SpotInstanceStatus) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SpotInstanceStatus) GoString() string {
+	return s.String()
 }
 
 // Describes Spot Instance placement.
@@ -16142,11 +22180,21 @@ type SpotPlacement struct {
 	// The name of the placement group (for cluster instances).
 	GroupName *string `locationName:"groupName" type:"string"`
 
-	metadataSpotPlacement `json:"-", xml:"-"`
+	metadataSpotPlacement `json:"-" xml:"-"`
 }
 
 type metadataSpotPlacement struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s SpotPlacement) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SpotPlacement) GoString() string {
+	return s.String()
 }
 
 // Describes the maximum hourly price (bid) for any Spot Instance launched to
@@ -16164,41 +22212,75 @@ type SpotPrice struct {
 	// The maximum price (bid) that you are willing to pay for a Spot Instance.
 	SpotPrice *string `locationName:"spotPrice" type:"string"`
 
-	// The date and time the request was created.
+	// The date and time the request was created, in UTC format (for example, YYYY-MM-DDTHH:MM:SSZ).
 	Timestamp *time.Time `locationName:"timestamp" type:"timestamp" timestampFormat:"iso8601"`
 
-	metadataSpotPrice `json:"-", xml:"-"`
+	metadataSpotPrice `json:"-" xml:"-"`
 }
 
 type metadataSpotPrice struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s SpotPrice) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s SpotPrice) GoString() string {
+	return s.String()
+}
+
 type StartInstancesInput struct {
 	// Reserved.
 	AdditionalInfo *string `locationName:"additionalInfo" type:"string"`
 
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more instance IDs.
 	InstanceIDs []*string `locationName:"InstanceId" locationNameList:"InstanceId" type:"list" required:"true"`
 
-	metadataStartInstancesInput `json:"-", xml:"-"`
+	metadataStartInstancesInput `json:"-" xml:"-"`
 }
 
 type metadataStartInstancesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s StartInstancesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StartInstancesInput) GoString() string {
+	return s.String()
+}
+
 type StartInstancesOutput struct {
 	// Information about one or more started instances.
 	StartingInstances []*InstanceStateChange `locationName:"instancesSet" locationNameList:"item" type:"list"`
 
-	metadataStartInstancesOutput `json:"-", xml:"-"`
+	metadataStartInstancesOutput `json:"-" xml:"-"`
 }
 
 type metadataStartInstancesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StartInstancesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StartInstancesOutput) GoString() string {
+	return s.String()
 }
 
 // Describes a state change.
@@ -16231,14 +22313,28 @@ type StateReason struct {
 	// Client.InvalidSnapshot.NotFound: The specified snapshot was not found.
 	Message *string `locationName:"message" type:"string"`
 
-	metadataStateReason `json:"-", xml:"-"`
+	metadataStateReason `json:"-" xml:"-"`
 }
 
 type metadataStateReason struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s StateReason) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StateReason) GoString() string {
+	return s.String()
+}
+
 type StopInstancesInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// Forces the instances to stop. The instances do not have an opportunity to
@@ -16252,22 +22348,42 @@ type StopInstancesInput struct {
 	// One or more instance IDs.
 	InstanceIDs []*string `locationName:"InstanceId" locationNameList:"InstanceId" type:"list" required:"true"`
 
-	metadataStopInstancesInput `json:"-", xml:"-"`
+	metadataStopInstancesInput `json:"-" xml:"-"`
 }
 
 type metadataStopInstancesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s StopInstancesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StopInstancesInput) GoString() string {
+	return s.String()
+}
+
 type StopInstancesOutput struct {
 	// Information about one or more stopped instances.
 	StoppingInstances []*InstanceStateChange `locationName:"instancesSet" locationNameList:"item" type:"list"`
 
-	metadataStopInstancesOutput `json:"-", xml:"-"`
+	metadataStopInstancesOutput `json:"-" xml:"-"`
 }
 
 type metadataStopInstancesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s StopInstancesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s StopInstancesOutput) GoString() string {
+	return s.String()
 }
 
 // Describes the storage location for an instance store-backed AMI.
@@ -16275,11 +22391,21 @@ type Storage struct {
 	// An Amazon S3 storage location.
 	S3 *S3Storage `type:"structure"`
 
-	metadataStorage `json:"-", xml:"-"`
+	metadataStorage `json:"-" xml:"-"`
 }
 
 type metadataStorage struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Storage) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Storage) GoString() string {
+	return s.String()
 }
 
 // Describes a subnet.
@@ -16312,11 +22438,21 @@ type Subnet struct {
 	// The ID of the VPC the subnet is in.
 	VPCID *string `locationName:"vpcId" type:"string"`
 
-	metadataSubnet `json:"-", xml:"-"`
+	metadataSubnet `json:"-" xml:"-"`
 }
 
 type metadataSubnet struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Subnet) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Subnet) GoString() string {
+	return s.String()
 }
 
 // Describes a tag.
@@ -16333,11 +22469,21 @@ type Tag struct {
 	// characters.
 	Value *string `locationName:"value" type:"string"`
 
-	metadataTag `json:"-", xml:"-"`
+	metadataTag `json:"-" xml:"-"`
 }
 
 type metadataTag struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Tag) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Tag) GoString() string {
+	return s.String()
 }
 
 // Describes a tag.
@@ -16354,35 +22500,69 @@ type TagDescription struct {
 	// The tag value.
 	Value *string `locationName:"value" type:"string"`
 
-	metadataTagDescription `json:"-", xml:"-"`
+	metadataTagDescription `json:"-" xml:"-"`
 }
 
 type metadataTagDescription struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s TagDescription) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TagDescription) GoString() string {
+	return s.String()
+}
+
 type TerminateInstancesInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more instance IDs.
 	InstanceIDs []*string `locationName:"InstanceId" locationNameList:"InstanceId" type:"list" required:"true"`
 
-	metadataTerminateInstancesInput `json:"-", xml:"-"`
+	metadataTerminateInstancesInput `json:"-" xml:"-"`
 }
 
 type metadataTerminateInstancesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s TerminateInstancesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TerminateInstancesInput) GoString() string {
+	return s.String()
+}
+
 type TerminateInstancesOutput struct {
 	// Information about one or more terminated instances.
 	TerminatingInstances []*InstanceStateChange `locationName:"instancesSet" locationNameList:"item" type:"list"`
 
-	metadataTerminateInstancesOutput `json:"-", xml:"-"`
+	metadataTerminateInstancesOutput `json:"-" xml:"-"`
 }
 
 type metadataTerminateInstancesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s TerminateInstancesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s TerminateInstancesOutput) GoString() string {
+	return s.String()
 }
 
 type UnassignPrivateIPAddressesInput struct {
@@ -16393,83 +22573,210 @@ type UnassignPrivateIPAddressesInput struct {
 	// You can specify this option multiple times to unassign more than one IP address.
 	PrivateIPAddresses []*string `locationName:"privateIpAddress" locationNameList:"PrivateIpAddress" type:"list" required:"true"`
 
-	metadataUnassignPrivateIPAddressesInput `json:"-", xml:"-"`
+	metadataUnassignPrivateIPAddressesInput `json:"-" xml:"-"`
 }
 
 type metadataUnassignPrivateIPAddressesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s UnassignPrivateIPAddressesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UnassignPrivateIPAddressesInput) GoString() string {
+	return s.String()
+}
+
 type UnassignPrivateIPAddressesOutput struct {
-	metadataUnassignPrivateIPAddressesOutput `json:"-", xml:"-"`
+	metadataUnassignPrivateIPAddressesOutput `json:"-" xml:"-"`
 }
 
 type metadataUnassignPrivateIPAddressesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s UnassignPrivateIPAddressesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UnassignPrivateIPAddressesOutput) GoString() string {
+	return s.String()
+}
+
 type UnmonitorInstancesInput struct {
+	// Checks whether you have the required permissions for the action, without
+	// actually making the request, and provides an error response. If you have
+	// the required permissions, the error response is DryRunOperation. Otherwise,
+	// it is UnauthorizedOperation.
 	DryRun *bool `locationName:"dryRun" type:"boolean"`
 
 	// One or more instance IDs.
 	InstanceIDs []*string `locationName:"InstanceId" locationNameList:"InstanceId" type:"list" required:"true"`
 
-	metadataUnmonitorInstancesInput `json:"-", xml:"-"`
+	metadataUnmonitorInstancesInput `json:"-" xml:"-"`
 }
 
 type metadataUnmonitorInstancesInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s UnmonitorInstancesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UnmonitorInstancesInput) GoString() string {
+	return s.String()
+}
+
 type UnmonitorInstancesOutput struct {
 	// Monitoring information for one or more instances.
 	InstanceMonitorings []*InstanceMonitoring `locationName:"instancesSet" locationNameList:"item" type:"list"`
 
-	metadataUnmonitorInstancesOutput `json:"-", xml:"-"`
+	metadataUnmonitorInstancesOutput `json:"-" xml:"-"`
 }
 
 type metadataUnmonitorInstancesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// User's Amazon S3 bucket details used to access the image.
+// String returns the string representation
+func (s UnmonitorInstancesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UnmonitorInstancesOutput) GoString() string {
+	return s.String()
+}
+
+// Information about items that were not successfully processed in a batch call.
+type UnsuccessfulItem struct {
+	// Information about the error.
+	Error *UnsuccessfulItemError `locationName:"error" type:"structure" required:"true"`
+
+	// The ID of the resource.
+	ResourceID *string `locationName:"resourceId" type:"string"`
+
+	metadataUnsuccessfulItem `json:"-" xml:"-"`
+}
+
+type metadataUnsuccessfulItem struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UnsuccessfulItem) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UnsuccessfulItem) GoString() string {
+	return s.String()
+}
+
+// Information about the error that occured. For more information about errors,
+// see Error Codes (http://docs.aws.amazon.com/AWSEC2/latest/APIReference/errors-overview.html).
+type UnsuccessfulItemError struct {
+	// The error code.
+	Code *string `locationName:"code" type:"string" required:"true"`
+
+	// The error message accompanying the error code.
+	Message *string `locationName:"message" type:"string" required:"true"`
+
+	metadataUnsuccessfulItemError `json:"-" xml:"-"`
+}
+
+type metadataUnsuccessfulItemError struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UnsuccessfulItemError) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UnsuccessfulItemError) GoString() string {
+	return s.String()
+}
+
+// Describes the S3 bucket for the disk image.
 type UserBucket struct {
-	// The Amazon S3 bucket name where the disk image is located.
+	// The name of the S3 bucket where the disk image is located.
 	S3Bucket *string `type:"string"`
 
-	// The Amazon S3 Key for the disk image.
+	// The key for the disk image.
 	S3Key *string `type:"string"`
 
-	metadataUserBucket `json:"-", xml:"-"`
+	metadataUserBucket `json:"-" xml:"-"`
 }
 
 type metadataUserBucket struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// User's Amazon S3 bucket details used to access the image.
+// String returns the string representation
+func (s UserBucket) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UserBucket) GoString() string {
+	return s.String()
+}
+
+// Describes the S3 bucket for the disk image.
 type UserBucketDetails struct {
-	// The Amazon S3 bucket from which the disk image was created.
+	// The S3 bucket from which the disk image was created.
 	S3Bucket *string `locationName:"s3Bucket" type:"string"`
 
-	// The Amazon S3 key from which the disk image was created.
+	// The key from which the disk image was created.
 	S3Key *string `locationName:"s3Key" type:"string"`
 
-	metadataUserBucketDetails `json:"-", xml:"-"`
+	metadataUserBucketDetails `json:"-" xml:"-"`
 }
 
 type metadataUserBucketDetails struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s UserBucketDetails) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UserBucketDetails) GoString() string {
+	return s.String()
+}
+
+// Describes the user data to be made available to an instance.
 type UserData struct {
+	// The Base64-encoded MIME user data for the instance.
 	Data *string `locationName:"data" type:"string"`
 
-	metadataUserData `json:"-", xml:"-"`
+	metadataUserData `json:"-" xml:"-"`
 }
 
 type metadataUserData struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UserData) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UserData) GoString() string {
+	return s.String()
 }
 
 // Describes a security group and AWS account ID pair.
@@ -16485,11 +22792,21 @@ type UserIDGroupPair struct {
 	// The ID of an AWS account. EC2-Classic only.
 	UserID *string `locationName:"userId" type:"string"`
 
-	metadataUserIDGroupPair `json:"-", xml:"-"`
+	metadataUserIDGroupPair `json:"-" xml:"-"`
 }
 
 type metadataUserIDGroupPair struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s UserIDGroupPair) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s UserIDGroupPair) GoString() string {
+	return s.String()
 }
 
 // Describes telemetry for a VPN tunnel.
@@ -16510,11 +22827,21 @@ type VGWTelemetry struct {
 	// If an error occurs, a description of the error.
 	StatusMessage *string `locationName:"statusMessage" type:"string"`
 
-	metadataVGWTelemetry `json:"-", xml:"-"`
+	metadataVGWTelemetry `json:"-" xml:"-"`
 }
 
 type metadataVGWTelemetry struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VGWTelemetry) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VGWTelemetry) GoString() string {
+	return s.String()
 }
 
 // Describes a VPC.
@@ -16541,11 +22868,21 @@ type VPC struct {
 	// The ID of the VPC.
 	VPCID *string `locationName:"vpcId" type:"string"`
 
-	metadataVPC `json:"-", xml:"-"`
+	metadataVPC `json:"-" xml:"-"`
 }
 
 type metadataVPC struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VPC) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VPC) GoString() string {
+	return s.String()
 }
 
 // Describes an attachment between a virtual private gateway and a VPC.
@@ -16556,11 +22893,21 @@ type VPCAttachment struct {
 	// The ID of the VPC.
 	VPCID *string `locationName:"vpcId" type:"string"`
 
-	metadataVPCAttachment `json:"-", xml:"-"`
+	metadataVPCAttachment `json:"-" xml:"-"`
 }
 
 type metadataVPCAttachment struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VPCAttachment) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VPCAttachment) GoString() string {
+	return s.String()
 }
 
 // Describes whether a VPC is enabled for ClassicLink.
@@ -16574,11 +22921,61 @@ type VPCClassicLink struct {
 	// The ID of the VPC.
 	VPCID *string `locationName:"vpcId" type:"string"`
 
-	metadataVPCClassicLink `json:"-", xml:"-"`
+	metadataVPCClassicLink `json:"-" xml:"-"`
 }
 
 type metadataVPCClassicLink struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VPCClassicLink) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VPCClassicLink) GoString() string {
+	return s.String()
+}
+
+// Describes a VPC endpoint.
+type VPCEndpoint struct {
+	// The date and time the VPC endpoint was created.
+	CreationTimestamp *time.Time `locationName:"creationTimestamp" type:"timestamp" timestampFormat:"iso8601"`
+
+	// The policy document associated with the endpoint.
+	PolicyDocument *string `locationName:"policyDocument" type:"string"`
+
+	// One or more route tables associated with the endpoint.
+	RouteTableIDs []*string `locationName:"routeTableIdSet" locationNameList:"item" type:"list"`
+
+	// The name of the AWS service to which the endpoint is associated.
+	ServiceName *string `locationName:"serviceName" type:"string"`
+
+	// The state of the VPC endpoint.
+	State *string `locationName:"state" type:"string"`
+
+	// The ID of the VPC endpoint.
+	VPCEndpointID *string `locationName:"vpcEndpointId" type:"string"`
+
+	// The ID of the VPC to which the endpoint is associated.
+	VPCID *string `locationName:"vpcId" type:"string"`
+
+	metadataVPCEndpoint `json:"-" xml:"-"`
+}
+
+type metadataVPCEndpoint struct {
+	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VPCEndpoint) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VPCEndpoint) GoString() string {
+	return s.String()
 }
 
 // Describes a VPC peering connection.
@@ -16601,11 +22998,21 @@ type VPCPeeringConnection struct {
 	// The ID of the VPC peering connection.
 	VPCPeeringConnectionID *string `locationName:"vpcPeeringConnectionId" type:"string"`
 
-	metadataVPCPeeringConnection `json:"-", xml:"-"`
+	metadataVPCPeeringConnection `json:"-" xml:"-"`
 }
 
 type metadataVPCPeeringConnection struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VPCPeeringConnection) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VPCPeeringConnection) GoString() string {
+	return s.String()
 }
 
 // Describes the status of a VPC peering connection.
@@ -16616,11 +23023,21 @@ type VPCPeeringConnectionStateReason struct {
 	// A message that provides more information about the status, if applicable.
 	Message *string `locationName:"message" type:"string"`
 
-	metadataVPCPeeringConnectionStateReason `json:"-", xml:"-"`
+	metadataVPCPeeringConnectionStateReason `json:"-" xml:"-"`
 }
 
 type metadataVPCPeeringConnectionStateReason struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VPCPeeringConnectionStateReason) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VPCPeeringConnectionStateReason) GoString() string {
+	return s.String()
 }
 
 // Describes a VPC in a VPC peering connection.
@@ -16634,11 +23051,21 @@ type VPCPeeringConnectionVPCInfo struct {
 	// The ID of the VPC.
 	VPCID *string `locationName:"vpcId" type:"string"`
 
-	metadataVPCPeeringConnectionVPCInfo `json:"-", xml:"-"`
+	metadataVPCPeeringConnectionVPCInfo `json:"-" xml:"-"`
 }
 
 type metadataVPCPeeringConnectionVPCInfo struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VPCPeeringConnectionVPCInfo) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VPCPeeringConnectionVPCInfo) GoString() string {
+	return s.String()
 }
 
 // Describes a VPN connection.
@@ -16676,11 +23103,21 @@ type VPNConnection struct {
 	// The ID of the virtual private gateway at the AWS side of the VPN connection.
 	VPNGatewayID *string `locationName:"vpnGatewayId" type:"string"`
 
-	metadataVPNConnection `json:"-", xml:"-"`
+	metadataVPNConnection `json:"-" xml:"-"`
 }
 
 type metadataVPNConnection struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VPNConnection) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VPNConnection) GoString() string {
+	return s.String()
 }
 
 // Describes VPN connection options.
@@ -16689,11 +23126,21 @@ type VPNConnectionOptions struct {
 	// must be used for devices that don't support BGP.
 	StaticRoutesOnly *bool `locationName:"staticRoutesOnly" type:"boolean"`
 
-	metadataVPNConnectionOptions `json:"-", xml:"-"`
+	metadataVPNConnectionOptions `json:"-" xml:"-"`
 }
 
 type metadataVPNConnectionOptions struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VPNConnectionOptions) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VPNConnectionOptions) GoString() string {
+	return s.String()
 }
 
 // Describes VPN connection options.
@@ -16702,11 +23149,21 @@ type VPNConnectionOptionsSpecification struct {
 	// must be used for devices that don't support BGP.
 	StaticRoutesOnly *bool `locationName:"staticRoutesOnly" type:"boolean"`
 
-	metadataVPNConnectionOptionsSpecification `json:"-", xml:"-"`
+	metadataVPNConnectionOptionsSpecification `json:"-" xml:"-"`
 }
 
 type metadataVPNConnectionOptionsSpecification struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VPNConnectionOptionsSpecification) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VPNConnectionOptionsSpecification) GoString() string {
+	return s.String()
 }
 
 // Describes a virtual private gateway.
@@ -16729,11 +23186,21 @@ type VPNGateway struct {
 	// The ID of the virtual private gateway.
 	VPNGatewayID *string `locationName:"vpnGatewayId" type:"string"`
 
-	metadataVPNGateway `json:"-", xml:"-"`
+	metadataVPNGateway `json:"-" xml:"-"`
 }
 
 type metadataVPNGateway struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VPNGateway) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VPNGateway) GoString() string {
+	return s.String()
 }
 
 // Describes a static route for a VPN connection.
@@ -16747,15 +23214,26 @@ type VPNStaticRoute struct {
 	// The current state of the static route.
 	State *string `locationName:"state" type:"string"`
 
-	metadataVPNStaticRoute `json:"-", xml:"-"`
+	metadataVPNStaticRoute `json:"-" xml:"-"`
 }
 
 type metadataVPNStaticRoute struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s VPNStaticRoute) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VPNStaticRoute) GoString() string {
+	return s.String()
+}
+
 // Describes a volume.
 type Volume struct {
+	// Information about the volume attachments.
 	Attachments []*VolumeAttachment `locationName:"attachmentSet" locationNameList:"item" type:"list"`
 
 	// The Availability Zone for the volume.
@@ -16782,8 +23260,8 @@ type Volume struct {
 	// it is not used in requests to create standard or gp2 volumes.
 	IOPS *int64 `locationName:"iops" type:"integer"`
 
-	// The full ARN of the AWS Key Management Service (KMS) master key that was
-	// used to protect the volume encryption key for the volume.
+	// The full ARN of the AWS Key Management Service (KMS) Customer Master Key
+	// (CMK) that was used to protect the volume encryption key for the volume.
 	KMSKeyID *string `locationName:"kmsKeyId" type:"string"`
 
 	// The size of the volume, in GiBs.
@@ -16805,11 +23283,21 @@ type Volume struct {
 	// Provisioned IOPS (SSD) volumes, or standard for Magnetic volumes.
 	VolumeType *string `locationName:"volumeType" type:"string"`
 
-	metadataVolume `json:"-", xml:"-"`
+	metadataVolume `json:"-" xml:"-"`
 }
 
 type metadataVolume struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Volume) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Volume) GoString() string {
+	return s.String()
 }
 
 // Describes volume attachment details.
@@ -16817,7 +23305,7 @@ type VolumeAttachment struct {
 	// The time stamp when the attachment initiated.
 	AttachTime *time.Time `locationName:"attachTime" type:"timestamp" timestampFormat:"iso8601"`
 
-	// Indicates whether the Amazon EBS volume is deleted on instance termination.
+	// Indicates whether the EBS volume is deleted on instance termination.
 	DeleteOnTermination *bool `locationName:"deleteOnTermination" type:"boolean"`
 
 	// The device name.
@@ -16832,23 +23320,43 @@ type VolumeAttachment struct {
 	// The ID of the volume.
 	VolumeID *string `locationName:"volumeId" type:"string"`
 
-	metadataVolumeAttachment `json:"-", xml:"-"`
+	metadataVolumeAttachment `json:"-" xml:"-"`
 }
 
 type metadataVolumeAttachment struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
-// Describes an Amazon EBS volume.
+// String returns the string representation
+func (s VolumeAttachment) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VolumeAttachment) GoString() string {
+	return s.String()
+}
+
+// Describes an EBS volume.
 type VolumeDetail struct {
 	// The size of the volume, in GiB.
 	Size *int64 `locationName:"size" type:"long" required:"true"`
 
-	metadataVolumeDetail `json:"-", xml:"-"`
+	metadataVolumeDetail `json:"-" xml:"-"`
 }
 
 type metadataVolumeDetail struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VolumeDetail) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VolumeDetail) GoString() string {
+	return s.String()
 }
 
 // Describes a volume status operation code.
@@ -16865,11 +23373,21 @@ type VolumeStatusAction struct {
 	// The event type associated with this operation.
 	EventType *string `locationName:"eventType" type:"string"`
 
-	metadataVolumeStatusAction `json:"-", xml:"-"`
+	metadataVolumeStatusAction `json:"-" xml:"-"`
 }
 
 type metadataVolumeStatusAction struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VolumeStatusAction) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VolumeStatusAction) GoString() string {
+	return s.String()
 }
 
 // Describes a volume status.
@@ -16880,11 +23398,21 @@ type VolumeStatusDetails struct {
 	// The intended status of the volume status.
 	Status *string `locationName:"status" type:"string"`
 
-	metadataVolumeStatusDetails `json:"-", xml:"-"`
+	metadataVolumeStatusDetails `json:"-" xml:"-"`
 }
 
 type metadataVolumeStatusDetails struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VolumeStatusDetails) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VolumeStatusDetails) GoString() string {
+	return s.String()
 }
 
 // Describes a volume status event.
@@ -16904,11 +23432,21 @@ type VolumeStatusEvent struct {
 	// The earliest start time of the event.
 	NotBefore *time.Time `locationName:"notBefore" type:"timestamp" timestampFormat:"iso8601"`
 
-	metadataVolumeStatusEvent `json:"-", xml:"-"`
+	metadataVolumeStatusEvent `json:"-" xml:"-"`
 }
 
 type metadataVolumeStatusEvent struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VolumeStatusEvent) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VolumeStatusEvent) GoString() string {
+	return s.String()
 }
 
 // Describes the status of a volume.
@@ -16919,11 +23457,21 @@ type VolumeStatusInfo struct {
 	// The status of the volume.
 	Status *string `locationName:"status" type:"string"`
 
-	metadataVolumeStatusInfo `json:"-", xml:"-"`
+	metadataVolumeStatusInfo `json:"-" xml:"-"`
 }
 
 type metadataVolumeStatusInfo struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VolumeStatusInfo) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VolumeStatusInfo) GoString() string {
+	return s.String()
 }
 
 // Describes the volume status.
@@ -16943,9 +23491,19 @@ type VolumeStatusItem struct {
 	// The volume status.
 	VolumeStatus *VolumeStatusInfo `locationName:"volumeStatus" type:"structure"`
 
-	metadataVolumeStatusItem `json:"-", xml:"-"`
+	metadataVolumeStatusItem `json:"-" xml:"-"`
 }
 
 type metadataVolumeStatusItem struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VolumeStatusItem) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VolumeStatusItem) GoString() string {
+	return s.String()
 }

@@ -4,8 +4,8 @@ import (
 	"encoding/hex"
 	"reflect"
 
-	"github.com/awslabs/aws-sdk-go/aws"
-	"github.com/awslabs/aws-sdk-go/aws/awsutil"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
 var (
@@ -31,7 +31,7 @@ func addAccountID(r *aws.Request) {
 	}
 
 	v := reflect.Indirect(reflect.ValueOf(r.Params))
-	if f := v.FieldByName("AccountID"); f.Elem().String() == "" {
+	if f := v.FieldByName("AccountID"); f.IsNil() {
 		f.Set(reflect.ValueOf(&defaultAccountID))
 	}
 }

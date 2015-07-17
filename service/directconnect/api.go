@@ -4,31 +4,25 @@
 package directconnect
 
 import (
-	"sync"
-
-	"github.com/awslabs/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/awsutil"
 )
 
-var oprw sync.Mutex
+const opAllocateConnectionOnInterconnect = "AllocateConnectionOnInterconnect"
 
 // AllocateConnectionOnInterconnectRequest generates a request for the AllocateConnectionOnInterconnect operation.
 func (c *DirectConnect) AllocateConnectionOnInterconnectRequest(input *AllocateConnectionOnInterconnectInput) (req *aws.Request, output *Connection) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAllocateConnectionOnInterconnect == nil {
-		opAllocateConnectionOnInterconnect = &aws.Operation{
-			Name:       "AllocateConnectionOnInterconnect",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAllocateConnectionOnInterconnect,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AllocateConnectionOnInterconnectInput{}
 	}
 
-	req = c.newRequest(opAllocateConnectionOnInterconnect, input, output)
+	req = c.newRequest(op, input, output)
 	output = &Connection{}
 	req.Data = output
 	return
@@ -38,33 +32,27 @@ func (c *DirectConnect) AllocateConnectionOnInterconnectRequest(input *AllocateC
 //
 // Allocates a VLAN number and a specified amount of bandwidth for use by a
 // hosted connection on the given interconnect.
-func (c *DirectConnect) AllocateConnectionOnInterconnect(input *AllocateConnectionOnInterconnectInput) (output *Connection, err error) {
+func (c *DirectConnect) AllocateConnectionOnInterconnect(input *AllocateConnectionOnInterconnectInput) (*Connection, error) {
 	req, out := c.AllocateConnectionOnInterconnectRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAllocateConnectionOnInterconnect *aws.Operation
+const opAllocatePrivateVirtualInterface = "AllocatePrivateVirtualInterface"
 
 // AllocatePrivateVirtualInterfaceRequest generates a request for the AllocatePrivateVirtualInterface operation.
 func (c *DirectConnect) AllocatePrivateVirtualInterfaceRequest(input *AllocatePrivateVirtualInterfaceInput) (req *aws.Request, output *VirtualInterface) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAllocatePrivateVirtualInterface == nil {
-		opAllocatePrivateVirtualInterface = &aws.Operation{
-			Name:       "AllocatePrivateVirtualInterface",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAllocatePrivateVirtualInterface,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AllocatePrivateVirtualInterfaceInput{}
 	}
 
-	req = c.newRequest(opAllocatePrivateVirtualInterface, input, output)
+	req = c.newRequest(op, input, output)
 	output = &VirtualInterface{}
 	req.Data = output
 	return
@@ -79,33 +67,27 @@ func (c *DirectConnect) AllocatePrivateVirtualInterfaceRequest(input *AllocatePr
 // virtual interface owner by calling ConfirmPrivateVirtualInterface. Until
 // this step has been completed, the virtual interface will be in 'Confirming'
 // state, and will not be available for handling traffic.
-func (c *DirectConnect) AllocatePrivateVirtualInterface(input *AllocatePrivateVirtualInterfaceInput) (output *VirtualInterface, err error) {
+func (c *DirectConnect) AllocatePrivateVirtualInterface(input *AllocatePrivateVirtualInterfaceInput) (*VirtualInterface, error) {
 	req, out := c.AllocatePrivateVirtualInterfaceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAllocatePrivateVirtualInterface *aws.Operation
+const opAllocatePublicVirtualInterface = "AllocatePublicVirtualInterface"
 
 // AllocatePublicVirtualInterfaceRequest generates a request for the AllocatePublicVirtualInterface operation.
 func (c *DirectConnect) AllocatePublicVirtualInterfaceRequest(input *AllocatePublicVirtualInterfaceInput) (req *aws.Request, output *VirtualInterface) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opAllocatePublicVirtualInterface == nil {
-		opAllocatePublicVirtualInterface = &aws.Operation{
-			Name:       "AllocatePublicVirtualInterface",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opAllocatePublicVirtualInterface,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &AllocatePublicVirtualInterfaceInput{}
 	}
 
-	req = c.newRequest(opAllocatePublicVirtualInterface, input, output)
+	req = c.newRequest(op, input, output)
 	output = &VirtualInterface{}
 	req.Data = output
 	return
@@ -120,33 +102,27 @@ func (c *DirectConnect) AllocatePublicVirtualInterfaceRequest(input *AllocatePub
 // virtual interface owner by calling ConfirmPublicVirtualInterface. Until this
 // step has been completed, the virtual interface will be in 'Confirming' state,
 // and will not be available for handling traffic.
-func (c *DirectConnect) AllocatePublicVirtualInterface(input *AllocatePublicVirtualInterfaceInput) (output *VirtualInterface, err error) {
+func (c *DirectConnect) AllocatePublicVirtualInterface(input *AllocatePublicVirtualInterfaceInput) (*VirtualInterface, error) {
 	req, out := c.AllocatePublicVirtualInterfaceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opAllocatePublicVirtualInterface *aws.Operation
+const opConfirmConnection = "ConfirmConnection"
 
 // ConfirmConnectionRequest generates a request for the ConfirmConnection operation.
 func (c *DirectConnect) ConfirmConnectionRequest(input *ConfirmConnectionInput) (req *aws.Request, output *ConfirmConnectionOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opConfirmConnection == nil {
-		opConfirmConnection = &aws.Operation{
-			Name:       "ConfirmConnection",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opConfirmConnection,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ConfirmConnectionInput{}
 	}
 
-	req = c.newRequest(opConfirmConnection, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ConfirmConnectionOutput{}
 	req.Data = output
 	return
@@ -157,33 +133,27 @@ func (c *DirectConnect) ConfirmConnectionRequest(input *ConfirmConnectionInput) 
 // Upon creation, the hosted connection is initially in the 'Ordering' state,
 // and will remain in this state until the owner calls ConfirmConnection to
 // confirm creation of the hosted connection.
-func (c *DirectConnect) ConfirmConnection(input *ConfirmConnectionInput) (output *ConfirmConnectionOutput, err error) {
+func (c *DirectConnect) ConfirmConnection(input *ConfirmConnectionInput) (*ConfirmConnectionOutput, error) {
 	req, out := c.ConfirmConnectionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opConfirmConnection *aws.Operation
+const opConfirmPrivateVirtualInterface = "ConfirmPrivateVirtualInterface"
 
 // ConfirmPrivateVirtualInterfaceRequest generates a request for the ConfirmPrivateVirtualInterface operation.
 func (c *DirectConnect) ConfirmPrivateVirtualInterfaceRequest(input *ConfirmPrivateVirtualInterfaceInput) (req *aws.Request, output *ConfirmPrivateVirtualInterfaceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opConfirmPrivateVirtualInterface == nil {
-		opConfirmPrivateVirtualInterface = &aws.Operation{
-			Name:       "ConfirmPrivateVirtualInterface",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opConfirmPrivateVirtualInterface,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ConfirmPrivateVirtualInterfaceInput{}
 	}
 
-	req = c.newRequest(opConfirmPrivateVirtualInterface, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ConfirmPrivateVirtualInterfaceOutput{}
 	req.Data = output
 	return
@@ -194,33 +164,27 @@ func (c *DirectConnect) ConfirmPrivateVirtualInterfaceRequest(input *ConfirmPriv
 // After the virtual interface owner calls this function, the virtual interface
 // will be created and attached to the given virtual private gateway, and will
 // be available for handling traffic.
-func (c *DirectConnect) ConfirmPrivateVirtualInterface(input *ConfirmPrivateVirtualInterfaceInput) (output *ConfirmPrivateVirtualInterfaceOutput, err error) {
+func (c *DirectConnect) ConfirmPrivateVirtualInterface(input *ConfirmPrivateVirtualInterfaceInput) (*ConfirmPrivateVirtualInterfaceOutput, error) {
 	req, out := c.ConfirmPrivateVirtualInterfaceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opConfirmPrivateVirtualInterface *aws.Operation
+const opConfirmPublicVirtualInterface = "ConfirmPublicVirtualInterface"
 
 // ConfirmPublicVirtualInterfaceRequest generates a request for the ConfirmPublicVirtualInterface operation.
 func (c *DirectConnect) ConfirmPublicVirtualInterfaceRequest(input *ConfirmPublicVirtualInterfaceInput) (req *aws.Request, output *ConfirmPublicVirtualInterfaceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opConfirmPublicVirtualInterface == nil {
-		opConfirmPublicVirtualInterface = &aws.Operation{
-			Name:       "ConfirmPublicVirtualInterface",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opConfirmPublicVirtualInterface,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &ConfirmPublicVirtualInterfaceInput{}
 	}
 
-	req = c.newRequest(opConfirmPublicVirtualInterface, input, output)
+	req = c.newRequest(op, input, output)
 	output = &ConfirmPublicVirtualInterfaceOutput{}
 	req.Data = output
 	return
@@ -230,33 +194,27 @@ func (c *DirectConnect) ConfirmPublicVirtualInterfaceRequest(input *ConfirmPubli
 //
 // After the virtual interface owner calls this function, the specified virtual
 // interface will be created and made available for handling traffic.
-func (c *DirectConnect) ConfirmPublicVirtualInterface(input *ConfirmPublicVirtualInterfaceInput) (output *ConfirmPublicVirtualInterfaceOutput, err error) {
+func (c *DirectConnect) ConfirmPublicVirtualInterface(input *ConfirmPublicVirtualInterfaceInput) (*ConfirmPublicVirtualInterfaceOutput, error) {
 	req, out := c.ConfirmPublicVirtualInterfaceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opConfirmPublicVirtualInterface *aws.Operation
+const opCreateConnection = "CreateConnection"
 
 // CreateConnectionRequest generates a request for the CreateConnection operation.
 func (c *DirectConnect) CreateConnectionRequest(input *CreateConnectionInput) (req *aws.Request, output *Connection) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateConnection == nil {
-		opCreateConnection = &aws.Operation{
-			Name:       "CreateConnection",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateConnection,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateConnectionInput{}
 	}
 
-	req = c.newRequest(opCreateConnection, input, output)
+	req = c.newRequest(op, input, output)
 	output = &Connection{}
 	req.Data = output
 	return
@@ -272,33 +230,27 @@ func (c *DirectConnect) CreateConnectionRequest(input *CreateConnectionInput) (r
 // in the region it is associated with. You can establish connections with AWS
 // Direct Connect locations in multiple regions, but a connection in one region
 // does not provide connectivity to other regions.
-func (c *DirectConnect) CreateConnection(input *CreateConnectionInput) (output *Connection, err error) {
+func (c *DirectConnect) CreateConnection(input *CreateConnectionInput) (*Connection, error) {
 	req, out := c.CreateConnectionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateConnection *aws.Operation
+const opCreateInterconnect = "CreateInterconnect"
 
 // CreateInterconnectRequest generates a request for the CreateInterconnect operation.
 func (c *DirectConnect) CreateInterconnectRequest(input *CreateInterconnectInput) (req *aws.Request, output *Interconnect) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreateInterconnect == nil {
-		opCreateInterconnect = &aws.Operation{
-			Name:       "CreateInterconnect",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreateInterconnect,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreateInterconnectInput{}
 	}
 
-	req = c.newRequest(opCreateInterconnect, input, output)
+	req = c.newRequest(op, input, output)
 	output = &Interconnect{}
 	req.Data = output
 	return
@@ -320,33 +272,27 @@ func (c *DirectConnect) CreateInterconnectRequest(input *CreateInterconnectInput
 // customer can then connect to AWS resources by creating a virtual interface
 // on their connection, using the VLAN assigned to them by the AWS Direct Connect
 // partner.
-func (c *DirectConnect) CreateInterconnect(input *CreateInterconnectInput) (output *Interconnect, err error) {
+func (c *DirectConnect) CreateInterconnect(input *CreateInterconnectInput) (*Interconnect, error) {
 	req, out := c.CreateInterconnectRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreateInterconnect *aws.Operation
+const opCreatePrivateVirtualInterface = "CreatePrivateVirtualInterface"
 
 // CreatePrivateVirtualInterfaceRequest generates a request for the CreatePrivateVirtualInterface operation.
 func (c *DirectConnect) CreatePrivateVirtualInterfaceRequest(input *CreatePrivateVirtualInterfaceInput) (req *aws.Request, output *VirtualInterface) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreatePrivateVirtualInterface == nil {
-		opCreatePrivateVirtualInterface = &aws.Operation{
-			Name:       "CreatePrivateVirtualInterface",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreatePrivateVirtualInterface,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreatePrivateVirtualInterfaceInput{}
 	}
 
-	req = c.newRequest(opCreatePrivateVirtualInterface, input, output)
+	req = c.newRequest(op, input, output)
 	output = &VirtualInterface{}
 	req.Data = output
 	return
@@ -355,33 +301,27 @@ func (c *DirectConnect) CreatePrivateVirtualInterfaceRequest(input *CreatePrivat
 // Creates a new private virtual interface. A virtual interface is the VLAN
 // that transports AWS Direct Connect traffic. A private virtual interface supports
 // sending traffic to a single virtual private cloud (VPC).
-func (c *DirectConnect) CreatePrivateVirtualInterface(input *CreatePrivateVirtualInterfaceInput) (output *VirtualInterface, err error) {
+func (c *DirectConnect) CreatePrivateVirtualInterface(input *CreatePrivateVirtualInterfaceInput) (*VirtualInterface, error) {
 	req, out := c.CreatePrivateVirtualInterfaceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreatePrivateVirtualInterface *aws.Operation
+const opCreatePublicVirtualInterface = "CreatePublicVirtualInterface"
 
 // CreatePublicVirtualInterfaceRequest generates a request for the CreatePublicVirtualInterface operation.
 func (c *DirectConnect) CreatePublicVirtualInterfaceRequest(input *CreatePublicVirtualInterfaceInput) (req *aws.Request, output *VirtualInterface) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opCreatePublicVirtualInterface == nil {
-		opCreatePublicVirtualInterface = &aws.Operation{
-			Name:       "CreatePublicVirtualInterface",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opCreatePublicVirtualInterface,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &CreatePublicVirtualInterfaceInput{}
 	}
 
-	req = c.newRequest(opCreatePublicVirtualInterface, input, output)
+	req = c.newRequest(op, input, output)
 	output = &VirtualInterface{}
 	req.Data = output
 	return
@@ -391,33 +331,27 @@ func (c *DirectConnect) CreatePublicVirtualInterfaceRequest(input *CreatePublicV
 // transports AWS Direct Connect traffic. A public virtual interface supports
 // sending traffic to public services of AWS such as Amazon Simple Storage Service
 // (Amazon S3).
-func (c *DirectConnect) CreatePublicVirtualInterface(input *CreatePublicVirtualInterfaceInput) (output *VirtualInterface, err error) {
+func (c *DirectConnect) CreatePublicVirtualInterface(input *CreatePublicVirtualInterfaceInput) (*VirtualInterface, error) {
 	req, out := c.CreatePublicVirtualInterfaceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opCreatePublicVirtualInterface *aws.Operation
+const opDeleteConnection = "DeleteConnection"
 
 // DeleteConnectionRequest generates a request for the DeleteConnection operation.
 func (c *DirectConnect) DeleteConnectionRequest(input *DeleteConnectionInput) (req *aws.Request, output *Connection) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteConnection == nil {
-		opDeleteConnection = &aws.Operation{
-			Name:       "DeleteConnection",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteConnection,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteConnectionInput{}
 	}
 
-	req = c.newRequest(opDeleteConnection, input, output)
+	req = c.newRequest(op, input, output)
 	output = &Connection{}
 	req.Data = output
 	return
@@ -429,99 +363,81 @@ func (c *DirectConnect) DeleteConnectionRequest(input *DeleteConnectionInput) (r
 // transfer charges. You need to cancel separately with the providers any services
 // or charges for cross-connects or network circuits that connect you to the
 // AWS Direct Connect location.
-func (c *DirectConnect) DeleteConnection(input *DeleteConnectionInput) (output *Connection, err error) {
+func (c *DirectConnect) DeleteConnection(input *DeleteConnectionInput) (*Connection, error) {
 	req, out := c.DeleteConnectionRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteConnection *aws.Operation
+const opDeleteInterconnect = "DeleteInterconnect"
 
 // DeleteInterconnectRequest generates a request for the DeleteInterconnect operation.
 func (c *DirectConnect) DeleteInterconnectRequest(input *DeleteInterconnectInput) (req *aws.Request, output *DeleteInterconnectOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteInterconnect == nil {
-		opDeleteInterconnect = &aws.Operation{
-			Name:       "DeleteInterconnect",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteInterconnect,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteInterconnectInput{}
 	}
 
-	req = c.newRequest(opDeleteInterconnect, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteInterconnectOutput{}
 	req.Data = output
 	return
 }
 
 // Deletes the specified interconnect.
-func (c *DirectConnect) DeleteInterconnect(input *DeleteInterconnectInput) (output *DeleteInterconnectOutput, err error) {
+func (c *DirectConnect) DeleteInterconnect(input *DeleteInterconnectInput) (*DeleteInterconnectOutput, error) {
 	req, out := c.DeleteInterconnectRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteInterconnect *aws.Operation
+const opDeleteVirtualInterface = "DeleteVirtualInterface"
 
 // DeleteVirtualInterfaceRequest generates a request for the DeleteVirtualInterface operation.
 func (c *DirectConnect) DeleteVirtualInterfaceRequest(input *DeleteVirtualInterfaceInput) (req *aws.Request, output *DeleteVirtualInterfaceOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDeleteVirtualInterface == nil {
-		opDeleteVirtualInterface = &aws.Operation{
-			Name:       "DeleteVirtualInterface",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDeleteVirtualInterface,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DeleteVirtualInterfaceInput{}
 	}
 
-	req = c.newRequest(opDeleteVirtualInterface, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DeleteVirtualInterfaceOutput{}
 	req.Data = output
 	return
 }
 
 // Deletes a virtual interface.
-func (c *DirectConnect) DeleteVirtualInterface(input *DeleteVirtualInterfaceInput) (output *DeleteVirtualInterfaceOutput, err error) {
+func (c *DirectConnect) DeleteVirtualInterface(input *DeleteVirtualInterfaceInput) (*DeleteVirtualInterfaceOutput, error) {
 	req, out := c.DeleteVirtualInterfaceRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDeleteVirtualInterface *aws.Operation
+const opDescribeConnections = "DescribeConnections"
 
 // DescribeConnectionsRequest generates a request for the DescribeConnections operation.
 func (c *DirectConnect) DescribeConnectionsRequest(input *DescribeConnectionsInput) (req *aws.Request, output *Connections) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeConnections == nil {
-		opDescribeConnections = &aws.Operation{
-			Name:       "DescribeConnections",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeConnections,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeConnectionsInput{}
 	}
 
-	req = c.newRequest(opDescribeConnections, input, output)
+	req = c.newRequest(op, input, output)
 	output = &Connections{}
 	req.Data = output
 	return
@@ -530,66 +446,54 @@ func (c *DirectConnect) DescribeConnectionsRequest(input *DescribeConnectionsInp
 // Displays all connections in this region.
 //
 // If a connection ID is provided, the call returns only that particular connection.
-func (c *DirectConnect) DescribeConnections(input *DescribeConnectionsInput) (output *Connections, err error) {
+func (c *DirectConnect) DescribeConnections(input *DescribeConnectionsInput) (*Connections, error) {
 	req, out := c.DescribeConnectionsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeConnections *aws.Operation
+const opDescribeConnectionsOnInterconnect = "DescribeConnectionsOnInterconnect"
 
 // DescribeConnectionsOnInterconnectRequest generates a request for the DescribeConnectionsOnInterconnect operation.
 func (c *DirectConnect) DescribeConnectionsOnInterconnectRequest(input *DescribeConnectionsOnInterconnectInput) (req *aws.Request, output *Connections) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeConnectionsOnInterconnect == nil {
-		opDescribeConnectionsOnInterconnect = &aws.Operation{
-			Name:       "DescribeConnectionsOnInterconnect",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeConnectionsOnInterconnect,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeConnectionsOnInterconnectInput{}
 	}
 
-	req = c.newRequest(opDescribeConnectionsOnInterconnect, input, output)
+	req = c.newRequest(op, input, output)
 	output = &Connections{}
 	req.Data = output
 	return
 }
 
 // Return a list of connections that have been provisioned on the given interconnect.
-func (c *DirectConnect) DescribeConnectionsOnInterconnect(input *DescribeConnectionsOnInterconnectInput) (output *Connections, err error) {
+func (c *DirectConnect) DescribeConnectionsOnInterconnect(input *DescribeConnectionsOnInterconnectInput) (*Connections, error) {
 	req, out := c.DescribeConnectionsOnInterconnectRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeConnectionsOnInterconnect *aws.Operation
+const opDescribeInterconnects = "DescribeInterconnects"
 
 // DescribeInterconnectsRequest generates a request for the DescribeInterconnects operation.
 func (c *DirectConnect) DescribeInterconnectsRequest(input *DescribeInterconnectsInput) (req *aws.Request, output *DescribeInterconnectsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeInterconnects == nil {
-		opDescribeInterconnects = &aws.Operation{
-			Name:       "DescribeInterconnects",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeInterconnects,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeInterconnectsInput{}
 	}
 
-	req = c.newRequest(opDescribeInterconnects, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeInterconnectsOutput{}
 	req.Data = output
 	return
@@ -598,33 +502,27 @@ func (c *DirectConnect) DescribeInterconnectsRequest(input *DescribeInterconnect
 // Returns a list of interconnects owned by the AWS account.
 //
 // If an interconnect ID is provided, it will only return this particular interconnect.
-func (c *DirectConnect) DescribeInterconnects(input *DescribeInterconnectsInput) (output *DescribeInterconnectsOutput, err error) {
+func (c *DirectConnect) DescribeInterconnects(input *DescribeInterconnectsInput) (*DescribeInterconnectsOutput, error) {
 	req, out := c.DescribeInterconnectsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeInterconnects *aws.Operation
+const opDescribeLocations = "DescribeLocations"
 
 // DescribeLocationsRequest generates a request for the DescribeLocations operation.
 func (c *DirectConnect) DescribeLocationsRequest(input *DescribeLocationsInput) (req *aws.Request, output *DescribeLocationsOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeLocations == nil {
-		opDescribeLocations = &aws.Operation{
-			Name:       "DescribeLocations",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeLocations,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeLocationsInput{}
 	}
 
-	req = c.newRequest(opDescribeLocations, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeLocationsOutput{}
 	req.Data = output
 	return
@@ -633,33 +531,27 @@ func (c *DirectConnect) DescribeLocationsRequest(input *DescribeLocationsInput) 
 // Returns the list of AWS Direct Connect locations in the current AWS region.
 // These are the locations that may be selected when calling CreateConnection
 // or CreateInterconnect.
-func (c *DirectConnect) DescribeLocations(input *DescribeLocationsInput) (output *DescribeLocationsOutput, err error) {
+func (c *DirectConnect) DescribeLocations(input *DescribeLocationsInput) (*DescribeLocationsOutput, error) {
 	req, out := c.DescribeLocationsRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeLocations *aws.Operation
+const opDescribeVirtualGateways = "DescribeVirtualGateways"
 
 // DescribeVirtualGatewaysRequest generates a request for the DescribeVirtualGateways operation.
 func (c *DirectConnect) DescribeVirtualGatewaysRequest(input *DescribeVirtualGatewaysInput) (req *aws.Request, output *DescribeVirtualGatewaysOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeVirtualGateways == nil {
-		opDescribeVirtualGateways = &aws.Operation{
-			Name:       "DescribeVirtualGateways",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeVirtualGateways,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeVirtualGatewaysInput{}
 	}
 
-	req = c.newRequest(opDescribeVirtualGateways, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeVirtualGatewaysOutput{}
 	req.Data = output
 	return
@@ -672,33 +564,27 @@ func (c *DirectConnect) DescribeVirtualGatewaysRequest(input *DescribeVirtualGat
 // via Amazon Virtual Private Cloud (VPC) console or the EC2 CreateVpnGateway
 // (http://docs.aws.amazon.com/AWSEC2/latest/APIReference/ApiReference-query-CreateVpnGateway.html)
 // action.
-func (c *DirectConnect) DescribeVirtualGateways(input *DescribeVirtualGatewaysInput) (output *DescribeVirtualGatewaysOutput, err error) {
+func (c *DirectConnect) DescribeVirtualGateways(input *DescribeVirtualGatewaysInput) (*DescribeVirtualGatewaysOutput, error) {
 	req, out := c.DescribeVirtualGatewaysRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
 
-var opDescribeVirtualGateways *aws.Operation
+const opDescribeVirtualInterfaces = "DescribeVirtualInterfaces"
 
 // DescribeVirtualInterfacesRequest generates a request for the DescribeVirtualInterfaces operation.
 func (c *DirectConnect) DescribeVirtualInterfacesRequest(input *DescribeVirtualInterfacesInput) (req *aws.Request, output *DescribeVirtualInterfacesOutput) {
-	oprw.Lock()
-	defer oprw.Unlock()
-
-	if opDescribeVirtualInterfaces == nil {
-		opDescribeVirtualInterfaces = &aws.Operation{
-			Name:       "DescribeVirtualInterfaces",
-			HTTPMethod: "POST",
-			HTTPPath:   "/",
-		}
+	op := &aws.Operation{
+		Name:       opDescribeVirtualInterfaces,
+		HTTPMethod: "POST",
+		HTTPPath:   "/",
 	}
 
 	if input == nil {
 		input = &DescribeVirtualInterfacesInput{}
 	}
 
-	req = c.newRequest(opDescribeVirtualInterfaces, input, output)
+	req = c.newRequest(op, input, output)
 	output = &DescribeVirtualInterfacesOutput{}
 	req.Data = output
 	return
@@ -716,14 +602,11 @@ func (c *DirectConnect) DescribeVirtualInterfacesRequest(input *DescribeVirtualI
 // If a connection ID is provided, only virtual interfaces provisioned on the
 // specified connection will be returned. If a virtual interface ID is provided,
 // only this particular virtual interface will be returned.
-func (c *DirectConnect) DescribeVirtualInterfaces(input *DescribeVirtualInterfacesInput) (output *DescribeVirtualInterfacesOutput, err error) {
+func (c *DirectConnect) DescribeVirtualInterfaces(input *DescribeVirtualInterfacesInput) (*DescribeVirtualInterfacesOutput, error) {
 	req, out := c.DescribeVirtualInterfacesRequest(input)
-	output = out
-	err = req.Send()
-	return
+	err := req.Send()
+	return out, err
 }
-
-var opDescribeVirtualInterfaces *aws.Operation
 
 // Container for the parameters to the AllocateConnectionOnInterconnect operation.
 type AllocateConnectionOnInterconnectInput struct {
@@ -762,11 +645,21 @@ type AllocateConnectionOnInterconnectInput struct {
 	// Default: None
 	VLAN *int64 `locationName:"vlan" type:"integer" required:"true"`
 
-	metadataAllocateConnectionOnInterconnectInput `json:"-", xml:"-"`
+	metadataAllocateConnectionOnInterconnectInput `json:"-" xml:"-"`
 }
 
 type metadataAllocateConnectionOnInterconnectInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AllocateConnectionOnInterconnectInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AllocateConnectionOnInterconnectInput) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the AllocatePrivateVirtualInterface operation.
@@ -786,11 +679,21 @@ type AllocatePrivateVirtualInterfaceInput struct {
 	// Default: None
 	OwnerAccount *string `locationName:"ownerAccount" type:"string" required:"true"`
 
-	metadataAllocatePrivateVirtualInterfaceInput `json:"-", xml:"-"`
+	metadataAllocatePrivateVirtualInterfaceInput `json:"-" xml:"-"`
 }
 
 type metadataAllocatePrivateVirtualInterfaceInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AllocatePrivateVirtualInterfaceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AllocatePrivateVirtualInterfaceInput) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the AllocatePublicVirtualInterface operation.
@@ -810,11 +713,21 @@ type AllocatePublicVirtualInterfaceInput struct {
 	// Default: None
 	OwnerAccount *string `locationName:"ownerAccount" type:"string" required:"true"`
 
-	metadataAllocatePublicVirtualInterfaceInput `json:"-", xml:"-"`
+	metadataAllocatePublicVirtualInterfaceInput `json:"-" xml:"-"`
 }
 
 type metadataAllocatePublicVirtualInterfaceInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s AllocatePublicVirtualInterfaceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s AllocatePublicVirtualInterfaceInput) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the ConfirmConnection operation.
@@ -826,11 +739,21 @@ type ConfirmConnectionInput struct {
 	// Default: None
 	ConnectionID *string `locationName:"connectionId" type:"string" required:"true"`
 
-	metadataConfirmConnectionInput `json:"-", xml:"-"`
+	metadataConfirmConnectionInput `json:"-" xml:"-"`
 }
 
 type metadataConfirmConnectionInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ConfirmConnectionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ConfirmConnectionInput) GoString() string {
+	return s.String()
 }
 
 // The response received when ConfirmConnection is called.
@@ -847,11 +770,21 @@ type ConfirmConnectionOutput struct {
 	// the 'Rejected' state if it is deleted by the end customer.
 	ConnectionState *string `locationName:"connectionState" type:"string"`
 
-	metadataConfirmConnectionOutput `json:"-", xml:"-"`
+	metadataConfirmConnectionOutput `json:"-" xml:"-"`
 }
 
 type metadataConfirmConnectionOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ConfirmConnectionOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ConfirmConnectionOutput) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the ConfirmPrivateVirtualInterface operation.
@@ -872,11 +805,21 @@ type ConfirmPrivateVirtualInterfaceInput struct {
 	// Default: None
 	VirtualInterfaceID *string `locationName:"virtualInterfaceId" type:"string" required:"true"`
 
-	metadataConfirmPrivateVirtualInterfaceInput `json:"-", xml:"-"`
+	metadataConfirmPrivateVirtualInterfaceInput `json:"-" xml:"-"`
 }
 
 type metadataConfirmPrivateVirtualInterfaceInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ConfirmPrivateVirtualInterfaceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ConfirmPrivateVirtualInterfaceInput) GoString() string {
+	return s.String()
 }
 
 // The response received when ConfirmPrivateVirtualInterface is called.
@@ -899,11 +842,21 @@ type ConfirmPrivateVirtualInterfaceOutput struct {
 	// the 'Rejected' state.
 	VirtualInterfaceState *string `locationName:"virtualInterfaceState" type:"string"`
 
-	metadataConfirmPrivateVirtualInterfaceOutput `json:"-", xml:"-"`
+	metadataConfirmPrivateVirtualInterfaceOutput `json:"-" xml:"-"`
 }
 
 type metadataConfirmPrivateVirtualInterfaceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ConfirmPrivateVirtualInterfaceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ConfirmPrivateVirtualInterfaceOutput) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the ConfirmPublicVirtualInterface operation.
@@ -915,11 +868,21 @@ type ConfirmPublicVirtualInterfaceInput struct {
 	// Default: None
 	VirtualInterfaceID *string `locationName:"virtualInterfaceId" type:"string" required:"true"`
 
-	metadataConfirmPublicVirtualInterfaceInput `json:"-", xml:"-"`
+	metadataConfirmPublicVirtualInterfaceInput `json:"-" xml:"-"`
 }
 
 type metadataConfirmPublicVirtualInterfaceInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ConfirmPublicVirtualInterfaceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ConfirmPublicVirtualInterfaceInput) GoString() string {
+	return s.String()
 }
 
 // The response received when ConfirmPublicVirtualInterface is called.
@@ -942,11 +905,21 @@ type ConfirmPublicVirtualInterfaceOutput struct {
 	// the 'Rejected' state.
 	VirtualInterfaceState *string `locationName:"virtualInterfaceState" type:"string"`
 
-	metadataConfirmPublicVirtualInterfaceOutput `json:"-", xml:"-"`
+	metadataConfirmPublicVirtualInterfaceOutput `json:"-" xml:"-"`
 }
 
 type metadataConfirmPublicVirtualInterfaceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s ConfirmPublicVirtualInterfaceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s ConfirmPublicVirtualInterfaceOutput) GoString() string {
+	return s.String()
 }
 
 // A connection represents the physical network connection between the AWS Direct
@@ -1008,11 +981,21 @@ type Connection struct {
 	// Example: 101
 	VLAN *int64 `locationName:"vlan" type:"integer"`
 
-	metadataConnection `json:"-", xml:"-"`
+	metadataConnection `json:"-" xml:"-"`
 }
 
 type metadataConnection struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Connection) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Connection) GoString() string {
+	return s.String()
 }
 
 // A structure containing a list of connections.
@@ -1020,11 +1003,21 @@ type Connections struct {
 	// A list of connections.
 	Connections []*Connection `locationName:"connections" type:"list"`
 
-	metadataConnections `json:"-", xml:"-"`
+	metadataConnections `json:"-" xml:"-"`
 }
 
 type metadataConnections struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Connections) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Connections) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the CreateConnection operation.
@@ -1050,11 +1043,21 @@ type CreateConnectionInput struct {
 	// Default: None
 	Location *string `locationName:"location" type:"string" required:"true"`
 
-	metadataCreateConnectionInput `json:"-", xml:"-"`
+	metadataCreateConnectionInput `json:"-" xml:"-"`
 }
 
 type metadataCreateConnectionInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateConnectionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateConnectionInput) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the CreateInterconnect operation.
@@ -1082,11 +1085,21 @@ type CreateInterconnectInput struct {
 	// Default: None
 	Location *string `locationName:"location" type:"string" required:"true"`
 
-	metadataCreateInterconnectInput `json:"-", xml:"-"`
+	metadataCreateInterconnectInput `json:"-" xml:"-"`
 }
 
 type metadataCreateInterconnectInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreateInterconnectInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreateInterconnectInput) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the CreatePrivateVirtualInterface operation.
@@ -1103,11 +1116,21 @@ type CreatePrivateVirtualInterfaceInput struct {
 	// Default: None
 	NewPrivateVirtualInterface *NewPrivateVirtualInterface `locationName:"newPrivateVirtualInterface" type:"structure" required:"true"`
 
-	metadataCreatePrivateVirtualInterfaceInput `json:"-", xml:"-"`
+	metadataCreatePrivateVirtualInterfaceInput `json:"-" xml:"-"`
 }
 
 type metadataCreatePrivateVirtualInterfaceInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreatePrivateVirtualInterfaceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreatePrivateVirtualInterfaceInput) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the CreatePublicVirtualInterface operation.
@@ -1124,11 +1147,21 @@ type CreatePublicVirtualInterfaceInput struct {
 	// Default: None
 	NewPublicVirtualInterface *NewPublicVirtualInterface `locationName:"newPublicVirtualInterface" type:"structure" required:"true"`
 
-	metadataCreatePublicVirtualInterfaceInput `json:"-", xml:"-"`
+	metadataCreatePublicVirtualInterfaceInput `json:"-" xml:"-"`
 }
 
 type metadataCreatePublicVirtualInterfaceInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s CreatePublicVirtualInterfaceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s CreatePublicVirtualInterfaceInput) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the DeleteConnection operation.
@@ -1140,11 +1173,21 @@ type DeleteConnectionInput struct {
 	// Default: None
 	ConnectionID *string `locationName:"connectionId" type:"string" required:"true"`
 
-	metadataDeleteConnectionInput `json:"-", xml:"-"`
+	metadataDeleteConnectionInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteConnectionInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteConnectionInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteConnectionInput) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the DeleteInterconnect operation.
@@ -1154,11 +1197,21 @@ type DeleteInterconnectInput struct {
 	// Example: dxcon-abc123
 	InterconnectID *string `locationName:"interconnectId" type:"string" required:"true"`
 
-	metadataDeleteInterconnectInput `json:"-", xml:"-"`
+	metadataDeleteInterconnectInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteInterconnectInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteInterconnectInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteInterconnectInput) GoString() string {
+	return s.String()
 }
 
 // The response received when DeleteInterconnect is called.
@@ -1171,11 +1224,21 @@ type DeleteInterconnectOutput struct {
 	// has been deleted.
 	InterconnectState *string `locationName:"interconnectState" type:"string"`
 
-	metadataDeleteInterconnectOutput `json:"-", xml:"-"`
+	metadataDeleteInterconnectOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteInterconnectOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteInterconnectOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteInterconnectOutput) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the DeleteVirtualInterface operation.
@@ -1187,11 +1250,21 @@ type DeleteVirtualInterfaceInput struct {
 	// Default: None
 	VirtualInterfaceID *string `locationName:"virtualInterfaceId" type:"string" required:"true"`
 
-	metadataDeleteVirtualInterfaceInput `json:"-", xml:"-"`
+	metadataDeleteVirtualInterfaceInput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVirtualInterfaceInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteVirtualInterfaceInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVirtualInterfaceInput) GoString() string {
+	return s.String()
 }
 
 // The response received when DeleteVirtualInterface is called.
@@ -1214,11 +1287,21 @@ type DeleteVirtualInterfaceOutput struct {
 	// the 'Rejected' state.
 	VirtualInterfaceState *string `locationName:"virtualInterfaceState" type:"string"`
 
-	metadataDeleteVirtualInterfaceOutput `json:"-", xml:"-"`
+	metadataDeleteVirtualInterfaceOutput `json:"-" xml:"-"`
 }
 
 type metadataDeleteVirtualInterfaceOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DeleteVirtualInterfaceOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DeleteVirtualInterfaceOutput) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the DescribeConnections operation.
@@ -1230,11 +1313,21 @@ type DescribeConnectionsInput struct {
 	// Default: None
 	ConnectionID *string `locationName:"connectionId" type:"string"`
 
-	metadataDescribeConnectionsInput `json:"-", xml:"-"`
+	metadataDescribeConnectionsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeConnectionsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeConnectionsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeConnectionsInput) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the DescribeConnectionsOnInterconnect operation.
@@ -1246,11 +1339,21 @@ type DescribeConnectionsOnInterconnectInput struct {
 	// Default: None
 	InterconnectID *string `locationName:"interconnectId" type:"string" required:"true"`
 
-	metadataDescribeConnectionsOnInterconnectInput `json:"-", xml:"-"`
+	metadataDescribeConnectionsOnInterconnectInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeConnectionsOnInterconnectInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeConnectionsOnInterconnectInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeConnectionsOnInterconnectInput) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the DescribeInterconnects operation.
@@ -1260,11 +1363,21 @@ type DescribeInterconnectsInput struct {
 	// Example: dxcon-abc123
 	InterconnectID *string `locationName:"interconnectId" type:"string"`
 
-	metadataDescribeInterconnectsInput `json:"-", xml:"-"`
+	metadataDescribeInterconnectsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeInterconnectsInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeInterconnectsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeInterconnectsInput) GoString() string {
+	return s.String()
 }
 
 // A structure containing a list of interconnects.
@@ -1272,37 +1385,77 @@ type DescribeInterconnectsOutput struct {
 	// A list of interconnects.
 	Interconnects []*Interconnect `locationName:"interconnects" type:"list"`
 
-	metadataDescribeInterconnectsOutput `json:"-", xml:"-"`
+	metadataDescribeInterconnectsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeInterconnectsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeInterconnectsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeInterconnectsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeLocationsInput struct {
-	metadataDescribeLocationsInput `json:"-", xml:"-"`
+	metadataDescribeLocationsInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeLocationsInput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeLocationsInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeLocationsInput) GoString() string {
+	return s.String()
+}
+
 type DescribeLocationsOutput struct {
 	Locations []*Location `locationName:"locations" type:"list"`
 
-	metadataDescribeLocationsOutput `json:"-", xml:"-"`
+	metadataDescribeLocationsOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeLocationsOutput struct {
 	SDKShapeTraits bool `type:"structure"`
 }
 
+// String returns the string representation
+func (s DescribeLocationsOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeLocationsOutput) GoString() string {
+	return s.String()
+}
+
 type DescribeVirtualGatewaysInput struct {
-	metadataDescribeVirtualGatewaysInput `json:"-", xml:"-"`
+	metadataDescribeVirtualGatewaysInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVirtualGatewaysInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeVirtualGatewaysInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVirtualGatewaysInput) GoString() string {
+	return s.String()
 }
 
 // A structure containing a list of virtual private gateways.
@@ -1310,11 +1463,21 @@ type DescribeVirtualGatewaysOutput struct {
 	// A list of virtual private gateways.
 	VirtualGateways []*VirtualGateway `locationName:"virtualGateways" type:"list"`
 
-	metadataDescribeVirtualGatewaysOutput `json:"-", xml:"-"`
+	metadataDescribeVirtualGatewaysOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVirtualGatewaysOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeVirtualGatewaysOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVirtualGatewaysOutput) GoString() string {
+	return s.String()
 }
 
 // Container for the parameters to the DescribeVirtualInterfaces operation.
@@ -1333,11 +1496,21 @@ type DescribeVirtualInterfacesInput struct {
 	// Default: None
 	VirtualInterfaceID *string `locationName:"virtualInterfaceId" type:"string"`
 
-	metadataDescribeVirtualInterfacesInput `json:"-", xml:"-"`
+	metadataDescribeVirtualInterfacesInput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVirtualInterfacesInput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeVirtualInterfacesInput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVirtualInterfacesInput) GoString() string {
+	return s.String()
 }
 
 // A structure containing a list of virtual interfaces.
@@ -1345,11 +1518,21 @@ type DescribeVirtualInterfacesOutput struct {
 	// A list of virtual interfaces.
 	VirtualInterfaces []*VirtualInterface `locationName:"virtualInterfaces" type:"list"`
 
-	metadataDescribeVirtualInterfacesOutput `json:"-", xml:"-"`
+	metadataDescribeVirtualInterfacesOutput `json:"-" xml:"-"`
 }
 
 type metadataDescribeVirtualInterfacesOutput struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s DescribeVirtualInterfacesOutput) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s DescribeVirtualInterfacesOutput) GoString() string {
+	return s.String()
 }
 
 // An interconnect is a connection that can host other connections.
@@ -1404,11 +1587,21 @@ type Interconnect struct {
 	// Default: None
 	Region *string `locationName:"region" type:"string"`
 
-	metadataInterconnect `json:"-", xml:"-"`
+	metadataInterconnect `json:"-" xml:"-"`
 }
 
 type metadataInterconnect struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Interconnect) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Interconnect) GoString() string {
+	return s.String()
 }
 
 // An AWS Direct Connect location where connections and interconnects can be
@@ -1421,11 +1614,21 @@ type Location struct {
 	// partner name and the physical site of the lit building.
 	LocationName *string `locationName:"locationName" type:"string"`
 
-	metadataLocation `json:"-", xml:"-"`
+	metadataLocation `json:"-" xml:"-"`
 }
 
 type metadataLocation struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s Location) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s Location) GoString() string {
+	return s.String()
 }
 
 // A structure containing information about a new private virtual interface.
@@ -1466,11 +1669,21 @@ type NewPrivateVirtualInterface struct {
 	// Example: "My VPC"
 	VirtualInterfaceName *string `locationName:"virtualInterfaceName" type:"string" required:"true"`
 
-	metadataNewPrivateVirtualInterface `json:"-", xml:"-"`
+	metadataNewPrivateVirtualInterface `json:"-" xml:"-"`
 }
 
 type metadataNewPrivateVirtualInterface struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s NewPrivateVirtualInterface) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s NewPrivateVirtualInterface) GoString() string {
+	return s.String()
 }
 
 // A structure containing information about a private virtual interface that
@@ -1506,11 +1719,21 @@ type NewPrivateVirtualInterfaceAllocation struct {
 	// Example: "My VPC"
 	VirtualInterfaceName *string `locationName:"virtualInterfaceName" type:"string" required:"true"`
 
-	metadataNewPrivateVirtualInterfaceAllocation `json:"-", xml:"-"`
+	metadataNewPrivateVirtualInterfaceAllocation `json:"-" xml:"-"`
 }
 
 type metadataNewPrivateVirtualInterfaceAllocation struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s NewPrivateVirtualInterfaceAllocation) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s NewPrivateVirtualInterfaceAllocation) GoString() string {
+	return s.String()
 }
 
 // A structure containing information about a new public virtual interface.
@@ -1549,11 +1772,21 @@ type NewPublicVirtualInterface struct {
 	// Example: "My VPC"
 	VirtualInterfaceName *string `locationName:"virtualInterfaceName" type:"string" required:"true"`
 
-	metadataNewPublicVirtualInterface `json:"-", xml:"-"`
+	metadataNewPublicVirtualInterface `json:"-" xml:"-"`
 }
 
 type metadataNewPublicVirtualInterface struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s NewPublicVirtualInterface) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s NewPublicVirtualInterface) GoString() string {
+	return s.String()
 }
 
 // A structure containing information about a public virtual interface that
@@ -1593,11 +1826,21 @@ type NewPublicVirtualInterfaceAllocation struct {
 	// Example: "My VPC"
 	VirtualInterfaceName *string `locationName:"virtualInterfaceName" type:"string" required:"true"`
 
-	metadataNewPublicVirtualInterfaceAllocation `json:"-", xml:"-"`
+	metadataNewPublicVirtualInterfaceAllocation `json:"-" xml:"-"`
 }
 
 type metadataNewPublicVirtualInterfaceAllocation struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s NewPublicVirtualInterfaceAllocation) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s NewPublicVirtualInterfaceAllocation) GoString() string {
+	return s.String()
 }
 
 // A route filter prefix that the customer can advertise through Border Gateway
@@ -1609,11 +1852,21 @@ type RouteFilterPrefix struct {
 	// Example: 10.10.10.0/24,10.10.11.0/24
 	CIDR *string `locationName:"cidr" type:"string"`
 
-	metadataRouteFilterPrefix `json:"-", xml:"-"`
+	metadataRouteFilterPrefix `json:"-" xml:"-"`
 }
 
 type metadataRouteFilterPrefix struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s RouteFilterPrefix) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s RouteFilterPrefix) GoString() string {
+	return s.String()
 }
 
 // You can create one or more AWS Direct Connect private virtual interfaces
@@ -1635,11 +1888,21 @@ type VirtualGateway struct {
 	// over this gateway.
 	VirtualGatewayState *string `locationName:"virtualGatewayState" type:"string"`
 
-	metadataVirtualGateway `json:"-", xml:"-"`
+	metadataVirtualGateway `json:"-" xml:"-"`
 }
 
 type metadataVirtualGateway struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VirtualGateway) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VirtualGateway) GoString() string {
+	return s.String()
 }
 
 // A virtual interface (VLAN) transmits the traffic between the AWS Direct Connect
@@ -1735,9 +1998,19 @@ type VirtualInterface struct {
 	// so on.)
 	VirtualInterfaceType *string `locationName:"virtualInterfaceType" type:"string"`
 
-	metadataVirtualInterface `json:"-", xml:"-"`
+	metadataVirtualInterface `json:"-" xml:"-"`
 }
 
 type metadataVirtualInterface struct {
 	SDKShapeTraits bool `type:"structure"`
+}
+
+// String returns the string representation
+func (s VirtualInterface) String() string {
+	return awsutil.StringValue(s)
+}
+
+// GoString returns the string representation
+func (s VirtualInterface) GoString() string {
+	return s.String()
 }

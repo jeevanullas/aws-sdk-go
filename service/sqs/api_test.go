@@ -5,8 +5,8 @@ package sqs_test
 import (
 	"testing"
 
-	"github.com/awslabs/aws-sdk-go/aws"
-	"github.com/awslabs/aws-sdk-go/service/sqs"
+	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/service/sqs"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -15,7 +15,7 @@ func TestFlattenedTraits(t *testing.T) {
 	_, err := s.DeleteMessageBatch(&sqs.DeleteMessageBatchInput{
 		QueueURL: aws.String("QUEUE"),
 		Entries: []*sqs.DeleteMessageBatchRequestEntry{
-			&sqs.DeleteMessageBatchRequestEntry{
+			{
 				ID:            aws.String("TEST"),
 				ReceiptHandle: aws.String("RECEIPT"),
 			},
@@ -23,5 +23,6 @@ func TestFlattenedTraits(t *testing.T) {
 	})
 
 	assert.Error(t, err)
-	assert.EqualError(t, err, "InvalidAddress: The address QUEUE is not valid for this endpoint.")
+	assert.Equal(t, "InvalidAddress", err.Code())
+	assert.Equal(t, "The address QUEUE is not valid for this endpoint.", err.Message())
 }
